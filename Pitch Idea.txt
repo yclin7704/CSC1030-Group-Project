@@ -1,0 +1,37 @@
+Title:
+Last Stand
+
+Setting:
+"Just arrived at an abandoned warehouse in a frozen tundra(maybe russia?) tonight will be the fierces the zombies will attack as they can't survive the cold either."
+The game will be based on surviving the last wave of zombies for one night and you have five hours to prepare (1 hour : 1 minute) there will be five searchable and shelterable locations not including the
+warehouse. This game will have multiple ending depending on the location of your last stand, choices you made, amount of fortification and warmth. 
+
+The game will remember what you did in the last playthrough
+but your game profile can be resetted if you refresh the page(I assume this resets the page). The game will have random event that triggers at certain intervals of time or upon visiting location to make each run
+unique. Might add a car to the game that can be repaired if you get all the parts to get a different ending.
+
+thinking of a morale system that depending if you did some bad action like killing a poor dog could lead to bad consquences in the future.
+
+Code:
+Starting Location(Abandoned Warehouse) - one person
+5 searchable and barricable location - five person (one each for each location)
+night phase - going through each property which will reduce or increase warmth such as do you have a gun?, are the window barricaded? (one or maybe two person?)
+repeated progression - one person
+random event - one person
+car? - one person
+morale system? - one person
+true ending? - group effort
+
+Night cycle:
+Main factor : weapon, foritification, warmth, location, allies
+
+Location Ideas:
+Hospital
+Farm House
+Abandoned Building
+Motel / Gas Station
+Wooden Cabin
+
+
+
+
