@@ -62,6 +62,7 @@ async function isMatch(pattern, textIn) {
 		if (Array.isArray(pattern[i])) {
 			// Contains any of the items in this sub-pattern
 			let containsAnyOf = false;
+			// Iterate through sub-pattern
 			for (let j = 0; j < pattern[i].length; j++) {
 				containsAnyOf = containsAnyOf || textArr.includes(pattern[i][j]);
 			}
