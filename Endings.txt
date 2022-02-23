@@ -1,5 +1,43 @@
-Starting location: Abandoned Warehouse:
-------------------------------------------
+Starting location - Abandoned Warehouse:
+-----------------------------------------------
 > (Bad) Ending One: Getting overrun by the infected Zombies.
 > (Bad) Ending Two: Getting Frostbite from the harsh cold.
 > (Neutral) Ending Three: Surviving the night, but not having an escape for the following day
+> (Good) Ending Four: Survived the night in the Abandoned warehouse, and can escape using the car you repaired.
+
+
+
+External Location One - Hospital:
+-----------------------------------------------
+>
+>
+
+
+
+External Location Two - Farm House:
+-----------------------------------------------
+>
+>
+
+
+
+External Location Three - Abandoned Building:
+-----------------------------------------------
+>
+>
+
+
+
+External Location Four - Motel / Gas Station:
+-----------------------------------------------
+>
+>
+
+
+
+External Location Five - Wooden Cabin:
+-----------------------------------------------
+>
+>
+
+
