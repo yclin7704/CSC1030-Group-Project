@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <title>JavaScript Testing</title>
+    <script type="text/javascript">
+        function backColor() {
+            if (document.body.style.backgroundColor == "white"){
+                document.body.style.backgroundColor = "rgb(161, 157, 154)";
+                document.getElementById("backgroundChange").innerHTML = "Change background colour to white";
+            }
+            else if (document.body.style.backgroundColor == "rgb(161, 157, 154)"){
+                document.body.style.backgroundColor = "white";
+                document.getElementById("backgroundChange").innerHTML = "Change background colour to grey";
+            }
+        }
+    </script>
+</head>
+<body style="background-color: white">
+    <button id="backgroundChange" onclick="backColor()">Change background colour to grey</button>
+</body>
+</html>
