@@ -1,3 +1,23 @@
+/* Variables */
+:root {
+	/*--mono-font: 
+	--handwritten-font:*/
+	/* These could probably have better names, but I don't know what we're actually planning to do with them yet */
+	--background: #24171b;
+	--red: #902e29;
+	--greenLight: #8a8e48;
+	--greenDark: #495435;
+	--brownLight: #99603d;
+	--brownDark: #5d453e;
+	--beige: #907c68;
+	--text: #debf89;
+}
+
+body {
+	margin: 0;
+	background-color: #111111;
+}
+
 .wrapper {
 	display: flex;
 	flex-direction: column;
@@ -13,18 +33,7 @@
 	vertical-align: middle;
 	margin: 5px;
 	height: 70vh;
-}
-
-.col3 {
-	flex: 10;
-	display: flex;
-	flex-direction: column;
-}
-
-.col2 {
-	flex: 30;
-	margin-left: 0;
-	margin-right: 0;
+	background-color: var(--background);
 }
 
 .col1 {
@@ -33,26 +42,33 @@
 	flex: 10;
 }
 
+.col2 {
+	flex: 30;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.col3 {
+	flex: 10;
+	display: flex;
+	flex-direction: column;
+}
+
 .dialogue {
 	height: 100%;
-	margin-top: 0;
+	background-color: var(--brownDark);
 }
 
 .map {
 	width: 90%;
 	margin: 2vh auto 0 auto;
-	background-color: #5d453e;
+	background-color: var(--brownDark);
 	flex: 10;
 }
 
 .inventory {
 	flex: 30;
-	background-color: #5d453e;
+	background-color: var(--brownDark);
 	width: 90%;
 	margin: 2vh auto;
-}
-
-body {
-	margin: 0;
-	background-color: #111111;
 }
