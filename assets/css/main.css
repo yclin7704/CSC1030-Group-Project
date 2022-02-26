@@ -48,6 +48,7 @@ body {
 	margin: 5px;
 	height: 70vh;
 	background-color: var(--background);
+	border-radius: 3px;
 }
 
 .col1 {
@@ -60,6 +61,7 @@ body {
 	flex: 30;
 	margin-left: 0;
 	margin-right: 0;
+	overflow: hidden;
 }
 
 .col2 img {
@@ -95,6 +97,7 @@ body {
 
 .map img {
 	width: 100%;
+	border-radius: 5px;
 }
 
 .inventory {
