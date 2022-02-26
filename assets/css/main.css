@@ -1,7 +1,10 @@
+/* Consider downloading to local file? */
+@import url("https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Roboto+Mono");
+
 /* Variables */
 :root {
-	/*--mono-font: 
-	--handwritten-font:*/
+	--mono-font: "Roboto Mono", monospace;
+	--handwritten-font: "Reenie Beanie", cursive;
 	/* These could probably have better names, but I don't know what we're actually planning to do with them yet */
 	--background: #24171b;
 	--red: #902e29;
@@ -11,6 +14,11 @@
 	--brownDark: #5d453e;
 	--beige: #907c68;
 	--text: #debf89;
+}
+
+html {
+	/* Monospace as default? Maybe change this */
+	font-family: var(--mono-font);
 }
 
 body {
@@ -30,16 +38,15 @@ body {
 }
 
 .col {
-	vertical-align: middle;
 	margin: 5px;
 	height: 70vh;
 	background-color: var(--background);
 }
 
 .col1 {
+	flex: 10;
 	display: flex;
 	flex-direction: column;
-	flex: 10;
 }
 
 .col2 {
@@ -48,27 +55,44 @@ body {
 	margin-right: 0;
 }
 
+.col2 img {
+	width: 100%;
+}
+
 .col3 {
 	flex: 10;
 	display: flex;
 	flex-direction: column;
 }
 
-.dialogue {
+.dialogueOuter {
 	height: 100%;
 	background-color: var(--brownDark);
 }
 
+.dialogue {
+	/*
+	TODO: Text is currently too wide. Consider something like:
+	width: min(180ch, 87%);
+	or rearranging panels
+	*/
+	margin: 5px auto;
+}
+
 .map {
-	width: 90%;
-	margin: 2vh auto 0 auto;
+	width: 92%;
+	margin: 1.2vh auto 0 auto;
 	background-color: var(--brownDark);
 	flex: 10;
+}
+
+.map img {
+	width: 100%;
 }
 
 .inventory {
 	flex: 30;
 	background-color: var(--brownDark);
-	width: 90%;
-	margin: 2vh auto;
+	width: 92%;
+	margin: 1.2vh auto;
 }
