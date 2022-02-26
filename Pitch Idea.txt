@@ -30,7 +30,12 @@ Hospital
 Farm House
 Abandoned Building
 Motel / Gas Station
-Wooden Cabin
+
+Wooden Cabin - James
+Gas Station - Ryan
+Hospital - Andrew
+
+
 
 
 
