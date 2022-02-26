@@ -26,6 +26,12 @@ body {
 	background-color: #111111;
 }
 
+.handwritten {
+	font-family: var(--handwritten-font);
+	/* Reenie Beanie needs to be increased in size to actually be readable */
+	font-size: 1.6rem;
+}
+
 .wrapper {
 	display: flex;
 	flex-direction: column;
