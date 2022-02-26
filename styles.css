@@ -13,33 +13,5 @@
 }
 
 h1 {
-    font-family: 'Amatic SC', cursive;
     text-align: center;
-}
-
-.button {
-    min-width: 0;
-    max-width: 100%;
-    border: none;
-    background-color: grey;
-    color: white;
-    border-radius: 15px;
-    display: block;
-    text-align: center;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 30px;
-    margin: auto;
-}
-
-/* Pseudo-classes to style button */
-
-.button:focus {
-    opacity: 50%;
-}
-
-.button:hover {
-    font-weight: bold;
-    background-color: lightgreen;
-    font-weight: bold;
 }
