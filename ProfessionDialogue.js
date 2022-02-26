@@ -1,4 +1,4 @@
-function displayHello() {
+function professionSelection() {
     
     var Professions = document.getElementsByName('Profession');
     var Profession;

@@ -15,8 +15,10 @@
 	height: 70vh;
 }
 
-.col1 {
+.col3 {
 	flex: 10;
+	display: flex;
+	flex-direction: column;
 }
 
 .col2 {
@@ -25,7 +27,7 @@
 	margin-right: 0;
 }
 
-.col3 {
+.col1 {
 	display: flex;
 	flex-direction: column;
 	flex: 10;
@@ -40,13 +42,13 @@
 .map {
 	width: 90%;
 	margin: 2vh auto 0 auto;
-	background-color: black;
+	background-color: #5d453e;
 	flex: 10;
 }
 
 .inventory {
 	flex: 30;
-	background-color: orange;
+	background-color: #5d453e;
 	width: 90%;
 	margin: 2vh auto;
 }
