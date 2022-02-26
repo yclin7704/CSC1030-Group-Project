@@ -19,6 +19,7 @@
 html {
 	/* Monospace as default? Maybe change this */
 	font-family: var(--mono-font);
+	color: var(--text);
 }
 
 body {
@@ -82,7 +83,7 @@ body {
 	width: min(180ch, 87%);
 	or rearranging panels
 	*/
-	margin: 5px auto;
+	margin: 10px;
 }
 
 .map {
