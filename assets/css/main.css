@@ -106,3 +106,37 @@ body {
 	width: 92%;
 	margin: 1.2vh auto;
 }
+
+.buttonChoice {
+	width: 70%;
+    border-radius: 20px;
+    padding: 10px;
+	margin: 10px auto 10px auto;
+    background-color: var(--beige);
+	color: var(--background);
+	box-shadow: 0 0 5px 2px black;
+    border-style: none;
+	font-size: 12pt;
+	font-weight: bolder;
+}
+
+.textBox {
+	height: 70%;
+	max-height: 70%;
+    width: 90%;
+    margin: auto;
+    padding: 25px;
+    background-color: var(--beige);
+	color: var(--background);
+    border-radius: 20px;
+    border-style: none;
+    box-shadow: 0 0 10px 2px black;
+	overflow:auto;
+}
+
+.centeredText {
+	position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-54%, -50%);
+}
