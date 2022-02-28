@@ -121,6 +121,7 @@ body {
 }
 
 .textBox {
+	font-size: 16pt;
 	height: 70%;
 	max-height: 70%;
     width: 90%;
@@ -139,4 +140,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-54%, -50%);
+}
+
+div a {
+	text-decoration: underline;
 }
