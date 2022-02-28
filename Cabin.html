@@ -27,7 +27,10 @@
 
 				<!-- Column 3: Buttons -->
 				<div class="col col3">
-					<button class="buttonChoice">Button</button>
+					<!-- Does this also clear localStorage for the other pages? If it does, fix it so it just clears stuff for my page probably? -->
+					<button class="buttonChoice" onclick="localStorage.clear(); console.log('Cleared localStorage! This probably broke stuff.')">
+						DEBUG: Clear localStorage
+					</button>
 					<button class="buttonChoice">Button</button>
 					<button class="buttonChoice">Button</button>
 					<button class="buttonChoice">Button</button>
