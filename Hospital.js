@@ -23,6 +23,8 @@ var HospitalMechanic = ["As a professional mechanic you believe that the first a
 var profession = "Mechanic"
 // checks to see if players are interacting with items
 var accessButton = true;
+// Number of times the player has waited
+var waits = 0;
 
 
 
@@ -82,5 +84,18 @@ function outsideInteraction_2() {
         // sets accessButton to false. This prevents the user from interacting with anything else for the time being
         accessButton = false;
         document.getElementById('DialogueDisplay').innerHTML = "Hello";
+    }
+}
+
+function wait(){
+    const MAX_WAITS = 5;
+    // Checks to see if the user isn't already interacting with something else
+    if (accessButton == true && waits < MAX_WAITS) {
+        alert("You waited");
+        waits += 1;
+    }
+    else if (accessButton == true && waits == MAX_WAITS) {
+        alert("You can no longer wait.");
+        alert("You died");
     }
 }
