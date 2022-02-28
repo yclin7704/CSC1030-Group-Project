@@ -30,7 +30,7 @@ body {
 .handwritten {
 	font-family: var(--handwritten-font);
 	/* Reenie Beanie needs to be increased in size to actually be readable */
-	font-size: 1.6rem;
+	font-size: 2rem;
 }
 
 .wrapper {
