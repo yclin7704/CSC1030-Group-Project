@@ -142,6 +142,7 @@ body {
 	transform: translate(-54%, -50%);
 }
 
-div a {
+.link {
+	color: var(--background);
 	text-decoration: underline;
 }
