@@ -120,6 +120,10 @@ body {
 	font-weight: bolder;
 }
 
+button:enabled:hover {
+	cursor: pointer;
+}
+
 .textBox {
 	font-size: 16pt;
 	height: 70%;
