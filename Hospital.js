@@ -19,8 +19,8 @@ var HospitalMechanic = ["As a professional mechanic you believe that the first a
 
 
 var profession = "WarVeteran"  // Stores the profession (FOR TESTING)
-var accessButton = true;     // checks to see if players are interacting with items
-var waits = 0;               // Number of times the player has waited
+var accessButton = true;       // checks to see if players are interacting with items
+var waits = 0;                 // Number of times the player has waited
 
 
 // Allows the player to go inside the Hospital
