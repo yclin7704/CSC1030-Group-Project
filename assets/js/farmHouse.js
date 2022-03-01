@@ -4,6 +4,7 @@ const hunterDialogue = [];
 const priestDialogue = [];
 const warVetDialogue = [];
 
+
 //This is the key needed to open the front door
 var key = false;
 
@@ -14,7 +15,10 @@ var farmDialogue = ['Managing to escape from the zombies, you have stumbled upon
 
 //When the html load it will fill in the buttons with text inside and display the starting dialogue
 function loadFarm(){
+    //Putting starting dialogue
     document.getElementById('dialogue').innerHTML = farmDialogue[0];
+
+    //Putting values in the button
     document.getElementById('btn1').innerHTML = 'Open the door';
     document.getElementById('btn2').innerHTML = 'Search the wheel barrow';
     document.getElementById('btn3').innerHTML = 'Search the flower pot';
@@ -23,10 +27,25 @@ function loadFarm(){
     document.getElementById('btn6').innerHTML = 'Go back to warehouse';
     document.getElementById('btn7').innerHTML = 'Wait';
     document.getElementById('outside').style.visibility = 'visible';
+
+    //Setting the function of the button
+    document.getElementById('btn1').setAttribute('onClick', 'javascript: goInsideFarmHouse();');
 }
 
 //Allows the user to interact with the door
 function goInsideFarmHouse(){
+    var outside = document.getElementById('outside');
+    outside.style.visibility = 'hidden';
+    outside.style.display = 'none';
+    document.getElementById('inside').style.visibility = 'visible';
+
+    document.getElementById('btn1').innerHTML = 'go back';
+    document.getElementById('btn2').innerHTML = 'Search the wheel barrow';
+    document.getElementById('btn3').innerHTML = 'Search the flower pot';
+    document.getElementById('btn4').innerHTML = 'Look under the welcome mat';
+    document.getElementById('btn5').innerHTML = 'Go into the shelter';
+    document.getElementById('btn6').innerHTML = 'Go back to warehouse';
+    document.getElementById('btn7').innerHTML = 'Wait';
 }
 
 //Allows the user to interact with the wheel barrow
