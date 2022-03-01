@@ -18,6 +18,16 @@ const dialogue = {
 		choices: ["Enter the cabin", "Choice 2", "Choice 3"],
 		callback: outsideInitialCallback,
 	},
+	firstVisitInside: {
+		text: "INSIDE CABIN",
+		choices: ["Leave the cabin", "Choice 2", "Choice 3", "Choice 4", "Choice 5", "Choice 6"],
+		callback: insideInitialCallback,
+	},
+	revisitInside: {
+		text: "INSIDE CABIN",
+		choices: ["Leave the cabin", "Choice 2", "Choice 3", "Choice 4", "Choice 5", "Choice 6"],
+		callback: insideInitialCallback,
+	},
 };
 
 const dialogueHunter = {
@@ -29,6 +39,7 @@ const dialogueHunter = {
 		choices: dialogue.firstVisitOutside.choices,
 		callback: outsideInitialCallback,
 	},
+	//firstVisitInside: {},
 };
 
 const dialogueMechanic = {};
@@ -47,29 +58,51 @@ async function main() {
 	// In the meantime,
 	profession = profHunter;
 
-	// Do stuff
+	let eventData;
 	let hasVisitedCabin = getStorage("hasVisitedCabin");
 	if (!hasVisitedCabin) {
 		// First time visiting cabin
 
-		// Remember that the user has now visited the cabin
-		// TODO: This counts the user as revisiting the cabin if they just refresh the page. I don't know if this is actually an issue, but maybe only set this value when leaving?
-		//setStorage("hasVisitedCabin");
-
-		let eventData = getEventData("firstVisitOutside");
-		print(eventData.text);
-		setChoices(eventData);
+		eventData = getEventData("firstVisitOutside");
 	} else {
 		// Already visited cabin
-		let eventData = getEventData("revisitOutside");
-		print(eventData.text);
-		setChoices(eventData);
+		eventData = getEventData("revisitOutside");
 	}
+	print(eventData.text);
+	setChoices(eventData);
 }
 
 async function outsideInitialCallback(event) {
 	let index = callbackToIndex(event);
-	print(`${index}: ${dialogue.firstVisitOutside.choices[index]}`);
+
+	switch (index) {
+		case 0:
+			// Enter the cabin
+			enterCabin();
+			break;
+	}
+}
+
+async function insideInitialCallback(event) {
+	let index = callbackToIndex(event);
+	print(`${index}: ${dialogue.firstVisitInside.choices[index]}`);
+}
+
+async function enterCabin() {
+	let imgLocation = getDOM("imgLocation");
+	imgLocation.src = "assets/images/cabin-inside.webp";
+
+	let eventData;
+	let hasVisitedCabin = getStorage("hasVisitedCabin");
+	if (!hasVisitedCabin) {
+		// Remember that the user has now visited the cabin
+		// TODO: This counts the user as revisiting the cabin if they just refresh the page. I don't know if this is actually an issue, but maybe only set this value when leaving?
+		//setStorage("hasVisitedCabin");
+		eventData = getEventData("firstVisitInside");
+	} else {
+	}
+	print(eventData.text);
+	setChoices(eventData);
 }
 
 /**
@@ -126,7 +159,7 @@ async function setChoices(eventData) {
 }
 
 function callbackToIndex(event) {
-	return event.target.name;
+	return parseInt(event.target.name);
 }
 
 /**
