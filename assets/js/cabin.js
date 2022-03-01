@@ -36,12 +36,12 @@ async function main() {
 
 		// Hunter has unique text for visiting the cabin as per script
 		if (profession === "Hunter") print(dialogueHunter.firstVisit);
-		else print(dialogue.revisit);
+		else print(dialogue.firstVisit);
 
 		setChoices(["Choice 1", "Choice 2", "Choice 3"]);
 	} else {
 		// Already visited cabin
-		print(dialogue.firstVisit);
+		print(dialogue.revisit);
 	}
 }
 
