@@ -42,62 +42,57 @@ function outsideInteraction_1() {
         if (profession == "Hunter") {
             // sets accessButton to false. This prevents the user from interacting with anything else for the time being
             accessButton = false;
-            document.getElementById('DialogueDisplay').innerHTML = HospitalHunter[0] +
-            '<br> <a onclick="OutInteraction_1_Result()"><strong>Yes</strong></a>' +
-            ' or <a onclick="OutInteraction_1_Result()"><strong>No</strong></a>';
+            document.getElementById('DialogueDisplay').innerHTML = HospitalHunter[0];
         }
 
         // If the player's chosen profession is the "War Veteran", this code executes
         else if (profession == "WarVeteran") {
             // sets accessButton to false. This prevents the user from interacting with anything else for the time being
             accessButton = false;
-            document.getElementById('DialogueDisplay').innerHTML = HospitalWarVeteran[0] +
-            '<br> <a id="Yes" onclick="OutInteraction_1_Result()"><strong>Yes</strong></a>' +
-            ' or <a id="No" onclick="OutInteraction_1_Result()"><strong>No</strong></a>';
+            document.getElementById('DialogueDisplay').innerHTML = HospitalWarVeteran[0];
         }
 
         // If the player's chosen profession is the "Priest", this code executes
         else if (profession == "Priest") {
             // sets accessButton to false. This prevents the user from interacting with anything else for the time being
             accessButton = false;
-            document.getElementById('DialogueDisplay').innerHTML = HospitalPriest[0] +
-            '<br> <a onclick="OutInteraction_1_Result()"><strong>Yes</strong></a>' +
-            ' or <a onclick="OutInteraction_1_Result()"><strong>No</strong></a>';
+            document.getElementById('DialogueDisplay').innerHTML = HospitalPriest[0];
         }
 
         // If the player's chosen profession is the "Doctor", this code executes
         else if (profession == "Doctor") {
             // sets accessButton to false. This prevents the user from interacting with anything else for the time being
             accessButton = false;
-            document.getElementById('DialogueDisplay').innerHTML = HospitalDoctor[0] +
-            '<br> <a onclick="OutInteraction_1_Result()"><strong>Yes</strong></a>' +
-            ' or <a onclick="OutInteraction_1_Result()"><strong>No</strong></a>';
+            document.getElementById('DialogueDisplay').innerHTML = HospitalDoctor[0];
         }
 
         // If the player's chosen profession is the "Mechanic", this code executes
         else if (profession == "Mechanic") {
             // sets accessButton to false. This prevents the user from interacting with anything else for the time being
             accessButton = false;
-            document.getElementById('DialogueDisplay').innerHTML = HospitalMechanic[0] + 
-            '<br> <a onclick="OutInteraction_1_Result()"><strong>Yes</strong></a>' +
-            ' or <a onclick="OutInteraction_1_Result()"><strong>No</strong></a>';
+            document.getElementById('DialogueDisplay').innerHTML = HospitalMechanic[0];
         }
+
+        document.getElementById('DialogueDisplay').innerHTML +=
+            '<br> <a class="link" onclick="OutInteraction_1_Result1()"><strong>Yes</strong></a>' +
+            ' or <a class="link" onclick="OutInteraction_1_Result2()"><strong>No</strong></a>';
     }
 }
 
-// Result of the player's choice on taking the First Aid kits
-function OutInteraction_1_Result() {
-    if (document.getElementById('Yes')){
-        accessButton = true;
-        document.getElementById('DialogueDisplay').innerHTML += "<br> You took the Firs Aid kits.";
-    }
-    else if (document.getElementById('No')){
-        accessButton = true;
-        document.getElementById('DialogueDisplay').innerHTML += "<br> You did not take the Firs Aid kits.";
-    }
-    document.getElementById('DialogueDisplay').innerHTML += ' <a href="Hospital_Outside.html"><strong>Return</strong></a>';
-    
 
+// Result of the player taking the First Aid kit
+function OutInteraction_1_Result1() {
+    accessButton = true;
+    document.getElementById('DialogueDisplay').innerHTML += "<br> You took the First Aid kits.";
+    document.getElementById('DialogueDisplay').innerHTML += ' <a class="link" href="Hospital_Outside.html"><strong>Return</strong></a>';
+}
+
+
+// Result of the player not taking the First Aid kit
+function OutInteraction_1_Result2() {
+    accessButton = true;
+    document.getElementById('DialogueDisplay').innerHTML += "<br> You did not take the First Aid kits.";
+    document.getElementById('DialogueDisplay').innerHTML += ' <a class="link" href="Hospital_Outside.html"><strong>Return</strong></a>';
 }
 
 // Allows the player to interact with the abandoned Campfire
@@ -106,24 +101,26 @@ function outsideInteraction_2() {
     if (accessButton == true) {
         // sets accessButton to false. This prevents the user from interacting with anything else for the time being
         accessButton = false;
-        document.getElementById('DialogueDisplay').innerHTML = "Hello";
+        document.getElementById('DialogueDisplay').innerHTML = 
+            '<br> <a class="link" onclick="OutInteraction_2_Result1()"><strong>Yes</strong></a>' +
+            ' or <a class="link" onclick="OutInteraction_2_Result2()"><strong>No</strong></a>';
     }
 }
 
 
-// Result of the player's choice on taking the wood
-function OutInteraction_2_Result() {
-    if (document.getElementById('Yes')){
-        accessButton = true;
-        document.getElementById('DialogueDisplay').innerHTML += "<br> You took the Firs wood for barricading.";
-    }
-    else if (document.getElementById('No')){
-        accessButton = true;
-        document.getElementById('DialogueDisplay').innerHTML += "<br> You did not take the wood.";
-    }
-    document.getElementById('DialogueDisplay').innerHTML += ' <a href="Hospital_Outside.html"><strong>Return</strong></a>';
-    
+// Result of the player taking the wood
+function OutInteraction_2_Result1() {
+    accessButton = true;
+    document.getElementById('DialogueDisplay').innerHTML += "<br> You took the Fire wood for barricading.";
+    document.getElementById('DialogueDisplay').innerHTML += ' <a class="link" href="Hospital_Outside.html"><strong>Return</strong></a>';
+}
 
+
+// Result of the player not taking the wood
+function OutInteraction_2_Result2() {
+    accessButton = true;
+    document.getElementById('DialogueDisplay').innerHTML += "<br> You did not take the wood.";
+    document.getElementById('DialogueDisplay').innerHTML += ' <a class="link" href="Hospital_Outside.html"><strong>Return</strong></a>';
 }
 
 
