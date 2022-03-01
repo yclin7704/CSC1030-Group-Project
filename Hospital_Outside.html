@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<script src="assets/js/Hospital.js"></script>
 	</head>
-	<body onload="loadDialogue()">
+	<body onload="loadDialogueOutside()">
 		<div class="wrapper">
 			<div class="row">
 				<!-- Column 1: Map and inventory -->
@@ -26,7 +26,6 @@
 
 				<!-- Column 3: Buttons -->
 				<div class="col col3">
-                    <!-- Allows the User to enter the Hospital by loading up Hopital_Inside html file -->
 					<button class="buttonChoice" onclick="goInsideHospital()">Go Inside the Hospital</button>
 					<button class="buttonChoice" onclick="outsideInteraction_1()">Check out First Aid Kits</button>
 					<button class="buttonChoice" onclick="outsideInteraction_2()">Check out the Campfire</button>

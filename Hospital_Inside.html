@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<script src="assets/js/Hospital.js"></script>
 	</head>
-	<body>
+	<body onload="loadDialogueInside()">
 		<div class="wrapper">
 			<div class="row">
 				<!-- Column 1: Map and inventory -->
@@ -26,10 +26,9 @@
 
 				<!-- Column 3: Buttons -->
 				<div class="col col3">
-                    <!-- Allows the User to return to outside the Hospital by loading up Hopital_Outside html file -->
-					<button class="buttonChoice" onclick="window.location.href='Hospital_Outside.html'"/>Return Outside</button>
-					<button class="buttonChoice">Button</button>
-					<button class="buttonChoice">Button</button>
+					<button class="buttonChoice" onclick="goOutsideHospital()">Return to the outside of the Hospital</button>
+					<button class="buttonChoice" onclick="insideInteraction_1()">Check out the dangerous weapon</button>
+					<button class="buttonChoice" onclick="insideInteraction_2()">Check out the Electric Blanket</button>
 					<button class="buttonChoice" onclick="wait()">Wait</button>
 					<button class="buttonChoice">Return to the Abandoned Warehouse</button>
 				</div>
@@ -38,10 +37,7 @@
 			<!-- Bottom: Dialogue box -->
 			<div class="dialogueOuter" style="background-color: rgb(48, 46, 46);">
 				<div class="dialogue" id="dialogue" style="height: 90%;">
-                    <div class="textBox centeredText">
-                        You decided to enter the abandoned Hospital which, upon entering, is much more decrepit than you first
-                        thought. There are broken walls, leaking pipes, water dripping from almost every ceiling and blood on the 
-                        walls, only fuelling your fear of what could be lurking amongst the rooms of the Hospital...
+                    <div id="DialogueDisplay2" class="textBox centeredText">
                     </div>
 				</div>
 			</div>

@@ -24,22 +24,28 @@ const HospitalMechanic = ["As a professional mechanic you believe that the first
 
 
 // Contains general dialogue to be displayed to the player
-const HospitalDialogue = ["You arrive at a Hospital, and judging by its ancient and run-down appearance it's likely that it's been abandoned for at least 17 years. Although you feel the need to turn away, curiosity and the concern for what might be waiting for you in the forest beckons you closer to the collosal building, and as you approach it, the air gets colder around you...<br>Around you, you see some <strong>worn-down first aid kits</strong> and <strong>an abandoned campfire</strong>"];
+const HospitalDialogue = ["You arrive at a Hospital, and judging by its ancient and run-down appearance it's likely that it's been abandoned for at least 17 years. Although you feel the need to turn away, curiosity and the concern for what might be waiting for you in the forest beckons you closer to the collosal building, and as you approach it, the air gets colder around you...<br>Around you, you see some <strong>worn-down first aid kits</strong> and <strong>an abandoned campfire</strong>"
+    , "You return to the outside of the Hospital, the air colder than it was than when you first arrived, yet you still feel as if you have unfinished business...<br>Around you, you still see some <strong>worn-down first aid kits</strong> and <strong>an abandoned campfire</strong>"
+    , "You decided to enter the abandoned Hospital which, upon entering, is much more decrepit than you first thought. There are broken walls, leaking pipes, water dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking amongst the rooms of the Hospital..."];
 
 
 const profession = "WarVeteran"  // Stores the profession (FOR TESTING)
 var accessButton = true;         // checks to see if players are interacting with items
 var waits = 0;                   // Number of times the player has waited
+var visitedOutside = false;      // Checks to see if the player has visited the outside of the Hospital already (DON'T KNOW HOW TO USE EFFICIENTLY YET)
 
 
 
 
-
-// loas the correct dialogue specific to the type of visit
-function loadDialogue() {
+// loads the correct dialogue specific to the outside of the Hospital
+function loadDialogueOutside() {
     document.getElementById('DialogueDisplay').innerHTML = HospitalDialogue[0];
 }
 
+// loads the correct dialogue specific to the inside of the Hospital
+function loadDialogueInside() {
+    document.getElementById('DialogueDisplay2').innerHTML = HospitalDialogue[2];
+}
 
 
 
@@ -50,6 +56,15 @@ function goInsideHospital() {
     if (accessButton == true) {
         // If the player isn't interacting with anything, then they can go inside the Hospital
         window.location.href = "Hospital_Inside.html";
+    }
+}
+
+// Allows the player to go outside the Hospital
+function goOutsideHospital() {
+    // Checks to see if the user isn't already interacting with something else
+    if (accessButton == true) {
+        // If the player isn't interacting with anything, then they can go inside the Hospital
+        window.location.href = "Hospital_Outside.html";
     }
 }
 
@@ -168,6 +183,51 @@ function OutInteraction_2_Result1() {
 function OutInteraction_2_Result2() {
     accessButton = true;
     document.getElementById('DialogueDisplay').innerHTML += "<br> You did not take the Fire Wood.";
+    document.getElementById('DialogueDisplay').innerHTML += ' <a class="link" href="Hospital_Outside.html"><strong>Return</strong></a>';
+}
+
+
+
+
+
+// Allows the player to interact with the Dangerous Item (weapon)
+function insideInteraction_1() {
+    document.getElementById('DialogueDisplay2').innerHTML = "Hello";
+}
+
+// Result of the player taking the Dangerous Item (weapon)
+function inInteraction_1_Result1() {
+    accessButton = true;
+    document.getElementById('DialogueDisplay').innerHTML += "<br> You took the Dangerous Item.";
+    document.getElementById('DialogueDisplay').innerHTML += ' <a class="link" href="Hospital_Outside.html"><strong>Return</strong></a>';
+}
+
+// Result of the player not taking the Dangerous Item (weapon)
+function inInteraction_1_Result2() {
+    accessButton = true;
+    document.getElementById('DialogueDisplay').innerHTML += "<br> You did not take the Dangerous Item.";
+    document.getElementById('DialogueDisplay').innerHTML += ' <a class="link" href="Hospital_Outside.html"><strong>Return</strong></a>';
+}
+
+
+
+
+// Allows the player to interact with the Electric Blanket
+function insideInteraction_2() {
+    document.getElementById('DialogueDisplay2').innerHTML = "There";
+}
+
+// Result of the player taking the Electric Blanket
+function inInteraction_2_Result1() {
+    accessButton = true;
+    document.getElementById('DialogueDisplay').innerHTML += "<br> You took the Electric Blanket";
+    document.getElementById('DialogueDisplay').innerHTML += ' <a class="link" href="Hospital_Outside.html"><strong>Return</strong></a>';
+}
+
+// Result of the player not taking the Electric Blanket
+function inInteraction_2_Result1() {
+    accessButton = true;
+    document.getElementById('DialogueDisplay').innerHTML += "<br> You did not take the Electric Blanket.";
     document.getElementById('DialogueDisplay').innerHTML += ' <a class="link" href="Hospital_Outside.html"><strong>Return</strong></a>';
 }
 
