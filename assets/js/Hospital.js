@@ -139,11 +139,16 @@ function OutInteraction_2_Result2() {
 // Allows the player to just sit and wait (Up to a max of 5 times)
 function wait(){
     const MAX_WAITS = 5;
-    // Checks to see if the user isn't already interacting with something else
+    /* Checks to see if the player isn't already interacting with something else
+       and also checks to ensure the number of waits is less than the max waits.
+    */
     if (accessButton == true && waits < MAX_WAITS) {
         alert("You waited");
         waits += 1;
     }
+    /* Checks to see if the player isn't already interacting with something else
+       and also checks to see if the number of waits executed equals the max waits.
+    */
     else if (accessButton == true && waits == MAX_WAITS) {
         alert("You can no longer wait.");
         alert("You died");
