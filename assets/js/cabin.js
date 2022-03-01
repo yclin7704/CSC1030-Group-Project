@@ -10,12 +10,12 @@ const dialogue = {
 	firstVisitOutside: {
 		text: `Following the path deeper into the dark woods, you stumble across a lone cabin. There appears to have been signs of a struggle, 
                 and it seems there are still zombies nearby. What happened here?`,
-		choices: ["Choice 1", "Choice 2", "Choice 3"],
+		choices: ["Enter the cabin", "Choice 2", "Choice 3"],
 		callback: outsideInitialCallback,
 	},
 	revisitOutside: {
 		text: "You return to the cabin. TODO: Mention time of day or current state or something?",
-		choices: ["Choice 1", "Choice 2", "Choice 3"],
+		choices: ["Enter the cabin", "Choice 2", "Choice 3"],
 		callback: outsideInitialCallback,
 	},
 };
@@ -26,7 +26,7 @@ const dialogueHunter = {
 		text: `Following the path you've treaded so many times before, you find yourself outside your cabin in the woods once again. 
                 You can still see signs of zombies nearby, and the window of the cabin is smashed.
                 TODO Something about things aren't looking good for the rest of your family`,
-		choices: ["Choice 1", "Choice 2", "Choice 3"],
+		choices: ["Enter the cabin", "Choice 2", "Choice 3"],
 		callback: outsideInitialCallback,
 	},
 };
@@ -45,7 +45,7 @@ const dialoguePriest = {};
 async function main() {
 	// profession = getStorage("profession"); TODO: Or wherever we decide to store the player's profession
 	// In the meantime,
-	profession = profDoctor;
+	profession = profHunter;
 
 	// Do stuff
 	let hasVisitedCabin = getStorage("hasVisitedCabin");
@@ -57,9 +57,7 @@ async function main() {
 		//setStorage("hasVisitedCabin");
 
 		let eventData = getEventData("firstVisitOutside");
-		console.log(eventData);
 		print(eventData.text);
-
 		setChoices(eventData);
 	} else {
 		// Already visited cabin
@@ -72,8 +70,15 @@ async function outsideInitialCallback(event) {
 	console.log(event.target.name);
 }
 
+/**
+ * Get data related to the given event, taking the current profession into account
+ * @param {string} eventName The name of the event
+ * @returns The event's data
+ */
 function getEventData(eventName) {
 	let profData;
+
+	// Get all event data for the current profession
 	switch (profession) {
 		case profHunter:
 			profData = dialogueHunter;
@@ -92,9 +97,12 @@ function getEventData(eventName) {
 			break;
 	}
 
+	// Try to get data for the given event for the specific profession
 	let eventData = profData[eventName];
 
+	// If it exists, return it
 	if (eventData) return eventData;
+	// Otherwise, fall back to the generic data for the event
 	else return dialogue[eventName];
 }
 
@@ -102,6 +110,7 @@ async function setChoices(eventData) {
 	// TODO: This can probably be done in a better way
 	// TODO: Disable already done actions
 	const choiceDiv = getDOM("divChoices");
+	// Clear previous options
 	choiceDiv.innerHTML = "";
 
 	for (let i = 0; i < eventData.choices.length; i++) {
@@ -119,19 +128,38 @@ async function choiceCallback(event) {
 	console.log(event);
 }
 
+/**
+ * Get the value stored under the given key in localStorage
+ * @param {string} key The key to search for
+ * @returns The value, if found
+ */
 function getStorage(key) {
 	return window.localStorage.getItem(key);
 }
 
+/**
+ * Store the given value under the given key in localStorage
+ * @param {string} key The key to store the data under
+ * @param {*} value The value to be stored
+ */
 function setStorage(key, value = 1) {
 	window.localStorage.setItem(key, value);
 }
 
+/**
+ * Display the given dialogue to the user
+ * @param {string} text The text to display
+ */
 async function print(text) {
 	let dialogueBox = getDOM("dialogue");
 	dialogueBox.innerHTML = text;
 }
 
+/**
+ * Get the element from the page with the given ID
+ * @param {string} id The ID of the element to be fetched
+ * @returns The element, if found
+ */
 function getDOM(id) {
 	return document.getElementById(id);
 }
