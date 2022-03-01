@@ -26,7 +26,7 @@ const dialogueHunter = {
 		text: `Following the path you've treaded so many times before, you find yourself outside your cabin in the woods once again. 
                 You can still see signs of zombies nearby, and the window of the cabin is smashed.
                 TODO Something about things aren't looking good for the rest of your family`,
-		choices: ["Enter the cabin", "Choice 2", "Choice 3"],
+		choices: dialogue.firstVisitOutside.choices,
 		callback: outsideInitialCallback,
 	},
 };
@@ -63,11 +63,13 @@ async function main() {
 		// Already visited cabin
 		let eventData = getEventData("revisitOutside");
 		print(eventData.text);
+		setChoices(eventData);
 	}
 }
 
 async function outsideInitialCallback(event) {
-	console.log(event.target.name);
+	let index = callbackToIndex(event);
+	print(`${index}: ${dialogue.firstVisitOutside.choices[index]}`);
 }
 
 /**
@@ -116,16 +118,15 @@ async function setChoices(eventData) {
 	for (let i = 0; i < eventData.choices.length; i++) {
 		let btn = document.createElement("button");
 		btn.name = i;
-		// TODO Do something with eventData.callback
 		btn.innerHTML = eventData.choices[i];
 		btn.classList = ["buttonChoice"];
-		btn.onclick = choiceCallback;
+		btn.onclick = eventData.callback;
 		choiceDiv.appendChild(btn);
 	}
 }
 
-async function choiceCallback(event) {
-	console.log(event);
+function callbackToIndex(event) {
+	return event.target.name;
 }
 
 /**
