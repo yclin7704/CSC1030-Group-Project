@@ -18,9 +18,19 @@ const HospitalDoctor = ["As a trained Doctor you have used first aid kits numero
 const HospitalMechanic = ["As a professional mechanic you believe that the first aid kit might be a useless item to carry with you as you believe that parts to fix the car might be more beneficial to have on you. Do you take the first aid kits?"];
 
 
+// Contains general dialogue to be displayed to the player
+const HospitalDialogue = ["You arrive at a Hospital, and judging by its ancient and run-down appearance it's likely that it's been abandoned for at least 17 years. Although you feel the need to turn away, curiosity and the concern for what might be waiting for you in the forest beckons you closer to the collosal building, and as you approach it, the air gets colder around you...<br>Around you, you see some <strong>worn-down first aid kits</strong> and <strong>an abandoned campfire</strong>"];
+
+
 const profession = "WarVeteran"  // Stores the profession (FOR TESTING)
-var accessButton = true;       // checks to see if players are interacting with items
-var waits = 0;                 // Number of times the player has waited
+var accessButton = true;         // checks to see if players are interacting with items
+var waits = 0;                   // Number of times the player has waited
+
+
+// loas the correct dialogue specific to the type of visit
+function loadDialogue() {
+    document.getElementById('DialogueDisplay').innerHTML = HospitalDialogue[0];
+}
 
 
 // Allows the player to go inside the Hospital
