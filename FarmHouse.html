@@ -7,8 +7,9 @@
 		<meta name="description" content="Last Stand Text Adventure" />
 
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<script src="assets/js/farmHouse.js"></script>
 	</head>
-	<body>
+	<body onload="loadFarm();">
 		<div class="wrapper">
 			<div class="row">
 				<!-- Column 1: Map and inventory -->
@@ -16,44 +17,40 @@
 					<div class="map">
 						<img src="assets/images/map.png" />
 					</div>
-					<div class="inventory"></div>
+					<div class="inventory">
+
+					</div>
 				</div>
 
 				<!-- Column 2: Image -->
 				<div class="col col2">
-					<div id="outside">
-                        <img src="assets/images/farm-house-outside.jpg" alt="Outside of farm house"/>
+					<div id="outside" style="visibility: hidden;">
+                        <img src="assets/images/farm-house-outside.jpg" alt="Outside of farm house" style="height: 600px;"/>
                     </div>
-					<div id="inside">
+					<div id="inside" style="visibility: hidden;">
 						<img src="assets/images/farm-house-inside.jpg" alt="Inside of farm house"/>
 					</div>
-					<div id="bedroom">
+					<div id="bedroom" style="visibility: hidden;">
 						<img src="assets/images/farm-house-bedroom.jpg" alt="Bedroom of farm houes"/>
 					</div>
 				</div>
 
 				<!-- Column 3: Buttons -->
 				<div class="col col3">
-					<button>Button</button>
-					<button>Button</button>
-					<button>Button</button>
-					<button>Button</button>
-					<button>Button</button>
+					<button class="buttonChoice" id="btn1"></button>
+					<button class="buttonChoice" id="btn2"></button>
+					<button class="buttonChoice" id="btn3"></button>
+					<button class="buttonChoice" id="btn4"></button>
+					<button class="buttonChoice" id="btn5"></button>
+					<button class="buttonChoice" id="btn6"></button>
+					<button class="buttonChoice" id="btn7"></button>
 				</div>
 			</div>
 
 			<!-- Bottom: Dialogue box -->
 			<div class="dialogueOuter">
-				<div class="dialogue" id="dialogue">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-					et dolore magna aliqua. Nunc congue nisi vitae suscipit tellus mauris a diam maecenas. Vitae et leo
-					duis ut diam quam nulla porttitor. In cursus turpis massa tincidunt dui. Consequat mauris nunc
-					congue nisi vitae suscipit tellus. Et malesuada fames ac turpis egestas integer eget aliquet.
-					Venenatis lectus magna fringilla urna porttitor rhoncus. Commodo quis imperdiet massa tincidunt nunc
-					pulvinar. Sollicitudin ac orci phasellus egestas tellus rutrum. <br />
-					<span class="handwritten">
-						And to follow here's some text using Reenie Beanie. How does it look?
-					</span>
+				<div class="dialogue textBox centeredText" id="dialogue">
+					
 				</div>
 			</div>
 		</div>
