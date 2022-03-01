@@ -42,6 +42,7 @@ function goInsideHospital() {
     }
 }
 
+
 // Allows the player to interact with the First Aid kits
 function outsideInteraction_1() {
 
@@ -104,6 +105,7 @@ function OutInteraction_1_Result2() {
     document.getElementById('DialogueDisplay').innerHTML += "<br> You did not take the First Aid kits.";
     document.getElementById('DialogueDisplay').innerHTML += ' <a class="link" href="Hospital_Outside.html"><strong>Return</strong></a>';
 }
+
 
 // Allows the player to interact with the abandoned Campfire
 function outsideInteraction_2() {
