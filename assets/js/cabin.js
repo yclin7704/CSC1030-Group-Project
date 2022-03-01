@@ -28,6 +28,11 @@ const dialogue = {
 		choices: ["Leave the cabin", "Choice 2", "Choice 3", "Choice 4", "Choice 5", "Choice 6"],
 		callback: insideInitialCallback,
 	},
+	firstLeaveCabin: {
+		text: "LEAVE CABIN",
+		choices: ["Enter the cabin", "Choice 2", "Choice 3"],
+		callback: outsideInitialCallback,
+	},
 };
 
 const dialogueHunter = {
@@ -85,7 +90,13 @@ async function outsideInitialCallback(event) {
 
 async function insideInitialCallback(event) {
 	let index = callbackToIndex(event);
-	print(`${index}: ${dialogue.firstVisitInside.choices[index]}`);
+
+	switch (index) {
+		case 0:
+			// Leave the cabin
+			leaveCabin();
+			break;
+	}
 }
 
 async function enterCabin() {
@@ -93,14 +104,29 @@ async function enterCabin() {
 	imgLocation.src = "assets/images/cabin-inside.webp";
 
 	let eventData;
+
+	let hasVisitedCabin = getStorage("hasVisitedCabin");
+	if (!hasVisitedCabin) eventData = getEventData("firstVisitInside");
+	else eventData = getEventData("revisitInside");
+
+	print(eventData.text);
+	setChoices(eventData);
+}
+
+async function leaveCabin() {
+	let imgLocation = getDOM("imgLocation");
+	imgLocation.src = "assets/images/cabin-outside.webp";
+
+	let eventData;
+
 	let hasVisitedCabin = getStorage("hasVisitedCabin");
 	if (!hasVisitedCabin) {
 		// Remember that the user has now visited the cabin
 		// TODO: This counts the user as revisiting the cabin if they just refresh the page. I don't know if this is actually an issue, but maybe only set this value when leaving?
 		//setStorage("hasVisitedCabin");
-		eventData = getEventData("firstVisitInside");
-	} else {
-	}
+		eventData = getEventData("firstLeaveCabin");
+	} else eventData = getEventData("leaveCabin");
+
 	print(eventData.text);
 	setChoices(eventData);
 }
