@@ -1,24 +1,24 @@
 // Contains the dialogue specific for Hunters
-var HospitalHunter = ["As a Hunter you have never had to rely on first aid kits in the wild before. Therefore you are not confident in whether or not you can properly salvage the first aid kits to get their benefits. Do you take the first aid kits?"];
+const HospitalHunter = ["As a Hunter you have never had to rely on first aid kits in the wild before. Therefore you are not confident in whether or not you can properly salvage the first aid kits to get their benefits. Do you take the first aid kits?"];
 
 
 // Contains the dialogue specific for War Veterans
-var HospitalWarVeteran = ["As a War Veteran, you are very familiar with first aid kits, as you have used plenty on the battlefield in order to help your fellow soldiers who were injured. Therefore, you believe that you could make good use of them. Do you take the first aid kits?"];
+const HospitalWarVeteran = ["As a War Veteran, you are very familiar with first aid kits, as you have used plenty on the battlefield in order to help your fellow soldiers who were injured. Therefore, you believe that you could make good use of them. Do you take the first aid kits?"];
 
 
 // Contains the dialogue specific for Priests
-var HospitalPriest = ["As a priest you believe that you don't require the first aid kits because your faith will protect you, but you have some doubts...Do you take the first aid kits?"];
+const HospitalPriest = ["As a priest you believe that you don't require the first aid kits because your faith will protect you, but you have some doubts...Do you take the first aid kits?"];
 
 
 // Contains the dialogue specific for Doctors
-var HospitalDoctor = ["As a trained Doctor you have used first aid kits numerous times in the past. Therefore, you believe that you would be able to salvage the first aid kits properly in order to get the full benefits of them. Do you take the first aid kits?"];
+const HospitalDoctor = ["As a trained Doctor you have used first aid kits numerous times in the past. Therefore, you believe that you would be able to salvage the first aid kits properly in order to get the full benefits of them. Do you take the first aid kits?"];
 
 
 // Contains the dialogue specific for Mechanics
-var HospitalMechanic = ["As a professional mechanic you believe that the first aid kit might be a useless item to carry with you as you believe that parts to fix the car might be more beneficial to have on you. Do you take the first aid kits?"];
+const HospitalMechanic = ["As a professional mechanic you believe that the first aid kit might be a useless item to carry with you as you believe that parts to fix the car might be more beneficial to have on you. Do you take the first aid kits?"];
 
 
-var profession = "WarVeteran"  // Stores the profession (FOR TESTING)
+const profession = "WarVeteran"  // Stores the profession (FOR TESTING)
 var accessButton = true;       // checks to see if players are interacting with items
 var waits = 0;                 // Number of times the player has waited
 
