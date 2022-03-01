@@ -7,16 +7,37 @@ const profVeteran = "Veteran";
 const profPriest = "Priest";
 
 const dialogue = {
-	firstVisit: `Following the path into the dark woods, you stumble across a lone cabin. There appears to have been signs of a struggle,
-    and it seems there are still zombies nearby. What happened here?`,
-	revisit: "You return to the cabin. TODO: Mention time of day or current state or something?",
+	firstVisitOutside: {
+		text: `Following the path deeper into the dark woods, you stumble across a lone cabin. There appears to have been signs of a struggle, 
+                and it seems there are still zombies nearby. What happened here?`,
+		choices: ["Choice 1", "Choice 2", "Choice 3"],
+		callback: outsideInitialCallback,
+	},
+	revisitOutside: {
+		text: "You return to the cabin. TODO: Mention time of day or current state or something?",
+		choices: ["Choice 1", "Choice 2", "Choice 3"],
+		callback: outsideInitialCallback,
+	},
 };
 
 const dialogueHunter = {
-	firstVisit: `Following the path you've treaded so many times before, you find yourself outside your cabin in the woods once again. 
+	// Hunter has unique text for visiting the cabin as per script
+	firstVisitOutside: {
+		text: `Following the path you've treaded so many times before, you find yourself outside your cabin in the woods once again. 
                 You can still see signs of zombies nearby, and the window of the cabin is smashed.
                 TODO Something about things aren't looking good for the rest of your family`,
+		choices: ["Choice 1", "Choice 2", "Choice 3"],
+		callback: outsideInitialCallback,
+	},
 };
+
+const dialogueMechanic = {};
+
+const dialogueDoctor = {};
+
+const dialogueVeteran = {};
+
+const dialoguePriest = {};
 
 /**
  * Main function
@@ -24,7 +45,7 @@ const dialogueHunter = {
 async function main() {
 	// profession = getStorage("profession"); TODO: Or wherever we decide to store the player's profession
 	// In the meantime,
-	profession = "Hunter";
+	profession = profDoctor;
 
 	// Do stuff
 	let hasVisitedCabin = getStorage("hasVisitedCabin");
@@ -32,27 +53,62 @@ async function main() {
 		// First time visiting cabin
 
 		// Remember that the user has now visited the cabin
-		setStorage("hasVisitedCabin");
+		// TODO: This counts the user as revisiting the cabin if they just refresh the page. I don't know if this is actually an issue, but maybe only set this value when leaving?
+		//setStorage("hasVisitedCabin");
 
-		// Hunter has unique text for visiting the cabin as per script
-		if (profession === "Hunter") print(dialogueHunter.firstVisit);
-		else print(dialogue.firstVisit);
+		let eventData = getEventData("firstVisitOutside");
+		console.log(eventData);
+		print(eventData.text);
 
-		setChoices(["Choice 1", "Choice 2", "Choice 3"]);
+		setChoices(eventData);
 	} else {
 		// Already visited cabin
-		print(dialogue.revisit);
+		let eventData = getEventData("revisitOutside");
+		print(eventData.text);
 	}
 }
 
-async function setChoices(choices) {
+async function outsideInitialCallback(event) {
+	console.log(event.target.name);
+}
+
+function getEventData(eventName) {
+	let profData;
+	switch (profession) {
+		case profHunter:
+			profData = dialogueHunter;
+			break;
+		case profMechanic:
+			profData = dialogueMechanic;
+			break;
+		case profDoctor:
+			profData = dialogueDoctor;
+			break;
+		case profVeteran:
+			profData = dialogueVeteran;
+			break;
+		case profPriest:
+			profData = dialoguePriest;
+			break;
+	}
+
+	let eventData = profData[eventName];
+
+	if (eventData) return eventData;
+	else return dialogue[eventName];
+}
+
+async function setChoices(eventData) {
 	// TODO: This can probably be done in a better way
+	// TODO: Disable already done actions
 	const choiceDiv = getDOM("divChoices");
 	choiceDiv.innerHTML = "";
-	for (let i = 0; i < choices.length; i++) {
+
+	for (let i = 0; i < eventData.choices.length; i++) {
 		let btn = document.createElement("button");
 		btn.name = i;
-		btn.innerHTML = choices[i];
+		// TODO Do something with eventData.callback
+		btn.innerHTML = eventData.choices[i];
 		btn.classList = ["buttonChoice"];
 		btn.onclick = choiceCallback;
 		choiceDiv.appendChild(btn);
@@ -60,7 +116,7 @@ async function setChoices(choices) {
 }
 
 async function choiceCallback(event) {
-	console.log(event.target.name);
+	console.log(event);
 }
 
 function getStorage(key) {
