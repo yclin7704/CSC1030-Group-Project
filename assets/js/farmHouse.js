@@ -18,7 +18,7 @@ function loadFarm(){
     //Putting starting dialogue
     document.getElementById('dialogue').innerHTML = farmDialogue[0];
 
-    //Putting values in the button
+    //Putting values in the buttons
     document.getElementById('btn1').innerHTML = 'Open the door';
     document.getElementById('btn2').innerHTML = 'Search the wheel barrow';
     document.getElementById('btn3').innerHTML = 'Search the flower pot';
@@ -28,7 +28,7 @@ function loadFarm(){
     document.getElementById('btn7').innerHTML = 'Wait';
     document.getElementById('outside').style.visibility = 'visible';
 
-    //Setting the function of the button
+    //Setting the function of the buttons
     document.getElementById('btn1').setAttribute('onClick', 'javascript: goInsideFarmHouse();');
 }
 
