@@ -6,7 +6,9 @@ const HospitalHunter = ["As a Hunter you have never had to rely on First Aid kit
     , "Hunter 5"
     , "Hunter 6"
     , "Hunter 7"
-    , "Hunter 8"];
+    , "Hunter 8"
+    , "Hunter 9"
+    , "Hunter 10"];
 
 
 // Contains the dialogue specific for War Veterans
@@ -17,7 +19,9 @@ const HospitalWarVeteran = ["As a War Veteran, you are very familiar with First 
     , "War Veteran 5"
     , "War Veteran 6"
     , "War Veteran 7"
-    , "War Veteran 8"];
+    , "War Veteran 8"
+    , "War Veteran 9"
+    , "War Veteran 10"];
 
 
 // Contains the dialogue specific for Priests
@@ -28,7 +32,9 @@ const HospitalPriest = ["As a priest you believe that you don't require the Firs
     , "Priest 5"
     , "Priest 6"
     , "Priest 7"
-    , "Priest 8"];
+    , "Priest 8"
+    , "Priest 9"
+    , "Priest 10"];
 
 
 // Contains the dialogue specific for Doctors
@@ -39,7 +45,9 @@ const HospitalDoctor = ["As a trained Doctor you have used First Aid kits numero
     , "Doctor 5"
     , "Doctor 6"
     , "Doctor 7"
-    , "Doctor 8"];
+    , "Doctor 8"
+    , "Doctor 9"
+    , "Doctor 10"];
 
 
 // Contains the dialogue specific for Mechanics
@@ -50,13 +58,15 @@ const HospitalMechanic = ["As a professional mechanic you believe that the First
     , "Mechanic 5"
     , "Mechanic 6"
     , "Mechanic 7"
-    , "Mechanic 8"];
+    , "Mechanic 8"
+    , "Mechanic 9"
+    , "Mechanic 10"];
 
 
 // Contains general dialogue to be displayed to the player
 const HospitalDialogue = ["You arrive at a Hospital, and judging by its ancient and run-down appearance it's likely that it's been abandoned for at least 17 years. Although you feel the need to turn away, curiosity and the concern for what might be waiting for you in the forest beckons you closer to the collosal building, and as you approach it, the air gets colder around you...<br>Around you, you see some <strong>worn-down First Aid kits</strong> and <strong>an abandoned campfire</strong>"
     , "You return to the outside of the Hospital, the air colder than it was than when you first arrived, yet you still feel as if you have unfinished business...<br>Around you, you still see some <strong>worn-down First Aid kits</strong> and <strong>an abandoned campfire</strong>"
-    , "You decided to enter the abandoned Hospital which, upon entering, is much more decrepit than you first thought. There are broken walls, leaking pipes, water dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking amongst the rooms of the Hospital..."];
+    , "You decided to enter the abandoned Hospital which, upon entering, is much more decrepit than you first thought. There are broken walls, leaking pipes, water dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking amongst the rooms of the Hospital...<br>As you look into each of the rooms you see a <strong>Bone Saw</strong>, an <strong>Electric Blanket</strong> and <strong>some fuel</strong>"];
 
 
 const profession = "Doctor"  // Stores the profession (FOR TESTING)
@@ -303,7 +313,7 @@ function InsideInteraction_1_Result1() {
         case "Mechanic": document.getElementById('DialogueDisplay2').innerHTML = HospitalMechanic[5]; break;
     }
 
-    document.getElementById('DialogueDisplay2').innerHTML += "<br> You took the Dangerous Item.";
+    document.getElementById('DialogueDisplay2').innerHTML += "<br><br><em><b> You took the Dangerous Item.</b></em>";
     document.getElementById('DialogueDisplay2').innerHTML += ' <a class="link" href="Hospital_Inside.html"><strong>Return</strong></a>';
 }
 
@@ -311,9 +321,10 @@ function InsideInteraction_1_Result1() {
 function InsideInteraction_1_Result2() {
     // Allows the player to access the other buttons again
     accessButton = true;
-    document.getElementById('DialogueDisplay2').innerHTML += "<br> You did not take the Dangerous Item.";
+    document.getElementById('DialogueDisplay2').innerHTML += "<br><br><em><b> You did not take the Dangerous Item.</b></em>";
     document.getElementById('DialogueDisplay2').innerHTML += ' <a class="link" href="Hospital_Inside.html"><strong>Return</strong></a>';
 }
+
 
 
 
@@ -375,7 +386,7 @@ function InsideInteraction_2_Result1() {
         case "Mechanic": document.getElementById('DialogueDisplay2').innerHTML = HospitalMechanic[7]; break;
     }
 
-    document.getElementById('DialogueDisplay2').innerHTML += "<br> You took the Electric Blanket";
+    document.getElementById('DialogueDisplay2').innerHTML += "<br><br><em><b> You took the Electric Blanket.</b></em>";
     document.getElementById('DialogueDisplay2').innerHTML += ' <a class="link" href="Hospital_Inside.html"><strong>Return</strong></a>';
 }
 
@@ -383,7 +394,80 @@ function InsideInteraction_2_Result1() {
 function InsideInteraction_2_Result2() {
     // Allows the player to access the other buttons again
     accessButton = true;
-    document.getElementById('DialogueDisplay2').innerHTML += "<br> You did not take the Electric Blanket.";
+    document.getElementById('DialogueDisplay2').innerHTML += "<br><br><em><b> You did not take the Electric Blanket.</b></em>";
+    document.getElementById('DialogueDisplay2').innerHTML += ' <a class="link" href="Hospital_Inside.html"><strong>Return</strong></a>';
+}
+
+
+
+
+
+// Allows the player to interact with the fuel (for the car?)
+function InsideInteraction_3() {
+
+    // Checks to see if the user isn't already interacting with something else
+    if (accessButton == true) {
+
+        // sets accessButton to false. This prevents the user from interacting with anything else for the time being
+        accessButton = false;
+
+        switch(profession) {
+            // If the player's chosen profession is the "Hunter", this code executes
+            case "Hunter": document.getElementById('DialogueDisplay2').innerHTML = HospitalHunter[8]; break;
+        
+            // If the player's chosen profession is the "War Veteran", this code executes
+            case "WarVeteran": document.getElementById('DialogueDisplay2').innerHTML = HospitalWarVeteran[8]; break;
+        
+            // If the player's chosen profession is the "Priest", this code executes
+            case "Priest": document.getElementById('DialogueDisplay2').innerHTML = HospitalPriest[8]; break;
+        
+            // If the player's chosen profession is the "Doctor", this code executes
+            case "Doctor": document.getElementById('DialogueDisplay2').innerHTML = HospitalDoctor[8]; break;
+        
+            // If the player's chosen profession is the "Mechanic", this code executes
+            case "Mechanic": document.getElementById('DialogueDisplay2').innerHTML = HospitalMechanic[8]; break;
+        }
+
+        // Gives the player the choice to either collect the Electric Blanket or not
+        document.getElementById('DialogueDisplay2').innerHTML +=
+            '<br> <a class="link" onclick="InsideInteraction_3_Result1()"><strong>Yes</strong></a>' +
+            ' or <a class="link" onclick="InsideInteraction_3_Result2()"><strong>No</strong></a>';
+    }
+}
+
+// Result of the player taking the fuel
+function InsideInteraction_3_Result1() {
+
+    // Allows the player to access the other buttons again
+    accessButton = true;
+
+    switch(profession) {
+        // If the player's chosen profession is the "Hunter", this code executes
+        case "Hunter": document.getElementById('DialogueDisplay2').innerHTML = HospitalHunter[9]; break;
+
+        // If the player's chosen profession is the "War Veteran", this code executes
+        case "WarVeteran": document.getElementById('DialogueDisplay2').innerHTML = HospitalWarVeteran[9]; break;
+
+        // If the player's chosen profession is the "Priest", this code executes
+        case "Priest": document.getElementById('DialogueDisplay2').innerHTML = HospitalPriest[9]; break;
+
+        // If the player's chosen profession is the "Doctor", this code executes
+        case "Doctor": document.getElementById('DialogueDisplay2').innerHTML = HospitalDoctor[9]; break;
+
+        // If the player's chosen profession is the "Mechanic", this code executes
+        case "Mechanic": document.getElementById('DialogueDisplay2').innerHTML = HospitalMechanic[9]; break;
+    }
+
+    document.getElementById('DialogueDisplay2').innerHTML += "<br><br><em><b> You took the fuel.</b></em>";
+    document.getElementById('DialogueDisplay2').innerHTML += ' <a class="link" href="Hospital_Inside.html"><strong>Return</strong></a>';
+
+}
+
+// Result of the player not taking the fuel
+function InsideInteraction_3_Result2() {
+    // Allows the player to access the other buttons again
+    accessButton = true;
+    document.getElementById('DialogueDisplay2').innerHTML += "<br><br><em><b> You did not take the fuel.</b></em>";
     document.getElementById('DialogueDisplay2').innerHTML += ' <a class="link" href="Hospital_Inside.html"><strong>Return</strong></a>';
 }
 
