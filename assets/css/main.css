@@ -111,6 +111,7 @@ body {
 	width: 70%;
 	border-radius: 20px;
 	padding: 10px;
+	display: block;
 	margin: 10px auto 10px auto;
 	background-color: var(--beige);
 	color: var(--background);
