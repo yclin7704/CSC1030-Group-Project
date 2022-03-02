@@ -11,6 +11,11 @@ function displayHello() {
     }
 }
 
+function getProfession() {
+    let profession = 'Mechanic';
+    return profession;
+}
+
 function displayText() {
     let Profession = localStorage.getItem('Profession');
     var dialogue;
