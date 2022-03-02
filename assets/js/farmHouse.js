@@ -1,112 +1,98 @@
-const doctorDialogue = [];
-const mechanicDialogue = [];
-const hunterDialogue = [];
-const priestDialogue = [];
-const warVetDialogue = [];
+const textElement = document.getElementById('dialogue'); // Dialogue box
+const optionButtonsElement = document.getElementById('options'); // Buttons
+const inventoryElement = document.getElementById('inventory'); // Inventory
+const imageElement = document.getElementById('locationImage');
+const profession = getProfession();
 
 
-//This is the key needed to open the front door
-var key = false;
+// This variable stores the current game state
 
+let state = {};
 
+// This function is called to start the game. The state is emptied and the first text node is shown.
 
-//This is the dialogue for farm house
-var farmDialogue = ['Managing to escape from the zombies, you have stumbled upon what looks like to be and old, messy farm house that hasn&#39t been occupied in years. <br><br> You look around the vicinity and you see a <strong>wheel barrow</strong>, <strong>a suspicious flower pot</strong>, <strong>a dirty welcome mat</strong> and at the side of the farm house you see what looks to be <strong>a shelter of some sort</strong>. '];
-
-//When the html load it will fill in the buttons with text inside and display the starting dialogue
-function loadFarm(){
-    //Putting starting dialogue
-    document.getElementById('dialogue').innerHTML = farmDialogue[0];
-
-    //Putting values in the buttons
-    document.getElementById('btn1').innerHTML = 'Open the door';
-    document.getElementById('btn2').innerHTML = 'Search the wheel barrow';
-    document.getElementById('btn3').innerHTML = 'Search the flower pot';
-    document.getElementById('btn4').innerHTML = 'Look under the welcome mat';
-    document.getElementById('btn5').innerHTML = 'Go into the shelter';
-    document.getElementById('btn6').innerHTML = 'Go back to warehouse';
-    document.getElementById('btn7').innerHTML = 'Wait';
-    document.getElementById('outside').style.visibility = 'visible';
-
-    //Setting the function of the buttons
-    document.getElementById('btn1').setAttribute('onClick', 'javascript: goInsideFarmHouse();');
-    document.getElementById('btn2').setAttribute('onClick', 'javascript: searchWheelBarrow();');
-    document.getElementById('btn3').setAttribute('onClick', 'javascript: searchFlowerPot();');
-    document.getElementById('btn4').setAttribute('onClick', 'javascript: searchWelcomeMat();');
-    document.getElementById('btn5').setAttribute('onClick', 'javascript: goShelter();');
-    document.getElementById('btn6').setAttribute('onClick', 'javascript: goWarehouse();');
-    document.getElementById('btn7').setAttribute('onClick', 'javascript: wait();');
-}
-
-//Allows the user to interact with the door
-function goInsideFarmHouse(){
-    if(key == false){
-        var outside = document.getElementById('outside');
-        outside.style.visibility = 'hidden';
-        outside.style.display = 'none';
-        var inside = document.getElementById('inside');
-        inside.style.visibility = 'visible';
-
-        document.getElementById('btn1').innerHTML = 'Go into the bedroom';
-        document.getElementById('btn2').innerHTML = 'Go into the kithen';
-        document.getElementById('btn3').innerHTML = 'Read note';
-        document.getElementById('btn4').innerHTML = 'Open drawer';
-        document.getElementById('btn5').innerHTML = 'Barricade the window';
-        document.getElementById('btn6').innerHTML = 'Go outside';
-        document.getElementById('btn7').innerHTML = 'Wait';
-
-        //Setting the function of the buttons
-        document.getElementById('btn1').setAttribute('onClick', 'javascript: goInsideFarmHouse();');
-        document.getElementById('btn2').setAttribute('onClick', 'javascript: searchWheelBarrow();');
-        document.getElementById('btn3').setAttribute('onClick', 'javascript: searchFlowerPot();');
-        document.getElementById('btn4').setAttribute('onClick', 'javascript: searchWelcomeMat();');
-        document.getElementById('btn5').setAttribute('onClick', 'javascript: goShelter();');
-        document.getElementById('btn6').setAttribute('onClick', 'javascript: goWarehouse();');
-        document.getElementById('btn7').setAttribute('onClick', 'javascript: wait();');
+function startGame(){
+    if (profession === 'Mechanic') {
+        state = {Mechanic:true}
     }
+    else if (profession === 'Medic') {
+        state = {Medic:true};
+    }
+    else if (profession === 'Hunter') {
+        state = {Hunter:true};
+    }
+    else if (profession === 'War Veteran') {
+        state = {WarVeteran:true}
+    }
+    else if (profession === 'Priest') {
+        state = {Priest:true}
+    }
+    else {
+        state = {};
+    }
+    showTextNode(1);
 }
 
-//Allows the user to go back outside
-function goOutside(){
-    var outside = document.getElementById('outside');
-    var inside = document.getElementById('inside');
-    outside.style.visibility = 'visiable';
-    outside.style.display = 'block';
-    inside.visibility = 'none';
-    inside.display = 'none';
+// This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.
+
+function showTextNode(textNodeIndex){
+    const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
+    textElement.innerHTML = textNode.text; // Changes the dialogue box to text stored in the text node.
+    inventoryElement.innerHTML = textNode.inventory;
+    imageElement.src = textNode.image;
+    while(optionButtonsElement.firstChild) {
+        optionButtonsElement.removeChild(optionButtonsElement.firstChild);
+    }
+
+    textNode.options.forEach(option => {
+        if (showOption(option)) {
+            const button = document.createElement('button'); // Creates a button.
+            button.innerText = option.text; // Button text is changed to the option text.
+            button.classList.add('buttonChoice'); // Sets the button class for styling.
+            button.addEventListener('click', () => selectOption(option)); // Adds event listener
+            optionButtonsElement.appendChild(button); 
+        }
+    })
 }
 
-//Allows the user to interact with the bedroom
-function goInsideBedroom(){
+// This function shows the current option selected
+
+function showOption(option) {
+    return option.requiredState == null || option.requiredState(state);
+}
+
+
+function selectOption(option) {
+    const nextTextNodeId = option.nextText;
+    if (nextTextNodeId <= 0) { // If the text node id is < 0, the game is restarted
+        return startGame();
+    }
+    state = Object.assign(state, option.setState);
+    showTextNode(nextTextNodeId);
 
 }
 
-//Allows the user to interact with the wheel barrow
-function searchWheelBarrow(){
+// The text nodes for the game are below
 
-}
+const textNodes = [
+    {
+        id: 1,
+        text: 'Managing to escape from the zombies, you have stumbled upon what looks like to be and old, messy farm house that hasn&#39t been occupied in years. <br><br> You look around the vicinity and you see a <strong>wheel barrow</strong>, <strong>a suspicious flower pot</strong>, <strong>a dirty welcome mat</strong> and at the side of the farm house you see what looks to be <strong>a shelter of some sort</strong>.',
+        inventory: '',
+        image: 'assets/images/farm-house-outside.jpg',
+        options: [
+            {
+                text: 'open door',
+                setState: {door:true},
+                nextText: 2
+            },
+            {
+                text: 'break door',
+                setState: {door:true},
+                nextText: 2
+            }
+        ]
+    }
+]
 
-//Allows the user to interact with the flower pot
-function searchFlowerPot(){
-
-}
-
-//Allows the user to interact with the welcome mat
-function searchWelcomeMat(){
-
-}
-
-//Allows the user to interact with the shelter
-function goShelter(){
-
-}
-
-//Allows the user to go back to the starting point
-function goWarehouse(){
-
-}
-
-//Allows the user to stay where they are at
-function wait(){
-
-}
+startGame(); // Function call to start the game
