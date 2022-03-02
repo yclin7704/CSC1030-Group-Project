@@ -1,4 +1,4 @@
-function professionSelection() {
+function displayHello() {
     
     var Professions = document.getElementsByName('Profession');
     var Profession;
@@ -28,11 +28,12 @@ function displayText() {
         localStorage.setItem("Dialogue", JSON.stringify(dialogue));
     }
     else if (Profession == "WarVeteran") {
-        dialogue = ["You are a War Veteran", "I've lost contact with my family back in xxxx, the zombies just over ran my last hideout. I've managed to stumble upon this old abandoned warehouse in the middle of no where. Honestly it took almost everything I had just to escape those damn things! This is just like back in those tre-... I-I don't know how much more I can take."]
+        dialogue = ["You are a War Veteran", "I've lost contact with my family back in <strong>xxxx</strong>, the zombies just over ran my last hideout. I've managed to stumble upon this old abandoned warehouse in the middle of no where. Honestly it took almost everything I had just to escape those damn things! This is just like back in those tre-... I-I don't know how much more I can take."]
         localStorage.setItem("Dialogue", JSON.stringify(dialogue));
     }
     else if (Profession == "Priest") {
-        dialogue = ["You are a Priest", "There shouldn't have been any zombies around the church, they said that they... I see, the experiment has field. I must protect the children if nothing else. That was what I thought but they all came in all too fast and ferocious. We tried to run, I tried to save them but we couldn't out run them. After the night it was only me. I couldn't even save one. As I stumble through the woods I eventually made it to an abandoned warehouse. I never should've made that deal."]
+        dialogue = ["You are a Priest", "There shouldn't have been any zombies around the church, they said that they... I see," 
+        + "the experiment has field. I must protect the children if nothing else. That was what I thought but they all came in all too fast and ferocious. We tried to run, I tried to save them but we couldn't out run them. After the night it was only me. I couldn't even save one. As I stumble through the woods I eventually made it to an abandoned warehouse. I never should've made that deal."]
         localStorage.setItem("Dialogue", JSON.stringify(dialogue));
     }
 

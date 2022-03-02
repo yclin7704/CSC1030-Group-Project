@@ -1,0 +1,41 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Festive&family=Poppins&family=Reenie+Beanie&family=Roboto+Mono&display=swap%27');
+
+* {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 24pt;
+    text-align: center;
+}
+
+body {
+    background-color: #5d453e;
+}
+
+.box {
+    width: 40%;
+    margin: auto;
+    padding: 50px;
+    background-color: #907c68;
+    border-radius: 20px;
+    border-style: none;
+    box-shadow: 0 0 10px 2px;
+}
+
+.button {
+    border-radius: 20px;
+    padding: 10px;
+    background-color: #24171b;
+    border-style: none;
+    color: #907c68;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+p {
+    color:#24171b;
+}
