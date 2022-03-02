@@ -63,6 +63,7 @@ const profession = "Doctor"  // Stores the profession (FOR TESTING)
 var accessButton = true;         // checks to see if players are interacting with items
 var waits = 0;                   // Number of times the player has waited
 var visitedOutside = false;      // Checks to see if the player has visited the outside of the Hospital already (DON'T KNOW HOW TO USE EFFICIENTLY YET)
+var time = 0;
 
 
 
@@ -407,4 +408,20 @@ function wait(){
         alert("You can no longer wait.");
         alert("You died");
     }
+}
+
+
+
+
+
+// Starts the timer
+function startTimer() {
+    // Has the timer run every second
+    setInterval(timer, 1000);
+}
+
+// Counts, in seconds, how long you've been playing
+function timer() {
+    time++;
+    document.getElementById('Timer').innerHTML = time;
 }
