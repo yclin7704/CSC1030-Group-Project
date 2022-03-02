@@ -7,9 +7,9 @@
 		<meta name="description" content="Last Stand Text Adventure" />
 
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<script src="assets/js/farmHouse.js"></script>
+		<script defer src="/assets/js/farmHouse.js"></script>
 	</head>
-	<body onload="loadFarm();">
+	<body>
 		<div class="wrapper">
 			<div class="row">
 				<!-- Column 1: Map and inventory -->
@@ -18,40 +18,25 @@
 						<img src="assets/images/map.png" />
 					</div>
 					<div class="inventory">
-
+						<p id="inventory"></p>
 					</div>
 				</div>
 
 				<!-- Column 2: Image -->
 				<div class="col col2">
-					<div id="outside" style="visibility: hidden;">
-                        <img src="assets/images/farm-house-outside.jpg" alt="Outside of farm house"/>
-                    </div>
-					<div id="inside" style="visibility: hidden;">
-						<img src="assets/images/farm-house-inside.jpg" alt="Inside of farm house"/>
-					</div>
-					<div id="bedroom" style="visibility: hidden;">
-						<img src="assets/images/farm-house-bedroom.jpg" alt="Bedroom of farm houes"/>
-					</div>
+					<img src="" style="opacity: 0.75;" alt="Farm house locations" id="locationImage" />
 				</div>
 
 				<!-- Column 3: Buttons -->
 				<div class="col col3">
-					<button class="buttonChoice" id="btn1"></button>
-					<button class="buttonChoice" id="btn2"></button>
-					<button class="buttonChoice" id="btn3"></button>
-					<button class="buttonChoice" id="btn4"></button>
-					<button class="buttonChoice" id="btn5"></button>
-					<button class="buttonChoice" id="btn6"></button>
-					<button class="buttonChoice" id="btn7"></button>
+					<div id="options">
+					</div>
 				</div>
 			</div>
 
 			<!-- Bottom: Dialogue box -->
 			<div class="dialogueOuter">
-				<div class="dialogue textBox centeredText" id="dialogue">
-					
-				</div>
+				<div class="dialogue" id="dialogue"></div>
 			</div>
 		</div>
 	</body>
