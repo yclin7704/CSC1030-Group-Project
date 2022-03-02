@@ -162,8 +162,9 @@ const textNodes = [
     // Player interacts with stranger outside the Hospital
     {
         id: 5,
-        text: 'As you approach the stranger he starts speaking to you.<br><br>"Hello there stranger, I saw that the door to the Hospital was locked, but you might be able to pry it' +
-            ' open with this crowbar. I\'d do it myself but I\'m not as strong as I used to be. However, before I give them to you, I would be grateful if you could give me some mushrooms"',
+        text: 'As you approach the stranger he starts speaking to you.<br><br>"Hello there stranger, the name\'s Charles, I used to be a member of the swiss police, but that\'s a long story. Anywho,' +
+        ' I saw that the door to the Hospital was locked, but you might be able to pry it' +' open with this crowbar. I\'d do it myself but I\'m not as strong as I used to be. However, before I give' +
+        ' them to you, I would be grateful if you could give me some mushrooms"',
         inventory: '',
         image: 'assets/images/Hospital_Outside.jpg',
         options: [
