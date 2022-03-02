@@ -9,7 +9,7 @@ let state = {};                                                           // Thi
 // This function will start the game
 function startGame() {
     state = {};        // States are emptied so that states don't carry over between games
-    showTextNode(1)  // Will display the first text node (id=100)
+    showTextNode(100)  // Will display the first text node (id=100)
 }
 
 
