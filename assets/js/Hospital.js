@@ -1,7 +1,7 @@
 const textElement = document.getElementById('DialogueHospital');          // The text to be displayed on-screen
 const optionButtonsElement = document.getElementById('ButtonsHospital');  // The buttons/options available to the player
 const inventoryElement = document.getElementById('inventory');            // The player's inventory
-const imageElement = document.getElementById('locationImage');            // The image to be displayed on-screen
+const imageElement = document.getElementById('ImageDisplay');            // The image to be displayed on-screen
 let state = {};                                                           // This will store the game's current/active state
 
 
@@ -9,7 +9,7 @@ let state = {};                                                           // Thi
 // This function will start the game
 function startGame() {
     state = {};        // States are emptied so that states don't carry over between games
-    showTextNode(100)  // Will display the first text node (id=100)
+    showTextNode(1)  // Will display the first text node (id=100)
 }
 
 
@@ -21,6 +21,7 @@ function showTextNode(textNodeIndex){
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     textElement.innerHTML = textNode.text;                                      // Changes the dialogue box to text stored in the text node.
     inventoryElement.innerHTML = textNode.inventory;
+    imageElement.src = textNode.image;
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
     }
@@ -66,12 +67,12 @@ const textNodes = [
     // The first visit to the outside of the Hospital
     {
         id: 100,
-        text: "You arrive at a Hospital, and judging by its ancient and run-down appearance it's likely that it's been abandoned for at least 17 years" + 
-            "Although you feel the need to turn away, curiosity and the concern for what might be waiting for you in the forest beckons you closer to the" +
-            "collosal building, and as you approach it, the air gets colder around you...<br>Around you, you see some <strong>worn-down First Aid kits</strong>" +
-            "and <strong>an abandoned campfire</strong>",
+        text: "You arrive at a Hospital, and judging by its ancient and run-down appearance it's likely that it's been abandoned for at least 17 years." + 
+            " Although you feel the need to turn away, curiosity and the concern for what might be waiting for you in the forest beckons you closer to the" +
+            " collosal building, and as you approach it, the air gets colder around you...<br>Around you, you see some <strong>worn-down First Aid kits</strong>" +
+            " and <strong>an abandoned campfire</strong>",
         inventory: '',
-        image: 'assets/images/Hospital_Outside.jpg',
+        image: 'assets/images/Hospital_Inside.jpg',
         options: [
             {
                 text: 'Go inside the Hospital',
@@ -111,6 +112,7 @@ const textNodes = [
             }
         ]
     }
-]
+];
 
-startGame(); // Function call to start the game
+// Calls the startGame() function to start the game
+startGame();
