@@ -1,11 +1,12 @@
 const textElement = document.getElementById('dialogue'); // Dialogue box
 const optionButtonsElement = document.getElementById('options'); // Buttons
 const inventoryElement = document.getElementById('inventory'); // Inventory
+const imageElement = document.getElementById('locationImage');
 
 
 // This variable stores the current game state
 
-let state = {}
+let state = {};
 
 // This function is called to start the game. The state is emptied and the first text node is shown.
 
@@ -20,6 +21,7 @@ function showTextNode(textNodeIndex){
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     textElement.innerHTML = textNode.text; // Changes the dialogue box to text stored in the text node.
     inventoryElement.innerHTML = textNode.inventory;
+    imageElement.src = textNode.image;
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
     }
@@ -59,6 +61,7 @@ const textNodes = [
         id: 1,
         text: 'You find what appears to be an empty gas station. However, the building is surrounded by fences, which creates suspicion that someone may be inside...',
         inventory: '',
+        image: 'assets/images/Hospital_Inside.jpg',
         options: [
             {
                 text: 'Cut the fence',
@@ -76,6 +79,7 @@ const textNodes = [
         id: 2,
         text: 'You have got past the fence. You hear a loud bang come from inside the gas station. You also notice a car parked in the garage...',
         inventory: 'Baseball Bat',
+        image: 'assets/images/gasstation.jpg',
         options: [
             {
                 text:'Go inside',
@@ -84,7 +88,6 @@ const textNodes = [
             },
             {
                 text:'Steal the car',
-                requiredState: (currentState) => currentState.mechanic,
                 setState: {inside: false,
                 stealCar: true},
                 nextText: 3
@@ -98,6 +101,7 @@ const textNodes = [
         options: [
             {
                 text:'Look in the drawers',
+                setState: {keys: true},
                 nextText: 5,
             },
             {
@@ -119,6 +123,22 @@ const textNodes = [
             {
                 text:'Restart the game.',
                 nextText: -1
+            }
+        ]
+    },
+    {
+        id: 5,
+        text: 'You have found the keys! You start the car and discover the car wont start...',
+        inventory: 'Keys',
+        options: [
+            {
+                text:'Go inside',
+                nextText: 8
+            },
+            {
+                text: 'Try fix the car',
+                requiredState: (currentState) => currentState.keys,
+                nextText: 9
             }
         ]
     }
