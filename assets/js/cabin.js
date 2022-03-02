@@ -10,27 +10,32 @@ const dialogue = {
 	firstVisitOutside: {
 		text: `Following the path deeper into the dark woods, you stumble across a lone cabin. There appears to have been signs of a struggle, 
                 and it seems there are still zombies nearby. What happened here?`,
-		choices: ["Enter the cabin", "Choice 2", "Choice 3"],
+		choices: ["Enter the cabin", "Choice 1", "Choice 2", "Choice 3", "Wait"],
 		callback: outsideInitialCallback,
 	},
 	revisitOutside: {
 		text: "You return to the cabin. TODO: Mention time of day or current state or something?",
-		choices: ["Enter the cabin", "Choice 2", "Choice 3"],
+		choices: ["Enter the cabin", "Choice 1", "Choice 2", "Choice 3", "Wait"],
 		callback: outsideInitialCallback,
 	},
 	firstVisitInside: {
 		text: "INSIDE CABIN",
-		choices: ["Leave the cabin", "Choice 2", "Choice 3", "Choice 4", "Choice 5", "Choice 6"],
+		choices: ["Leave the cabin", "Choice 1", "Choice 2", "Choice 3", "Choice 4", "Choice 5", "Choice 6", "Wait"],
 		callback: insideInitialCallback,
 	},
 	revisitInside: {
 		text: "INSIDE CABIN",
-		choices: ["Leave the cabin", "Choice 2", "Choice 3", "Choice 4", "Choice 5", "Choice 6"],
+		choices: ["Leave the cabin", "Choice 1", "Choice 2", "Choice 3", "Choice 4", "Choice 5", "Choice 6", "Wait"],
+		callback: insideInitialCallback,
+	},
+	insideEvent1: {
+		text: "Event 1",
+		choices: ["Go back", "Wait"],
 		callback: insideInitialCallback,
 	},
 	firstLeaveCabin: {
 		text: "LEAVE CABIN",
-		choices: ["Enter the cabin", "Choice 2", "Choice 3"],
+		choices: ["Enter the cabin", "Choice 1", "Choice 2", "Choice 3", "Wait"],
 		callback: outsideInitialCallback,
 	},
 };
@@ -96,7 +101,16 @@ async function insideInitialCallback(event) {
 			// Leave the cabin
 			leaveCabin();
 			break;
+		case 1:
+			event1();
+			break;
 	}
+}
+
+async function event1() {
+	let eventData = getEventData("insideEvent1");
+	print(eventData.text);
+	setChoices(eventData);
 }
 
 async function enterCabin() {
