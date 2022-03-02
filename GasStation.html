@@ -3,41 +3,41 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Last Stand - Gas Station</title>
+		<title>Last Stand</title>
 		<meta name="description" content="Last Stand Text Adventure" />
 
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<script defer src="GasStation.js"></script>
 	</head>
 	<body>
 		<div class="wrapper">
 			<div class="row">
-				<div class="col col1" style="background-color: #24171b">
+				<!-- Column 1: Map and inventory -->
+				<div class="col col1">
 					<div class="map">
-						<img
-							style="width: 100%"
-							src=""
-						/>
+						<img src="assets/images/map.png" />
 					</div>
-					<div class="inventory"></div>
+					<div class="inventory">
+						<p id="inventory"></p>
+					</div>
 				</div>
-				<div class="col col2" style="background-color: #24171b">
-					<img
-						style="width: 100%;"
-						src="images/gasstation.jpg"
-					/>
+
+				<!-- Column 2: Image -->
+				<div class="col col2">
+					<img src="assets/images/gasstation.jpg" style="opacity: 0.75;" />
 				</div>
-				<div class="col col3" style="background-color: #24171b">
-					<button></button>
-					<button></button>
-					<button></button>
-					<button></button>
-					<button></button>
+
+				<!-- Column 3: Buttons -->
+				<div class="col col3">
+					<div id="options">
+					</div>
 				</div>
 			</div>
-			<div class="dialogue" style="background-color: #5d453e">
-            <input type="text" placeholder = "Input instruction here..." style="width: 100%; height: 30px;" id="dialogue">
-            <span id=""></span>
-            </div>
+
+			<!-- Bottom: Dialogue box -->
+			<div class="dialogueOuter">
+				<div class="dialogue" id="dialogue"></div>
+			</div>
 		</div>
 	</body>
 </html>
