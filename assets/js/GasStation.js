@@ -2,6 +2,7 @@ const textElement = document.getElementById('dialogue'); // Dialogue box
 const optionButtonsElement = document.getElementById('options'); // Buttons
 const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage');
+const profession = getProfession();
 
 
 // This variable stores the current game state
@@ -11,7 +12,24 @@ let state = {};
 // This function is called to start the game. The state is emptied and the first text node is shown.
 
 function startGame(){
-    state = {};
+    if (profession === 'Mechanic') {
+        state = {Mechanic:true}
+    }
+    else if (profession === 'Medic') {
+        state = {Medic:true};
+    }
+    else if (profession === 'Hunter') {
+        state = {Hunter:true};
+    }
+    else if (profession === 'War Veteran') {
+        state = {WarVeteran:true}
+    }
+    else if (profession === 'Priest') {
+        state = {Priest:true}
+    }
+    else {
+        state = {};
+    }
     showTextNode(1);
 }
 
@@ -83,13 +101,10 @@ const textNodes = [
         options: [
             {
                 text:'Go inside',
-                setState: {inside: true},
                 nextText: 4
             },
             {
                 text:'Steal the car',
-                setState: {inside: false,
-                stealCar: true},
                 nextText: 3
             }
         ]
@@ -137,7 +152,7 @@ const textNodes = [
             },
             {
                 text: 'Try fix the car',
-                requiredState: (currentState) => currentState.keys,
+                requiredState: (currentState) => currentState.Mechanic,
                 nextText: 9
             }
         ]
