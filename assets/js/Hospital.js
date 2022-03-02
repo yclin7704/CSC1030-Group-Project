@@ -72,7 +72,7 @@ const textNodes = [
             " collosal building, and as you approach it, the air gets colder around you...<br>Around you, you see some <strong>worn-down First Aid kits</strong>" +
             " and <strong>an abandoned campfire</strong>",
         inventory: '',
-        image: 'assets/images/Hospital_Inside.jpg',
+        image: 'assets/images/Hospital_Outside.jpg',
         options: [
             {
                 text: 'Go inside the Hospital',
@@ -104,6 +104,7 @@ const textNodes = [
             " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking amongst the rooms of the Hospital...<br>As you look into" +
             " each of the rooms you see a <strong>Bone Saw</strong>, an <strong>Electric Blanket</strong> and <strong>some fuel</strong>",
         inventory: '',
+        image: 'assets/images/Hospital_Inside.jpg',
         options: [
             {
                 text: 'Go outside the Hospital',
