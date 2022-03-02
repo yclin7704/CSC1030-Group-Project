@@ -96,6 +96,7 @@ const textNodes = [
         options: [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
+                setState: {collectMushrooms:true},
                 nextText: 5
             }
         ]
@@ -111,8 +112,13 @@ const textNodes = [
         options: [
             {
                 text: 'Go inside the Hospital',
-                requiredState: (currentState) => currentState.crowbar,
+                requiredState: (currentState) => currentState.crowbar === true,
                 nextText: 4
+            },
+            {
+                text: 'Collect mushrooms',
+                requiredState: (currentState) => currentState.collectMushrooms === true,
+                nextText: 6
             },
             {
                 text: 'Talk to stranger camping in front of the Hospital',
@@ -157,32 +163,49 @@ const textNodes = [
     {
         id: 5,
         text: 'As you approach the stranger he starts speaking to you.<br><br>"Hello there stranger, I saw that the door to the Hospital was locked, but you might be able to pry it' +
-            ' open with this crowbar. I\'d do it myself but I\'m not as strong as I used to be. so here, take it!"',
+            ' open with this crowbar. I\'d do it myself but I\'m not as strong as I used to be. However, before I give them to you, I would be grateful if you could give me some mushrooms"',
         inventory: '',
         image: 'assets/images/Hospital_Outside.jpg',
         options: [
             {
-                text: 'Take the Crowbar',
-                setState: {crowbar:true},
-                nextText: 6
+                text: 'Return to the front of the Hospital',
+                setState: {crowbar: false},
+                nextText: 2
             },
             {
-                text: 'Don\'t take the crowbar and go back',
-                setState: {crowbar:false},
+                text: 'Trade the mushrooms for the crowbar',
+                requiredState: (currentState) => currentState.collectMushrooms === false,
+                nextText: 7
+            }
+        ]
+    },
+
+    // Collect mushrooms for the stranger
+    {
+        id: 6,
+        text: 'You see a lot of mushrooms growing in the bushes and overgrown foilage, it takes you while to collect them as you had to avoid thorns, but eventually' +
+            ' you acquire all the mushrooms for the Stranger in front of the Hospital',
+        inventory: '',
+        image: 'assets/images/Hospital_Outside.jpg',
+        options: [
+            {
+                text: 'Return to the front of the Hospital',
+                setState: {collectMushrooms: false},
                 nextText: 2
             }
         ]
     },
 
-    // You took the crowbar
+    // You traded the mushrooms for the crowbar
     {
-        id: 6,
-        text: "You took the crowbar, believing that you will now be able to enter the Hospital",
-        inventory: 'crowbar',
+        id: 7,
+        text: '"Thank you kind stranger, and as promised, here\'s the crowbar you need. Good luck!"<br><br>You take the crowbar from him',
+        inventory: '',
         image: 'assets/images/Hospital_Outside.jpg',
         options: [
             {
                 text: "Return to the front of the Hospital",
+                setState: {crowbar: true},
                 nextText: 2
             }
         ]
