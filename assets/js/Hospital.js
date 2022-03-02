@@ -73,7 +73,8 @@ const profession = "Doctor"      // Stores the profession (FOR TESTING)
 var accessButton = true;         // checks to see if players are interacting with items
 var waits = 0;                   // Number of times the player has waited
 var visitedOutside = false;      // Checks to see if the player has visited the outside of the Hospital already (DON'T KNOW HOW TO USE EFFICIENTLY YET)
-var time = 0;                    // time in seconds          
+var time = 0;                    // time in seconds
+var fuel = false;          
 
 
 
@@ -461,6 +462,7 @@ function InsideInteraction_3_Result1() {
     }
 
     document.getElementById('DialogueDisplay2').innerHTML += "<br><br><em><b> You took the fuel.</b></em>";
+    fuel == true;
     document.getElementById('DialogueDisplay2').innerHTML += ' <a class="link" href="Hospital_Inside.html"><strong>Return</strong></a>';
 
 }
