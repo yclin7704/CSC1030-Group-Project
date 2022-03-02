@@ -2,7 +2,7 @@ const textElement = document.getElementById('dialogue'); // Dialogue box
 const optionButtonsElement = document.getElementById('options'); // Buttons
 const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage');
-const profession = getProfession();
+// const profession = getProfession();
 
 
 // This variable stores the current game state
@@ -39,7 +39,7 @@ function showTextNode(textNodeIndex){
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     textElement.innerHTML = textNode.text; // Changes the dialogue box to text stored in the text node.
     inventoryElement.innerHTML = textNode.inventory;
-    imageElement.src = textNode.image;
+    // imageElement.src = textNode.image;
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
     }
@@ -79,7 +79,7 @@ const textNodes = [
         id: 1,
         text: 'Managing to escape from the zombies, you have stumbled upon what looks like to be and old, messy farm house that hasn&#39t been occupied in years. <br><br> You look around the vicinity and you see a <strong>wheel barrow</strong>, <strong>a suspicious flower pot</strong>, <strong>a dirty welcome mat</strong> and at the side of the farm house you see what looks to be <strong>a shelter of some sort</strong>.',
         inventory: '',
-        image: 'assets/images/farm-house-outside.jpg',
+        // image: 'assets/images/farm-house-outside.jpg',
         options: [
             {
                 text: 'open door',
