@@ -69,11 +69,12 @@ const HospitalDialogue = ["You arrive at a Hospital, and judging by its ancient 
     , "You decided to enter the abandoned Hospital which, upon entering, is much more decrepit than you first thought. There are broken walls, leaking pipes, water dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking amongst the rooms of the Hospital...<br>As you look into each of the rooms you see a <strong>Bone Saw</strong>, an <strong>Electric Blanket</strong> and <strong>some fuel</strong>"];
 
 
-const profession = "Doctor"  // Stores the profession (FOR TESTING)
+const profession = "Doctor"      // Stores the profession (FOR TESTING)
 var accessButton = true;         // checks to see if players are interacting with items
 var waits = 0;                   // Number of times the player has waited
 var visitedOutside = false;      // Checks to see if the player has visited the outside of the Hospital already (DON'T KNOW HOW TO USE EFFICIENTLY YET)
-var time = 0;
+var time = 0;                    // time in seconds          
+
 
 
 
@@ -87,6 +88,7 @@ function loadDialogueOutside() {
 function loadDialogueInside() {
     document.getElementById('DialogueDisplay2').innerHTML = HospitalDialogue[2];
 }
+
 
 
 
@@ -313,7 +315,7 @@ function InsideInteraction_1_Result1() {
         case "Mechanic": document.getElementById('DialogueDisplay2').innerHTML = HospitalMechanic[5]; break;
     }
 
-    document.getElementById('DialogueDisplay2').innerHTML += "<br><br><em><b> You took the Dangerous Item.</b></em>";
+    document.getElementById('DialogueDisplay2').innerHTML += "<br><br><em><b> You took the Bone Saw.</b></em>";
     document.getElementById('DialogueDisplay2').innerHTML += ' <a class="link" href="Hospital_Inside.html"><strong>Return</strong></a>';
 }
 
@@ -321,7 +323,7 @@ function InsideInteraction_1_Result1() {
 function InsideInteraction_1_Result2() {
     // Allows the player to access the other buttons again
     accessButton = true;
-    document.getElementById('DialogueDisplay2').innerHTML += "<br><br><em><b> You did not take the Dangerous Item.</b></em>";
+    document.getElementById('DialogueDisplay2').innerHTML += "<br><br><em><b> You did not take the Bone Saw.</b></em>";
     document.getElementById('DialogueDisplay2').innerHTML += ' <a class="link" href="Hospital_Inside.html"><strong>Return</strong></a>';
 }
 
