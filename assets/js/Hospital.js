@@ -84,6 +84,8 @@ function selectOption(option) {
 
 // The list of Text Nodes that can be selected
 const textNodes = [
+
+
     // The first visit to the outside of the Hospital
     {
         id: 1,
@@ -96,17 +98,18 @@ const textNodes = [
         options: [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
-                setState: {collectMushrooms: true, FirstAid: false},
+                setState: {collectMushrooms: true, FirstAid: false, FireWood: false},
                 nextText: 5
             },
             {
                 text: 'Check out the First Aid kits scattered across the ground',
-                setState: {crowbar: false, collectMushrooms: true, FirstAid: false},
+                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false},
                 nextText: 8
             },
             {
                 text: 'Check out the abandoned campfire',
-                nextText: 12
+                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false},
+                nextText: 10
             }
         ]
     },
@@ -141,7 +144,7 @@ const textNodes = [
             },
             {
                 text: 'Check out the abandoned campfire',
-                nextText: 12
+                nextText: 10
             }
         ]
     },
@@ -223,6 +226,7 @@ const textNodes = [
         ]
     },
 
+
     // You traded the mushrooms for the crowbar
     {
         id: 7,
@@ -262,7 +266,7 @@ const textNodes = [
                 text: 'Salvage the First Aid kits',
                 requiredState: (currentState) => currentState.FirstAid === false,
                 setState: {FirstAid: true},
-                nextText: 2
+                nextText: 9
             },
             {
                 text: 'Collect the nearby Mushrooms',
@@ -271,6 +275,71 @@ const textNodes = [
             }
         ]
 
+    },
+
+
+    // You salvaged the First Aid kits
+    {
+        id: 9,
+        text: 'Even though it took you a while and resulted in you getting cut on the thorns a few times, you eventually managed to salvage what you could' +
+            ' from the First Aid kits.',
+        inventory: '',
+        image: 'assets/images/Hospital_Outside.jpg',
+        options: [
+            {
+                text: 'Return to the front of the Hospital',
+                nextText: 2
+            }
+        ]
+    },
+
+
+    // You check out the abandoned campfire
+    {
+        id: 10,
+        text: 'As you approach the campfire, the smell of smoke is overwhelming, "Someone, or something, has definitely been here!", you think to yourself' +
+            ' worryingly. However, there is some spare leftover Fire Wood beside the campfire, do you take it? ',
+        inventory: '',
+        image: 'assets/images/Hospital_Outside.jpg',
+        options: [
+            {
+                text: 'You already collected all the wood from the campfire, there\'s no need for you to be here. Return to the front of the Hospital',
+                requiredState: (currentState) => currentState.FireWood === true,
+                nextText: 2
+            },
+            {
+                text: 'Leave the campfire alone for now, as you feel like you might be able to make use of it later',
+                requiredState: (currentState) => currentState.FireWood === false,
+                nextText: 2
+            },
+            {
+                text: 'Take the Fire Wood from the campfire to use later',
+                requiredState: (currentState) => currentState.FireWood === false,
+                setState: {FireWood:true},
+                nextText: 11
+            },
+            {
+                text: 'Collect the nearby Mushrooms',
+                requiredState: (currentState) => currentState.collectMushrooms === true,
+                nextText: 6
+            }
+        ]
+    },
+
+
+    // You decided to take the Fire Wood from the abandoned Campfire
+    {
+        id: 11,
+        text: 'You picked up all the pieces of wood from the campfire and put them in your bag, hoping that you\'ll be able to use them later and that no unsavoury' +
+            ' creatures will hunt you down for taking the wood',
+        inventory: '',
+        image: 'assets/images/Hospital_Outside.jpg',
+        options: [
+            {
+                text: 'Return to the front of the Hospital',
+                nextText: 2
+            }
+        ]
     },
 
 
@@ -289,6 +358,15 @@ const textNodes = [
         ]
     }
 ];
+
+
+/**Ideas that might be easier to implement once an inventory system has been added
+ * 
+ * @todo - Eating the collected mushrooms instead of trading will cause you to die of poisoning
+ * @todo - The Hunter and War Veteran can have the option to break into the Hospital without the need of a crowbar
+ *  
+*/
+
 
 // Calls the startGame() function to start the game
 startGame();
