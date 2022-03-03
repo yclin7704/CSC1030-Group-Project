@@ -12,7 +12,7 @@ function displayHello() {
 }
 
 function getProfession() {
-    let profession = 'Doctor';
+    let profession = 'Hunter';
     return profession;
 }
 

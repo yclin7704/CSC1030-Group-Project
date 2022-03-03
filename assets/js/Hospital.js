@@ -25,10 +25,6 @@ function startGame() {
     else if (profession === 'Priest') {
         state = {Priest:true}
     }
-    else {
-        // Else State is made empty
-        state = {};
-    }
     showTextNode(1)  // Will display the first text node (id=1)
 }
 
@@ -100,12 +96,12 @@ const textNodes = [
         options: [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
-                setState: state += {collectMushrooms:true},
+                setState: {collectMushrooms: true, FirstAid: false},
                 nextText: 5
             },
             {
                 text: 'Check out the First Aid kits scattered across the ground',
-                setState: state += {FirstAid: true, crowbar: false},
+                setState: {crowbar: false, collectMushrooms: true, FirstAid: false},
                 nextText: 8
             },
             {
@@ -114,6 +110,7 @@ const textNodes = [
             }
         ]
     },
+
 
     // Every visit to the outside of the Hospital after the first one
     {
@@ -136,12 +133,10 @@ const textNodes = [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
                 requiredState: (currentState) => currentState.crowbar === false,
-                setState: {collectMushrooms: true},
                 nextText: 5
             },
             {
                 text: 'Check out the First Aid kits scattered across the ground',
-                setState: {FirstAid: true, crowbar: false},
                 nextText: 8
             },
             {
@@ -150,6 +145,7 @@ const textNodes = [
             }
         ]
     },
+
 
     // The first visit to the inside the Hospital
     {
@@ -167,6 +163,7 @@ const textNodes = [
         ]
     },
 
+
     // Every visit to the inside of the Hospital after the first one
     {
         id: 4,
@@ -182,12 +179,13 @@ const textNodes = [
         ]
     },
 
+
     // Player interacts with stranger outside the Hospital
     {
         id: 5,
         text: 'As you approach the stranger he starts speaking to you.<br><br>"Hello there stranger, the name\'s Charles, I used to be a member of the swiss police, but that\'s a long story. Anywho,' +
         ' I saw that the door to the Hospital was locked, but you might be able to pry it' +' open with this crowbar. I\'d do it myself but I\'m not as strong as I used to be. However, before I give' +
-        ' them to you, I would be grateful if you could give me some mushrooms"',
+        ' them to you, I would be grateful if you could give me some mushrooms. I think there was some near the entrance to the Hospital Grounds."',
         inventory: '',
         image: 'assets/images/Hospital_Outside.jpg',
         options: [
@@ -207,6 +205,7 @@ const textNodes = [
             }
         ]
     },
+
 
     // Collect mushrooms for the stranger
     {
@@ -239,28 +238,43 @@ const textNodes = [
         ]
     },
 
+
     // You check out the First Aid kits scattered on the ground
     {
         id: 8,
         text: 'You see that among all the thorns and brambles are a lot of First Aid kits, each of them looking decades old, as if they\'ve been here' +
             ' since the Second World War. You also notice that the First Aid kits each have parts missing, which would make sense as surely a lot of people' +
-            ' have been salvaging them. Do you attempt to salvage the First Aid kits?',
+            ' have been salvaging them. Nearby you also notice that there are a lot of <strong>Mushrooms.</strong> Do you attempt to salvage the First Aid kits?',
         inventory: '',
         image: 'assets/images/Hospital_Outside.jpg',
         options: [
             {
                 text: 'You have already salvaged the First Aid kits, you have no more business here',
+                requiredState: (currentState) => currentState.FirstAid === true,
                 nextText: 2
             },
             {
                 text: 'Don\'t salvage the First Aid kits and instead return to the front of the Hospital',
+                requiredState: (currentState) => currentState.FirstAid === false,
                 nextText: 2
             },
+            {
+                text: 'Salvage the First Aid kits',
+                requiredState: (currentState) => currentState.FirstAid === false,
+                setState: {FirstAid: true},
+                nextText: 2
+            },
+            {
+                text: 'Collect the nearby Mushrooms',
+                requiredState: (currentState) => currentState.collectMushrooms === true,
+                nextText: 6
+            }
         ]
 
     },
 
-    // You try to forcefully take the crowbar
+
+    // You try to forcefully take the crowbar - ENDING 1
     {
         id: 100,
         text: 'You try to take the crowbar from the Stranger by force, but as you do so he pulls out a knife and stabs you to death' +
