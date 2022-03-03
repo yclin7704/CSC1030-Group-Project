@@ -1,7 +1,8 @@
 const textElement = document.getElementById('dialogue'); // Dialogue box
+const noteItem = document.getElementById('handwritten'); //Notes you find in the game
 const optionButtonsElement = document.getElementById('options'); // Buttons
 const inventoryElement = document.getElementById('inventory'); // Inventory
-const imageElement = document.getElementById('locationImage');
+const imageElement = document.getElementById('locationImage'); // Image
 const profession = getProfession();
 
 
@@ -40,6 +41,7 @@ function showTextNode(textNodeIndex){
     textElement.innerHTML = textNode.text; // Changes the dialogue box to text stored in the text node.
     inventoryElement.innerHTML = textNode.inventory;
     imageElement.src = textNode.image;
+    noteItem.innerHTML = textNode.note;
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
     }
@@ -72,27 +74,164 @@ function selectOption(option) {
 
 }
 
+// Change the handwritten text
+function changeText(){
+    console.log('changing font');
+   document.getElementById('handwritten').style.fontFamily = "Roboto Mono", 'monospace';
+   console.log('hi');
+   document.getElementById('handwritten').style.fontSize = "1rem";
+   console.log('there');
+}
+function revertText(){
+    console.log('changing font');
+    document.getElementById('handwritten').style.fontFamily = "Reenie Beanie", 'cursive';
+    document.getElementById('handwritten').style.fontSize = "2rem";
+}
+
+
 // The text nodes for the game are below
 
 const textNodes = [
+    //First visit to outside of the farm house
     {
         id: 1,
-        text: 'Managing to escape from the zombies, you have stumbled upon what looks like to be and old, messy farm house that hasn&#39t been occupied in years. <br><br> You look around the vicinity and you see a <strong>wheel barrow</strong>, <strong>a suspicious flower pot</strong>, <strong>a dirty welcome mat</strong> and at the side of the farm house you see what looks to be <strong>a shelter of some sort</strong>.',
+        text: "Moving away from the infected city, you have stumbled upon what looks like to be and old, damaged farm house that hasn&#39t been occupied in years. You walk toward the garden or what could have once been a lovely rose garden was now a deserted wasteland...",
+        note: '',
+        inventory: "",
+        image: 'assets/images/farm-house-outside.jpg',
+        options: [
+            {
+                text: 'Go in',
+                nextText: 2
+            }
+        ]
+    },
+    {
+        id: 2,
+        text: 'You look around the vicinity and you see a <u><strong>wheel barrow</strong></u>, <u><strong>a suspicious flower pot</strong></u>, <u><strong>a dirty welcome mat</strong></u> and at the side of the farm house you see what looks to be <u><strong>a shelter of some sort</strong></u>.',
+        note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
         options: [
             {
-                text: 'open door',
-                setState: {door:true},
+                text: 'Walk up to the door',
+                nextText: 8
+            },
+            {
+                text: 'Search the wheel barrow',
+                nextText: 3
+            },
+            {
+                text: 'Search the flower pot',
+                nextText: 4
+            },
+            {
+                text: 'Look under the welcome mat',
+                nextText: 5
+            },
+            {
+                text: 'Go inside the shelter',
+                nextText: 6
+            }
+        ]
+    },
+    {
+        id: 3,
+        text: 'You look inside the wheel barrow',
+        note: '',
+        inventory: '',
+        image: 'assets/images/farm-house-outside.jpg',
+        options: [
+            {
+                text: 'Take torch',
+                setState: {torch:true},
                 nextText: 2
             },
             {
-                text: 'break door',
-                setState: {door:true},
+                text: 'Leave the torch',
                 nextText: 2
+            }
+        ]
+    },
+    {
+        id: 4,
+        text: 'You look inside the flower pot and find a note',
+        note: '',
+        inventory: '',
+        image: 'assets/images/farm-house-outside.jpg',
+        options: [
+            {
+                text: 'Read Note',
+                nextText: 7
+            },
+            {
+                text: 'Ignore the note',
+                nextText: 2
+            }
+        ]
+    },
+    {
+        id: 5,
+        text: 'You look under the welcome mat and found a key',
+        note: '',
+        inventory: '',
+        image: 'assets/images/farm-house-outside.jpg',
+        options: [
+            {
+                text: 'Take key',
+                setState: {key:true},
+                nextText: 2
+            },
+            {
+                text: 'Ignore the key',
+                nextText: 2
+            }
+        ]
+    },
+    {
+        id: 6,
+        text: 'You go into the shelter and realise thats it&#39s locked',
+        note: '',
+
+    },
+    {
+        id: 7,
+        text: 'You read the note and it says: <br><button onClick="changeText();" class="changeText">Change Text</button> <button onCLick="revertText();" class="changeText">Revert Text</button>',
+        note: 'I&#39ve been in this dark place for what it feels like days. It seems like the group that has captured me is planning some cultist acts. One day, the group brought me out of the room that I was being held captive and forced me to create some sort of.... They called themselves the "bad boys" which is really childish considering these people are like in their 40s. I hope this note reaches to the authorities to save me from this cult.',
+        inventory: '',
+        image: 'assets/images/farm-house-outside.jpg',
+        options: [
+            {
+                text: 'Back',
+                nextText: 2
+            }
+        ]
+    },
+    {
+        id: 8,
+        text: 'You walk up to the door and found out that it&#39s locked, There is probably a key somewhere',
+        note: '',
+        inventory: '',
+        image: 'assets/images/farm-house-outside.jpg',
+        options: [
+            {
+                text: 'Open the door',
+                requiredState: (currentState) => currentState.key,
+                nextText: 9
+            },
+            {
+                text: 'Pick lock the door',
+                requiredState: (currentState) => currentState.Mechanic,
+                nextText: 9
+            },
+            {
+                text: 'Shoot the lock off',
+                requiredState: (currentState) => currentState.Hunter, //need to get gun from inventory
+                nextText: 10
             }
         ]
     }
 ]
+
 
 startGame(); // Function call to start the game

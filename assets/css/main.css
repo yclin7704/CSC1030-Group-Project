@@ -151,3 +151,9 @@ button:enabled:hover {
 	color: var(--background);
 	text-decoration: underline;
 }
+
+.changeText{
+	background-color: #debf89;
+	margin-top: 10px;
+	font-weight: bold;
+}
