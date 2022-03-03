@@ -29,8 +29,9 @@ function startGame() {
         // Else State is made empty
         state = {};
     }
-    showTextNode(1)  // Will display the first text node (id=100)
+    showTextNode(1)  // Will display the first text node (id=1)
 }
+
 
 
 /**This function will display the current text node
@@ -58,6 +59,7 @@ function showTextNode(textNodeIndex){
 }
 
 
+
 /**This function shows the current option selected
  * 
  * @param option - the option (button) to be displayed on-screen
@@ -65,6 +67,7 @@ function showTextNode(textNodeIndex){
 function showOption(option) {
     return option.requiredState == null || option.requiredState(state);
 }
+
 
 
 /** This function allows states to be updated depending on the otpion selected
@@ -82,6 +85,7 @@ function selectOption(option) {
 }
 
 
+
 // The list of Text Nodes that can be selected
 const textNodes = [
     // The first visit to the outside of the Hospital
@@ -96,8 +100,17 @@ const textNodes = [
         options: [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
-                setState: {collectMushrooms:true},
+                setState: state += {collectMushrooms:true},
                 nextText: 5
+            },
+            {
+                text: 'Check out the First Aid kits scattered across the ground',
+                setState: state += {FirstAid: true, crowbar: false},
+                nextText: 8
+            },
+            {
+                text: 'Check out the abandoned campfire',
+                nextText: 12
             }
         ]
     },
@@ -123,7 +136,17 @@ const textNodes = [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
                 requiredState: (currentState) => currentState.crowbar === false,
+                setState: {collectMushrooms: true},
                 nextText: 5
+            },
+            {
+                text: 'Check out the First Aid kits scattered across the ground',
+                setState: {FirstAid: true, crowbar: false},
+                nextText: 8
+            },
+            {
+                text: 'Check out the abandoned campfire',
+                nextText: 12
             }
         ]
     },
@@ -132,7 +155,7 @@ const textNodes = [
     {
         id: 3,
         text: "You decided to enter the abandoned Hospital which, upon entering, is much more decrepit than you first thought. There are broken walls, leaking pipes, water" +
-            " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking amongst the rooms of the Hospital...<br>As you look into" +
+            " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking among the rooms of the Hospital...<br>As you look into" +
             " each of the rooms you see a <strong>Bone Saw</strong>, an <strong>Electric Blanket</strong> and <strong>some fuel</strong>",
         inventory: '',
         image: 'assets/images/Hospital_Inside.jpg',
@@ -177,6 +200,10 @@ const textNodes = [
                 text: 'Trade the mushrooms for the crowbar',
                 requiredState: (currentState) => currentState.collectMushrooms === false,
                 nextText: 7
+            },
+            {
+                text: 'Try to forcefully take the crowbar',
+                nextText: 100
             }
         ]
     },
@@ -208,6 +235,42 @@ const textNodes = [
                 text: "Return to the front of the Hospital",
                 setState: {crowbar: true},
                 nextText: 2
+            }
+        ]
+    },
+
+    // You check out the First Aid kits scattered on the ground
+    {
+        id: 8,
+        text: 'You see that among all the thorns and brambles are a lot of First Aid kits, each of them looking decades old, as if they\'ve been here' +
+            ' since the Second World War. You also notice that the First Aid kits each have parts missing, which would make sense as surely a lot of people' +
+            ' have been salvaging them. Do you attempt to salvage the First Aid kits?',
+        inventory: '',
+        image: 'assets/images/Hospital_Outside.jpg',
+        options: [
+            {
+                text: 'You have already salvaged the First Aid kits, you have no more business here',
+                nextText: 2
+            },
+            {
+                text: 'Don\'t salvage the First Aid kits and instead return to the front of the Hospital',
+                nextText: 2
+            },
+        ]
+
+    },
+
+    // You try to forcefully take the crowbar
+    {
+        id: 100,
+        text: 'You try to take the crowbar from the Stranger by force, but as you do so he pulls out a knife and stabs you to death' +
+            ' <br><b><em>You Died!</em></b>',
+        inventory: '',
+        image: 'assets/images/Game_Over_TEST-IMAGE.jpg',
+        options: [
+            {
+                text: 'Play Again?',
+                nextText: -1
             }
         ]
     }
