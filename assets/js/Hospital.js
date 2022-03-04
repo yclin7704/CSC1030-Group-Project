@@ -153,7 +153,7 @@ const textNodes = [
     // The first visit to the inside the Hospital
     {
         id: 3,
-        text: "You decided to enter the abandoned Hospital which, upon entering, is much more decrepit than you first thought. There are broken walls, leaking pipes, water" +
+        text: "You decided to enter the main Lobby of the abandoned Hospital which, upon entering, is much more decrepit than you first thought. There are broken walls, leaking pipes, water" +
             " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking among the rooms of the Hospital...<br>As you look into" +
             " each of the rooms you see a <strong>Bone Saw</strong>, an <strong>Electric Blanket</strong> and <strong>some fuel</strong>",
         inventory: '',
@@ -162,6 +162,14 @@ const textNodes = [
             {
                 text: 'Go outside the Hospital',
                 nextText: 2
+            },
+            {
+                text: 'Check out the Bone Saw',
+                nextText: 12
+            },
+            {
+                text: 'Check out the Electric Blanket',
+                nextText: 14
             }
         ]
     },
@@ -170,7 +178,7 @@ const textNodes = [
     // Every visit to the inside of the Hospital after the first one
     {
         id: 4,
-        text: "You decide to go back inside the abandoned Hospital to stay sheltered from the arctic winds outside, the dripping water slowly driving you insane. However, you can" +
+        text: "You return to the main Lobby inside the abandoned Hospital to stay sheltered from the arctic winds outside, the dripping water slowly driving you insane. However, you can" +
             " still see a <strong>Bone Saw</strong>, an <strong>Electric Blanket</strong> and <strong>some fuel</strong>",
         inventory: '',
         image: 'assets/images/Hospital_Inside.jpg',
@@ -178,6 +186,14 @@ const textNodes = [
             {
                 text: 'Go outside the Hospital',
                 nextText: 2
+            },
+            {
+                text: 'Check out the Bone Saw',
+                nextText: 12
+            },
+            {
+                text: 'Check out the Electric Blanket',
+                nextText: 14
             }
         ]
     },
@@ -338,6 +354,78 @@ const textNodes = [
             {
                 text: 'Return to the front of the Hospital',
                 nextText: 2
+            }
+        ]
+    },
+
+
+    // You check out the Bone Saw
+    {
+        id: 12,
+        text: 'Among all the clutter in a surgical room you spot what looks like a Bone Saw or Gigli Saw, you feel as if it might be a good idea to take this with you' +
+            ' as a weapon in case you need to defend yourself. Do you take the Bone Saw?',
+        inventory: '',
+        image: 'assets/images/Hospital_Inside.jpg',
+        options: [
+            {
+                text: 'Take the Bone Saw',
+                nextText: 13
+            },
+            {
+                text: 'Don\'t take the Bone Saw and return to main lobby of the Hospital',
+                nextText: 4
+            }
+        ]
+    },
+
+
+    // You decided to take the Bone Saw
+    {
+        id: 13,
+        text: 'You decided to take the Bone Saw agreeing with the fact that it\'ll make a great weapon should the zombies attack you, especially considering that you' +
+            ' cut yourself a little putting it into your bag, surprised at its sharpness after all these years',
+        inventory: '',
+        image: 'assets/images/Hospital_Inside.jpg',
+        options: [
+            {
+                text: 'Head back to the main lobby of the Hospital',
+                nextText: 4
+            }
+        ]
+    },
+
+
+    // You check out the Electric Blanket
+    {
+        id: 14,
+        text: 'You look under the counter of the Hospital Lobby and find an electric blanket, and with how cold it is in the building, and with hoe it\'s even worse outside' +
+            ' the Hospital, you feel like having the Electric Blanket will prove to be a crucial item to have to keep you warm as the night approaches. Do you take the Electric Blanket?',
+        inventory: '',
+        image:  'assets/images/Hospital_Inside.jpg',
+        options: [
+            {
+                text: 'Take the Electric Blanket',
+                nextText: 15
+            },
+            {
+                text: 'Don\'t take the Electric Blanket and return to the Hospital Lobby',
+                nextText: 4
+            }
+        ]
+    },
+
+
+    // You decide to take the Electric Blanket
+    {
+        id: 15,
+        text: 'With freezing hands, you take the Electric Blanket out from under the counter and place it in your bag, hoping that somewhere, you\'ll be able to find an outlet' +
+            ' to plug the blanket into to warm you up.',
+        inventory: '',
+        image: 'assets/images/Hospital_Inside.jpg',
+        options: [
+            {
+                text: 'Head back to the main lobby of the Hospital',
+                nextText: 4
             }
         ]
     },
