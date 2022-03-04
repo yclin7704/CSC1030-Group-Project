@@ -347,7 +347,7 @@ const textNodes = [
     {
         id: 100,
         text: 'You try to take the crowbar from the Stranger by force, but as you do so he pulls out a knife and stabs you to death' +
-            ' <br><b><em>You Died!</em></b>',
+            ' <br><b><em>You Died!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
         inventory: '',
         image: 'assets/images/Game_Over_TEST-IMAGE.jpg',
         options: [
