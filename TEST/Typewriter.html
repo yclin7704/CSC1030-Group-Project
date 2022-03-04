@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Waiting+for+the+Sunrise" rel="stylesheet" type="text/css"/>
+    <style>
+        body {
+            font-family: 'Waiting for the Sunrise', cursive; 
+            background-color: bisque;
+            font-size:30px; 
+            margin: 10px 50px; 
+            letter-spacing: 6px; 
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        // set up text to print, each item in array is new line
+        var Texts = new Array(
+            "This is a test", 
+            "to try and find out", 
+            "if a typewriter kind of style", 
+            "could work well or not");
+        var iSpeed = 100; // time delay of print out
+        var iIndex = 0; // start printing array at this posision
+        var iArrLength = Texts[0].length; // the length of the text array
+        var iScrollAt = 20; // start scrolling up at this many lines
+            
+        var iTextPos = 0; // initialise text position
+        var sContents = ''; // initialise contents variable
+        var iRow; // initialise current row
+     
+        function typewriter() {
+            sContents =  ' ';
+            iRow = Math.max(0, iIndex-iScrollAt);
+            var destination = document.getElementById('typedtext');
+            
+            while ( iRow < iIndex ) {
+                sContents += Texts[iRow++] + '<br />';
+            }
+            destination.innerHTML = sContents + Texts[iIndex].substring(0, iTextPos) + "_";
+            if ( iTextPos++ == iArrLength ) {
+                iTextPos = 0;
+                iIndex++;
+                if ( iIndex != Texts.length ) {
+                    iArrLength = Texts[iIndex].length;
+                    setTimeout("typewriter()", 500);
+                }
+            } 
+            else {
+                setTimeout("typewriter()", iSpeed);
+            }
+        }
+    </script>
+    <title>Document</title>
+</head>
+<body onload="typewriter()">
+    <div id="typedtext"></div>
+</body>
+</html>
