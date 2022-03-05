@@ -7,6 +7,7 @@ let state = {};                                                           // Thi
 
 
 
+
 // This function will start the game
 function startGame() {
     // State is set to the profession chosen
@@ -27,6 +28,7 @@ function startGame() {
     }
     showTextNode(1)  // Will display the first text node (id=1)
 }
+
 
 
 
@@ -56,6 +58,7 @@ function showTextNode(textNodeIndex){
 
 
 
+
 /**This function shows the current option selected
  * 
  * @param option - the option (button) to be displayed on-screen
@@ -63,6 +66,7 @@ function showTextNode(textNodeIndex){
 function showOption(option) {
     return option.requiredState == null || option.requiredState(state);
 }
+
 
 
 
@@ -79,6 +83,7 @@ function selectOption(option) {
     showTextNode(nextTextNodeId);
 
 }
+
 
 
 
@@ -113,6 +118,7 @@ const textNodes = [
             }
         ]
     },
+
 
 
     // Every visit to the outside of the Hospital after the first one
@@ -150,6 +156,7 @@ const textNodes = [
     },
 
 
+
     // The first visit to the inside the Hospital
     {
         id: 3,
@@ -175,6 +182,7 @@ const textNodes = [
     },
 
 
+
     // Every visit to the inside of the Hospital after the first one
     {
         id: 4,
@@ -197,6 +205,7 @@ const textNodes = [
             }
         ]
     },
+
 
 
     // Player interacts with stranger outside the Hospital
@@ -226,6 +235,7 @@ const textNodes = [
     },
 
 
+
     // Collect mushrooms for the stranger
     {
         id: 6,
@@ -243,6 +253,7 @@ const textNodes = [
     },
 
 
+
     // You traded the mushrooms for the crowbar
     {
         id: 7,
@@ -257,6 +268,7 @@ const textNodes = [
             }
         ]
     },
+
 
 
     // You check out the First Aid kits scattered on the ground
@@ -294,6 +306,7 @@ const textNodes = [
     },
 
 
+
     // You salvaged the First Aid kits
     {
         id: 9,
@@ -308,6 +321,7 @@ const textNodes = [
             }
         ]
     },
+
 
 
     // You check out the abandoned campfire
@@ -343,6 +357,7 @@ const textNodes = [
     },
 
 
+
     // You decided to take the Fire Wood from the abandoned Campfire
     {
         id: 11,
@@ -357,6 +372,7 @@ const textNodes = [
             }
         ]
     },
+
 
 
     // You check out the Bone Saw
@@ -379,6 +395,7 @@ const textNodes = [
     },
 
 
+
     // You decided to take the Bone Saw
     {
         id: 13,
@@ -393,6 +410,7 @@ const textNodes = [
             }
         ]
     },
+
 
 
     // You check out the Electric Blanket
@@ -415,6 +433,7 @@ const textNodes = [
     },
 
 
+
     // You decide to take the Electric Blanket
     {
         id: 15,
@@ -429,6 +448,7 @@ const textNodes = [
             }
         ]
     },
+
 
 
     // You try to forcefully take the crowbar - ENDING 1
@@ -448,12 +468,16 @@ const textNodes = [
 ];
 
 
+
+
 /**Ideas that might be easier to implement once an inventory system has been added
  * 
  * @todo - Eating the collected mushrooms instead of trading will cause you to die of poisoning
  * @todo - The Hunter and War Veteran can have the option to break into the Hospital without the need of a crowbar
  *  
 */
+
+
 
 
 // Calls the startGame() function to start the game
