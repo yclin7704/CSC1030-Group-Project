@@ -8,22 +8,43 @@ let state = {};                                                           // Thi
 
 
 
-async function typeSentence(sentence, delay = 40) {
+// Will display the textNode text by printing it in a typewriter liek fashion
+async function typeSentence(sentence, delay = 30) {
+
+    // Clears the HTML so that it doesn't keep adding on to it
     document.getElementById('DialogueHospital').innerHTML = '';
-    var letters = sentence.split("");
+
+    // splits the sentence into individual characters
+    var letters = sentence.split(""); 
+
     let i = 0;
     while(i < letters.length) {
+
+        // the delay before each letter is printed
         await waitForMs(delay);
-        document.getElementById('DialogueHospital').innerHTML += letters[i];
-        i++;
+
+        // If the letter isn't an opening HTML tag character, this code runs
+        if (letters[i] != '<') {
+            document.getElementById('DialogueHospital').innerHTML += letters[i];
+            i++;
+        }
+
+        // Skips over HTML tag characters
+        else {
+            i++;
+            while (letters[i] != '>') {
+                i++;
+            }
+            i++;
+        }
     }
-    letters = '';
     return;
 }
 
 
 
 
+// Creates a time delay before each letter is printed
 function waitForMs(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
 }  
