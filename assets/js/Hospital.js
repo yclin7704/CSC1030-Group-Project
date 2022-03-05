@@ -8,6 +8,29 @@ let state = {};                                                           // Thi
 
 
 
+async function typeSentence(sentence, delay = 40) {
+    document.getElementById('DialogueHospital').innerHTML = '';
+    var letters = sentence.split("");
+    let i = 0;
+    while(i < letters.length) {
+        await waitForMs(delay);
+        document.getElementById('DialogueHospital').innerHTML += letters[i];
+        i++;
+    }
+    letters = '';
+    return;
+}
+
+
+
+
+function waitForMs(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
+}  
+
+
+
+
 // This function will start the game
 function startGame() {
     // State is set to the profession chosen
@@ -38,7 +61,8 @@ function startGame() {
  */
 function showTextNode(textNodeIndex){
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
-    textElement.innerHTML = textNode.text;                                      // Changes the dialogue box to text stored in the text node.
+    //textElement.innerHTML = textNode.text;                                      // Changes the dialogue box to text stored in the text node.
+    typeSentence(textNode.text);
     inventoryElement.innerHTML = textNode.inventory;
     imageElement.src = textNode.image;
     while(optionButtonsElement.firstChild) {

@@ -14,23 +14,57 @@
             letter-spacing: 6px; 
             font-weight: bold;
         }
+
+        .typing-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 42px;
+            background-color: rgb(0, 0, 0);
+            margin-left: 8px;
+        }
+
+        @keyframes blink {
+            0% {opacity: 1;}
+            40% {opacity: 1;}
+            60% {opacity: 0;}
+            100% {opacity: 0;}
+        }
+
+        .input-cursor { 
+            animation: blink .6s linear infinite alternate;
+        }
+
     </style>
     <script>
-        var messageArray = ["Typewriter Effect", "Hello There General Kenobi"];
-        var i = 0;
-        var speed = 70;
-
-        function typewriter() {
-            document.querySelector('#message').innerHTML = messageArray[1].substring(0, i);
-            if (i++ != messageArray[1].length) {
-                setTimeout(typewriter, speed);
+        async function typeSentence(sentence, delay = 100) {
+            const letters = sentence.split("");
+            let i = 0;
+            while(i < letters.length) {
+                await waitForMs(delay);
+                document.getElementById('sentence').innerHTML += letters[i];
+                i++;
             }
+            return;
         }
+
+
+        function waitForMs(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms))
+        }  
+
     </script>
     <title>Document</title>
 </head>
-<body onload="typewriter()">
-    <button> Click Me </button>
-    <div id="message"></div>
+<body onload="typeSentence('Hello There')">
+    <div class="typing-container">
+        <span id="sentence" class="sentence"></span>
+        <span class="input-cursor"></span>
+    </div>
 </body>
 </html>
