@@ -204,46 +204,11 @@ const textNodes = [
     },
 
 
-    // Intermidiate to allow dialogue to flow nicer
-    {
-        id: 90,
-        text: "You return to the outside of the Hospital, the air colder than it was than when you first arrived, yet you still feel as if you have unfinished business..." +
-            "<br>Around you, you still see some <strong>worn-down First Aid kits</strong> and <strong>an abandoned campfire</strong>",
-        inventory: '',
-        image: 'assets/images/Hospital_Outside.jpg',
-        options: [
-            {
-                text: 'Go inside the Hospital',
-                requiredState: (currentState) => currentState.crowbar === true,
-                nextText: 4
-            },
-            {
-                text: 'Collect mushrooms',
-                requiredState: (currentState) => currentState.collectMushrooms === true,
-                nextText: 6
-            },
-            {
-                text: 'Talk to stranger camping in front of the Hospital',
-                requiredState: (currentState) => currentState.crowbar === false,
-                nextText: 5
-            },
-            {
-                text: 'Check out the First Aid kits scattered across the ground',
-                nextText: 8
-            },
-            {
-                text: 'Check out the abandoned campfire',
-                nextText: 10
-            }
-        ]
-    },
-
-
 
     // The first visit to the inside the Hospital
     {
         id: 3,
-        text: "You decided to enter the main Lobby of the abandoned Hospital which, upon entering, is much more decrepit than you first thought. There are broken walls, leaking pipes, water" +
+        text: "You enter the main Lobby of the abandoned Hospital which, upon entering, looks completely decrepit and old. There are broken walls, leaking pipes, water" +
             " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking among the rooms of the Hospital...<br>As you look into" +
             " each of the rooms you see a <strong>Bone Saw</strong>, an <strong>Electric Blanket</strong> and <strong>some fuel</strong>",
         inventory: '',
@@ -251,7 +216,7 @@ const textNodes = [
         options: [
             {
                 text: 'Go outside the Hospital',
-                nextText: 90
+                nextText: 2
             },
             {
                 text: 'Check out the Bone Saw',
@@ -276,7 +241,7 @@ const textNodes = [
         options: [
             {
                 text: 'Go outside the Hospital',
-                nextText: 90
+                nextText: 2
             },
             {
                 text: 'Check out the Bone Saw',
