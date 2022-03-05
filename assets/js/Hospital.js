@@ -180,6 +180,41 @@ const textNodes = [
             {
                 text: 'Go inside the Hospital',
                 requiredState: (currentState) => currentState.crowbar === true,
+                nextText: 3
+            },
+            {
+                text: 'Collect mushrooms',
+                requiredState: (currentState) => currentState.collectMushrooms === true,
+                nextText: 6
+            },
+            {
+                text: 'Talk to stranger camping in front of the Hospital',
+                requiredState: (currentState) => currentState.crowbar === false,
+                nextText: 5
+            },
+            {
+                text: 'Check out the First Aid kits scattered across the ground',
+                nextText: 8
+            },
+            {
+                text: 'Check out the abandoned campfire',
+                nextText: 10
+            }
+        ]
+    },
+
+
+    // Intermidiate to allow dialogue to flow nicer
+    {
+        id: 90,
+        text: "You return to the outside of the Hospital, the air colder than it was than when you first arrived, yet you still feel as if you have unfinished business..." +
+            "<br>Around you, you still see some <strong>worn-down First Aid kits</strong> and <strong>an abandoned campfire</strong>",
+        inventory: '',
+        image: 'assets/images/Hospital_Outside.jpg',
+        options: [
+            {
+                text: 'Go inside the Hospital',
+                requiredState: (currentState) => currentState.crowbar === true,
                 nextText: 4
             },
             {
@@ -216,7 +251,7 @@ const textNodes = [
         options: [
             {
                 text: 'Go outside the Hospital',
-                nextText: 2
+                nextText: 90
             },
             {
                 text: 'Check out the Bone Saw',
@@ -241,7 +276,7 @@ const textNodes = [
         options: [
             {
                 text: 'Go outside the Hospital',
-                nextText: 2
+                nextText: 90
             },
             {
                 text: 'Check out the Bone Saw',
