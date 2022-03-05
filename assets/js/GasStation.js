@@ -9,6 +9,8 @@ const profession = getProfession();
 
 let state = {};
 
+let inventory = {};
+
 // This function is called to start the game. The state is emptied and the first text node is shown.
 
 function startGame(){
@@ -30,6 +32,7 @@ function startGame(){
     else {
         state = {};
     }
+    inventory = {};
     showTextNode(1);
 }
 
@@ -68,8 +71,19 @@ function selectOption(option) {
         return startGame();
     }
     state = Object.assign(state, option.setState);
+    inventory = Object.assign(inventory, option.setInventory);
     showTextNode(nextTextNodeId);
 
+}
+
+var getInventory = function(obj) {
+    var inventory = [];
+    for (var item in obj){
+        if (obj.hasOwnProperty(item)) {
+            inventory.push(item);
+        }
+    }
+    return inventory;
 }
 
 // The text nodes for the game are below
@@ -78,7 +92,7 @@ const textNodes = [
     {
         id: 1,
         text: 'You find what appears to be an empty gas station. However, the building is surrounded by fences, which creates suspicion that someone may be inside...',
-        inventory: '',
+        inventory: getInventory(inventory),
         image: 'assets/images/Hospital_Inside.jpg',
         options: [
             {
@@ -96,7 +110,7 @@ const textNodes = [
     {
         id: 2,
         text: 'You have got past the fence. You hear a loud bang come from inside the gas station. You also notice a car parked in the garage...',
-        inventory: 'Baseball Bat',
+        inventory: getInventory(inventory),
         image: 'assets/images/gasstation.jpg',
         options: [
             {
@@ -112,11 +126,12 @@ const textNodes = [
     {
         id: 3,
         text: 'You approach the car, however, it appears to be locked. You need to find a key.',
-        inventory: '',
+        inventory: getInventory(inventory),
         options: [
             {
                 text:'Look in the drawers',
-                setState: {keys: true},
+                setInventory: {Keys:true,
+                Handgun: true},
                 nextText: 5,
             },
             {
@@ -125,7 +140,8 @@ const textNodes = [
             },
             {
                 text: 'Go inside the gas station',
-                setState: {inside: true},
+                setState: {inside: true,
+                keys: true},
                 nextText: 7
             }
         ]
@@ -133,7 +149,7 @@ const textNodes = [
     {
         id: 4,
         text: 'Entering in the side door has alerted the people camping inside and you were shot and killed.',
-        inventory: '',
+        inventory: getInventory(inventory),
         options: [
             {
                 text:'Restart the game.',
@@ -144,7 +160,7 @@ const textNodes = [
     {
         id: 5,
         text: 'You have found the keys! You start the car and discover the car wont start...',
-        inventory: 'Keys',
+        inventory: getInventory(inventory),
         options: [
             {
                 text:'Go inside',
@@ -152,7 +168,7 @@ const textNodes = [
             },
             {
                 text: 'Try fix the car',
-                requiredState: (currentState) => currentState.Mechanic,
+                requiredInventory: (currentInventory) => currentInventory.keys,
                 nextText: 9
             }
         ]
