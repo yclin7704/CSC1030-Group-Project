@@ -4,12 +4,14 @@ const inventoryElement = document.getElementById('inventory');            // The
 const imageElement = document.getElementById('ImageDisplay');             // The image to be displayed on-screen
 const profession = getProfession();                                       // This will store the profession
 let state = {};                                                           // This will store the game's current/active state
-
+var buttonActive;
 
 
 
 // Will display the textNode text by printing it in a typewriter liek fashion
 async function typeSentence(sentence, delay = 30) {
+
+    buttonActive = false;
 
     // Clears the HTML so that it doesn't keep adding on to it
     document.getElementById('DialogueHospital').innerHTML = '';
@@ -38,6 +40,7 @@ async function typeSentence(sentence, delay = 30) {
             i++;
         }
     }
+    buttonActive = true;
     return;
 }
 
@@ -149,7 +152,7 @@ const textNodes = [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
                 setState: {collectMushrooms: true, FirstAid: false, FireWood: false},
-                nextText: 5
+                nextText: 5,
             },
             {
                 text: 'Check out the First Aid kits scattered across the ground',
