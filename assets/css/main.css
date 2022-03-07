@@ -125,6 +125,12 @@ button:enabled:hover {
 	cursor: pointer;
 }
 
+button[disabled],
+input[type="button"][disabled] {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
 .textBox {
 	font-size: 16pt;
 	height: 70%;
@@ -152,7 +158,7 @@ button:enabled:hover {
 	text-decoration: underline;
 }
 
-.changeText{
+.changeText {
 	background-color: #debf89;
 	margin-top: 10px;
 	font-weight: bold;
