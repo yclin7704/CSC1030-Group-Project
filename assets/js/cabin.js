@@ -84,24 +84,6 @@ function areReqsMet(reqs) {
 }
 
 /**
- * Get the value stored under the given key in localStorage
- * @param {string} key The key to search for
- * @returns The value, if found
- */
-function getStorage(key) {
-	return window.localStorage.getItem(key);
-}
-
-/**
- * Store the given value under the given key in localStorage
- * @param {string} key The key to store the data under
- * @param {*} value The value to be stored
- */
-function setStorage(key, value = 1) {
-	window.localStorage.setItem(key, value);
-}
-
-/**
  * Display the given dialogue to the user
  * @param {string} text The text to display
  */
