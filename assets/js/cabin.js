@@ -31,7 +31,7 @@ async function runEvent(eventId) {
 	// Update the game's state, if needed
 	updateGameState(eventData.stateChanges);
 	// Display the event text
-	print(eventData.text);
+	print(eventData.text, eventId);
 	// Update the setting image
 	setImg(eventData.img);
 	// Show the user's options
@@ -158,9 +158,8 @@ function areReqsMet(reqs) {
  * @todo Some fancy ttyping effect maybe?
  * @param {string} text The text to display
  */
-async function print(text) {
-	let dialogueBox = getDOM("dialogue");
-	dialogueBox.innerHTML = text;
+async function print(text, eventId) {
+	typeSentence(text, eventId);
 }
 
 /**
