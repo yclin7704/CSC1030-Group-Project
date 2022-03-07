@@ -17,7 +17,6 @@ const eventOpts = [
 		choices: [
 			{
 				desc: "Enter the cabin",
-				stateChange: {},
 				requiredState: {},
 				nextEvent: "outside",
 			},
@@ -29,10 +28,11 @@ const events = [
 	{
 		id: "firstVisitOutside",
 		text: `Following the path you've treaded so many times before, you find yourself outside your cabin in the woods once again. 
-                You can still see signs of zombies nearby, and the window of the cabin is smashed.
-                TODO Something about things aren't looking good for the rest of your family`,
+        You can still see signs of zombies nearby, and the window of the cabin is smashed.
+        TODO Something about things aren't looking good for the rest of your family`,
 		img: imgOutside,
 		optsId: "outside",
+		stateChanges: {},
 	},
 ];
 
@@ -45,9 +45,16 @@ async function main() {
 
 async function runEvent(eventId) {
 	let eventData = events.find((event) => event.id === eventId);
+	updateGameState(eventData.stateChanges);
 	print(eventData.text);
 	setImg(eventData.img);
 	setChoices(eventData.optsId);
+}
+
+function updateGameState(changes) {
+	for (let key in changes) {
+		gameState[key] = changes[key];
+	}
 }
 
 async function setChoices(optsId) {
