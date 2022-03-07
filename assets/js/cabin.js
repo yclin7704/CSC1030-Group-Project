@@ -18,7 +18,7 @@ const eventOpts = [
 			{
 				desc: "Enter the cabin",
 				requiredState: {},
-				nextEvent: "outside",
+				nextEventId: "outside",
 				stateChanges: {},
 			},
 		],
@@ -84,8 +84,10 @@ async function setChoices(optsId) {
 	}
 }
 
-function selectOption(opt) {
-	console.log(opt);
+async function selectOption(opt) {
+	updateGameState(opt.stateChanges);
+	let nextEventId = opt.nextEventId;
+	runEvent(nextEventId);
 }
 
 function areReqsMet(reqs) {
