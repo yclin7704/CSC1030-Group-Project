@@ -8,8 +8,17 @@ const eventOpts = [
 			{
 				desc: "Enter the cabin",
 				requiredState: {},
-				nextEventId: "outside",
+				nextEventId: "inside",
 				stateChanges: {},
+			},
+		],
+	},
+	{
+		id: "inside",
+		choices: [
+			{
+				desc: "Leave the cabin",
+				nextEventId: "firstVisitOutside",
 			},
 		],
 	},
@@ -24,5 +33,11 @@ const events = [
 		img: imgOutside,
 		optsId: "outside",
 		stateChanges: {},
+	},
+	{
+		id: "inside",
+		text: `Inside the cabin`,
+		img: imgInside,
+		optsId: "inside",
 	},
 ];
