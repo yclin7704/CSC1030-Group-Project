@@ -7,15 +7,18 @@
     <link rel="stylesheet" href="./TEST/Styling.css"/>
     <title>Last Stand</title>
     <script src="./assets/js/Timer.js"></script>
+    <script src="./TEST/ProfessionDialogue.js"></script>
 </head>
 <body onload="StopTimer()">
     <div class="box centered">
         <h1> Game Over </h1>
         <br>
         <p>Time Played: <span id="TheTime"></span> seconds</p>
-        <br>
         <p>Profession Chosen: <span id="TheProfession"></span></p>
         <button class="button" onclick="playAgain()"> Play Again? </button>
+        <script>
+            document.getElementById('TheProfession').innerHTML = getProfession();
+        </script>
     </div>
 </body>
 </html>

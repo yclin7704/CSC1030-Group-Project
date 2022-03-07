@@ -18,4 +18,7 @@ function StopTimer() {
 
 function playAgain() {
     window.location.href = "Hospital.html";
+    //window.location.href = "Cabin.html";
+    //window.location.href = "GasStation.html";
+    //window.location.href = "FarmHouse.html";
 }
