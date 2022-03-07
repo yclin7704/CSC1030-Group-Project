@@ -19,6 +19,7 @@ const eventOpts = [
 				desc: "Enter the cabin",
 				requiredState: {},
 				nextEvent: "outside",
+				stateChanges: {},
 			},
 		],
 	},
@@ -40,6 +41,10 @@ const events = [
  * Main function
  */
 async function main() {
+	// TODO: Inventory
+	// TODO: Returning to cabin
+	//TODO: Actually test any of this code
+
 	runEvent("firstVisitOutside");
 }
 
@@ -69,6 +74,7 @@ async function setChoices(optsId) {
 		let btn = document.createElement("button");
 
 		btn.innerHTML = opt.desc;
+		// TODO: Disable button, or hide it?
 		btn.disabled = !areReqsMet(opt.requiredState);
 
 		btn.classList = ["buttonChoice"];
