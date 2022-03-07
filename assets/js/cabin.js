@@ -16,15 +16,53 @@ async function main() {
 	// TODO: Returning to cabin
 	// TODO: Actually test any of this code
 
+	// TODO: Get profession properly
+	profession = profHunter;
+
 	runEvent("firstVisitOutside");
 }
 
 async function runEvent(eventId) {
-	let eventData = events.find((event) => event.id === eventId);
+	let eventData = getEventData(eventId);
 	updateGameState(eventData.stateChanges);
 	print(eventData.text);
 	setImg(eventData.img);
 	setChoices(eventData.optsId);
+}
+
+function getEventData(eventId) {
+	let eventData = events.find((event) => event.id === eventId);
+	let profEventData = getProfEventData().find((event) => event.id === eventId);
+
+	if (profEventData === undefined) return eventData;
+	else {
+		let data = {};
+
+		for (let key in eventData) {
+			data[key] = eventData[key];
+		}
+
+		for (let key in profEventData) {
+			data[key] = profEventData[key];
+		}
+
+		return data;
+	}
+}
+
+function getProfEventData() {
+	switch (profession) {
+		case profHunter:
+			return eventsHunter;
+		case profMechanic:
+			return eventsMechanic;
+		case profDoctor:
+			return eventsDoctor;
+		case profVeteran:
+			return eventsVeteran;
+		case profPriest:
+			return eventsPriest;
+	}
 }
 
 function updateGameState(changes) {
