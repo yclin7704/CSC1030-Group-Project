@@ -8,52 +8,6 @@ var buttonActive;
 
 
 
-// Will display the textNode text by printing it in a typewriter liek fashion
-async function typeSentence(sentence, delay = 30) {
-
-    buttonActive = false;
-
-    // Clears the HTML so that it doesn't keep adding on to it
-    document.getElementById('DialogueHospital').innerHTML = '';
-
-    // splits the sentence into individual characters
-    var letters = sentence.split(""); 
-
-    let i = 0;
-    while(i < letters.length) {
-
-        // the delay before each letter is printed
-        await waitForMs(delay);
-
-        // If the letter isn't an opening HTML tag character, this code runs
-        if (letters[i] != '<') {
-            document.getElementById('DialogueHospital').innerHTML += letters[i];
-            i++;
-        }
-
-        // Skips over HTML tag characters
-        else {
-            i++;
-            while (letters[i] != '>') {
-                i++;
-            }
-            i++;
-        }
-    }
-    buttonActive = true;
-    return;
-}
-
-
-
-
-// Creates a time delay before each letter is printed
-function waitForMs(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms))
-}  
-
-
-
 
 // This function will start the game
 function startGame() {
@@ -84,9 +38,8 @@ function startGame() {
  * @param textNodeIndex - This is the id number of the text node to be displayed
  */
 function showTextNode(textNodeIndex){
-    const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
-    //textElement.innerHTML = textNode.text;                                      // Changes the dialogue box to text stored in the text node.
-    typeSentence(textNode.text);
+    const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.                                    
+    typeSentence(textNode.text); // Changes the dialogue box to text stored in the text node.
     inventoryElement.innerHTML = textNode.inventory;
     imageElement.src = textNode.image;
     while(optionButtonsElement.firstChild) {
