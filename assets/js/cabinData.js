@@ -11,10 +11,24 @@ const eventOpts = [
 				nextEventId: "inside",
 				stateChanges: {},
 			},
+			{
+				desc: "Search for firewood",
+				requiredState: { foundFirewood: false },
+				nextEventId: "searchForFirewood",
+			},
 		],
 	},
 	{
 		id: "inside",
+		choices: [
+			{
+				desc: "Leave the cabin",
+				nextEventId: "firstVisitOutside",
+			},
+		],
+	},
+	{
+		id: "searchForFirewood",
 		choices: [
 			{
 				desc: "Leave the cabin",
@@ -27,11 +41,19 @@ const eventOpts = [
 const events = [
 	{
 		id: "firstVisitOutside",
-		text: `Following the path deeper into the dark woods, you stumble across a lone cabin. There appears to have been signs of a struggle, 
-        and it seems there are still zombies nearby. What happened here?`,
+		text: `Following the path deeper into the dark woods, you stumble across a lone cabin.
+        It looks to have been recently abandoned, and you can see signs of zombies nearby.
+        The windows have been smashed in and the door is hanging off its hinges.
+        You might be able to find some wood for a fire here, or with some barricades you might even be able to spend the night here.`,
 		img: imgOutside,
 		optsId: "outside",
 		stateChanges: {},
+	},
+	{
+		id: "searchForFirewood",
+		text: `WOOD`,
+		optsId: "searchForFirewood",
+		stateChanges: { foundFirewood: true },
 	},
 	{
 		id: "inside",

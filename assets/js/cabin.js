@@ -17,7 +17,7 @@ async function main() {
 	// TODO: Actually test any of this code
 
 	// TODO: Get profession properly
-	profession = profHunter;
+	profession = profMechanic;
 
 	runEvent("firstVisitOutside");
 }
@@ -102,7 +102,7 @@ async function selectOption(opt) {
 function areReqsMet(reqs) {
 	let allMet = true;
 	for (let key in reqs) {
-		allMet = allMet && reqs[key] === gameState[key];
+		allMet = allMet && (reqs[key] === gameState[key] || (!reqs[key] && !gameState[key]));
 	}
 	return allMet;
 }
