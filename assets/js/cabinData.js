@@ -41,7 +41,7 @@ const eventOpts = [
 const events = [
 	{
 		id: "firstVisitOutside",
-		text: `Following the path <strong>deeper</strong> into the dark woods, you stumble across a lone cabin. <br />
+		text: `Following the path deeper into the dark woods, you stumble across a lone cabin.
         It looks to have been recently abandoned, and you can see signs of zombies nearby.
         The windows have been smashed in and the door is hanging off its hinges.
         You might be able to find some wood for a fire here, or with some barricades you might even be able to spend the night here.`,
