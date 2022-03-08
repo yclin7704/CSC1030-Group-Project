@@ -1,17 +1,22 @@
-let eventId;
+let currentText;
 
-// Will display the textNode text by printing it in a typewriter like fashion
-async function typeSentence(sentence, givenEventId, delay = 10) {
+/**
+ * Display the given text ina typewriter-like fashion
+ * @param {string} text The text to display
+ * @param {number} delay The delay between printing each character (Default 10)
+ * @returns Nothing
+ */
+async function typeSentence(text, delay = 10) {
+	currentText = text;
+
 	// Clears the HTML so that it doesn't keep adding on to it
 	let dialogueBox = document.getElementById("dialogue");
 	dialogueBox.innerHTML = "";
-	console.log(`Printing ${givenEventId}`);
-
-	eventId = givenEventId;
 
 	// Split the sentence into a char array
-	let letters = sentence.split("");
+	let letters = text.split("");
 
+	// Variables used to manage printing HTML tags
 	let tag = "";
 	let isInTag = false;
 	let isInQuotes = false;
@@ -23,7 +28,7 @@ async function typeSentence(sentence, givenEventId, delay = 10) {
 		if (!tag) await waitForMs(delay);
 
 		// If the user has gone on to the next event/location, stop displaying this one
-		if (eventId != givenEventId) return;
+		if (currentText != text) return;
 
 		// If at the start of a tag
 		if (letters[i] === "<") {
@@ -66,7 +71,7 @@ async function typeSentence(sentence, givenEventId, delay = 10) {
 
 /**
  * Wait for the given number of milliseconds
- * Note: setTimeout has a minimum delay of 4ms, and is inaccurate
+ * Note: setTimeout has a minimum delay of 4ms, and is inaccurate. Unfortunately no better alternative seems to exist
  * @param {number} ms The number of milliseconds to wait for
  * @returns {Promise} A promise that will resolve itself after the given time
  */
