@@ -14,6 +14,7 @@ async function typeSentence(sentence, givenEventId, delay = 10) {
 
 	let tag = "";
 	let isInTag = false;
+	let isInQuotes = false;
 	let hasReachedBackslash = false;
 
 	for (let i = 0; i < letters.length; i++) {
@@ -30,9 +31,14 @@ async function typeSentence(sentence, givenEventId, delay = 10) {
 			isInTag = true;
 		}
 		// If in < these > and not also in " these ", then the next > marks the end of the tag
-		else if (isInTag && letters[i] === "/") {
+		else if (isInTag && !isInQuotes && letters[i] === "/") {
 			tag += letters[i];
 			hasReachedBackslash = true;
+		}
+		// Allow URLs etc containing `/`
+		else if (isInTag && letters[i] === '"') {
+			tag += letters[i];
+			isInQuotes = !isInQuotes;
 		}
 		// If at the end of the tag
 		else if (letters[i] === ">" && hasReachedBackslash) {
