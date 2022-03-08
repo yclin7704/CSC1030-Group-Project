@@ -5,6 +5,7 @@ const imageElement = document.getElementById('ImageDisplay');             // The
 const profession = getProfession();                                       // This will store the profession
 let state = {};                                                           // This will store the game's current/active state
 var buttonActive;
+let random = [];
 
 
 
@@ -35,6 +36,7 @@ function showTextNode(textNodeIndex){
     typeSentence(textNode.text); // Changes the dialogue box to text stored in the text node.
     inventoryElement.innerHTML = textNode.inventory;
     imageElement.src = textNode.image;
+    random[0] = textNode.random;
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
     }
@@ -157,7 +159,8 @@ const textNodes = [
         id: 3,
         text: "You enter the main Lobby of the abandoned Hospital which, upon entering, looks completely decrepit and old. There are broken walls, leaking pipes, water" +
             " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking among the rooms of the Hospital...<br>As you look into" +
-            " each of the rooms you see a <strong>Bone Saw</strong>, an <strong>Electric Blanket</strong> and <strong>some fuel</strong>",
+            " each of the rooms you see a <strong>Bone Saw</strong>, an <strong>Electric Blanket</strong> and <strong>some fuel</strong>. There's also an <strong>abandoned room</strong>" +
+            " at the end of the Lobby.",
         inventory: '',
         image: 'assets/images/Hospital_Inside.jpg',
         options: [
@@ -167,7 +170,6 @@ const textNodes = [
             },
             {
                 text: 'Enter abandoned room at the end of the lobby',
-                requiredState: (currentState) => currentState.BoneSaw === true && currentState.ElectricBlanket === true && currentState.Fuel === true,
                 nextText: 18
             },
             {
@@ -517,6 +519,43 @@ const textNodes = [
 
 
 
+    // You prepare for the night
+    {
+        id: 19,
+        text: 'You decided to get ready for the night ahead by making some last minute preparations to the abandoned room and just in general so you\'ll suvive...',
+        inventory: '',
+        image: 'assets/images/Hospital_Inside.jpg',
+        random: Math.round(Math.random()),
+        options: [
+            {
+                text: 'Barricade the windows with the wood from the Campfire',
+                requiredState: (currentState) => currentState.FireWood === true,
+                nextText: 20
+            },
+            {
+                text: 'Use the Fire Wood from the Campfire to make your own campfire here',
+                requiredState: (currentState) => currentState.FireWood === true,
+                nextText: 21
+            },
+            {
+                text: 'Start the Night',
+                requiredState: (currentState) => currentState.FirstAid === false &&
+                                                 currentState.FireWood === false &&
+                                                 currentState.BoneSaw === false &&
+                                                 currentState.ElectricBlanket === false &&
+                                                 currentState.Fuel === false,
+                nextText: 101
+            },
+            {
+                text: 'Start the Night',
+                requiredState: (currentState) => currentState.BoneSaw === true,
+                nextText: 102
+            }
+        ]
+    },
+
+
+
     // You try to forcefully take the crowbar - ENDING 1
     {
         id: 100,
@@ -530,7 +569,46 @@ const textNodes = [
                 nextText: -1
             }
         ]
+    },
+
+
+
+    // You decided to start the Night without making any preparations - ENDING 3
+    {
+        id: 101,
+        text: 'You decided not to make any preparations at all and waited patiently for the night to fall over the Hospital. However, due to your lack' +
+            ' of preparations the Zombies started climbing through the windows and piling through the door to the abandoned room. You immediately became' +
+            ' overwhelmed and with no weapon to defend yourself, you had to accept your fate...' +
+            '<br><b><em>You Died!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
+        inventory: '',
+        image: 'assets/images/Game_Over_TEST-IMAGE.jpg',
+        options: [
+            {
+                text: 'Play Again?',
+                nextText: -1
+            }
+        ]
+    },
+
+
+
+    // You deicded to start the night while only having the Bone Saw as a weapon - ENDING 4
+    {
+        id: 102,
+        text: 'You decided not to make any defence preparations at all and waited patiently for the night to consume the Hospital in darkness, confident in' +
+            ' the fatc that you\'ll be able to survive with just the Bone Saw as your weapon of choice. As night arrives, the Zombies start climbing through' +
+            ' the windows and also start piling through the door. Howver you start slashing the zombies down one by one with the Bone saw until there were none left' +
+            '<br><b><em>You Survived!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
+        inventory: '',
+        image: 'assets/images/Victory_TEST-GIF.gif',
+        options: [
+            {
+                text: 'Play Again?',
+                nextText: -1
+            }
+        ]
     }
+
 ];
 
 
