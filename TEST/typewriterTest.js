@@ -18,30 +18,42 @@ async function typeSentence(sentence, givenEventId, delay = 10) {
 
 	for (let i = 0; i < letters.length; i++) {
 		// Wait before printing each letter
+		// TODO: HTML tags are skipped over instantly (takes too long otherwise)
 		if (!tag) await waitForMs(delay);
 
 		// If the user has gone on to the next event/location, stop displaying this one
 		if (eventId != givenEventId) return;
 
+		// If at the start of a tag
 		if (letters[i] === "<") {
 			tag += letters[i];
 			isInTag = true;
-		} else if (isInTag && letters[i] === "/") {
+		}
+		// If in < these > and not also in " these ", then the next > marks the end of the tag
+		else if (isInTag && letters[i] === "/") {
 			tag += letters[i];
 			hasReachedBackslash = true;
-			console.log("Backslash");
-		} else if (letters[i] === ">" && hasReachedBackslash) {
+		}
+		// If at the end of the tag
+		else if (letters[i] === ">" && hasReachedBackslash) {
 			tag += letters[i];
+
+			// Add the tag (TODO: Currently added instantly)
 			dialogueBox.innerHTML += tag;
 
 			// Reset variables
 			tag = "";
 			isInTag = false;
 			hasReachedBackslash = false;
-		} else if (letters[i] === ">" && !hasReachedBackslash) {
+		}
+		// Any other `>` that is not the end of the tag
+		else if (letters[i] === ">" && !hasReachedBackslash) {
 			isInTag = false;
 			tag += letters[i];
-		} else if (tag) tag += letters[i];
+		}
+		// Any other character while constructing the tag
+		else if (tag) tag += letters[i];
+		// Not constructing a tag
 		else dialogueBox.innerHTML += letters[i];
 	}
 }
