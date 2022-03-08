@@ -1,6 +1,7 @@
 const imgOutside = "assets/images/cabin-outside.webp";
 const imgInside = "assets/images/cabin-inside.webp";
 
+// TODO: Only event OR choice should be able to update game state (Or should most of the time, anyway). Which?
 const eventOpts = [
 	{
 		id: "outside",
@@ -13,7 +14,7 @@ const eventOpts = [
 			},
 			{
 				desc: "Search for firewood",
-				requiredState: { foundFirewood: false },
+				requiredState: { hasLargeFirewood: false },
 				nextEventId: "searchForFirewood",
 			},
 		],
@@ -27,15 +28,59 @@ const eventOpts = [
 			},
 		],
 	},
+
+	// BEGIN: Firewood
 	{
 		id: "searchForFirewood",
 		choices: [
 			{
-				desc: "Leave the cabin",
+				desc: "Ignore the firewood for now and return to the entrance to the cabin",
+				nextEventId: "firstVisitOutside",
+			},
+			{
+				desc: "Take some of the logs",
+				requiredState: { hasLargeFirewood: false },
+				stateChanges: { hasLargeFirewood: true },
+				nextEventId: "takeLargeFirewood",
+			},
+			{
+				desc: "Make some smaller kindling out of the logs using your saw",
+				requiredState: { hasSaw: true /* That variable may need renamed */, hasKindling: false },
+				// TODO: Inventory?
+				stateChanges: { hasKindling: true },
+				nextEventId: "makeKindling",
+			},
+			{
+				desc: "Venture out into the woods and see what you can find",
+				nextEventId: undefined,
+			},
+		],
+	},
+	{
+		id: "takingLargeFirewood",
+		choices: [
+			{
+				desc: "Return to the entrance to the cabin with your blocks of firewood",
 				nextEventId: "firstVisitOutside",
 			},
 		],
 	},
+	{
+		id: "makingKindling",
+		choices: [
+			{
+				desc: "Return to the entrance to the cabin with your kindling",
+				nextEventId: "firstVisitOutside",
+			},
+			{
+				desc: "Return the the entrance to the cabin and take some larger blocks of firewood too",
+				nextEventId: "firstVisitOutside",
+				requiredState: { hasLargeFirewood: false },
+				stateChanges: { hasLargeFirewood: true },
+			},
+		],
+	},
+	// END: Firewood
 ];
 
 const events = [
@@ -49,12 +94,33 @@ const events = [
 		optsId: "outside",
 		stateChanges: {},
 	},
+
+	// BEGIN: Firewood
 	{
 		id: "searchForFirewood",
-		text: `WOOD`,
+		text: `Walking around the house, you find a large stack of logs. Unfortunately, they're too big to help you start the fire,
+        but they'll be useful for keeping it going throughout the night.<br />
+        If you had a <strong>saw</strong> of some sort, you could cut some of them up into kindling.<br />
+        You might also be able to find some smaller branches out in the forest, but who knows what's out in those dark woods?<br />
+        Or you could hope that you find some other kindling before night.`,
 		optsId: "searchForFirewood",
-		stateChanges: { foundFirewood: true },
+		stateChanges: { visitedFirewood: true },
 	},
+	{
+		id: "takeLargeFirewood",
+		text: `You take some of the wood with you. It's heavy, but you should have enough now to last you the night.<br />
+        If you find a saw, you can always return here and make some kindling.`,
+		// IDEA: Making kindling when you find the saw from the wood you already have is probably too ambitious, right?
+		optsId: "takingLargeFirewood",
+	},
+	{
+		id: "makeKindling",
+		text: `You saw some of the logs into smaller peices of kindling. This should be a great help in starting a fire to keep you warm enough to last through tonight.<br />
+        Do you want to take some larger blocks of wood too?`,
+		optsId: "makingKindling",
+	},
+	// END: Firewood
+
 	{
 		id: "inside",
 		text: `Inside the cabin`,

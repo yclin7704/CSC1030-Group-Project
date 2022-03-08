@@ -6,7 +6,9 @@ const profDoctor = "Doctor";
 const profVeteran = "Veteran";
 const profPriest = "Priest";
 
-let gameState = {};
+let gameState = {
+	hasSaw: true,
+};
 
 /**
  * Main function
