@@ -6,7 +6,9 @@ const profDoctor = "Doctor";
 const profVeteran = "Veteran";
 const profPriest = "Priest";
 
-let gameState = {};
+let gameState = {
+	hasSaw: true,
+};
 
 /**
  * Main function
@@ -167,6 +169,7 @@ async function print(text, eventId) {
  * @param {string} src The location of the image file
  */
 async function setImg(src) {
+	if (!src) return;
 	getDOM("imgLocation").src = src;
 }
 
