@@ -6,7 +6,7 @@ let currentText;
  * @param {number} delay The delay between printing each character (Default 10)
  * @returns Nothing
  */
-async function typeSentence(text, delay = 10) {
+async function typeSentence(text, delay = 30) {
 	currentText = text;
 
 	// Clears the HTML so that it doesn't keep adding on to it
