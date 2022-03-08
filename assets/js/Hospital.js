@@ -600,7 +600,7 @@ const textNodes = [
             ' the windows and also start piling through the door. Howver you start slashing the zombies down one by one with the Bone saw until there are none left' +
             '<br><b><em>You Survived!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
         inventory: '',
-        image: 'assets/images/Victory_TEST-GIF.gif',
+        image: 'assets/images/Victory2_TEST-GIF.gif',
         options: [
             {
                 text: 'Play Again?',
