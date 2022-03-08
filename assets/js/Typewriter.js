@@ -1,6 +1,8 @@
 // Will display the textNode text by printing it in a typewriter like fashion
 async function typeSentence(sentence, delay = 30) {
 
+    currentText = sentence;
+
     // Clears the HTML so that it doesn't keep adding on to it
     document.getElementById('DialogueHospital').innerHTML = '';
 

@@ -12,20 +12,13 @@ var buttonActive;
 // This function will start the game
 function startGame() {
     // State is set to the profession chosen
-    if (profession === 'Mechanic') {
-        state = {Mechanic:true}
-    }
-    else if (profession === 'Medic') {
-        state = {Medic:true};
-    }
-    else if (profession === 'Hunter') {
-        state = {Hunter:true};
-    }
-    else if (profession === 'War Veteran') {
-        state = {WarVeteran:true}
-    }
-    else if (profession === 'Priest') {
-        state = {Priest:true}
+    switch(profession){
+        case "Mechanic": state = {Mechanic: true}; break;
+        case "Doctor": state = {Doctor: true}; break;
+        case "Hunter": state = {Hunter: true}; break;
+        case "War Veteran": state = {WarVeteran: true}; break;
+        case "Priest": state = {Priest: true}; break;
+        default: state = {}; break;
     }
     showTextNode(1)  // Will display the first text node (id=1)
 }
@@ -173,12 +166,21 @@ const textNodes = [
                 nextText: 2
             },
             {
+                text: 'Enter abandoned room at the end of the lobby',
+                requiredState: (currentState) => currentState.BoneSaw === true && currentState.ElectricBlanket === true && currentState.Fuel === true,
+                nextText: 18
+            },
+            {
                 text: 'Check out the Bone Saw',
                 nextText: 12
             },
             {
                 text: 'Check out the Electric Blanket',
                 nextText: 14
+            },
+            {
+                text: 'Check out the Fuel',
+                nextText: 16
             }
         ]
     },
@@ -408,6 +410,7 @@ const textNodes = [
         options: [
             {
                 text: 'Head back to the main lobby of the Hospital',
+                setState: {BoneSaw: true},
                 nextText: 3
             }
         ]
@@ -446,6 +449,67 @@ const textNodes = [
         options: [
             {
                 text: 'Head back to the main lobby of the Hospital',
+                setState: {ElectricBlanket: true},
+                nextText: 3
+            }
+        ]
+    },
+
+
+
+    // You check out the Fuel
+    {
+        id: 16,
+        text: 'In the Storage Closet on the right hand side of the Lobby, you can see some fuel. However, it\'s stashed way at the back of the closet, but you feel like it' +
+            ' might be useful to have. Do you try to take the Fuel?',
+        inventory: '',
+        image: 'assets/images/Hospital_Inside.jpg',
+        options: [
+            {
+                text: 'Take the Fuel',
+                nextText: 17
+            },
+            {
+                text: 'Don\'t take the Fuel and return to the Hospital Lobby',
+                nextText: 3
+            }
+        ]
+    },
+
+
+
+    // You decided to take the Fuel
+    {
+        id: 17,
+        text: 'After spending a lot of time rummaging through the Storage Closet you eventually manage to get the fuel from the back, brushing all the dust off your shoulders' +
+            ' you return to the Hospital Lobby',
+        inventory: '',
+        image: 'assets/images/Hospital_Inside.jpg',
+        options: [
+            {
+                text: 'Head back to the main lobby of the Hospital',
+                setState: {Fuel: true},
+                nextText: 3
+            }
+        ]
+    },
+
+
+
+    // You decided to enter the abandoned room
+    {
+        id: 18,
+        text: 'You slowly enter the abandoned room, it\'s very quiet and also quite spacious. You feel as if that this might be a good place to camp out for the night and' +
+            ' make your <strong>Final Stand</strong>. Do you wish to stay here and prepare for the night ahead?',
+        inventory: '',
+        image: 'assets/images/Hospital_Inside.jpg',
+        options: [
+            {
+                text: 'Yes! Make my Final Stand and don\'t look back',
+                nextText: 19
+            },
+            {
+                text: 'No! Leave the room and return to the Hospital Lobby',
                 nextText: 3
             }
         ]
