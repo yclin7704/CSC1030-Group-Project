@@ -3,7 +3,8 @@ let eventId;
 // Will display the textNode text by printing it in a typewriter like fashion
 async function typeSentence(sentence, givenEventId, delay = 10) {
 	// Clears the HTML so that it doesn't keep adding on to it
-	document.getElementById("dialogue").innerHTML = "";
+	let dialogueBox = document.getElementById("dialogue");
+	dialogueBox.innerHTML = "";
 	console.log(`Printing ${givenEventId}`);
 
 	eventId = givenEventId;
@@ -11,14 +12,37 @@ async function typeSentence(sentence, givenEventId, delay = 10) {
 	// Split the sentence into a char array
 	let letters = sentence.split("");
 
+	let tag = "";
+	let isInTag = false;
+	let hasReachedBackslash = false;
+
 	for (let i = 0; i < letters.length; i++) {
 		// Wait before printing each letter
-		await waitForMs(delay);
+		if (!tag) await waitForMs(delay);
 
 		// If the user has gone on to the next event/location, stop displaying this one
 		if (eventId != givenEventId) return;
 
-		document.getElementById("dialogue").innerHTML += letters[i];
+		if (letters[i] === "<") {
+			tag += letters[i];
+			isInTag = true;
+		} else if (isInTag && letters[i] === "/") {
+			tag += letters[i];
+			hasReachedBackslash = true;
+			console.log("Backslash");
+		} else if (letters[i] === ">" && hasReachedBackslash) {
+			tag += letters[i];
+			dialogueBox.innerHTML += tag;
+
+			// Reset variables
+			tag = "";
+			isInTag = false;
+			hasReachedBackslash = false;
+		} else if (letters[i] === ">" && !hasReachedBackslash) {
+			isInTag = false;
+			tag += letters[i];
+		} else if (tag) tag += letters[i];
+		else dialogueBox.innerHTML += letters[i];
 	}
 }
 
