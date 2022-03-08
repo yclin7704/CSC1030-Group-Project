@@ -12,7 +12,8 @@ const eventOpts = [
 			},
 			{
 				desc: "Search for firewood",
-				requiredState: { hasLargeFirewood: false },
+				// TODO: Should be OR here, not AND
+				requiredState: { hasLargeFirewood: false, hasKindling: false },
 				nextEventId: "searchForFirewood",
 			},
 		],
