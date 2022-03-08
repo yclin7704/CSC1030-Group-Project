@@ -203,6 +203,7 @@ const textNodes = [
         options: [
             {
                 text: 'Back',
+                setState: {note1:true},
                 nextText: 2
             }
         ]
@@ -227,7 +228,7 @@ const textNodes = [
             {
                 text: 'Shoot the lock off',
                 requiredState: (currentState) => currentState.Hunter, //need to get gun from inventory
-                nextText: 10
+                nextText: 9
             },
             {
                 text: 'back',
@@ -239,6 +240,18 @@ const textNodes = [
     {
         id: 9,
         text: 'Upon entering the farm house, you see that it is in ruins, wallpaper discoloured, . You wondered what could have possibly happened here to create this mess.',
+        note: '',
+        inventory: '',
+        image: 'assets/images/farm-house-inside.jpg',
+        options: [
+            {
+
+            }
+        ]
+    },
+    {
+        id: 10,
+        text: '',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-inside.jpg',
