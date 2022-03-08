@@ -596,8 +596,8 @@ const textNodes = [
     {
         id: 102,
         text: 'You decided not to make any defence preparations at all and waited patiently for the night to consume the Hospital in darkness, confident in' +
-            ' the fatc that you\'ll be able to survive with just the Bone Saw as your weapon of choice. As night arrives, the Zombies start climbing through' +
-            ' the windows and also start piling through the door. Howver you start slashing the zombies down one by one with the Bone saw until there were none left' +
+            ' the fact that you\'ll be able to survive with just the Bone Saw as your weapon of choice. As night arrives, the Zombies start climbing through' +
+            ' the windows and also start piling through the door. Howver you start slashing the zombies down one by one with the Bone saw until there are none left' +
             '<br><b><em>You Survived!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
         inventory: '',
         image: 'assets/images/Victory_TEST-GIF.gif',
