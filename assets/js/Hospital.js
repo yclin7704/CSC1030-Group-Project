@@ -391,7 +391,7 @@ const textNodes = [
             },
             {
                 text: 'Don\'t take the Bone Saw and return to main lobby of the Hospital',
-                nextText: 4
+                nextText: 3
             }
         ]
     },
@@ -408,7 +408,7 @@ const textNodes = [
         options: [
             {
                 text: 'Head back to the main lobby of the Hospital',
-                nextText: 4
+                nextText: 3
             }
         ]
     },
@@ -429,7 +429,7 @@ const textNodes = [
             },
             {
                 text: 'Don\'t take the Electric Blanket and return to the Hospital Lobby',
-                nextText: 4
+                nextText: 3
             }
         ]
     },
@@ -446,7 +446,7 @@ const textNodes = [
         options: [
             {
                 text: 'Head back to the main lobby of the Hospital',
-                nextText: 4
+                nextText: 3
             }
         ]
     },

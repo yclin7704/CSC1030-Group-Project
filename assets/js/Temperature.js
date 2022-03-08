@@ -1,4 +1,4 @@
-var tempDecrease = 10;
+var tempDecrease = 2;
 let temperature = 40;
 
 function decreaseTemp() {
