@@ -52,6 +52,7 @@ function showTextNode(textNodeIndex){
             button.innerText = option.text;                               // Button text is changed to suit the option text
             button.classList.add('buttonChoice');                         // Sets the button class for styling.
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
+            button.addEventListener('click', () => decreaseTemp());
             optionButtonsElement.appendChild(button); 
         }
     })

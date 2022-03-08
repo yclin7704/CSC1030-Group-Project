@@ -8,11 +8,13 @@
     <title>Last Stand</title>
     <script src="./assets/js/Timer.js"></script>
     <script src="./TEST/ProfessionDialogue.js"></script>
+    <script src="./assets/js/Temperature.js"></script>
 </head>
-<body onload="StopTimer()">
+<body onload="StopTimer(); returnTemp();">
     <div class="box centered">
         <h1> Game Over </h1>
         <br>
+        <p>Temperature: <span id="TheTemperature"></span> degrees Celsius</p>
         <p>Time Played: <span id="TheTime"></span> seconds</p>
         <p>Profession Chosen: <span id="TheProfession"></span></p>
         <button class="button" onclick="playAgain()"> Play Again? </button>
