@@ -8,9 +8,7 @@ const eventOpts = [
 		choices: [
 			{
 				desc: "Enter the cabin",
-				requiredState: {},
 				nextEventId: "inside",
-				stateChanges: {},
 			},
 			{
 				desc: "Search for firewood",
@@ -92,7 +90,6 @@ const events = [
         You might be able to find some wood for a fire here, or with some barricades you might even be able to spend the night here.`,
 		img: imgOutside,
 		optsId: "outside",
-		stateChanges: {},
 	},
 
 	// BEGIN: Firewood
