@@ -1,7 +1,7 @@
 let currentText;
 
 /**
- * Display the given text ina typewriter-like fashion
+ * Display the given text in a typewriter-like fashion
  * @param {string} text The text to display
  * @param {number} delay The delay between printing each character (Default 10)
  * @returns Nothing
