@@ -102,7 +102,7 @@ const textNodes = [
         note: '',
         inventory: "",
         image: 'assets/images/farm-house-outside.jpg',
-        sound: 'TEST/SoundTest/wind.wav',
+        sound: 'assets/sounds/wind.wav',
         options: [
             {
                 text: 'Go in',
@@ -116,7 +116,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
-        sound: 'TEST/SoundTest/wind.wav',
+        sound: 'assets/sounds/wind.wav',
         options: [
             {
                 text: 'Walk up to the door',
