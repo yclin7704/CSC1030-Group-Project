@@ -115,6 +115,32 @@ const eventOpts = [
 				desc: "Ignore the hatch for now",
 				nextEventId: "insideCabin",
 			},
+			{
+				desc: "Use your spare key to open the lock",
+				nextEventId: "unlockHatch",
+				requiredState: { hasHatchKey: true },
+				stateChanges: { hatchOpen: true },
+				disableMode: "hidden",
+			},
+			{
+				desc: "Pick the lock",
+				nextEventId: "pickHatchLock",
+				requiredState: { canLockpick: true /* A bunch of these probably need renamed depending on what other people do */ },
+				stateChanges: { hatchOpen: true },
+			},
+			{
+				desc: "Cut the lock's shackle using your bolt cutters",
+				nextEventId: "unlockHatch",
+				requiredState: { hasBoltCutters: true },
+				stateChanges: { hatchOpen: true },
+				disableMode: "hidden",
+			},
+			{
+				desc: "Use your crowbar to pry open the hatch",
+				nextEventId: "pryOpenHatch",
+				requiredState: { hasCrowbar: true },
+				stateChanges: { hatchOpen: true },
+			},
 		],
 	},
 	// END: Inside
@@ -178,7 +204,8 @@ const events = [
 	},
 	{
 		id: "approachHatch",
-		text: "Locked",
+		text: `There's a heavy lock on the hatch, and it refuses to budge.<br />
+        With a crowbar or some other tool you may be able to wedge it open, or use something else to get past the lock itself.`,
 		img: imgHatch,
 		optsId: "inspectingHatch",
 	},

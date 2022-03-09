@@ -161,6 +161,7 @@ function areReqsMet(reqs) {
  * @param {string} text The text to display
  */
 async function print(text) {
+	// TODO: Decrease speed slightly?
 	typeSentence(text, "dialogue", 15);
 }
 
