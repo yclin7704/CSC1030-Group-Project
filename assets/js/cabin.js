@@ -6,9 +6,7 @@ const profDoctor = "Doctor";
 const profVeteran = "Veteran";
 const profPriest = "Priest";
 
-let gameState = {
-	hasSaw: true,
-};
+let gameState = {};
 
 /**
  * Main function
@@ -114,14 +112,16 @@ async function setChoices(optsId) {
 		let opt = opts.choices[i];
 		let btn = document.createElement("button");
 
-		btn.innerHTML = opt.desc;
-		// TODO: Disable button, or hide it? Or both - option decides
-		btn.disabled = !areReqsMet(opt.requiredState);
+		let requirementsMet = areReqsMet(opt.requiredState);
+		let isHidden = !requirementsMet && opt.disableMode === "hidden";
 
+		btn.disabled = !requirementsMet;
+		btn.innerHTML = opt.desc;
 		btn.classList = ["buttonChoice"];
 
 		btn.addEventListener("click", () => selectOption(opt));
-		choiceDiv.appendChild(btn);
+
+		if (!isHidden) choiceDiv.appendChild(btn);
 	}
 }
 

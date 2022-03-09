@@ -1,5 +1,6 @@
 const imgOutside = "assets/images/cabin-outside.webp";
 const imgInside = "assets/images/cabin-inside.webp";
+const imgHatch = "assets/images/cabin-trapdoor.jpg";
 
 // TODO: Only event OR choice should be able to update game state (Or should most of the time, anyway). Which?
 const eventOpts = [
@@ -8,29 +9,40 @@ const eventOpts = [
 		choices: [
 			{
 				desc: "Enter the cabin",
-				nextEventId: "inside",
+				requiredState: { hasBeenInsideCabin: false },
+				stateChanges: { hasBeenInsideCabin: true },
+				nextEventId: "initialInsideCabin",
+				disableMode: "hidden",
+			},
+			{
+				desc: "Enter the cabin",
+				requiredState: { hasBeenInsideCabin: true },
+				nextEventId: "insideCabin",
+				disableMode: "hidden",
 			},
 			{
 				desc: "Search for firewood",
-				// TODO: Should be OR here, not AND
-				requiredState: { hasLargeFirewood: false, hasKindling: false },
+				requiredState: { hasVisitedFirewood: false },
+				stateChanges: { hasVisitedFirewood: true },
 				nextEventId: "searchForFirewood",
+				disableMode: "hidden",
 			},
-		],
-	},
-	{
-		id: "inside",
-		choices: [
 			{
-				desc: "Leave the cabin",
-				nextEventId: "firstVisitOutside",
+				desc: "Return the the pile of firewood",
+				requiredState: { hasVisitedFirewood: true },
+				nextEventId: "visitFirewood",
+				disableMode: "hidden",
+			},
+			{
+				desc: "Venture deeper into the forest",
+				nextEventId: undefined,
 			},
 		],
 	},
 
 	// BEGIN: Firewood
 	{
-		id: "searchForFirewood",
+		id: "atFirewood",
 		choices: [
 			{
 				desc: "Ignore the firewood for now and return to the entrance to the cabin",
@@ -41,6 +53,7 @@ const eventOpts = [
 				requiredState: { hasLargeFirewood: false },
 				stateChanges: { hasLargeFirewood: true },
 				nextEventId: "takeLargeFirewood",
+				disableMode: "hidden",
 			},
 			{
 				desc: "Make some smaller kindling out of the logs using your saw",
@@ -80,6 +93,31 @@ const eventOpts = [
 		],
 	},
 	// END: Firewood
+
+	// BEGIN: Inside
+	{
+		id: "inside",
+		choices: [
+			{
+				desc: "Leave the cabin",
+				nextEventId: "firstVisitOutside",
+			},
+			{
+				desc: "Take a closer look at the hatch in the floor",
+				nextEventId: "approachHatch",
+			},
+		],
+	},
+	{
+		id: "inspectingHatch",
+		choices: [
+			{
+				desc: "Ignore the hatch for now",
+				nextEventId: "insideCabin",
+			},
+		],
+	},
+	// END: Inside
 ];
 
 const events = [
@@ -101,8 +139,12 @@ const events = [
         If you had a <strong>saw</strong> of some sort, you could cut some of them up into kindling.<br />
         You might also be able to find some smaller branches out in the forest, but who knows what's out in those dark woods?<br />
         Or you could hope that you find some other kindling before night.`,
-		optsId: "searchForFirewood",
-		stateChanges: { visitedFirewood: true },
+		optsId: "atFirewood",
+	},
+	{
+		id: "visitFirewood",
+		text: "You return to the stack of logs.",
+		optsId: "atFirewood",
 	},
 	{
 		id: "takeLargeFirewood",
@@ -119,12 +161,28 @@ const events = [
 	},
 	// END: Firewood
 
+	// BEGIN: Inside cabin
 	{
-		id: "inside",
-		text: `Inside the cabin`,
+		id: "initialInsideCabin",
+		text: `Pushing the broken door aside, you enter the cabin. As your eyes adjust to its dark interior, you get a better picture of the state of disrepair the cabin is now in.
+        Broken glass from the shattered windows litters the floor, and [TODO].<br />
+        You also spot a hatch in the floor.`,
 		img: imgInside,
 		optsId: "inside",
 	},
+	{
+		id: "insideCabin",
+		text: `Returning to the cabin`,
+		img: imgInside,
+		optsId: "inside",
+	},
+	{
+		id: "approachHatch",
+		text: "Locked",
+		img: imgHatch,
+		optsId: "inspectingHatch",
+	},
+	// END: Inside cabin
 ];
 
 const eventsHunter = [

@@ -6,11 +6,11 @@ let currentText;
  * @param {number} delay The delay between printing each character (Default 30)
  * @returns Nothing
  */
-async function typeSentence(text, delay = 30) {
+async function typeSentence(text, dialogueId = "dialogue", delay = 30) {
 	currentText = text;
 
 	// Clears the HTML so that it doesn't keep adding on to it
-	let dialogueBox = document.getElementById("dialogue");
+	let dialogueBox = document.getElementById(dialogueId);
 	dialogueBox.innerHTML = "";
 
 	// Split the sentence into a char array
