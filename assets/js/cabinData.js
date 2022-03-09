@@ -48,6 +48,7 @@ const eventOpts = [
 				// TODO: Inventory?
 				stateChanges: { hasKindling: true },
 				nextEventId: "makeKindling",
+				disableMode: "hidden",
 			},
 			{
 				desc: "Venture out into the woods and see what you can find",
