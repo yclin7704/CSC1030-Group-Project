@@ -12,9 +12,16 @@ const eventOpts = [
 			},
 			{
 				desc: "Search for firewood",
-				// TODO: Should be OR here, not AND
-				requiredState: { hasLargeFirewood: false, hasKindling: false },
+				requiredState: { hasVisitedFirewood: false },
+				stateChanges: { hasVisitedFirewood: true },
 				nextEventId: "searchForFirewood",
+				disableMode: "hidden",
+			},
+			{
+				desc: "Return the the pile of firewood",
+				requiredState: { hasVisitedFirewood: true },
+				nextEventId: "visitFirewood",
+				disableMode: "hidden",
 			},
 		],
 	},
@@ -30,7 +37,7 @@ const eventOpts = [
 
 	// BEGIN: Firewood
 	{
-		id: "searchForFirewood",
+		id: "atFirewood",
 		choices: [
 			{
 				desc: "Ignore the firewood for now and return to the entrance to the cabin",
@@ -41,6 +48,7 @@ const eventOpts = [
 				requiredState: { hasLargeFirewood: false },
 				stateChanges: { hasLargeFirewood: true },
 				nextEventId: "takeLargeFirewood",
+				disableMode: "hidden",
 			},
 			{
 				desc: "Make some smaller kindling out of the logs using your saw",
@@ -48,7 +56,6 @@ const eventOpts = [
 				// TODO: Inventory?
 				stateChanges: { hasKindling: true },
 				nextEventId: "makeKindling",
-				disableMode: "hidden",
 			},
 			{
 				desc: "Venture out into the woods and see what you can find",
@@ -102,8 +109,12 @@ const events = [
         If you had a <strong>saw</strong> of some sort, you could cut some of them up into kindling.<br />
         You might also be able to find some smaller branches out in the forest, but who knows what's out in those dark woods?<br />
         Or you could hope that you find some other kindling before night.`,
-		optsId: "searchForFirewood",
-		stateChanges: { visitedFirewood: true },
+		optsId: "atFirewood",
+	},
+	{
+		id: "visitFirewood",
+		text: "You return to the stack of logs.",
+		optsId: "atFirewood",
 	},
 	{
 		id: "takeLargeFirewood",
