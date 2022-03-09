@@ -33,7 +33,7 @@ function startGame() {
  */
 function showTextNode(textNodeIndex){
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.                                    
-    typeSentence(textNode.text); // Changes the dialogue box to text stored in the text node.
+    typeSentence(textNode.text, "DialogueHospital"); // Changes the dialogue box to text stored in the text node.
     inventoryElement.innerHTML = textNode.inventory;
     imageElement.src = textNode.image;
     random[0] = textNode.random;
