@@ -23,6 +23,10 @@ const eventOpts = [
 				nextEventId: "visitFirewood",
 				disableMode: "hidden",
 			},
+			{
+				desc: "Venture deeper into the forest",
+				nextEventId: undefined,
+			},
 		],
 	},
 	{
