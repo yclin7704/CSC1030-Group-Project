@@ -1,12 +1,7 @@
-let profession;
-
-const profHunter = "Hunter";
-const profMechanic = "Mechanic";
-const profDoctor = "Doctor";
-const profVeteran = "Veteran";
-const profPriest = "Priest";
-
-let gameState = {};
+let gameState = {
+	// TODO: Get profession properly
+	profession: profHunter,
+};
 
 /**
  * Main function
@@ -15,9 +10,6 @@ async function main() {
 	// TODO: Inventory
 	// TODO: Returning to cabin
 	// TODO: Actually test any of this code
-
-	// TODO: Get profession properly
-	profession = profMechanic;
 
 	runEvent("firstVisitOutside");
 }
@@ -73,7 +65,7 @@ function getEventData(eventId) {
  * @returns The event data for the current profession
  */
 function getProfEventData() {
-	switch (profession) {
+	switch (gameState.profession) {
 		case profHunter:
 			return eventsHunter;
 		case profMechanic:

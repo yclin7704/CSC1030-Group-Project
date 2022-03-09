@@ -2,6 +2,13 @@ const imgOutside = "assets/images/cabin-outside.webp";
 const imgInside = "assets/images/cabin-inside.webp";
 const imgHatch = "assets/images/cabin-trapdoor.jpg";
 
+const profHunter = "Hunter";
+const profMechanic = "Mechanic";
+const profDoctor = "Doctor";
+const profVeteran = "Veteran";
+const profPriest = "Priest";
+
+// TODO: Add ways to survive/die
 // TODO: Only event OR choice should be able to update game state (Or should most of the time, anyway). Which?
 const eventOpts = [
 	{
@@ -118,7 +125,7 @@ const eventOpts = [
 			{
 				desc: "Use your spare key to open the lock",
 				nextEventId: "unlockHatch",
-				requiredState: { hasHatchKey: true },
+				requiredState: { profession: profHunter },
 				stateChanges: { hatchOpen: true },
 				disableMode: "hidden",
 			},
@@ -130,16 +137,28 @@ const eventOpts = [
 			},
 			{
 				desc: "Cut the lock's shackle using your bolt cutters",
-				nextEventId: "unlockHatch",
+				nextEventId: "cutHatchLockBolts",
 				requiredState: { hasBoltCutters: true },
 				stateChanges: { hatchOpen: true },
-				disableMode: "hidden",
 			},
 			{
 				desc: "Use your crowbar to pry open the hatch",
 				nextEventId: "pryOpenHatch",
 				requiredState: { hasCrowbar: true },
 				stateChanges: { hatchOpen: true },
+			},
+		],
+	},
+	{
+		id: "openedHatch",
+		choices: [
+			{
+				desc: "Climb down the ladder into the darkness below",
+				nextEventId: undefined,
+			},
+			{
+				desc: "Ignore the basement for now",
+				nextEventId: "insideCabin",
 			},
 		],
 	},
@@ -205,9 +224,33 @@ const events = [
 	{
 		id: "approachHatch",
 		text: `There's a heavy lock on the hatch, and it refuses to budge.<br />
-        With a crowbar or some other tool you may be able to wedge it open, or use something else to get past the lock itself.`,
+        With a crowbar or some other tool you may be able to wedge the hatch open, or use something else to get past the lock itself.`,
 		img: imgHatch,
 		optsId: "inspectingHatch",
+	},
+	{
+		id: "unlockHatch",
+		text: `It's a good thing you remembered to bring your spare key with you when you returned. The lock is slightly rusted, but still swings open when you turn the key.
+        You're very glad your sturdy lock managed to prevent [TODO Haven't decided what's down there yet] from any damage. It also means your family are nowhere to be found here -
+        there's no way to lock this from the inside.`,
+		optsId: "openedHatch",
+	},
+	{
+		id: "pickHatchLock",
+		text: `The lock is beginning to rust, but you're able to get it open without too much effort. This lock was designed more to look impressive than actually protect anything.`,
+		optsId: "openedHatch",
+	},
+	{
+		id: "cutHatchLockBolts",
+		text: `The bolt cutters slice through the lock's shackles with ease, and you can easily pull away the rest of the lock.
+        This lock was designed more to look impressive than actually protect anything.`,
+		optsId: "openedHatch",
+	},
+	{
+		id: "pryOpenHatch",
+		text: `Wedging one end of the crowbar beneath a gap to the side of the hatch, you push hard against the crowbar.
+        To your surprise, the shackle of the lock snaps before the hatch itself does. Looks like the lock isn't as strong as it looked.`,
+		optsId: "openedHatch",
 	},
 	// END: Inside cabin
 ];
