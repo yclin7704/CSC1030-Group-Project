@@ -1,67 +1,80 @@
-// Will display the textNode text by printing it in a typewriter like fashion
-async function typeSentence(sentence, delay = 30) {
+let currentText;
 
-    currentText = sentence;
+/**
+ * Display the given text in a typewriter-like fashion
+ * @param {string} text The text to display
+ * @param {number} delay The delay between printing each character (Default 30)
+ * @returns Nothing
+ */
+async function typeSentence(text, dialogueId = "dialogue", delay = 30) {
+	currentText = text;
 
-    // Clears the HTML so that it doesn't keep adding on to it
-    document.getElementById('DialogueHospital').innerHTML = '';
+	// Clears the HTML so that it doesn't keep adding on to it
+	let dialogueBox = document.getElementById(dialogueId);
+	dialogueBox.innerHTML = "";
 
-    // splits the sentence into individual characters
-    var letters = sentence.split(""); 
+	// Split the sentence into a char array
+	let letters = text.split("");
 
-    // acts as an index position
-    let i = 0;
+	// Variables used to manage printing HTML tags
+	let tag = "";
+	let isInTag = false;
+	let isInQuotes = false;
+	let hasReachedBackslash = false;
 
-    // Loops through each character in the split sentence
-    while(i < letters.length) {
+	for (let i = 0; i < letters.length; i++) {
+		// Wait before printing each letter
+		// TODO: HTML tags are skipped over instantly (takes too long otherwise)
+		if (!tag) await waitForMs(delay);
 
-        // the delay before each letter is printed
-        await waitForMs(delay);
+		// If the user has gone on to the next event/location, stop displaying this one
+		if (currentText != text) return;
 
-        // If the letter isn't an opening HTML tag character, this code runs
-        if (letters[i] != "<") {
-            document.getElementById('DialogueHospital').innerHTML += letters[i];
-            i++;
-        }
-        else {
+		// If at the start of a tag
+		if (letters[i] === "<") {
+			tag += letters[i];
+			isInTag = true;
+		}
+		// If in < these > and not also in " these ", then the next > marks the end of the tag
+		else if (isInTag && !isInQuotes && letters[i] === "/") {
+			tag += letters[i];
+			hasReachedBackslash = true;
+		}
+		// Allow URLs etc containing `/`
+		else if (isInTag && letters[i] === '"') {
+			tag += letters[i];
+			isInQuotes = !isInQuotes;
+		}
+		// If at the end of the tag
+		else if (letters[i] === ">" && hasReachedBackslash) {
+			tag += letters[i];
 
-            //creates a new string to store the value of the HTML tag to check later
-            var tag = letters[i];
-            i++;
-            while(letters[i] != ">"){
-                tag += letters[i];
-                i++;
-            }
-            tag += letters[i];
-            i++;
-            switch(tag){
-                // If the tag is a <strong> tag this code will run
-                case "<strong>": i=tagStrong(letters, i); break;
+			// Add the tag (TODO: Currently added instantly)
+			dialogueBox.innerHTML += tag;
 
-                // This code will run by default for tags like <br> as they don't have a corresponding closing tag
-                default: document.getElementById('DialogueHospital').innerHTML += tag;
-            }
-        }
-    }
-    return;
+			// Reset variables
+			tag = "";
+			isInTag = false;
+			hasReachedBackslash = false;
+		}
+		// Any other `>` that is not the end of the tag
+		else if (letters[i] === ">" && !hasReachedBackslash) {
+			isInTag = false;
+			tag += letters[i];
+		}
+		// Any other character while constructing the tag
+		else if (tag) tag += letters[i];
+		// Not constructing a tag
+		else dialogueBox.innerHTML += letters[i];
+	}
 }
 
-
-// Will allow the Typewriter effect to print the text with the <strong></strong> tags applied
-function tagStrong(letters, i){
-    var word = "";
-    while(letters[i] != "<"){
-        word += letters[i];
-        i++;
-    }
-    i += 9;
-    // Will print the text in between the <strong></strong> tags so the effects are applied
-    document.getElementById('DialogueHospital').innerHTML += "<strong>" + word + "</strong>";
-    return i;
-}
-
-
-// Creates a time delay before each letter is printed
+/**
+ * Wait for the given number of milliseconds
+ * Note: setTimeout has a minimum delay of 4ms, and is inaccurate. Unfortunately no better alternative seems to exist
+ * @param {number} ms The number of milliseconds to wait for
+ * @returns {Promise} A promise that will resolve itself after the given time
+ */
 function waitForMs(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms))
-}  
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
