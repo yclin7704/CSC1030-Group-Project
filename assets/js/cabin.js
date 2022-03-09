@@ -112,15 +112,15 @@ async function setChoices(optsId) {
 		let opt = opts.choices[i];
 		let btn = document.createElement("button");
 
-		btn.innerHTML = opt.desc;
 		let requirementsMet = areReqsMet(opt.requiredState);
 		let isHidden = !requirementsMet && opt.disableMode === "hidden";
-		// TODO: Disable button, or hide it? Or both - option decides
-		btn.disabled = !requirementsMet;
 
+		btn.disabled = !requirementsMet;
+		btn.innerHTML = opt.desc;
 		btn.classList = ["buttonChoice"];
 
 		btn.addEventListener("click", () => selectOption(opt));
+
 		if (!isHidden) choiceDiv.appendChild(btn);
 	}
 }
