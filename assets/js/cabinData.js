@@ -1,5 +1,6 @@
 const imgOutside = "assets/images/cabin-outside.webp";
 const imgInside = "assets/images/cabin-inside.webp";
+const imgHatch = "assets/images/cabin-trapdoor.jpg";
 
 // TODO: Only event OR choice should be able to update game state (Or should most of the time, anyway). Which?
 const eventOpts = [
@@ -35,15 +36,6 @@ const eventOpts = [
 			{
 				desc: "Venture deeper into the forest",
 				nextEventId: undefined,
-			},
-		],
-	},
-	{
-		id: "inside",
-		choices: [
-			{
-				desc: "Leave the cabin",
-				nextEventId: "firstVisitOutside",
 			},
 		],
 	},
@@ -101,6 +93,31 @@ const eventOpts = [
 		],
 	},
 	// END: Firewood
+
+	// BEGIN: Inside
+	{
+		id: "inside",
+		choices: [
+			{
+				desc: "Leave the cabin",
+				nextEventId: "firstVisitOutside",
+			},
+			{
+				desc: "Take a closer look at the hatch in the floor",
+				nextEventId: "approachHatch",
+			},
+		],
+	},
+	{
+		id: "inspectingHatch",
+		choices: [
+			{
+				desc: "Ignore the hatch for now",
+				nextEventId: "insideCabin",
+			},
+		],
+	},
+	// END: Inside
 ];
 
 const events = [
@@ -147,7 +164,9 @@ const events = [
 	// BEGIN: Inside cabin
 	{
 		id: "initialInsideCabin",
-		text: `Pushing the broken door aside, you enter the cabin.`,
+		text: `Pushing the broken door aside, you enter the cabin. As your eyes adjust to its dark interior, you get a better picture of the state of disrepair the cabin is now in.
+        Broken glass from the shattered windows litters the floor, and [TODO].<br />
+        You also spot a hatch in the floor.`,
 		img: imgInside,
 		optsId: "inside",
 	},
@@ -156,6 +175,12 @@ const events = [
 		text: `Returning to the cabin`,
 		img: imgInside,
 		optsId: "inside",
+	},
+	{
+		id: "approachHatch",
+		text: "Locked",
+		img: imgHatch,
+		optsId: "inspectingHatch",
 	},
 	// END: Inside cabin
 ];
