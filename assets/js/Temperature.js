@@ -13,12 +13,11 @@ function decreaseTemp(value) {
     }
     else if (change == "increase") {
         temperature += tempIncrease;
-        if (temperature >= 80) {
+        if (temperature >= 100) {
             sessionStorage.setItem("Temperature", temperature);
             window.location.href = "EndStatistics.html";
         }
     }
-    
 }
 
 function returnTemp () {
