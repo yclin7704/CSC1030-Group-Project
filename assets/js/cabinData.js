@@ -8,7 +8,16 @@ const eventOpts = [
 		choices: [
 			{
 				desc: "Enter the cabin",
-				nextEventId: "inside",
+				requiredState: { hasBeenInsideCabin: false },
+				stateChanges: { hasBeenInsideCabin: true },
+				nextEventId: "initialInsideCabin",
+				disableMode: "hidden",
+			},
+			{
+				desc: "Enter the cabin",
+				requiredState: { hasBeenInsideCabin: true },
+				nextEventId: "insideCabin",
+				disableMode: "hidden",
 			},
 			{
 				desc: "Search for firewood",
@@ -135,12 +144,20 @@ const events = [
 	},
 	// END: Firewood
 
+	// BEGIN: Inside cabin
 	{
-		id: "inside",
-		text: `Inside the cabin`,
+		id: "initialInsideCabin",
+		text: `Pushing the broken door aside, you enter the cabin.`,
 		img: imgInside,
 		optsId: "inside",
 	},
+	{
+		id: "insideCabin",
+		text: `Returning to the cabin`,
+		img: imgInside,
+		optsId: "inside",
+	},
+	// END: Inside cabin
 ];
 
 const eventsHunter = [
