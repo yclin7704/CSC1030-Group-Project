@@ -160,8 +160,8 @@ function areReqsMet(reqs) {
  * @todo Some fancy ttyping effect maybe?
  * @param {string} text The text to display
  */
-async function print(text, eventId) {
-	typeSentence(text, eventId);
+async function print(text) {
+	typeSentence(text, "dialogue", 15);
 }
 
 /**
