@@ -113,6 +113,14 @@ const eventOpts = [
 				nextEventId: "leaveCabin",
 			},
 			{
+				desc: "Begin searching the cabin",
+				nextEventId: "searchingCabin",
+			},
+			{
+				desc: "See if any of the furniture can be moved to create a barricade",
+				nextEventId: "testBarricadingFurniture",
+			},
+			{
 				desc: "Take a closer look at the hatch in the floor",
 				nextEventId: "approachHatch",
 			},
@@ -228,7 +236,7 @@ const events = [
 	{
 		id: "initialInsideCabin",
 		text: `Pushing the broken door aside, you enter the cabin. As your eyes adjust to its dark interior, you get a better picture of the state of disrepair the cabin is now in.
-        Broken glass from the shattered windows litters the floor, and [TODO].<br />
+        Broken glass from the shattered windows litters the floor, and the room is a mess.<br />
         You also spot a hatch in the floor.`,
 		img: imgInside,
 		audio: audioRain,
@@ -241,6 +249,16 @@ const events = [
 		audio: audioRain,
 		optsId: "inside",
 	},
+	{
+		id: "searchingCabin",
+		text: "Searching",
+	},
+	{
+		id: "testBarricadingFurniture",
+		text: "Barricading",
+	},
+
+	// BEGIN: Hatch
 	{
 		id: "approachHatch",
 		text: `There's a heavy lock on the hatch, and it refuses to budge.<br />
@@ -272,6 +290,8 @@ const events = [
         To your surprise, the shackle of the lock snaps before the hatch itself does. Looks like the lock isn't as strong as it looked.`,
 		optsId: "openedHatch",
 	},
+	// END: Hatch
+
 	// END: Inside cabin
 ];
 
