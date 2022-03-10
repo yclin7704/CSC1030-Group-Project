@@ -56,7 +56,7 @@ const eventOpts = [
 		choices: [
 			{
 				desc: "Ignore the firewood for now and return to the entrance to the cabin",
-				nextEventId: "firstVisitOutside",
+				nextEventId: "leaveLogs",
 			},
 			{
 				desc: "Take some of the logs",
@@ -83,7 +83,7 @@ const eventOpts = [
 		choices: [
 			{
 				desc: "Return to the entrance to the cabin with your blocks of firewood",
-				nextEventId: "firstVisitOutside",
+				nextEventId: "leaveLogs",
 			},
 		],
 	},
@@ -92,11 +92,11 @@ const eventOpts = [
 		choices: [
 			{
 				desc: "Return to the entrance to the cabin with your kindling",
-				nextEventId: "firstVisitOutside",
+				nextEventId: "leaveLogs",
 			},
 			{
 				desc: "Return the the entrance to the cabin and take some larger blocks of firewood too",
-				nextEventId: "firstVisitOutside",
+				nextEventId: "leaveLogs",
 				requiredState: { hasLargeFirewood: false },
 				stateChanges: { hasLargeFirewood: true },
 			},
@@ -110,7 +110,7 @@ const eventOpts = [
 		choices: [
 			{
 				desc: "Leave the cabin",
-				nextEventId: "firstVisitOutside",
+				nextEventId: "leaveCabin",
 			},
 			{
 				desc: "Take a closer look at the hatch in the floor",
@@ -175,6 +175,20 @@ const events = [
         It looks to have been recently abandoned, and you can see signs of zombies nearby.
         The windows have been smashed in and the door is hanging off its hinges.
         You might be able to find some wood for a fire here, or with some barricades you might even be able to spend the night here.`,
+		img: imgOutside,
+		audio: audioWind,
+		optsId: "outside",
+	},
+	{
+		id: "leaveCabin",
+		text: `Leaving the shelter of the cabin, you feel the strength of the harsh wind once again. The sky is already beginning to darken - not much longer until night falls.`,
+		img: imgOutside,
+		audio: audioWind,
+		optsId: "outside",
+	},
+	{
+		id: "leaveLogs",
+		text: `Leaving the little shelter the side of the cabin provides, you feel the crisp wind hit you again. It seems like it will be a cold night.`,
 		img: imgOutside,
 		audio: audioWind,
 		optsId: "outside",
