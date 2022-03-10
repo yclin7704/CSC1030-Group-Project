@@ -395,6 +395,7 @@ const textNodes = [
             },
             {
                 text: 'Don\'t take the Bone Saw and return to main lobby of the Hospital',
+                setState: {BoneSaw: false},
                 nextText: 3
             }
         ]
@@ -434,6 +435,7 @@ const textNodes = [
             },
             {
                 text: 'Don\'t take the Electric Blanket and return to the Hospital Lobby',
+                setState: {ElectricBlanket: false},
                 nextText: 3
             }
         ]
@@ -473,6 +475,7 @@ const textNodes = [
             },
             {
                 text: 'Don\'t take the Fuel and return to the Hospital Lobby',
+                setState: {Fuel: false},
                 nextText: 3
             }
         ]
@@ -581,7 +584,7 @@ const textNodes = [
             ' overwhelmed and with no weapon to defend yourself, you had to accept your fate...' +
             '<br><b><em>You Died!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
         inventory: '',
-        image: 'assets/images/Game_Over_TEST-IMAGE.jpg',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
         options: [
             {
                 text: 'Play Again?',
