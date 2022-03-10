@@ -3,7 +3,7 @@ const noteItem = document.getElementById('handwritten'); //Notes you find in the
 const optionButtonsElement = document.getElementById('options'); // Buttons
 const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage'); // Image
-const soundElement = document.createElement('audio');
+const soundElement = document.createElement('audio'); //Sound
 const profession = getProfession();
 
 
@@ -43,8 +43,7 @@ function showTextNode(textNodeIndex){
     inventoryElement.innerHTML = textNode.inventory;
     imageElement.src = textNode.image;
     noteItem.innerHTML = textNode.note;
-    soundElement.src = textNode.sound;
-    soundElement.play(); //Play the sound whatever is in the textnode sound
+    crossfadeAudio(textNode.sound);
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
     }
@@ -247,14 +246,39 @@ const textNodes = [
         image: 'assets/images/farm-house-inside.jpg',
         options: [
             {
-
+                text: 'Go to Bedroom',
+                nextText: 0
+            },
+            {
+                text: 'Look at the table',
+                nextText: 0
+            },
+            {
+                text: 'Look at the painting',
+                nextText: 0
+            },
+            {
+                text: 'Look inside the fireplace',
+                nextText: 0
+            },
+            {
+                text: 'Go to the kitchen',
+                nextText: 0
+            },
+            {
+                text: 'Go back outside',
+                nextText: 0
+            },
+            {
+                text: 'Wait',
+                nextText: 0
             }
         ]
     },
+    //inside after first time
     {
         id: 10,
         text: '',
-        note: '',
         inventory: '',
         image: 'assets/images/farm-house-inside.jpg',
         options: [
@@ -262,6 +286,11 @@ const textNodes = [
                 
             }
         ]
+    },
+    {
+        id: 11,
+        text: '',
+        
     }
 ]
 
