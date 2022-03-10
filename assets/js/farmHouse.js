@@ -44,7 +44,7 @@ function showTextNode(textNodeIndex){
     imageElement.src = textNode.image;
     noteItem.innerHTML = textNode.note;
     soundElement.src = textNode.sound;
-    soundElement.play();
+    soundElement.play(); //Play the sound whatever is in the textnode sound
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
     }
@@ -212,7 +212,7 @@ const textNodes = [
     },
     {
         id: 8,
-        text: 'You walk up to the door and found out that it&#39s locked, There is probably a key somewhere',
+        text: "You walk up to the door and found out that it's locked, There is probably a key somewhere",
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
@@ -241,7 +241,7 @@ const textNodes = [
     //First time inside the house
     {
         id: 9,
-        text: 'Upon entering the farm house, you see that it is in ruins, wallpaper discoloured, . You wondered what could have possibly happened here to create this mess.',
+        text: 'Upon entering the farm house, you see that it is in ruins, wallpaper discoloured. You wondered what could have possibly happened here to create this mess. Around you, there is a table on your left, a painting that has been tilted on the wall, a small fireplace beside the kitchen door, what seems like a bedroom in front of you and the kitchen to your left.',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-inside.jpg',
