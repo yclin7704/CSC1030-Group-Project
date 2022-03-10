@@ -26,6 +26,8 @@ async function runEvent(eventId) {
 	print(eventData.text, eventId);
 	// Update the setting image
 	setImg(eventData.img);
+	// Crossfade audio
+	crossfadeAudio(eventData.audio);
 	// Show the user's options
 	setChoices(eventData.optsId);
 }

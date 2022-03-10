@@ -2,6 +2,9 @@ const imgOutside = "assets/images/cabin-outside.webp";
 const imgInside = "assets/images/cabin-inside.webp";
 const imgHatch = "assets/images/cabin-trapdoor.jpg";
 
+const audioWind = "assets/sounds/wind.wav";
+const audioRain = "assets/sounds/rain_2.wav";
+
 const profHunter = "Hunter";
 const profMechanic = "Mechanic";
 const profDoctor = "Doctor";
@@ -173,6 +176,7 @@ const events = [
         The windows have been smashed in and the door is hanging off its hinges.
         You might be able to find some wood for a fire here, or with some barricades you might even be able to spend the night here.`,
 		img: imgOutside,
+		audio: audioWind,
 		optsId: "outside",
 	},
 
@@ -213,12 +217,14 @@ const events = [
         Broken glass from the shattered windows litters the floor, and [TODO].<br />
         You also spot a hatch in the floor.`,
 		img: imgInside,
+		audio: audioRain,
 		optsId: "inside",
 	},
 	{
 		id: "insideCabin",
 		text: `Returning to the cabin`,
 		img: imgInside,
+		audio: audioRain,
 		optsId: "inside",
 	},
 	{
