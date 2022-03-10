@@ -105,6 +105,7 @@ const textNodes = [
             }
         ]
     },
+    //Outside of the farm house
     {
         id: 2,
         text: 'You look around the vicinity and you see a <u><strong>wheel barrow</strong></u>, <u><strong>a suspicious flower pot</strong></u>, <u><strong>a dirty welcome mat</strong></u> and at the side of the farm house you see what looks to be <u><strong>a shelter of some sort</strong></u>.',
@@ -135,6 +136,7 @@ const textNodes = [
             }
         ]
     },
+    //Look inside the wheel barrow
     {
         id: 3,
         text: 'You look inside the wheel barrow',
@@ -144,15 +146,23 @@ const textNodes = [
         options: [
             {
                 text: 'Take torch',
+                requiredState: (currentState) => !currentState.torch,
                 setState: {torch:true},
                 nextText: 2
             },
             {
                 text: 'Leave the torch',
+                requiredState: (currentState) => !currentState.torch,
+                nextText: 2
+            },
+            {
+                text: 'You have already picked up the torch',
+                requiredState: (currentState) => currentState.torch,
                 nextText: 2
             }
         ]
     },
+    //Look inside the flower pot
     {
         id: 4,
         text: 'You look inside the flower pot and find a note',
@@ -170,6 +180,7 @@ const textNodes = [
             }
         ]
     },
+    //Look under the door mat
     {
         id: 5,
         text: 'You look under the welcome mat and found a key',
@@ -179,25 +190,33 @@ const textNodes = [
         options: [
             {
                 text: 'Take key',
+                requiredState: (currentState) => !currentState.key,
                 setState: {key:true},
                 nextText: 2
             },
             {
                 text: 'Ignore the key',
+                requiredState: (currentState) => !currentState.key,
+                nextText: 2
+            },
+            {
+                text: 'U have already picked up the key',
+                requiredState: (currentState) => currentState.key,
                 nextText: 2
             }
         ]
     },
     {
         id: 6,
-        text: 'You go into the shelter and realise that it wasn&#39t a shelter but it was a wine cellar. ',
+        text: "You go into the shelter and realise that it wasn't a shelter but it was a wine cellar. ",
         note: '',
 
     },
+    //reading the note
     {
         id: 7,
-        text: 'You read the note and it says: <br><button onClick="changeText();" class="changeText">Change Text</button> <button onCLick="revertText();" class="changeText">Revert Text</button>',
-        note: 'I&#39ve been in this dark place for what it feels like days. It seems like the group that has captured me is planning some cultist acts. One day, the group brought me out of the room that I was being held captive and forced me to create some sort of.... They called themselves the "bad boys" which is really childish considering these people are like in their 40s. I hope this note reaches to the authorities to save me from this cult.',
+        text: 'You read the note and it says: <br><button onClick="changeText();" class="changeText">Change Text</button> <button onClick="revertText();" class="changeText">Revert Text</button>',
+        note: "I've been in this dark place for what it feels like days. It seems like the group that has captured me is planning some cultist acts. One day, the group brought me out of the room that I was being held captive and forced me to create some sort of.... They called themselves the 'bad boys' which is really childish considering these people are like in their 40s. I hope this note reaches to the authorities to save me from this cult.",
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
         sound: "",
@@ -209,6 +228,7 @@ const textNodes = [
             }
         ]
     },
+    //Walk up to the front door
     {
         id: 8,
         text: "You walk up to the door and found out that it's locked, There is probably a key somewhere",
@@ -250,7 +270,7 @@ const textNodes = [
                 nextText: 0
             },
             {
-                text: 'Look at the table',
+                text: 'Look on the table',
                 nextText: 0
             },
             {
@@ -278,20 +298,69 @@ const textNodes = [
     //inside after first time
     {
         id: 10,
-        text: '',
+        text: 'Returning back to the living room, Around you, there is a table on your left, a painting that has been tilted on the wall, a small fireplace beside the kitchen door, what seems like a bedroom in front of you and the kitchen to your left.',
         inventory: '',
         image: 'assets/images/farm-house-inside.jpg',
         options: [
             {
-                
+                text: 'Go to Bedroom',
+                nextText: 0
+            },
+            {
+                text: 'Look on the table',
+                nextText: 0
+            },
+            {
+                text: 'Look at the painting',
+                nextText: 0
+            },
+            {
+                text: 'Look inside the fireplace',
+                nextText: 0
+            },
+            {
+                text: 'Go to the kitchen',
+                nextText: 0
+            },
+            {
+                text: 'Go back outside',
+                nextText: 0
+            },
+            {
+                text: 'Wait',
+                nextText: 0
             }
         ]
     },
+    //Bedroom
     {
         id: 11,
         text: '',
         
-    }
+    },
+    //Look on the table
+    {
+        id: 12,
+        text: ''
+    },
+    //Look at the painting
+    {
+        id: 13,
+    },
+    //Look inside the fireplace
+    {
+        id: 14,
+    },
+    //Go to the kitchen
+    {
+        id: 15,
+    },
+    //Go back outside
+    {
+        id: 16,
+        text: ''
+    },
+
 ]
 
 
