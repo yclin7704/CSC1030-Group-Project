@@ -3,6 +3,7 @@ const noteItem = document.getElementById('handwritten'); //Notes you find in the
 const optionButtonsElement = document.getElementById('options'); // Buttons
 const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage'); // Image
+const soundElement = document.createElement('audio');
 const profession = getProfession();
 
 
@@ -38,10 +39,12 @@ function startGame(){
 
 function showTextNode(textNodeIndex){
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
-    textElement.innerHTML = textNode.text; // Changes the dialogue box to text stored in the text node.
+    typeSentence(textNode.text, "dialogue"); // Changes the dialogue box to text stored in the text node.
     inventoryElement.innerHTML = textNode.inventory;
     imageElement.src = textNode.image;
     noteItem.innerHTML = textNode.note;
+    soundElement.src = textNode.sound;
+    soundElement.play(); //Play the sound whatever is in the textnode sound
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
     }
@@ -76,14 +79,10 @@ function selectOption(option) {
 
 // Change the handwritten text
 function changeText(){
-    console.log('changing font');
    document.getElementById('handwritten').style.fontFamily = "Roboto Mono", 'monospace';
-   console.log('hi');
    document.getElementById('handwritten').style.fontSize = "1rem";
-   console.log('there');
 }
 function revertText(){
-    console.log('changing font');
     document.getElementById('handwritten').style.fontFamily = "Reenie Beanie", 'cursive';
     document.getElementById('handwritten').style.fontSize = "2rem";
 }
@@ -95,10 +94,11 @@ const textNodes = [
     //First visit to outside of the farm house
     {
         id: 1,
-        text: "Moving away from the infected city, you have stumbled upon what looks like to be and old, damaged farm house that hasn&#39t been occupied in years. You walk toward the garden or what could have once been a lovely rose garden was now a deserted wasteland...",
+        text: "Moving away from the infected city, you have stumbled upon what looks like to be and old, damaged farm house that hasn't been occupied in years. You walk toward the garden or what could have once been a lovely rose garden was now a deserted wasteland...",
         note: '',
         inventory: "",
         image: 'assets/images/farm-house-outside.jpg',
+        sound: 'assets/sounds/wind.wav',
         options: [
             {
                 text: 'Go in',
@@ -112,6 +112,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
+        sound: 'assets/sounds/wind.wav',
         options: [
             {
                 text: 'Walk up to the door',
@@ -190,7 +191,7 @@ const textNodes = [
     },
     {
         id: 6,
-        text: 'You go into the shelter and realise thats it&#39s locked',
+        text: 'You go into the shelter and realise that it wasn&#39t a shelter but it was a wine cellar. ',
         note: '',
 
     },
@@ -200,6 +201,7 @@ const textNodes = [
         note: 'I&#39ve been in this dark place for what it feels like days. It seems like the group that has captured me is planning some cultist acts. One day, the group brought me out of the room that I was being held captive and forced me to create some sort of.... They called themselves the "bad boys" which is really childish considering these people are like in their 40s. I hope this note reaches to the authorities to save me from this cult.',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
+        sound: "",
         options: [
             {
                 text: 'Back',
@@ -210,7 +212,7 @@ const textNodes = [
     },
     {
         id: 8,
-        text: 'You walk up to the door and found out that it&#39s locked, There is probably a key somewhere',
+        text: "You walk up to the door and found out that it's locked, There is probably a key somewhere",
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
@@ -239,7 +241,7 @@ const textNodes = [
     //First time inside the house
     {
         id: 9,
-        text: 'Upon entering the farm house, you see that it is in ruins, wallpaper discoloured, . You wondered what could have possibly happened here to create this mess.',
+        text: 'Upon entering the farm house, you see that it is in ruins, wallpaper discoloured. You wondered what could have possibly happened here to create this mess. Around you, there is a table on your left, a painting that has been tilted on the wall, a small fireplace beside the kitchen door, what seems like a bedroom in front of you and the kitchen to your left.',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-inside.jpg',
@@ -257,7 +259,7 @@ const textNodes = [
         image: 'assets/images/farm-house-inside.jpg',
         options: [
             {
-
+                
             }
         ]
     }

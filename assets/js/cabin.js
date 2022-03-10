@@ -1,12 +1,7 @@
-let profession;
-
-const profHunter = "Hunter";
-const profMechanic = "Mechanic";
-const profDoctor = "Doctor";
-const profVeteran = "Veteran";
-const profPriest = "Priest";
-
-let gameState = {};
+let gameState = {
+	// TODO: Get profession properly
+	profession: profHunter,
+};
 
 /**
  * Main function
@@ -15,9 +10,6 @@ async function main() {
 	// TODO: Inventory
 	// TODO: Returning to cabin
 	// TODO: Actually test any of this code
-
-	// TODO: Get profession properly
-	profession = profMechanic;
 
 	runEvent("firstVisitOutside");
 }
@@ -34,6 +26,8 @@ async function runEvent(eventId) {
 	print(eventData.text, eventId);
 	// Update the setting image
 	setImg(eventData.img);
+	// Crossfade audio
+	crossfadeAudio(eventData.audio);
 	// Show the user's options
 	setChoices(eventData.optsId);
 }
@@ -73,7 +67,7 @@ function getEventData(eventId) {
  * @returns The event data for the current profession
  */
 function getProfEventData() {
-	switch (profession) {
+	switch (gameState.profession) {
 		case profHunter:
 			return eventsHunter;
 		case profMechanic:
@@ -161,6 +155,7 @@ function areReqsMet(reqs) {
  * @param {string} text The text to display
  */
 async function print(text) {
+	// TODO: Decrease speed slightly?
 	typeSentence(text, "dialogue", 15);
 }
 

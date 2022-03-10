@@ -2,6 +2,16 @@ const imgOutside = "assets/images/cabin-outside.webp";
 const imgInside = "assets/images/cabin-inside.webp";
 const imgHatch = "assets/images/cabin-trapdoor.jpg";
 
+const audioWind = "assets/sounds/wind.wav";
+const audioRain = "assets/sounds/rain_2.wav";
+
+const profHunter = "Hunter";
+const profMechanic = "Mechanic";
+const profDoctor = "Doctor";
+const profVeteran = "Veteran";
+const profPriest = "Priest";
+
+// TODO: Add ways to survive/die
 // TODO: Only event OR choice should be able to update game state (Or should most of the time, anyway). Which?
 const eventOpts = [
 	{
@@ -115,6 +125,44 @@ const eventOpts = [
 				desc: "Ignore the hatch for now",
 				nextEventId: "insideCabin",
 			},
+			{
+				desc: "Use your spare key to open the lock",
+				nextEventId: "unlockHatch",
+				requiredState: { profession: profHunter },
+				stateChanges: { hatchOpen: true },
+				disableMode: "hidden",
+			},
+			{
+				desc: "Pick the lock",
+				nextEventId: "pickHatchLock",
+				requiredState: { canLockpick: true /* A bunch of these probably need renamed depending on what other people do */ },
+				stateChanges: { hatchOpen: true },
+			},
+			{
+				desc: "Cut the lock's shackle using your bolt cutters",
+				nextEventId: "cutHatchLockBolts",
+				requiredState: { hasBoltCutters: true },
+				stateChanges: { hatchOpen: true },
+			},
+			{
+				desc: "Use your crowbar to pry open the hatch",
+				nextEventId: "pryOpenHatch",
+				requiredState: { hasCrowbar: true },
+				stateChanges: { hatchOpen: true },
+			},
+		],
+	},
+	{
+		id: "openedHatch",
+		choices: [
+			{
+				desc: "Climb down the ladder into the darkness below",
+				nextEventId: undefined,
+			},
+			{
+				desc: "Ignore the basement for now",
+				nextEventId: "insideCabin",
+			},
 		],
 	},
 	// END: Inside
@@ -128,6 +176,7 @@ const events = [
         The windows have been smashed in and the door is hanging off its hinges.
         You might be able to find some wood for a fire here, or with some barricades you might even be able to spend the night here.`,
 		img: imgOutside,
+		audio: audioWind,
 		optsId: "outside",
 	},
 
@@ -168,19 +217,46 @@ const events = [
         Broken glass from the shattered windows litters the floor, and [TODO].<br />
         You also spot a hatch in the floor.`,
 		img: imgInside,
+		audio: audioRain,
 		optsId: "inside",
 	},
 	{
 		id: "insideCabin",
 		text: `Returning to the cabin`,
 		img: imgInside,
+		audio: audioRain,
 		optsId: "inside",
 	},
 	{
 		id: "approachHatch",
-		text: "Locked",
+		text: `There's a heavy lock on the hatch, and it refuses to budge.<br />
+        With a crowbar or some other tool you may be able to wedge the hatch open, or use something else to get past the lock itself.`,
 		img: imgHatch,
 		optsId: "inspectingHatch",
+	},
+	{
+		id: "unlockHatch",
+		text: `It's a good thing you remembered to bring your spare key with you when you returned. The lock is slightly rusted, but still swings open when you turn the key.
+        You're very glad your sturdy lock managed to prevent [TODO Haven't decided what's down there yet] from any damage. It also means your family are nowhere to be found here -
+        there's no way to lock this from the inside.`,
+		optsId: "openedHatch",
+	},
+	{
+		id: "pickHatchLock",
+		text: `The lock is beginning to rust, but you're able to get it open without too much effort. This lock was designed more to look impressive than actually protect anything.`,
+		optsId: "openedHatch",
+	},
+	{
+		id: "cutHatchLockBolts",
+		text: `The bolt cutters slice through the lock's shackles with ease, and you can easily pull away the rest of the lock.
+        This lock was designed more to look impressive than actually protect anything.`,
+		optsId: "openedHatch",
+	},
+	{
+		id: "pryOpenHatch",
+		text: `Wedging one end of the crowbar beneath a gap to the side of the hatch, you push hard against the crowbar.
+        To your surprise, the shackle of the lock snaps before the hatch itself does. Looks like the lock isn't as strong as it looked.`,
+		optsId: "openedHatch",
 	},
 	// END: Inside cabin
 ];
