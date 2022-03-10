@@ -208,8 +208,21 @@ const textNodes = [
     },
     {
         id: 6,
-        text: "You go into the shelter and realise that it wasn't a shelter but it was a wine cellar. ",
+        text: "You go into the shelter and it is completely dark and you can't see anything down here. Maybe you need to find a light source?",
         note: '',
+        inventory: '',
+        iamge: '',
+        options: [
+            {
+                text: 'Turn on torch',
+                requiredState: (currentState) => currentState.torch,
+                nextText: 1
+            },
+            {
+                text: 'Go back',
+                nextText: 2
+            }
+        ]
 
     },
     //reading the note
@@ -360,7 +373,16 @@ const textNodes = [
         id: 16,
         text: ''
     },
-
+    //The closet inside the bedroom
+    {
+        id: 17,
+        text: '',
+    },
+    //Turn on the torch in the basement
+    {
+        id: 1,
+        text: '',
+    }
 ]
 
 
