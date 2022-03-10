@@ -1,4 +1,4 @@
-var tempDecrease = 2;
+var tempDecrease = 10;
 var tempIncrease = 1;
 let temperature = 40;
 

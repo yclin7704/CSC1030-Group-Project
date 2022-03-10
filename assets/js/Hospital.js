@@ -36,7 +36,6 @@ function showTextNode(textNodeIndex){
     typeSentence(textNode.text, "DialogueHospital"); // Changes the dialogue box to text stored in the text node.
     inventoryElement.innerHTML = textNode.inventory;
     imageElement.src = textNode.image;
-    random[0] = textNode.random;
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
     }
@@ -46,8 +45,14 @@ function showTextNode(textNodeIndex){
             const button = document.createElement('button');              // Creates a new button.
             button.innerText = option.text;                               // Button text is changed to suit the option text
             button.classList.add('buttonChoice');                         // Sets the button class for styling.
+            value = option.text2;
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
-            button.addEventListener('click', () => decreaseTemp("decrease"));
+            if (value === "decrease") {
+                button.addEventListener('click', () => decreaseTemp("decrease"));
+            }
+            else if (value === "increase") {
+                button.addEventListener('click', () => decreaseTemp("increase"));
+            }
             optionButtonsElement.appendChild(button); 
         }
     })
@@ -101,6 +106,7 @@ const textNodes = [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
                 setState: {collectMushrooms: true, FirstAid: false, FireWood: false},
+                text2: "decrease",
                 nextText: 5,
             },
             {
@@ -139,6 +145,7 @@ const textNodes = [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
                 requiredState: (currentState) => currentState.crowbar === false,
+                text2: "decrease",
                 nextText: 5
             },
             {
@@ -226,6 +233,7 @@ const textNodes = [
             {
                 text: 'Return to the front of the Hospital',
                 setState: {crowbar: false},
+                text2: "decrease",
                 nextText: 2
             },
             {
