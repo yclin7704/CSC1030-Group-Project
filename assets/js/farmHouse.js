@@ -79,14 +79,10 @@ function selectOption(option) {
 
 // Change the handwritten text
 function changeText(){
-    console.log('changing font');
    document.getElementById('handwritten').style.fontFamily = "Roboto Mono", 'monospace';
-   console.log('hi');
    document.getElementById('handwritten').style.fontSize = "1rem";
-   console.log('there');
 }
 function revertText(){
-    console.log('changing font');
     document.getElementById('handwritten').style.fontFamily = "Reenie Beanie", 'cursive';
     document.getElementById('handwritten').style.fontSize = "2rem";
 }
@@ -205,6 +201,7 @@ const textNodes = [
         note: 'I&#39ve been in this dark place for what it feels like days. It seems like the group that has captured me is planning some cultist acts. One day, the group brought me out of the room that I was being held captive and forced me to create some sort of.... They called themselves the "bad boys" which is really childish considering these people are like in their 40s. I hope this note reaches to the authorities to save me from this cult.',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
+        sound: "",
         options: [
             {
                 text: 'Back',
