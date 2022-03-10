@@ -280,11 +280,11 @@ const textNodes = [
         options: [
             {
                 text: 'Go to Bedroom',
-                nextText: 0
+                nextText: 11
             },
             {
                 text: 'Look on the table',
-                nextText: 0
+                nextText: 12
             },
             {
                 text: 'Look at the painting',
@@ -300,7 +300,7 @@ const textNodes = [
             },
             {
                 text: 'Go back outside',
-                nextText: 0
+                nextText: 2
             },
             {
                 text: 'Wait',
@@ -317,27 +317,27 @@ const textNodes = [
         options: [
             {
                 text: 'Go to Bedroom',
-                nextText: 0
+                nextText: 11
             },
             {
                 text: 'Look on the table',
-                nextText: 0
+                nextText: 12
             },
             {
                 text: 'Look at the painting',
-                nextText: 0
+                nextText: 13
             },
             {
                 text: 'Look inside the fireplace',
-                nextText: 0
+                nextText: 14
             },
             {
                 text: 'Go to the kitchen',
-                nextText: 0
+                nextText: 15
             },
             {
                 text: 'Go back outside',
-                nextText: 0
+                nextText: 2
             },
             {
                 text: 'Wait',
