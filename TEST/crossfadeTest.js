@@ -11,13 +11,16 @@ const wind = "../assets/sounds/wind.wav";
 const rain = "Rain_Light.wav";
 
 /**
- * Crossfade between the current audio track and the next one
+ * Linear crossfade between the current audio track and the next one
  * @param {string} newSource The location of the new audio source
  */
 async function fadeAudio(newSource) {
+	// The length of the fade, in ms
 	const fadeInTime = 2000;
-	const fadeInStep = 0.1;
+	// The size each step to take should be (0.1 = 10%)
+	const fadeInStep = 0.05;
 
+	// Figure which track we're fading in and which we're fading out
 	let audioIn;
 	let audioOut;
 
@@ -31,40 +34,43 @@ async function fadeAudio(newSource) {
 		audioTrack = 0;
 	}
 
+	// Set output volume to 1 to avoid issues if user clicks too quickly
 	audioOut.volume = 1;
 
-	if (newSource) {
-		audioIn.volume = 0;
-		audioIn.src = newSource;
-		audioIn.play();
-
-		let fadeIn = setInterval(function () {
-			// Only fade if not at zero already
-			if (audioIn.volume < 0.999 - fadeInStep) {
-				audioIn.volume += fadeInStep;
-			} else {
-				// When volume at 1 stop
-				clearInterval(fadeIn);
-				audioIn.volume = 1;
-			}
-		}, fadeInTime * fadeInStep);
-	}
-
+	// Fade out the old track on an interval
 	let fadeOut = setInterval(function () {
 		// Only fade if not at zero already
 		if (audioOut.volume > fadeInStep) {
 			audioOut.volume -= fadeInStep;
 		} else {
-			// When volume at zero stop
+			// Stop when volume is near-zero
 			clearInterval(fadeOut);
 			audioOut.volume = 0;
 		}
 	}, fadeInTime * fadeInStep);
+
+	audioIn.volume = 0;
+	audioIn.src = newSource;
+	if (newSource) {
+		audioIn.play();
+
+		// If a new source is provided, fade into it on an interval
+		let fadeIn = setInterval(function () {
+			// Only fade if not at one already
+			if (audioIn.volume < 0.999 - fadeInStep) {
+				audioIn.volume += fadeInStep;
+			} else {
+				// Stop when volume is near-one
+				clearInterval(fadeIn);
+				audioIn.volume = 1;
+			}
+		}, fadeInTime * fadeInStep);
+	}
 }
 
 async function onClick() {
 	console.log(audioTrack);
-	if (audioTrack === 0) fadeAudio(wind);
+	if (audioTrack === 0) fadeAudio(null);
 	else fadeAudio(rain);
 }
 
