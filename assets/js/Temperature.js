@@ -8,7 +8,7 @@ function decreaseTemp(value) {
         temperature -= tempDecrease;
         if (temperature <= -21) {
             sessionStorage.setItem("Temperature", temperature);
-            window.location.href = "EndStatistics.html";
+            showTextNode(103);
         }
     }
     else if (change == "increase") {

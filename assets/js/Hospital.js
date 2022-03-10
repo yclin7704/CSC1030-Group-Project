@@ -610,6 +610,24 @@ const textNodes = [
                 nextText: -1
             }
         ]
+    },
+
+
+
+    // You died to Frostbite - ENDING 5
+    {
+        id: 103,
+        text: "As the harsh colds and strong winds of the tundra surround you, you can feel your body becoming weaker and weaker by the second, to the point that you can't" +
+            " even feel anything, numbed by the cold. With no will left to move, you sit there slowly but surely succumbing to the frozen wasteland's wrath, and eventually..." +
+            "You die of Frostbite...<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+        options: [
+            {
+                text: "Play Again?",
+                nextText: -1
+            }
+        ]
     }
 
 ];
