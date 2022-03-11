@@ -2,6 +2,7 @@ let currentText;
 
 /**
  * Display the given text in a typewriter-like fashion
+ * @todo Repeated dialogue causes this to break. Maybe switch to internal counter that's incremented each time this is called or something?
  * @param {string} text The text to display
  * @param {number} delay The delay between printing each character (Default 30)
  * @returns Nothing
