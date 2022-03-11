@@ -120,6 +120,13 @@ const eventOpts = [
 				disableMode: "hidden",
 			},
 			{
+				desc: "SAFE",
+				nextEventId: "openSafe",
+				requiredState: { profession: profHunter, rifledCabin: true, openedSafe: false },
+				stateChanges: { openedSafe: true },
+				disableMode: "hidden",
+			},
+			{
 				desc: "Continue searching the cabin",
 				nextEventId: "continueSearchingCabin",
 				requiredState: { rifledCabin: true, searchedCabin: false },
@@ -163,6 +170,13 @@ const eventOpts = [
 				desc: "Continue searching",
 				nextEventId: "continueSearchingCabin",
 				stateChanges: { searchedCabin: true },
+			},
+			{
+				desc: "SAFE",
+				nextEventId: "openSafe",
+				requiredState: { profession: profHunter, openedSafe: false },
+				stateChanges: { openedSafe: true },
+				disableMode: "hidden",
 			},
 			{
 				desc: "Abandon your search for now",
@@ -434,6 +448,13 @@ const eventsHunter = [
 		text: `Following the path you've treaded so many times before, you find yourself outside your cabin in the woods once again. 
         You can still see signs of zombies nearby, and the window of the cabin is smashed.
         TODO Something about things aren't looking good for the rest of your family`,
+	},
+	{
+		id: "searchingCabin",
+		text: `You begin rifling through the cupboards and cabinets in the cabin. They seem mostly empty or filled with junk,
+        but you're able to scavenge a few tins of food and a bottle of water. There's also a locked safe hidden at the back of a cabinet -
+        If the password hasn't been changed, you should be able to get it open.`,
+		optsId: "riflingCabin",
 	},
 ];
 const eventsMechanic = [];
