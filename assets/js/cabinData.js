@@ -222,6 +222,7 @@ const eventOpts = [
 			},
 			{
 				desc: "You've searched everywhere, there's nothing left to find",
+				nextEventId: "insideCabin",
 			},
 		],
 	},
