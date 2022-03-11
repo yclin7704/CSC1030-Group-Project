@@ -158,8 +158,11 @@ function areReqsMet(reqs) {
  * @param {string} text The text to display
  */
 async function print(text) {
+	let dialogue;
+	if (typeof text === "string") dialogue = text;
+	else if (typeof text === "function") dialogue = text();
 	// TODO: Decrease speed slightly?
-	typeSentence(text, "dialogue", 15);
+	typeSentence(dialogue, "dialogue", 15);
 }
 
 /**

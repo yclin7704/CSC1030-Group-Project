@@ -134,6 +134,12 @@ const eventOpts = [
 				disableMode: "hidden",
 			},
 			{
+				desc: getRandomSearchCabinChoice,
+				nextEventId: "randomSearchCabin",
+				requiredState: { thoroughlySearchedCabin: true },
+				disableMode: "hidden",
+			},
+			{
 				desc: "Take the stack of planks you found earlier",
 				nextEventId: "",
 				requiredState: { foundPlanks: true, hasPlanks: false },
@@ -171,34 +177,34 @@ const eventOpts = [
 				desc: "Take the planks and search the cabin for a hammer and nails",
 				nextEventId: "thoroughlySearchCabin",
 				requiredState: { hasHammer: false, hasNails: false },
-				stateChanges: { hasPlanks: true },
+				stateChanges: { hasPlanks: true, thoroughlySearchedCabin: true },
 				disableMode: "hidden",
 			},
 			{
 				desc: "Take the planks and search the cabin for some nails",
 				nextEventId: "thoroughlySearchCabin",
 				requiredState: { hasHammer: true, hasNails: false },
-				stateChanges: { hasPlanks: true },
+				stateChanges: { hasPlanks: true, thoroughlySearchedCabin: true },
 				disableMode: "hidden",
 			},
 			{
 				desc: "Take the planks and search the cabin for a hammer",
 				nextEventId: "thoroughlySearchCabin",
 				requiredState: { hasHammer: false, hasNails: true },
-				stateChanges: { hasPlanks: true },
+				stateChanges: { hasPlanks: true, thoroughlySearchedCabin: true },
 				disableMode: "hidden",
 			},
 			{
 				desc: "Lucky you've already got both! Take the planks and keep searching for anything else that looks useful",
 				nextEventId: "thoroughlySearchCabin",
 				requiredState: { hasHammer: true, hasNails: true },
-				stateChanges: { hasPlanks: true },
+				stateChanges: { hasPlanks: true, thoroughlySearchedCabin: true },
 				disableMode: "hidden",
 			},
 			{
 				desc: "Ignore the planks for now and continue searching the cabin for anything else useful",
 				nextEventId: "thoroughlySearchCabin",
-				stateChanges: { foundPlanks: true },
+				stateChanges: { foundPlanks: true, thoroughlySearchedCabin: true },
 			},
 			{
 				desc: "Ignore the planks for now and stop searching - you doubt you'll find anything else useful in this place",
@@ -373,7 +379,7 @@ const events = [
 	},
 	{
 		id: "randomSearchCabin",
-		text: "RANDOM",
+		text: getRandomSearchCabinDialogue,
 		optsId: "randomlySearchingCabin",
 	},
 	{
@@ -461,6 +467,22 @@ function getRandomSearchCabinGiveUp() {
 		"You're done searching",
 		"This search has to end eventually",
 		"Leave your search for now",
+		"You should probably stop searching now",
+	];
+	return choices[getRandom(0, choices.length)];
+}
+
+function getRandomSearchCabinDialogue() {
+	const choices = [
+		"You found: Nothing",
+		"You spot a hastily scrawled note, but it's unreadable.",
+		"You found an empty drawer! It's useless.",
+		"You thought you'd found something, but it was just some dust.",
+		"Dust, dust, and more dust in the wind",
+		"Is that... no wait, it's not.",
+		"It's a blank piece of paper",
+		"You stood on a bent nail. Ouch!",
+		"Does that push away to reveal a secret? Nope, it still doesn't budge.",
 	];
 	return choices[getRandom(0, choices.length)];
 }
