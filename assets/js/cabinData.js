@@ -220,6 +220,9 @@ const eventOpts = [
 				desc: getRandomSearchCabinChoice,
 				nextEventId: "randomSearchCabin",
 			},
+			{
+				desc: "You've searched everywhere, there's nothing left to find",
+			},
 		],
 	},
 	{
@@ -374,7 +377,7 @@ const events = [
 	},
 	{
 		id: "thoroughlySearchCabin",
-		text: "Thoroughly searching",
+		text: `Hidden in a box at the back of a cupboard, you find [TODO]`,
 		optsId: "thoroughlySearchingCabin",
 	},
 	{
