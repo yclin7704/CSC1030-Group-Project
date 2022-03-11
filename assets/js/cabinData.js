@@ -127,6 +127,20 @@ const eventOpts = [
 				disableMode: "hidden",
 			},
 			{
+				desc: "Thoroughly search the rest of the cabin",
+				nextEventId: "thoroughlySearchCabin",
+				requiredState: { searchedCabin: true, thoroughlySearchedCabin: false },
+				stateChanges: { thoroughlySearchedCabin: true },
+				disableMode: "hidden",
+			},
+			{
+				desc: "Take the stack of planks you found earlier",
+				nextEventId: "",
+				requiredState: { foundPlanks: true, hasPlanks: false },
+				stateChanges: { hasPlanks: true },
+				disableMode: "hidden",
+			},
+			{
 				desc: "See if any of the furniture can be moved to create a barricade",
 				nextEventId: "testBarricadingFurniture",
 			},
@@ -147,6 +161,49 @@ const eventOpts = [
 			{
 				desc: "Abandon your search for now",
 				nextEventId: "insideCabin",
+			},
+		],
+	},
+	{
+		id: "continuedSearchingCabin",
+		choices: [
+			{
+				desc: "Take the planks and search the cabin for a hammer and nails",
+				nextEventId: "thoroughlySearchCabin",
+				requiredState: { hasHammer: false, hasNails: false },
+				stateChanges: { hasPlanks: true },
+				disableMode: "hidden",
+			},
+			{
+				desc: "Take the planks and search the cabin for some nails",
+				nextEventId: "thoroughlySearchCabin",
+				requiredState: { hasHammer: true, hasNails: false },
+				stateChanges: { hasPlanks: true },
+				disableMode: "hidden",
+			},
+			{
+				desc: "Take the planks and search the cabin for a hammer",
+				nextEventId: "thoroughlySearchCabin",
+				requiredState: { hasHammer: false, hasNails: true },
+				stateChanges: { hasPlanks: true },
+				disableMode: "hidden",
+			},
+			{
+				desc: "Lucky you've already got both! Take the planks and keep searching for anything else that looks useful",
+				nextEventId: "thoroughlySearchCabin",
+				requiredState: { hasHammer: true, hasNails: true },
+				stateChanges: { hasPlanks: true },
+				disableMode: "hidden",
+			},
+			{
+				desc: "Ignore the planks for now and continue searching the cabin for anything else useful",
+				nextEventId: "thoroughlySearchCabin",
+				stateChanges: { foundPlanks: true },
+			},
+			{
+				desc: "Ignore the planks for now and stop searching - you doubt you'll find anything else useful in this place",
+				nextEventId: "insideCabin",
+				stateChanges: { foundPlanks: true },
 			},
 		],
 	},
@@ -283,8 +340,14 @@ const events = [
 	},
 	{
 		id: "continueSearchingCabin",
-		text: `Continuing your search, you come across `,
+		text: `Continuing your search, you spot a stack of wooden planks shoved under the bed.
+        Not what you'd want to build a cabin out of, but good enough to help barricade, if you can find some nails and a hammer.`,
 		optsId: "continuedSearchingCabin",
+	},
+	{
+		id: "thoroughlySearchCabin",
+		text: "Thoroughly searching",
+		optsId: "thoroughlySearchingCabin",
 	},
 	{
 		id: "testBarricadingFurniture",
