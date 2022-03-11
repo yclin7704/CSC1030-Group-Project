@@ -217,6 +217,19 @@ const eventOpts = [
 		],
 	},
 	{
+		id: "randomlySearchingCabin",
+		choices: [
+			{
+				desc: getRandomSearchCabinChoice,
+				nextEventId: "randomSearchCabin",
+			},
+			{
+				desc: getRandomSearchCabinGiveUp,
+				nextEventId: "insideCabin",
+			},
+		],
+	},
+	{
 		id: "inspectingHatch",
 		choices: [
 			{
@@ -359,6 +372,11 @@ const events = [
 		optsId: "thoroughlySearchingCabin",
 	},
 	{
+		id: "randomSearchCabin",
+		text: "RANDOM",
+		optsId: "randomlySearchingCabin",
+	},
+	{
 		id: "testBarricadingFurniture",
 		text: `Barricading`,
 	},
@@ -413,6 +431,37 @@ const eventsDoctor = [];
 const eventsVeteran = [];
 const eventsPriest = [];
 
-function getRandomSearchCabinChoice() {
-	return "Test";
+// BEGIN: Logic for determining some data
+function getRandom(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
 }
+
+function getRandomSearchCabinChoice() {
+	const choices = [
+		"Continue your search",
+		"Keep searching",
+		"Hmmm, you don't know if you searched in there yet...",
+		"Is there anything else for you to find?",
+		"You're not done searching yet...",
+		"You're not giving up yet.",
+		"Look for anything else to search",
+		"There's got to be something else to find",
+	];
+	return choices[getRandom(0, choices.length)];
+}
+
+function getRandomSearchCabinGiveUp() {
+	const choices = [
+		"You feel like there's nothing left to find",
+		"Abandon your search",
+		"Give up",
+		"You feel like you've searched everything",
+		"Finish searching",
+		"Stop your search",
+		"You're done searching",
+		"This search has to end eventually",
+		"Leave your search for now",
+	];
+	return choices[getRandom(0, choices.length)];
+}
+// END: Logic for determining some data
