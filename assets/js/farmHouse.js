@@ -216,7 +216,7 @@ const textNodes = [
             {
                 text: 'Turn on torch',
                 requiredState: (currentState) => currentState.torch,
-                nextText: 1
+                nextText: 18
             },
             {
                 text: 'Go back',
@@ -311,7 +311,7 @@ const textNodes = [
     //inside after first time
     {
         id: 10,
-        text: 'Returning back to the living room, Around you, there is a table on your left, a painting that has been tilted on the wall, a small fireplace beside the kitchen door, what seems like a bedroom in front of you and the kitchen to your left.',
+        text: 'Returning back to the living room, Around you, there is a <u><strong>table on your left</strong></u>, <u><strong>a painting that has been tilted on the wall</strong></u>, <u><strong>a small fireplace</strong></u> beside the kitchen door, what seems like <u><strong>a bedroom</strong></u> in front of you and <u><strong>the kitchen</strong></u> to your right.',
         inventory: '',
         image: 'assets/images/farm-house-inside.jpg',
         options: [
@@ -348,21 +348,79 @@ const textNodes = [
     //Bedroom
     {
         id: 11,
-        text: '',
-        
+        text: "Entering the bedroom, you see that it looks like a typical normal bedroom, which seems like they were in a hurry to get out of the room. <u><strong>Drawers</strong></u> opened, <u><strong>bed</strong></u> was not done, <u><strong>random items on the ground</strong></u> and <u><strong>a large wardrobe that's tied with rope and chains</strong></u>",
+        note: '',
+        inventory: '',
+        image: 'assets/images/farm-house-bedroom.jpg',
+        sound: '',
+        options: [
+            {
+                text: 'Seach the drawers',
+                nextText: 0
+            },
+            {
+                text: 'Salvage the bed',
+                nextText: 0
+            },
+            {
+                text: 'Look at the items on the floor',
+                nextText: 0
+            },
+            {
+                text: 'Untie the ropes and chains off the wardrobe',
+                nextText: 0
+            }
+        ]
     },
     //Look on the table
     {
         id: 12,
-        text: ''
+        text: 'Looking on the table, you see that there is a note',
+        notes: '',
+        inventory: '',
+        image: 'assets/images/farm-house-inside.jpg',
+        options: [
+            {
+                text: 'Read the note',
+                nextText: 0
+            },
+            {
+                text: 'Ignore the note',
+                nextText: 10
+            }
+        ]
     },
     //Look at the painting
     {
         id: 13,
+        text: "You look at the painting, and you see there's a message on the frame and it says 'find the notes'. You wonder what could this possibly mean?",
+        notes: '',
+        inventory: '',
+        image: 'assets/images/farm-house-inside.jpg',
+        options: [
+            {
+                text: 'Back',
+                nextText: 10
+            }
+        ]
     },
     //Look inside the fireplace
     {
         id: 14,
+        text: 'You look inside the fireplace and see a semi-burnt note',
+        notes: '',
+        inventory: '',
+        image: 'assets/images/farm-house-inside.jpg',
+        options: [
+            {
+                text: 'Pick up the burnt note and read it',
+                nextText: 0
+            },
+            {
+                text: 'Ignore the note',
+                nextText: 10
+            }
+        ]
     },
     //Go to the kitchen
     {
@@ -380,8 +438,11 @@ const textNodes = [
     },
     //Turn on the torch in the basement
     {
-        id: 1,
+        id: 18,
         text: '',
+        note: '',
+        inventory: '',
+        image: 'assets/images/farm-house-basement.jpg'
     }
 ]
 
