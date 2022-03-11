@@ -111,8 +111,10 @@ async function setChoices(optsId) {
 		let isHidden = !requirementsMet && opt.disableMode === "hidden";
 
 		btn.disabled = !requirementsMet;
-		btn.innerHTML = opt.desc;
 		btn.classList = ["buttonChoice"];
+
+		if (typeof opt.desc === "string") btn.innerHTML = opt.desc;
+		else if (typeof opt.desc === "function") btn.innerHTML = opt.desc();
 
 		btn.addEventListener("click", () => selectOption(opt));
 

@@ -208,6 +208,15 @@ const eventOpts = [
 		],
 	},
 	{
+		id: "thoroughlySearchingCabin",
+		choices: [
+			{
+				desc: getRandomSearchCabinChoice,
+				nextEventId: "randomSearchCabin",
+			},
+		],
+	},
+	{
 		id: "inspectingHatch",
 		choices: [
 			{
@@ -403,3 +412,7 @@ const eventsMechanic = [];
 const eventsDoctor = [];
 const eventsVeteran = [];
 const eventsPriest = [];
+
+function getRandomSearchCabinChoice() {
+	return "Test";
+}
