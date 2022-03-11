@@ -8,6 +8,7 @@ function decreaseTemp(value) {
         temperature -= tempDecrease;
         if (temperature <= -21) {
             sessionStorage.setItem("Temperature", temperature);
+            temperature = 40;
             showTextNode(103);
         }
     }
