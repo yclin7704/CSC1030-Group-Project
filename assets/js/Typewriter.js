@@ -1,14 +1,16 @@
-let currentText;
+let printCount = 0;
 
 /**
  * Display the given text in a typewriter-like fashion
- * @todo Repeated dialogue causes this to break. Maybe switch to internal counter that's incremented each time this is called or something?
  * @param {string} text The text to display
  * @param {number} delay The delay between printing each character (Default 30)
  * @returns Nothing
  */
 async function typeSentence(text, dialogueId = "dialogue", delay = 30) {
-	currentText = text;
+	printCount++;
+	if (printCount > 100) printCount = 0;
+	let thisPrintCount = printCount;
+	console.log(printCount);
 
 	// Clears the HTML so that it doesn't keep adding on to it
 	let dialogueBox = document.getElementById(dialogueId);
@@ -29,7 +31,7 @@ async function typeSentence(text, dialogueId = "dialogue", delay = 30) {
 		if (!tag) await waitForMs(delay);
 
 		// If the user has gone on to the next event/location, stop displaying this one
-		if (currentText != text) return;
+		if (printCount != thisPrintCount) return;
 
 		// If at the start of a tag
 		if (letters[i] === "<") {
