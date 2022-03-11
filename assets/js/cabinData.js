@@ -115,6 +115,16 @@ const eventOpts = [
 			{
 				desc: "Begin searching the cabin",
 				nextEventId: "searchingCabin",
+				requiredState: { rifledCabin: false },
+				stateChanges: { rifledCabin: true },
+				disableMode: "hidden",
+			},
+			{
+				desc: "Continue searching the cabin",
+				nextEventId: "continueSearchingCabin",
+				requiredState: { rifledCabin: true, searchedCabin: false },
+				stateChanges: { searchedCabin: true },
+				disableMode: "hidden",
 			},
 			{
 				desc: "See if any of the furniture can be moved to create a barricade",
@@ -123,6 +133,20 @@ const eventOpts = [
 			{
 				desc: "Take a closer look at the hatch in the floor",
 				nextEventId: "approachHatch",
+			},
+		],
+	},
+	{
+		id: "riflingCabin",
+		choices: [
+			{
+				desc: "Continue searching",
+				nextEventId: "continueSearchingCabin",
+				stateChanges: { searchedCabin: true },
+			},
+			{
+				desc: "Abandon your search for now",
+				nextEventId: "insideCabin",
 			},
 		],
 	},
@@ -251,11 +275,20 @@ const events = [
 	},
 	{
 		id: "searchingCabin",
-		text: "Searching",
+		text: `You begin rifling through the cupboards and cabinets in the cabin. They seem mostly empty or filled with junk,
+        but you're able to scavenge a few tins of food and a bottle of water. There's also a locked safe hidden at the back of a cabinet, but no signs of a combination anywhere.`,
+		// TODO: Anything inside safe, or just note for the hunter?
+		// TODO: Image
+		optsId: "riflingCabin",
+	},
+	{
+		id: "continueSearchingCabin",
+		text: `Continuing your search, you come across `,
+		optsId: "continuedSearchingCabin",
 	},
 	{
 		id: "testBarricadingFurniture",
-		text: "Barricading",
+		text: `Barricading`,
 	},
 
 	// BEGIN: Hatch
