@@ -10,7 +10,6 @@ async function typeSentence(text, dialogueId = "dialogue", delay = 30) {
 	printCount++;
 	if (printCount > 100) printCount = 0;
 	let thisPrintCount = printCount;
-	console.log(printCount);
 
 	// Clears the HTML so that it doesn't keep adding on to it
 	let dialogueBox = document.getElementById(dialogueId);
