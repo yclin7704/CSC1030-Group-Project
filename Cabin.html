@@ -15,7 +15,11 @@
 				<!-- Column 1: Map and inventory -->
 				<div class="col col1">
 					<div class="map">
-						<img src="assets/images/map.png" />
+						<label for="temperatureMeter">Temperature:</label><br />
+						<meter id="temperatureMeter" class="temperatureMeter"></meter><br />
+						<br />
+						Time:<br />
+						5:15pm
 					</div>
 					<div class="inventory"></div>
 				</div>
@@ -27,9 +31,9 @@
 
 				<!-- Column 3: Buttons -->
 				<div class="col col3" id="divChoices">
-					<!-- Does this also clear localStorage for the other pages? If it does, fix it so it just clears stuff for my page probably? -->
-					<button class="buttonChoice" onclick="localStorage.clear(); console.log('Cleared localStorage! This probably broke stuff.')">
-						DEBUG: Clear localStorage
+					<!-- Just in case things break - This should never be seen normally -->
+					<button class="buttonChoice" onclick="sessionStorage.clear(); console.log('Cleared sessionStorage!')">
+						DEBUG: Clear sessionStorage
 					</button>
 				</div>
 			</div>
@@ -50,6 +54,7 @@
 		<script src="assets/js/cabinData.js"></script>
 		<script src="assets/js/Typewriter.js"></script>
 		<script src="assets/js/crossfade.js"></script>
+		<script src="TEST/TemperatureTest.js"></script>
 		<script src="assets/js/cabin.js"></script>
 	</body>
 </html>

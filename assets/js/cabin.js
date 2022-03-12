@@ -1,6 +1,6 @@
 let gameState = {
 	// TODO: Get profession properly
-	profession: profHunter,
+	profession: profDoctor,
 };
 
 /**
@@ -31,6 +31,8 @@ async function runEvent(eventId) {
 	//crossfadeAudio(eventData.audio);
 	// Show the user's options
 	setChoices(eventData.optsId);
+
+	changeTemp("decrease");
 }
 
 /**
