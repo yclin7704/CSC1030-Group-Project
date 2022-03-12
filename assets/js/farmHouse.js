@@ -348,14 +348,14 @@ const textNodes = [
     //Bedroom
     {
         id: 11,
-        text: "Entering the bedroom, you see that it looks like a typical normal bedroom, which seems like they were in a hurry to get out of the room. <u><strong>Drawers</strong></u> opened, <u><strong>bed</strong></u> was not done, <u><strong>random items on the ground</strong></u> and <u><strong>a large wardrobe that's tied with rope and chains</strong></u>",
+        text: "Entering the bedroom, you see that it looks like a typical normal bedroom, which seems like they were in a hurry to get out of the room. <u><strong>Drawers</strong></u> opened, <u><strong>bed</strong></u> was not done, <u><strong>random items on the ground</strong></u> and <u><strong>a large wardrobe that's tied with rope and chains and there's seem to be something moving inside.</strong></u>",
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-bedroom.jpg',
         sound: '',
         options: [
             {
-                text: 'Seach the drawers',
+                text: 'Search the drawers',
                 nextText: 0
             },
             {
@@ -368,7 +368,7 @@ const textNodes = [
             },
             {
                 text: 'Untie the ropes and chains off the wardrobe',
-                nextText: 0
+                nextText: 16
             }
         ]
     },
@@ -425,24 +425,198 @@ const textNodes = [
     //Go to the kitchen
     {
         id: 15,
+        text: 'You go to the kitchen and like the living room, it is in ruins. In there, you see some cupboards and a fridge.',
+        notes: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: 'Check cupboards',
+                nextText: 0
+            },
+            {
+                text: 'Open the fridge',
+                nextText: 0
+            }
+        ]
     },
-    //Go back outside
+    //The closet inside the bedroom - ENDING 1 - the plot
     {
         id: 16,
-        text: ''
+        text: 'You untied the ropes and chain, and pops out a zombified little girl that jumps up and bites your neck. As the zombie devours your flesh, as your vision starts to blur, you start to thought what a way to go...<br><br><a href=\"EndStatistics.html\">See Statistics</a>',
+        notes: '',
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+        options: [
+            {
+                text: "Play Again?",
+                nextText: -1
+            }
+        ]
     },
-    //The closet inside the bedroom
+    //Turn on the torch in the basement. This is where you will stay for the night.
     {
         id: 17,
-        text: '',
+        text: 'You turned your torch and see there are barrels... Lots of them, it seems like it was a wine cellar instead.',
+        notes: '',
+        inventory: '',
+        image: 'assets/images/farm-house-basement.jpg',
+        options: [
+            {
+                text: 'Pick out the wood planks from the broken barrels',
+                requiredState: (currentState) => currentState.barricade === false,
+                setState: {barricade: true},
+                nextText: 17
+            },
+            {
+
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => currentState.blacket === false,
+                setState: {Blanket: true},
+                nextText: 17
+            },
+            {
+                text: 'Start the night',
+                requiredState: (currentState) => currentState.barricade === false,
+                requiredState: (currentState) => currentState.blacket === false,
+                nextText: 0
+            },
+            {
+                
+            }
+        ]
     },
-    //Turn on the torch in the basement
+    //Bedroom - Search the drawers
     {
         id: 18,
         text: '',
-        note: '',
+        notes: '',
         inventory: '',
-        image: 'assets/images/farm-house-basement.jpg'
+        image: '',
+        options: [
+            {
+                text: '',
+            }
+        ]
+    },
+    //Bedroom - Salvage the bed
+    {
+        id: 19,
+        text: '',
+        notes: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+
+            }
+        ]
+    },
+    //Bedroom - look at the floor
+    {
+        id: 20,
+        text: '',
+        notes: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+
+            }
+        ]
+    },
+    //Table - note
+    {
+        id: 21,
+        text: '',
+        notes: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+
+            }
+        ]
+    },
+    //Fireplace - note
+    {
+        id: 22,
+        text: '',
+        notes: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+
+            }
+        ]
+    },
+    //Kitchen - Cupboards
+    {
+        id: 23,
+        text: '',
+        notes: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+
+            }
+        ]
+    },
+    //Kithcen - Fridge
+    {
+        id: 24,
+        text: '',
+        notes: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+
+            }
+        ]
+    },
+    //Start the night - no barricade, no camp
+    {
+        id: 25,
+        text: '',
+        notes: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+
+            }
+        ]
+    },
+    //Start the night - barricade, no camp
+    {
+        id: 26,
+        text: '',
+        notes: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+
+            }
+        ]
+    },
+    //Start the night - barricade, camp
+    {
+        id: 27,
+        text: '',
+        notes: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+
+            }
+        ]
     }
 ]
 
