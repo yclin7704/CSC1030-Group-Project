@@ -35,6 +35,10 @@ function startGame() {
         case "Priest": state = {Priest: true}; break;
         default: state = {}; break;
     }
+	
+	// The seccond ID should point to dieing due to being too hot
+    setTemperatureData(showTextNode, 103, 103)
+    
     showTextNode(1)  // Will display the first text node (id=1)
 }
 
@@ -62,10 +66,10 @@ function showTextNode(textNodeIndex){
             value = option.text2;
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
             if (value === "decrease") {
-                button.addEventListener('click', () => decreaseTemp("decrease"));
+                button.addEventListener('click', () => changeTemp("decrease"));
             }
             else if (value === "increase") {
-                button.addEventListener('click', () => decreaseTemp("increase"));
+                button.addEventListener('click', () => changeTemp("increase"));
             }
             optionButtonsElement.appendChild(button); 
         }
