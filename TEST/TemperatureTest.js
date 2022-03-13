@@ -53,18 +53,18 @@ function changeTemp(change) {
  * (In most cases you should probably be using changeTemp)
  * @param {integer} value
  */
-function setTemp(value) {
+function setTemp(value, displayUpdate = true) {
 	temperature = value;
-	tempUpdated();
+	tempUpdated(displayUpdate);
 }
 
 /**
  * Called when the temperature is changed so that the new value can be saved,
  * and the game ended if required.
  */
-function tempUpdated() {
+function tempUpdated(displayUpdate = true) {
 	// Update the value shown to the user
-	meterSetup(temperature);
+	if (displayUpdate) meterSetup(temperature);
 	temperatureSpan.innerHTML = temperature;
 
 	// Save the temperature to sessionStorage
@@ -72,9 +72,6 @@ function tempUpdated() {
 
 	// End the game if the temperature becomes too high/too low
 	if (temperature <= minTemp || temperature >= maxTemp) {
-		// EndStatistics.html should probably reset temperature instead of this file, but I'm just testing stuff for now
-		temperature = maxTemp - 1;
-		sessionStorage.setItem("Temperature", temperature);
 		// Do whatever stuff to show the game is over
 		window.location.href = "EndStatistics.html";
 	}
