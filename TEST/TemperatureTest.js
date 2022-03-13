@@ -8,8 +8,18 @@ const highTemp = 50;
 const temperatureMeter = document.getElementById("temperatureMeter");
 const temperatureSpan = document.getElementById("temperatureSpan");
 
+let showTextNodeFunction;
+let tempTooLowId;
+let tempTooHighId;
+
 let temperature = getSavedTemp();
 meterSetup(temperature);
+
+function setTemperatureData(funcName, lowId, highId) {
+	showTextNodeFunction = funcName;
+	tempTooLowId = lowId;
+	tempTooHighId = highId;
+}
 
 /**
  * Get the temperature value saved to sessionStorage, or the default (40) if it has not been set.
@@ -73,7 +83,10 @@ function tempUpdated(displayUpdate = true) {
 	// End the game if the temperature becomes too high/too low
 	if (temperature <= minTemp || temperature >= maxTemp) {
 		// Do whatever stuff to show the game is over
-		window.location.href = "EndStatistics.html";
+		if (temperature <= minTemp) showTextNodeFunction(tempTooLowId);
+		else if (temperature >= maxTemp) showTextNodeFunction(tempTooHighId);
+
+		//window.location.href = "EndStatistics.html";
 	}
 }
 

@@ -12,6 +12,8 @@ async function main() {
 	// TODO: Returning to cabin
 	// TODO: Actually test any of this code
 
+	setTemperatureData(runEvent, "tempTooLow", "tempTooHigh");
+
 	StartTimer();
 	runEvent("firstVisitOutside");
 }
