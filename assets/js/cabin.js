@@ -38,7 +38,7 @@ async function runEvent(eventId) {
 		// Show the user's options
 		setChoices(eventData.optsId);
 		// Change temperature
-		if (eventData.tempChange) changeTemp(eventData.tempChange);
+		changeTemp(eventData.tempChange);
 	}
 }
 
