@@ -319,7 +319,7 @@ const eventOpts = [
 		choices: [
 			{
 				desc: "See statistics",
-				nextEventId: undefined,
+				nextEventId: goToStatistics,
 			},
 		],
 	},
@@ -467,7 +467,7 @@ const events = [
 	{
 		id: "tempTooLow",
 		text: `As you are enveloped by the strong winds and harsh cold of the surrounding tundra, you feel yourself becoming weaker and weaker.
-        You begin to lose all feeling in your limbs, numbed by cold. With no will left to move, you collapse to the ground and slowly succumb to the wasteland's wintery wratch.`,
+        You begin to lose all feeling in your limbs, numbed by cold. With no will left to move, you collapse to the ground and slowly succumb to the wasteland's wintery wrath.`,
 		optsId: "gameOver",
 	},
 	{
@@ -546,5 +546,9 @@ function getRandomSearchCabinDialogue() {
 		"Does that push away to reveal a secret? Nope, it still doesn't budge.",
 	];
 	return choices[getRandom(0, choices.length)];
+}
+
+function goToStatistics() {
+	window.location.href = "EndStatistics.html";
 }
 // END: Logic for determining some data

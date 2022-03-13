@@ -12,8 +12,6 @@ let showTextNodeFunction;
 let tempTooLowId;
 let tempTooHighId;
 
-let isDead = false;
-
 let temperature = getSavedTemp();
 meterSetup(temperature);
 
@@ -91,12 +89,11 @@ function tempUpdated(displayUpdate = true) {
 	sessionStorage.setItem("Temperature", temperature);
 
 	// End the game if the temperature becomes too high/too low
-	if (temperature <= minTemp || (temperature >= maxTemp && !isDead)) {
+	if (temperature <= minTemp || temperature >= maxTemp) {
 		// Do whatever stuff to show the game is over
-		isDead = true;
 		if (temperature <= minTemp) showTextNodeFunction(tempTooLowId);
 		else if (temperature >= maxTemp) showTextNodeFunction(tempTooHighId);
-	} else isDead = false;
+	}
 }
 
 /**

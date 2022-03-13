@@ -23,20 +23,23 @@ async function main() {
  * @param {string} eventId The event ID
  */
 async function runEvent(eventId) {
-	let eventData = getEventData(eventId);
-	// Update the game's state, if needed
-	updateGameState(eventData.stateChanges);
-	// Display the event text
-	print(eventData.text, eventId);
-	// Update the setting image
-	setImg(eventData.img);
-	// Crossfade audio
-	// DEBUG: Re-enable audio
-	//crossfadeAudio(eventData.audio);
-	// Show the user's options
-	setChoices(eventData.optsId);
-	// Change temperature
-	changeTemp(eventData.tempChange);
+	if (typeof eventId === "function") eventId();
+	else {
+		let eventData = getEventData(eventId);
+		// Update the game's state, if needed
+		updateGameState(eventData.stateChanges);
+		// Display the event text
+		print(eventData.text, eventId);
+		// Update the setting image
+		setImg(eventData.img);
+		// Crossfade audio
+		// DEBUG: Re-enable audio
+		//crossfadeAudio(eventData.audio);
+		// Show the user's options
+		setChoices(eventData.optsId);
+		// Change temperature
+		if (eventData.tempChange) changeTemp(eventData.tempChange);
+	}
 }
 
 /**
