@@ -15,6 +15,12 @@ let tempTooHighId;
 let temperature = getSavedTemp();
 meterSetup(temperature);
 
+/**
+ * Should be called at the start to set these values correctly
+ * @param {function} funcName The function to be used to call to display the correct event
+ * @param {*} lowId The ID of the text node where you freeze
+ * @param {*} highId The ID of the text node where you overheat
+ */
 function setTemperatureData(funcName, lowId, highId) {
 	showTextNodeFunction = funcName;
 	tempTooLowId = lowId;
