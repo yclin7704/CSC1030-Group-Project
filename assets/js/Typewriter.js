@@ -6,7 +6,7 @@ let printCount = 0;
  * @param {number} delay The delay between printing each character (Default 30)
  * @returns Nothing
  */
-async function typeSentence(text, dialogueId = "dialogue", delay = 30) {
+async function typeSentence(text, dialogueId = "dialogue", delay = 30, isSlow = false) {
 	printCount++;
 	if (printCount > 100) printCount = 0;
 	let thisPrintCount = printCount;
@@ -30,7 +30,7 @@ async function typeSentence(text, dialogueId = "dialogue", delay = 30) {
 		if (!tag) await waitForMs(delay);
 
 		// If the user has gone on to the next event/location, stop displaying this one
-		if (printCount != thisPrintCount) return;
+		if (printCount != thisPrintCount && !isSlow) return;
 
 		// If at the start of a tag
 		if (letters[i] === "<") {
