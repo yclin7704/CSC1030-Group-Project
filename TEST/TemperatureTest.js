@@ -45,8 +45,8 @@ function getTemp() {
  * @param {*} change The value/direction to change the temperature by
  */
 function changeTemp(change) {
-	const standardIncrease = 1;
-	const standardDecrease = -10;
+	const standardIncrease = 7;
+	const standardDecrease = -2;
 
 	// Change the temperature by the desired value
 	if (change === "decrease") {

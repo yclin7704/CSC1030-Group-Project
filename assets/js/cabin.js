@@ -31,8 +31,8 @@ async function runEvent(eventId) {
 	//crossfadeAudio(eventData.audio);
 	// Show the user's options
 	setChoices(eventData.optsId);
-
-	changeTemp("decrease");
+	// Change temperature
+	changeTemp(eventData.tempChange);
 }
 
 /**
@@ -132,6 +132,8 @@ async function selectOption(opt) {
 	// Update game state if needed
 	updateGameState(opt.stateChanges);
 	// Continue to the next event
+	// Change temperature
+	changeTemp(opt.tempChange);
 	let nextEventId = opt.nextEventId;
 	runEvent(nextEventId);
 }

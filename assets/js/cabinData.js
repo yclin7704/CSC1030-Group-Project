@@ -50,6 +50,14 @@ const eventOpts = [
 			{
 				desc: "Open your map",
 			},
+			{
+				desc: "DEBUG: Increase temp",
+				tempChange: "increase",
+			},
+			{
+				desc: "DEBUG: Decrease temp",
+				tempChange: "decrease",
+			},
 		],
 	},
 
