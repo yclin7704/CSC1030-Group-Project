@@ -47,6 +47,9 @@ const eventOpts = [
 				desc: "Venture deeper into the forest",
 				nextEventId: undefined,
 			},
+			{
+				desc: "Open your map",
+			},
 		],
 	},
 
@@ -270,7 +273,9 @@ const eventOpts = [
 			{
 				desc: "Pick the lock",
 				nextEventId: "pickHatchLock",
-				requiredState: { canLockpick: true /* A bunch of these probably need renamed depending on what other people do */ },
+				requiredState: {
+					canLockpick: true /* A bunch of these probably need renamed depending on what other people do */,
+				},
 				stateChanges: { hatchOpen: true },
 			},
 			{
