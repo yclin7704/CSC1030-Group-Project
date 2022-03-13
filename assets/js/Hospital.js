@@ -771,7 +771,7 @@ const textNodes = [
     {
         id: 27,
         text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
-            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 27:<br>Unfortuantely, all of our test keep resulting in failure and we were going to give up. However" +
+            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 27:<br>Unfortuantely, all of our tests keep resulting in failure and we were going to give up. However" +
             " recently, some of the test subjects have started to experience some extreme side-affects, such as violent tendencies, screaming and scratching themselves as if" +
             " they're trying to get rid of an itch on their body. I still don't know the cause of this as of yet, but part of me believes it has something to do with the serum" +
             " that we were asked to test, as after searching through some of the strange men's documents, it seems that they are using the blood of some fossilised creature." +
@@ -805,7 +805,7 @@ const textNodes = [
             " a strong itching sensation, which probably means that I was injected with the serum and might not have much time left. I knew that asking questions was a bad thing" +
             "  but at least I was able to see the end-result of the test that they were keeping secret even from us. It would seem that the blood samples they were using contained" +
             " some kind of parasite and/or bacteria that pretty much leads to a partial breakdown of the body making the subjects look like zombie figures. The itching is really bad" +
-            " now like it's under the skin, to whoever reads this, the world is in danger, there's someone that you need to speak to, he createc the serum and might know of an antidote" +
+            " now like it's under the skin, to whoever reads this, the world is in danger, there's someone that you need to speak to, he created the serum and might know of an antidote" +
             " his name is..................</span>",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
