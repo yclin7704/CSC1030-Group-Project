@@ -1,24 +1,27 @@
-var time = 0;
-var myTimer;
+let time = 0;
+let myTimer;
 
 function StartTimer() {
-    myTimer = setInterval(Timer, 1000);
+	myTimer = setInterval(Timer, 1000);
 }
 
 function Timer() {
-    time++;
-    sessionStorage.setItem('Time', time);
+	time++;
+	sessionStorage.setItem("Time", time);
 }
 
 function StopTimer() {
-    var times = sessionStorage.getItem('Time');
-    clearTimeout(myTimer);
-    document.getElementById('TheTime').innerHTML = times;
+	let times = sessionStorage.getItem("Time");
+	clearTimeout(myTimer);
+}
+
+function getTime() {
+	return time;
 }
 
 function playAgain() {
-    window.location.href = "Hospital.html";
-    //window.location.href = "Cabin.html";
-    //window.location.href = "GasStation.html";
-    //window.location.href = "FarmHouse.html";
+	window.location.href = "Hospital.html";
+	//window.location.href = "Cabin.html";
+	//window.location.href = "GasStation.html";
+	//window.location.href = "FarmHouse.html";
 }

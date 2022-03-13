@@ -1,26 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./TEST/Styling.css"/>
-    <title>Last Stand</title>
-    <script src="./assets/js/Timer.js"></script>
-    <script src="./TEST/ProfessionDialogue.js"></script>
-    <script src="./assets/js/Temperature.js"></script>
-</head>
-<body onload="StopTimer(); returnTemp();">
-    <div class="box centered">
-        <h1> Game Over </h1>
-        <br>
-        <p>Your Temperature: <span id="TheTemperature"></span>&deg;C</p>
-        <p>Time Played: <span id="TheTime"></span> seconds</p>
-        <p>Profession Chosen: <span id="TheProfession"></span></p>
-        <button class="button" onclick="playAgain()"> Play Again? </button>
-        <script>
-            document.getElementById('TheProfession').innerHTML = getProfession();
-        </script>
-    </div>
-</body>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Last Stand - Statistics</title>
+		<meta name="description" content="Statistics page" />
+
+		<link rel="stylesheet" href="./assets/css/main.css" />
+		<link rel="stylesheet" href="./assets/css/endStatistics.css" />
+	</head>
+	<body>
+		<div class="box centered">
+			<h1>Game Over!</h1>
+			<p>Your Temperature: <span id="temperatureSpan"></span>&deg;C</p>
+			<p>Time Played: <span id="timeSpan"></span> seconds</p>
+			<p>Profession Chosen: <span id="professionSpan"></span></p>
+			<button class="button" onclick="playAgain()">Play Again?</button>
+		</div>
+
+		<script src="./assets/js/Timer.js"></script>
+		<script src="./TEST/TemperatureTest.js"></script>
+		<script src="./assets/js/statistics.js"></script>
+	</body>
 </html>

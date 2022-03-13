@@ -1,7 +1,8 @@
 let gameState = {
-	// TODO: Get profession properly
+	// TODO: Get profession properly with sessionStorage.getItem("profession");
 	profession: profDoctor,
 };
+sessionStorage.setItem("profession", "Hunter");
 
 /**
  * Main function
