@@ -2,6 +2,8 @@ const imgOutside = "assets/images/cabin-outside.webp";
 const imgInside = "assets/images/cabin-inside.webp";
 const imgHatch = "assets/images/cabin-trapdoor.jpg";
 
+const gifDied = "assets/images/You-Died_TEST-GIF.gif";
+
 const audioWind = "assets/sounds/wind.wav";
 const audioRain = "assets/sounds/rain_2.wav";
 
@@ -468,11 +470,13 @@ const events = [
 		id: "tempTooLow",
 		text: `As you are enveloped by the strong winds and harsh cold of the surrounding tundra, you feel yourself becoming weaker and weaker.
         You begin to lose all feeling in your limbs, numbed by cold. With no will left to move, you collapse to the ground and slowly succumb to the wasteland's wintery wrath.`,
+		img: gifDied,
 		optsId: "gameOver",
 	},
 	{
 		id: "tempTooHigh",
 		text: "Hot",
+		img: gifDied,
 		optsId: "gameOver",
 	},
 	// END: Deaths
