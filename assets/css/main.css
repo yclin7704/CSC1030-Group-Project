@@ -185,6 +185,7 @@ input[type="button"][disabled] {
 }
 
 .temperatureSpan {
+	color: #eeeeee;
 }
 
 .divTempMeter {

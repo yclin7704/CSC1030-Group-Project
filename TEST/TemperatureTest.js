@@ -1,9 +1,9 @@
 const minTemp = -21;
 const maxTemp = 60;
 
-const lowTemp = -12;
-const normalTemp = 1;
-const highTemp = 40;
+const lowTemp = -10;
+const normalTemp = 5;
+const highTemp = 50;
 
 const temperatureMeter = document.getElementById("temperatureMeter");
 const temperatureSpan = document.getElementById("temperatureSpan");
