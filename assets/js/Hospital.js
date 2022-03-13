@@ -269,6 +269,11 @@ const textNodes = [
             {
                 text: 'Try to forcefully take the crowbar',
                 nextText: 100
+            },
+            {
+                text: "Eat the Mushrooms instead",
+                requiredState: (currentState) => currentState.hasMushrooms === true,
+                nextText: 104
             }
         ]
     },
@@ -285,7 +290,7 @@ const textNodes = [
         options: [
             {
                 text: 'Return to the front of the Hospital',
-                setState: {collectMushrooms: false},
+                setState: {collectMushrooms: false, hasMushrooms: true},
                 nextText: 2
             }
         ]
@@ -866,12 +871,7 @@ const textNodes = [
             ' <br><b><em>You Died!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
         inventory: '',
         image: 'assets/images/Game_Over_TEST-IMAGE.jpg',
-        options: [
-            {
-                text: 'Play Again?',
-                nextText: -1
-            }
-        ]
+        options: []
     },
 
 
@@ -885,12 +885,7 @@ const textNodes = [
             '<br><b><em>You Died!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
-        options: [
-            {
-                text: 'Play Again?',
-                nextText: -1
-            }
-        ]
+        options: []
     },
 
 
@@ -904,12 +899,7 @@ const textNodes = [
             '<br><b><em>You Survived!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
         inventory: '',
         image: 'assets/images/Victory2_TEST-GIF.gif',
-        options: [
-            {
-                text: 'Play Again?',
-                nextText: -1
-            }
-        ]
+        options: []
     },
 
 
@@ -922,12 +912,21 @@ const textNodes = [
             "You die of Frostbite...<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
-        options: [
-            {
-                text: "Play Again?",
-                nextText: -1
-            }
-        ]
+        options: []
+    },
+
+
+
+    // You died as a result of poisoning by eating the Mushrooms - ENDING 5
+    {
+        id: 104,
+        text: "You decided to eat the Mushrooms instead of trading them for the crowbar, expecting them to be a good source of nutrition and food. However, it turns out" +
+            " that the mushrooms are extremely poisonous and slightly hallucinogenic as you start to see hallucinations of what looks to be a tall shadowy figure with" +
+            " glowing red eyes towering over the Hospital staring right at you, and as the figure reaches out to you, you collapse and die..." +
+            "<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+        options: []
     }
 
 ];
