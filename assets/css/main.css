@@ -171,20 +171,24 @@ input[type="button"][disabled] {
 }
 
 /* TODO: Remove if we don't decide to use this */
+.temperature {
+	margin: 5px;
+}
+
 .temperatureMeter {
 	width: 80%;
 	display: inline-block;
 	border-radius: 5px;
-	overflow: auto;
-	height: 1rem;
-	margin: 5px;
+	overflow: hidden;
+	background: #111111;
+	font-size: 0px;
 }
 
 .temperatureSpan {
-	margin-left: 0.5rem;
 }
 
 .divTempMeter {
 	height: 1rem;
 	display: inline-block;
+	margin: 0px;
 }
