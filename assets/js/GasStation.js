@@ -2,57 +2,28 @@ const textElement = document.getElementById('dialogue'); // Dialogue box
 const optionButtonsElement = document.getElementById('options'); // Buttons
 const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage');
-const profession = getProfession();
 
-var myTimer;
-var duration;
+let profession = sessionStorage.getItem("profession");
 
 
 // This variable stores the current game state
-
 let state = {};
 
 let inventory = {};
 
 // This function is called to start the game. The state is emptied and the first text node is shown.
 
-function startTimer() {
-    myTimer = setInterval('countdown()', 1000)
-}
-
-function stopTimer() {
-    clearInterval(myTimer);
-}
-
-function countdown(seconds) {
-    console.log('The zombies are attacking... run!')
-    duration = seconds;
-    duration --;
-    if (duration >= 0) {
-    document.getElementById('timer').innerHTML = duration;
-    } else {
-        stopTimer();
-    }
-}
-
 function startGame(){
-    if (profession === 'Mechanic') {
-        state = {Mechanic:true}
-    }
-    else if (profession === 'Medic') {
-        state = {Medic:true};
-    }
-    else if (profession === 'Hunter') {
-        state = {Hunter:true};
-    }
-    else if (profession === 'War Veteran') {
-        state = {WarVeteran:true}
-    }
-    else if (profession === 'Priest') {
-        state = {Priest:true}
-    }
-    else {
-        state = {};
+
+    console.log(profession);
+
+    switch(profession){
+        case "Mechanic": state = {Mechanic: true}; break;
+        case "Doctor": state = {Doctor: true}; break;
+        case "Hunter": state = {Hunter: true}; break;
+        case "War Veteran": state = {WarVeteran: true}; break;
+        case "Priest": state = {Priest: true}; break;
+        default: state = {}; break;
     }
     inventory = {};
     showTextNode(1);
@@ -103,13 +74,15 @@ function selectOption(option) {
 const textNodes = [
     {
         id: 1,
-        text: 'You find what appears to be an empty gas station. However, the building is surrounded by fences, which creates suspicion that someone may be inside...',
+        text: 'You find what appears to be an empty gas station. However, the building is surrounded by fences, which creates suspicion that someone may be inside.'
+         + 'You are unsure if they are hostile or not, so you must be careful not to make too much noise.',
         inventory: '',
         image: 'assets/images/GasStation.jpg',
         options: [
             {
                 text: 'Cut the fence',
                 requiredInventory: (currentInventory) => currentInventory.boltcutters,
+                setState: {shed:true},
                 nextText: 2
             },
             {
@@ -126,9 +99,7 @@ const textNodes = [
         options: [
             {
                 text: 'Look in the shed',
-                setState: {
-                    attack:true
-                },
+                requiredState: (currentState) => currentState.shed,
                 nextText: 3,
             },
             {
@@ -139,16 +110,44 @@ const textNodes = [
     },
     {
         id: 3,
-        text: 'You open the door of the shed and knock over a shovel leaning against a wall. It makes a loud noise which alerts zombies nearby. You have to think fast.',
+        text: 'You open the door of the shed and knock over a shovel leaning against a wall. It makes a loud noise and you hear a group of people approaching...',
+        inventory: '',
         image: 'assets/images/shed-inside.jpg',
         options: [
             {
-                text: 'Open the drawers'
+                text: 'Hide under the table',
+                nextText: 4
             },
             {
-                text: 'Look under the table'
+                text: 'Hide in the cabinet'
+            },
+            {
+                text: 'Run back to the gas station',
+                setState: {shed:false},
+                nextText: 1
             }
         ]
+    },
+    {
+        id: 4,
+        text: 'A group of survivors entered the shed and found you.',
+        inventory: '',
+        image: 'assets/images/shed-inside.jpg',
+        options: [
+            {
+                text: 'Convince them to let you live',
+                requiredState: (currentState) => currentState.Priest,
+                nextText: 5
+            },
+            {
+                text: 'Push through the group and run away',
+                nextText: 6
+            }
+        ]
+    },
+    {
+        id: 5,
+        text: ''
     }
 
 
