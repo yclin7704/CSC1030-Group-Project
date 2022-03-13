@@ -30,8 +30,10 @@ External Location Three - Abandoned Building:
 
 External Location Four - Motel / Gas Station:
 -----------------------------------------------
->
->
+> (Bad) Ending One: Getting overrun by infected zombies
+> (Bad) Ending Two: Getting killed by the group of survivors
+> (Neutral) Ending Three: Surviving the night, but not having an escape for the following day
+> (Good) Ending Four: Fixing the car and escaping
 
 
 
