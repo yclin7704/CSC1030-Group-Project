@@ -81,7 +81,9 @@ function setTemp(value, displayUpdate = true) {
 function tempUpdated(displayUpdate = true) {
 	// Update the value shown to the user
 	if (displayUpdate) meterSetup(temperature);
-	temperatureSpan.innerHTML = temperature;
+	try {
+		temperatureSpan.innerHTML = temperature;
+	} catch {}
 
 	// Save the temperature to sessionStorage
 	sessionStorage.setItem("Temperature", temperature);
@@ -137,9 +139,11 @@ function meterSetup(value) {
 	divNormal.style.width = `${(normalWidth / range) * 100}%`;
 	divHigh.style.width = `${(highWidth / range) * 100}%`;
 
-	temperatureMeter.innerHTML = "";
-	temperatureMeter.appendChild(divLow);
-	temperatureMeter.appendChild(divMed);
-	temperatureMeter.appendChild(divNormal);
-	temperatureMeter.appendChild(divHigh);
+	try {
+		temperatureMeter.innerHTML = "";
+		temperatureMeter.appendChild(divLow);
+		temperatureMeter.appendChild(divMed);
+		temperatureMeter.appendChild(divNormal);
+		temperatureMeter.appendChild(divHigh);
+	} catch {}
 }
