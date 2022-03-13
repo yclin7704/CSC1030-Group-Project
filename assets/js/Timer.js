@@ -1,5 +1,11 @@
-let time = 0;
+let time = getSavedTime();
 let myTimer;
+
+function getSavedTime() {
+	let saved = parseInt(sessionStorage.getItem("Time"));
+	if (!isNaN(saved)) return saved;
+	else return 0;
+}
 
 function StartTimer() {
 	myTimer = setInterval(Timer, 1000);
@@ -7,16 +13,19 @@ function StartTimer() {
 
 function Timer() {
 	time++;
-	sessionStorage.setItem("Time", time);
+	saveTime();
 }
 
 function StopTimer() {
-	let times = sessionStorage.getItem("Time");
 	clearTimeout(myTimer);
 }
 
 function getTime() {
 	return time;
+}
+
+function saveTime(value = time) {
+	sessionStorage.setItem("Time", value);
 }
 
 function playAgain() {

@@ -12,6 +12,7 @@ async function main() {
 async function playAgain() {
 	// Reset temperature etc.
 	setTemp(40, false);
+	saveTime(0);
 	// Redirect to start screen
 	window.location.href = "PlayerMenu.html";
 }

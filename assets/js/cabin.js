@@ -12,6 +12,7 @@ async function main() {
 	// TODO: Returning to cabin
 	// TODO: Actually test any of this code
 
+	StartTimer();
 	runEvent("firstVisitOutside");
 }
 
