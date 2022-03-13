@@ -714,6 +714,115 @@ const textNodes = [
 
 
 
+    // You decide to keep reading the Hospital Documents - #1
+    {
+        id: 25,
+        text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
+            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 1:<br>Some strange men started appearing in the Hospital recently, with more of them coming and going" +
+            " more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task" +
+            " given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However" +
+            " we'll have to see how it all plays out in the long run...<br><br> Dr. Nallig</span>",
+        inventory: '',
+        image: 'assets/images/Hospital/Hospital_Outside.jpg',
+        options: [
+            {
+                text: "Read Next Entry",
+                nextText: 26
+            },
+            {
+                text: "Go back to searching the back of the Hospital",
+                nextText: 4
+            }
+        ]
+    },
+
+
+
+    // You decide to keep reading the Hospital Documents - #2
+    {
+        id: 26,
+        text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
+            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 11:<br>A bit of a long entry today. I think I've finally discovered the purpose of these strange men" +
+            ", as recently the tests we've been performing have required human subjects and they've all been failures so far, but these men have somehow managed to keep" +
+            " providing us with what they call \"willing test subjects\". However, although I do doubt that the test subjects were willing to do this, I think it would be" +
+            " best for me to keep my head down and keep running tests as I wouldn't dare question them on where they get the test subjects, as I fear what would happen to me" +
+            " should I do so...<br><br> Dr. Nallig</span>",
+        inventory: '',
+        image: 'assets/images/Hospital/Hospital_Outside.jpg',
+        options: [
+            {
+                text: "Read Next Entry",
+                nextText: 27
+            },
+            {
+                text: "Read Previous Entry",
+                nextText: 25
+            },
+            {
+                text: "Go back to searching the back of the Hospital",
+                nextText: 4
+            }
+        ]
+    },
+
+
+
+    // You decide to keep reading the Hospital Documents - #3
+    {
+        id: 27,
+        text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
+            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 27:<br>Unfortuantely, all of our test keep resulting in failure and we were going to give up. However" +
+            " recently, some of the test subjects have started to experience some extreme side-affects, such as violent tendencies, screaming and scratching themselves as if" +
+            " they're trying to get rid of an itch on their body. I still don't know the cause of this as of yet, but part of me believes it has something to do with the serum" +
+            " that we were asked to test, as after searching through some of the strange men's documents, it seems that they are using the blood of some fossilised creature." +
+            " I feel like now might be the time to step up and ask some questions, before any more life is wasted at the hands of us and these men...<br><br> Dr. Nallig </span>",
+        inventory: '',
+        image: 'assets/images/Hospital/Hospital_Outside.jpg',
+        options: [
+            {
+                text: "Read Next Entry",
+                nextText: 28
+            },
+            {
+                text: "Read Previous Entry",
+                nextText: 26
+            },
+            {
+                text: "Go back to searching the back of the Hospital",
+                nextText: 4
+            }
+        ]
+    },
+
+
+
+    // You decide to read the final entry
+    {
+        id: 28,
+        text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
+            "<span class=\"handwritten\" id=\"handwritten\">Log Entry ???:<br>Today I woke up in a strange room that I think might be one of the testing rooms, as there are" +
+            " windows looking out behind the Hospital. However, I fear this might be the last Log Entry I do when my mind is my own, as since I woke up I've been experiencing" +
+            " a strong itching sensation, which probably means that I was injected with the serum and might not have much time left. I knew that asking questions was a bad thing" +
+            "  but at least I was able to see the end-result of the test that they were keeping secret even from us. It would seem that the blood samples they were using contained" +
+            " some kind of parasite and/or bacteria that pretty much leads to a partial breakdown of the body making the subjects look like zombie figures. The itching is really bad" +
+            " now like it's under the skin, to whoever reads this, the world is in danger, there's someone that you need to speak to, he createc the serum and might know of an antidote" +
+            " his name is..................</span>",
+        inventory: '',
+        image: 'assets/images/Hospital/Hospital_Outside.jpg',
+        options: [
+            {
+                text: "Read Previous Entry",
+                nextText: 27
+            },
+            {
+                text: "Go back to searching the back of the Hospital",
+                nextText: 4
+            }
+        ]
+    },
+
+
+
     // You prepare for the night
     {
         id: 50,
@@ -767,7 +876,7 @@ const textNodes = [
 
 
 
-    // You decided to start the Night without making any preparations - ENDING 3
+    // You decided to start the Night without making any preparations - ENDING 2
     {
         id: 101,
         text: 'You decided not to make any preparations at all and waited patiently for the night to fall over the Hospital. However, due to your lack' +
@@ -786,7 +895,7 @@ const textNodes = [
 
 
 
-    // You deicded to start the night while only having the Bone Saw as a weapon - ENDING 4
+    // You deicded to start the night while only having the Bone Saw as a weapon - ENDING 3
     {
         id: 102,
         text: 'You decided not to make any defence preparations at all and waited patiently for the night to consume the Hospital in darkness, confident in' +
@@ -805,7 +914,7 @@ const textNodes = [
 
 
 
-    // You died to Frostbite - ENDING 5
+    // You died to Frostbite - ENDING 4
     {
         id: 103,
         text: "As the harsh colds and strong winds of the tundra surround you, you can feel your body becoming weaker and weaker by the second, to the point that you can't" +
