@@ -314,6 +314,15 @@ const eventOpts = [
 		],
 	},
 	// END: Inside
+	{
+		id: "gameOver",
+		choices: [
+			{
+				desc: "See statistics",
+				nextEventId: undefined,
+			},
+		],
+	},
 ];
 
 const events = [
@@ -453,6 +462,20 @@ const events = [
 	// END: Hatch
 
 	// END: Inside cabin
+
+	// BEGIN: Deaths
+	{
+		id: "tempTooLow",
+		text: `As you are enveloped by the strong winds and harsh cold of the surrounding tundra, you feel yourself becoming weaker and weaker.
+        You begin to lose all feeling in your limbs, numbed by cold. With no will left to move, you collapse to the ground and slowly succumb to the wasteland's wintery wratch.`,
+		optsId: "gameOver",
+	},
+	{
+		id: "tempTooHigh",
+		text: "Hot",
+		optsId: "gameOver",
+	},
+	// END: Deaths
 ];
 
 const eventsHunter = [
