@@ -131,9 +131,10 @@ async function setChoices(optsId) {
 async function selectOption(opt) {
 	// Update game state if needed
 	updateGameState(opt.stateChanges);
-	// Continue to the next event
 	// Change temperature
 	changeTemp(opt.tempChange);
+
+	// Continue to the next event
 	let nextEventId = opt.nextEventId;
 	runEvent(nextEventId);
 }

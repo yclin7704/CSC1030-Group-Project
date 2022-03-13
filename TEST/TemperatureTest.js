@@ -1,27 +1,15 @@
 const minTemp = -21;
 const maxTemp = 60;
 
-const meter = document.getElementById("temperatureMeter");
+const lowTemp = -12;
+const normalTemp = 1;
+const highTemp = 40;
+
+const temperatureMeter = document.getElementById("temperatureMeter");
+const temperatureSpan = document.getElementById("temperatureSpan");
 
 let temperature = getSavedTemp();
-meterSetup();
-
-/**
- * Set up the temperature meter
- */
-function meterSetup() {
-	// Bar turns red below low value
-	meter.low = -5;
-	// Bar turns yellow below high value
-	meter.high = 5;
-	// Optimum value doesn't really seem to do anything, but I'm setting it anyway
-	meter.optimum = 40;
-
-	meter.min = minTemp;
-	meter.max = maxTemp;
-
-	meter.value = temperature;
-}
+meterSetup(temperature);
 
 /**
  * Get the temperature value saved to sessionStorage, or the default (40) if it has not been set.
@@ -76,7 +64,8 @@ function setTemp(value) {
  */
 function tempUpdated() {
 	// Update the value shown to the user
-	meter.value = temperature;
+	meterSetup(temperature);
+	temperatureSpan.innerHTML = temperature;
 
 	// Save the temperature to sessionStorage
 	sessionStorage.setItem("Temperature", temperature);
@@ -89,4 +78,52 @@ function tempUpdated() {
 		// Do whatever stuff to show the game is over
 		window.location.href = "EndStatistics.html";
 	}
+}
+
+/**
+ * Set up the temperature bar
+ */
+function meterSetup(value) {
+	let range = maxTemp - minTemp;
+	let tempInRange = value - minTemp;
+
+	let lowDiff = lowTemp - minTemp;
+	let medDiff = normalTemp - lowTemp;
+	let normalDiff = highTemp - normalTemp;
+	let highDiff = maxTemp - highTemp;
+
+	let lowWidth = Math.max(Math.min(tempInRange, lowDiff), 0);
+	tempInRange -= lowDiff;
+	let medWidth = Math.max(Math.min(tempInRange, medDiff), 0);
+	tempInRange -= medDiff;
+	let normalWidth = Math.max(Math.min(tempInRange, normalDiff), 0);
+	tempInRange -= normalDiff;
+	let highWidth = Math.max(Math.min(tempInRange, highDiff), 0);
+	tempInRange -= highDiff;
+
+	let divLow = document.createElement("div");
+	let divMed = document.createElement("div");
+	let divNormal = document.createElement("div");
+	let divHigh = document.createElement("div");
+
+	divLow.style.background = "red";
+	divMed.style.background = "gold";
+	divNormal.style.background = "green";
+	divHigh.style.background = "red";
+
+	divLow.classList = ["divTempMeter"];
+	divMed.classList = ["divTempMeter"];
+	divNormal.classList = ["divTempMeter"];
+	divHigh.classList = ["divTempMeter"];
+
+	divLow.style.width = `${(lowWidth / range) * 100}%`;
+	divMed.style.width = `${(medWidth / range) * 100}%`;
+	divNormal.style.width = `${(normalWidth / range) * 100}%`;
+	divHigh.style.width = `${(highWidth / range) * 100}%`;
+
+	temperatureMeter.innerHTML = "";
+	temperatureMeter.appendChild(divLow);
+	temperatureMeter.appendChild(divMed);
+	temperatureMeter.appendChild(divNormal);
+	temperatureMeter.appendChild(divHigh);
 }

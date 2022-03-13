@@ -169,3 +169,22 @@ input[type="button"][disabled] {
 	margin-top: 10px;
 	font-weight: bold;
 }
+
+/* TODO: Remove if we don't decide to use this */
+.temperatureMeter {
+	width: 80%;
+	display: inline-block;
+	border-radius: 5px;
+	overflow: auto;
+	height: 1rem;
+	margin: 5px;
+}
+
+.temperatureSpan {
+	margin-left: 0.5rem;
+}
+
+.divTempMeter {
+	height: 1rem;
+	display: inline-block;
+}
