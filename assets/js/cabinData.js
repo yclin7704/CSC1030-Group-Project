@@ -326,10 +326,33 @@ const eventOpts = [
 			{
 				desc: "Try to push yourself out",
 				nextEventId: "icyWaterPush",
+				tempChange: "decrease",
 			},
 			{
 				desc: "Grasp onto the nearby tree and try to pull yourself out",
 				nextEventId: "icyWaterPull",
+				tempChange: 10,
+			},
+		],
+	},
+	{
+		id: "inIcyWater",
+		choices: [
+			{
+				desc: "Grasp onto the nearby tree and try to pull yourself out",
+				nextEventId: "icyWaterPull",
+				tempChange: 10,
+			},
+		],
+	},
+	{
+		id: "outOfIcyWater",
+		choices: [
+			{
+				desc: "Continue",
+			},
+			{
+				desc: "Return to the cabin",
 			},
 		],
 	},
@@ -511,11 +534,14 @@ const events = [
 	},
 	{
 		id: "icyWaterPush",
-		text: ``,
+		text: `As you desperately try to push yourself out, the snow crumbles around you and you slip deeper into the freezing water.`,
+		optsId: "inIcyWater",
 	},
 	{
 		id: "icyWaterPull",
-		text: `Grasping onto the root of the tree, you try desperately to pull yourself out of the icy hole. The root holds, and inch by inch, you claw yourself out.`,
+		text: `Grasping onto the root of the tree, you try desperately to pull yourself out of the icy hole. The root holds, and inch by inch, you claw yourself out.
+        Should you turn back now, or push on and see what you can find?`,
+		optsId: "outOfIcyWater",
 	},
 	// END: Forest
 

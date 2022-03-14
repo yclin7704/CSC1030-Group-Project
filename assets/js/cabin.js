@@ -11,6 +11,7 @@ async function main() {
 	// TODO: Inventory
 	// TODO: Returning to cabin
 	// TODO: Actually test any of this code
+	// TODO: Should display death immediately on refresh
 
 	setTemperatureData(runEvent, tempTooLow, tempTooHigh);
 
@@ -208,6 +209,7 @@ function getDOM(id) {
 
 async function tempTooLow() {
 	gameState.tempTooLow = true;
+	// TODO: Add extra text to end of current text
 }
 
 async function tempTooHigh() {
