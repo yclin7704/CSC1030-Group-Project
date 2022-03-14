@@ -12,7 +12,7 @@ async function main() {
 	// TODO: Returning to cabin
 	// TODO: Actually test any of this code
 
-	setTemperatureData(runEvent, "tempTooLow", "tempTooHigh");
+	setTemperatureData(runEvent, tempTooLow, tempTooHigh);
 
 	StartTimer();
 	runEvent("firstVisitOutside");
@@ -24,7 +24,7 @@ async function main() {
  */
 async function runEvent(eventId) {
 	if (typeof eventId === "function") eventId();
-	else {
+	else if (eventId) {
 		let eventData = getEventData(eventId);
 		// Update the game's state, if needed
 		updateGameState(eventData.stateChanges);
@@ -110,7 +110,7 @@ async function setChoices(optsId) {
 	// Clear previous options
 	choiceDiv.innerHTML = "";
 
-	let opts = eventOpts.find((opts) => opts.id === optsId);
+	let opts = getOptsById(optsId);
 
 	for (let i = 0; i < opts.choices.length; i++) {
 		let opt = opts.choices[i];
@@ -131,11 +131,21 @@ async function setChoices(optsId) {
 	}
 }
 
+function getOptsById(optsId) {
+	return eventOpts.find((opts) => opts.id === optsId);
+}
+
 /**
  * Called when the user picks an option by clicking on the corresponding button
  * @param {JSON} opt The chosen option's data
  */
 async function selectOption(opt) {
+	if (!gameState.isDead) {
+		if (gameState.tempTooLow || gameState.tempTooHigh) gameState.isDead = true;
+		if (gameState.tempTooLow) opt = getOptsById("tempTooLowCall").choices[0];
+		else if (gameState.tempTooHigh) opt = getOptsById("tempTooHighCall").choices[0];
+	}
+
 	// Update game state if needed
 	updateGameState(opt.stateChanges);
 	// Change temperature
@@ -143,6 +153,7 @@ async function selectOption(opt) {
 
 	// Continue to the next event
 	let nextEventId = opt.nextEventId;
+
 	runEvent(nextEventId);
 }
 
@@ -193,6 +204,14 @@ async function setImg(src) {
  */
 function getDOM(id) {
 	return document.getElementById(id);
+}
+
+async function tempTooLow() {
+	gameState.tempTooLow = true;
+}
+
+async function tempTooHigh() {
+	gameState.tempTooHigh = true;
 }
 
 // Run the main function

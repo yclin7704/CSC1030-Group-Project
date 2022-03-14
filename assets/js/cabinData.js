@@ -336,6 +336,23 @@ const eventOpts = [
 	// END: Forest
 
 	{
+		id: "tempTooLowCall",
+		choices: [
+			{
+				nextEventId: "tempTooLow",
+			},
+		],
+	},
+	{
+		id: "tempTooHighCall",
+		choices: [
+			{
+				nextEventId: "tempTooHigh",
+			},
+		],
+	},
+
+	{
 		id: "gameOver",
 		choices: [
 			{
