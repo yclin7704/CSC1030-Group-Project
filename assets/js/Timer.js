@@ -9,10 +9,10 @@ function getSavedTime() {
 }
 
 function StartTimer() {
-	myTimer = setInterval(Timer, 1000);
+	myTimer = setInterval(incrementTime, 1000);
 }
 
-function Timer() {
+function incrementTime() {
 	time++;
 	saveTime();
 
@@ -62,7 +62,7 @@ function padTime(num) {
 	else return num;
 }
 
-function StopTimer() {
+function stopTimer() {
 	clearTimeout(myTimer);
 }
 

@@ -2,7 +2,7 @@
  * Main function
  */
 async function main() {
-	StopTimer();
+	stopTimer();
 
 	get("temperatureStatSpan").innerHTML = getTemp();
 	get("timeStatSpan").innerHTML = getTime();
