@@ -905,14 +905,5 @@ const textNodes = [
 
 
 
-/**Ideas that might be easier to implement once an inventory system has been added
- * 
- * @todo - The Hunter and War Veteran can have the option to break into the Hospital without the need of a crowbar
- *  
-*/
-
-
-
-
 // Calls the startGame() function to start the game
 startGame();
