@@ -2,12 +2,12 @@ let time = getSavedTime();
 let myTimer;
 let timeSpan = document.getElementById("timeSpan");
 
-let showTextNodeFunction;
+let showTextNodeFunctionTimer;
 let onDayEndId;
 let onNightEndId;
 
 // Length time of day/night takes in secconds
-const dayLength = 250;
+const dayLength = 5;
 const nightLength = 50;
 
 function getSavedTime() {
@@ -17,7 +17,7 @@ function getSavedTime() {
 }
 
 function setTimerData(funcName, dayEndId, nightEndId) {
-	showTextNodeFunction = funcName;
+	showTextNodeFunctionTimer = funcName;
 	onDayEndId = dayEndId;
 	onNightEndId = nightEndId;
 }
@@ -33,8 +33,8 @@ function incrementTime() {
 
 	displayTime();
 
-	if (time === dayLength) showTextNodeFunction(onDayEndId);
-	else if (time === dayLength + nightLength) showTextNodeFunction(onNightEndId);
+	if (time === dayLength) showTextNodeFunctionTimer(onDayEndId);
+	else if (time === dayLength + nightLength) showTextNodeFunctionTimer(onNightEndId);
 }
 
 function displayTime() {

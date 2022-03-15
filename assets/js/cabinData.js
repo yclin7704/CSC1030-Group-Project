@@ -545,6 +545,10 @@ const events = [
 	},
 	// END: Forest
 
+	// BEGIN: Night
+	//{},
+	// END: Night
+
 	// BEGIN: Deaths
 	{
 		id: "tempTooLow",
@@ -563,6 +567,12 @@ const events = [
 	{
 		id: "alreadyDead",
 		text: `You're already dead, and refreshing the page can't fix that.`,
+		img: gifDied,
+		optsId: "gameOver",
+	},
+	{
+		id: "onNightEnd",
+		text: `NIGHT`,
 		img: gifDied,
 		optsId: "gameOver",
 	},
