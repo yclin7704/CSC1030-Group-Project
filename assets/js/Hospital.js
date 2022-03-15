@@ -124,23 +124,23 @@ const textNodes = [
         options: [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
-                setState: {collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false, ElectricBlanket: false},
+                setState: {collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
                 text2: "decrease",
                 nextText: 5,
             },
             {
                 text: 'Check out the First Aid kits scattered across the ground',
-                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false, ElectricBlanket: false},
+                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
                 nextText: 8
             },
             {
                 text: 'Check out the abandoned campfire',
-                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false, ElectricBlanket: false},
+                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
                 nextText: 10
             },
             {
                 text: "Follow the pathway",
-                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false, ElectricBlanket: false},
+                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
                 nextText: 4
             }
         ]
@@ -194,7 +194,7 @@ const textNodes = [
         id: 3,
         text: "You enter the main Lobby of the abandoned Hospital which, upon entering, looks completely decrepit and old. There are broken walls, leaking pipes, water" +
             " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking among the rooms of the Hospital...<br>As you look into" +
-            " each of the rooms you see a <strong>Bone Saw</strong>, an <strong>Electric Blanket</strong> and <strong>some fuel</strong>. There's also an <strong>abandoned room</strong>" +
+            " each of the rooms you see a <strong>Bone Saw</strong> and <strong>some fuel</strong>. There's also an <strong>abandoned room</strong>" +
             " at the end of the Lobby.",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Inside.jpg',
@@ -210,10 +210,6 @@ const textNodes = [
             {
                 text: 'Check out the Bone Saw',
                 nextText: 12
-            },
-            {
-                text: 'Check out the Electric Blanket',
-                nextText: 14
             },
             {
                 text: 'Check out the Fuel',
@@ -474,52 +470,6 @@ const textNodes = [
             {
                 text: 'Head back to the main lobby of the Hospital',
                 setState: {BoneSaw: true},
-                nextText: 3
-            }
-        ]
-    },
-
-
-
-    // You check out the Electric Blanket
-    {
-        id: 14,
-        text: 'You look under the counter of the Hospital Lobby and find an electric blanket, and with how cold it is in the building, and with hoe it\'s even worse outside' +
-            ' the Hospital, you feel like having the Electric Blanket will prove to be a crucial item to have to keep you warm as the night approaches. Do you take the Electric Blanket?',
-        inventory: '',
-        image:  'assets/images/Hospital/Hospital_Inside.jpg',
-        options: [
-            {
-                text: 'Take the Electric Blanket',
-                requiredState: (currentState) => currentState.ElectricBlanket === false,
-                nextText: 15
-            },
-            {
-                text: 'Don\'t take the Electric Blanket and return to the Hospital Lobby',
-                requiredState: (currentState) => currentState.ElectricBlanket === false,
-                nextText: 3
-            },
-            {
-                text: "You already took the Electric Blanket, you have no business here. Return to the Hospital Lobby",
-                requiredState: (currentState) => currentState.BoneSaw === true,
-                nextText: 3
-            }
-        ]
-    },
-
-
-
-    // You decide to take the Electric Blanket
-    {
-        id: 15,
-        text: 'With freezing hands, you take the Electric Blanket out from under the counter and place it in your bag, hoping that somewhere, you\'ll be able to find an outlet' +
-            ' to plug the blanket into to warm you up.',
-        inventory: '',
-        image: 'assets/images/Hospital/Hospital_Inside.jpg',
-        options: [
-            {
-                text: 'Head back to the main lobby of the Hospital',
-                setState: {ElectricBlanket: true},
                 nextText: 3
             }
         ]
