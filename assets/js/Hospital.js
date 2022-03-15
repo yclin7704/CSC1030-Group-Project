@@ -10,10 +10,10 @@ let random = [];
 
 
 
-const text = ["Log Entry 1:<br>Some strange men started appearing in the Hospital recently, with more of them coming and going more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However we'll have to see how it all plays out in the long run...<br><br> Dr. Nallig",
-    "Log Entry 11:<br>A bit of a long entry today. I think I've finally discovered the purpose of these strange men, as recently the tests we've been performing have required human subjects and they've all been failures so far, but these men have somehow managed to keep providing us with what they call \"willing test subjects\". However, although I do doubt that the test subjects were willing to do this, I think it would be best for me to keep my head down and keep running tests as I wouldn't dare question them on where they get the test subjects, as I fear what would happen to me should I do so...<br><br> Dr. Nallig",
-    "Log Entry 27:<br>Unfortuantely, all of our tests keep resulting in failure and we were going to give up. However recently, some of the test subjects have started to experience some extreme side-affects, such as violent tendencies, screaming and scratching themselves as if they're trying to get rid of an itch on their body. I still don't know the cause of this as of yet, but part of me believes it has something to do with the serum that we were asked to test, as after searching through some of the strange men's documents, it seems that they are using the blood of some fossilised creature. I feel like now might be the time to step up and ask some questions, before any more life is wasted at the hands of us and these men...<br><br> Dr. Nallig ",
-    "Log Entry ???:<br>Today I woke up in a strange room that I think might be one of the testing rooms, as there are windows looking out behind the Hospital. However, I fear this might be the last Log Entry I do when my mind is my own, as since I woke up I've been experiencing a strong itching sensation, which probably means that I was injected with the serum and might not have much time left. I knew that asking questions was a bad thing but at least I was able to see the end-result of the test that they were keeping secret even from us. It would seem that the blood samples they were using contained some kind of parasite and/or bacteria that pretty much leads to a partial breakdown of the body making the subjects look like zombie figures. The itching is really bad now like it's under the skin, to whoever reads this, the world is in danger, there's someone that you need to speak to, he created the serum and might know of an antidote his name is.................."
+const text = ["Log Entry 1:</br>Some strange men started appearing in the Hospital recently, with more of them coming and going more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However we'll have to see how it all plays out in the long run...</br></br> Dr. Nallig",
+    "Log Entry 11:</br>A bit of a long entry today. I think I've finally discovered the purpose of these strange men, as recently the tests we've been performing have required human subjects and they've all been failures so far, but these men have somehow managed to keep providing us with what they call \"willing test subjects\". However, although I do doubt that the test subjects were willing to do this, I think it would be best for me to keep my head down and keep running tests as I wouldn't dare question them on where they get the test subjects, as I fear what would happen to me should I do so...</br></br> Dr. Nallig",
+    "Log Entry 27:</br>Unfortuantely, all of our tests keep resulting in failure and we were going to give up. However recently, some of the test subjects have started to experience some extreme side-affects, such as violent tendencies, screaming and scratching themselves as if they're trying to get rid of an itch on their body. I still don't know the cause of this as of yet, but part of me believes it has something to do with the serum that we were asked to test, as after searching through some of the strange men's documents, it seems that they are using the blood of some fossilised creature. I feel like now might be the time to step up and ask some questions, before any more life is wasted at the hands of us and these men...</br></br> Dr. Nallig ",
+    "Log Entry ???:</br>Today I woke up in a strange room that I think might be one of the testing rooms, as there are windows looking out behind the Hospital. However, I fear this might be the last Log Entry I do when my mind is my own, as since I woke up I've been experiencing a strong itching sensation, which probably means that I was injected with the serum and might not have much time left. I knew that asking questions was a bad thing but at least I was able to see the end-result of the test that they were keeping secret even from us. It would seem that the blood samples they were using contained some kind of parasite and/or bacteria that pretty much leads to a partial breakdown of the body making the subjects look like zombie figures. The itching is really bad now like it's under the skin, to whoever reads this, the world is in danger, there's someone that you need to speak to, he created the serum and might know of an antidote his name is.................."
 ];
 var position = 0;
 
@@ -143,7 +143,7 @@ const textNodes = [
         id: 1,
         text: "You arrive at a Hospital, and judging by its ancient and run-down appearance it's likely that it's been abandoned for at least 17 years." + 
             " Although you feel the need to turn away, curiosity and the concern for what might be waiting for you in the forest beckons you closer to the" +
-            " collosal building, and as you approach it, the air gets colder around you...<br>Around you, you see some <strong>worn-down First Aid kits</strong>" +
+            " collosal building, and as you approach it, the air gets colder around you...</br>Around you, you see some <strong>worn-down First Aid kits</strong>" +
             " , <strong>an abandoned campfire</strong> and a <strong>pathway.</strong> Furthermore, the door to the Hospital seems <strong>locked</strong> but" +
             " something like a crowbar could pry it open.",
         inventory: '',
@@ -179,7 +179,7 @@ const textNodes = [
     {
         id: 2,
         text: "You return to the outside of the Hospital, the air colder than it was than when you first arrived, yet you still feel as if you have unfinished business..." +
-            "<br>Around you, you still see some <strong>worn-down First Aid kits</strong>, <strong>an abandoned campfire</strong> and a <strong>pathway</strong>",
+            "</br>Around you, you still see some <strong>worn-down First Aid kits</strong>, <strong>an abandoned campfire</strong> and a <strong>pathway</strong>",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         options: [
@@ -220,7 +220,7 @@ const textNodes = [
     {
         id: 3,
         text: "You enter the main Lobby of the abandoned Hospital which, upon entering, looks completely decrepit and old. There are broken walls, leaking pipes, water" +
-            " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking among the rooms of the Hospital...<br>As you look into" +
+            " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking among the rooms of the Hospital...</br>As you look into" +
             " each of the rooms you see a <strong>Bone Saw</strong> and <strong>some fuel</strong>. There's also an <strong>abandoned room</strong>" +
             " at the end of the Lobby.",
         inventory: '',
@@ -276,9 +276,9 @@ const textNodes = [
     // Player interacts with stranger outside the Hospital
     {
         id: 5,
-        text: 'As you approach the stranger he starts speaking to you.<br><br>"Hello there stranger, the name\'s Charles, I used to be a member of the swiss police, but that\'s a long story. Anywho,' +
-        ' I saw that the door to the Hospital was locked, but you might be able to pry it' +' open with this crowbar. I\'d do it myself but I\'m not as strong as I used to be. However, before I give' +
-        ' them to you, I would be grateful if you could give me some mushrooms. I think there was some near the entrance to the Hospital Grounds."',
+        text: 'As you approach the stranger he starts speaking to you.</br></br>\"Hello there stranger, the name\'s Charles, I used to be a member of the swiss police, but that\'s a long story. Anywho,' +
+        ' I saw that the door to the Hospital was locked, but you might be able to pry it open with this crowbar. I\'d do it myself but I\'m not as strong as I used to be. However, before I give' +
+        ' them to you, I would be grateful if you could give me some mushrooms. I think there was some near the entrance to the Hospital Grounds.\"',
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         options: [
@@ -328,7 +328,7 @@ const textNodes = [
     // You traded the mushrooms for the crowbar
     {
         id: 7,
-        text: '"Thank you kind stranger, and as promised, here\'s the crowbar you need. Good luck!"<br><br>You take the crowbar from him',
+        text: '"Thank you kind stranger, and as promised, here\'s the crowbar you need. Good luck!"</br></br>You take the crowbar from him',
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         options: [
@@ -602,9 +602,9 @@ const textNodes = [
     // You decide to read the Newspaper
     {
         id: 20,
-        text: "The Newspaper, although mysteriously cut-off, dates back two weeks ago, the 10th March 1999, and it reads...<br>" +
+        text: "The Newspaper, although mysteriously cut-off, dates back two weeks ago, the 10th March 1999, and it reads...</br>" +
             "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
-            " <span class=\"handwritten\" id=\"handwritten\">BREAKING NEWS - Civilians Going Missing!!<br>Recently, it's been reported that up to 30 people from local towns" +
+            " <span class=\"handwritten\" id=\"handwritten\">BREAKING NEWS - Civilians Going Missing!!</br>Recently, it's been reported that up to 30 people from local towns" +
             " and cities have suddenly vanished without trace. Local Police have been investigating the homes of each one of these individuals and what's most astonishing is" +
             " that in every single case there isn't a single piece of evidence left behind by the perpetrators. The Police have advised that you stay on high alert in the" +
             " coming days, by locking door and windows as they continue to search for a conclusion into what's going on. However rumours have begun to spread that it might be.......</span>",
@@ -705,11 +705,11 @@ const textNodes = [
     {
         id: 25,
         text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
-            " <button onClick=\"NextText();\" class=\"changeText\"> Next Entry </button> <button onClick=\"PreviousText();\" class=\"changeText\"> Previous Entry </button><br>" +
-            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 1:<br>Some strange men started appearing in the Hospital recently, with more of them coming and going" +
+            " <button onClick=\"NextText();\" class=\"changeText\"> Next Entry </button> <button onClick=\"PreviousText();\" class=\"changeText\"> Previous Entry </button></br>" +
+            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 1:</br>Some strange men started appearing in the Hospital recently, with more of them coming and going" +
             " more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task" +
             " given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However" +
-            " we'll have to see how it all plays out in the long run...<br><br> Dr. Nallig</span>",
+            " we'll have to see how it all plays out in the long run...</br></br> Dr. Nallig</span>",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         options: [
@@ -839,9 +839,9 @@ const textNodes = [
     {
         id: 100,
         text: 'You try to take the crowbar from the Stranger by force, but as you do so he pulls out a knife and stabs you to death' +
-            ' <br><b><em>You Died!</em></b><br><br><a href="EndStatistics.html">See Statistics</a>',
+            ' </br><b><em>You Died!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
-        image: 'assets/images/Game_Over_TEST-IMAGE.jpg',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
     },
 
@@ -853,7 +853,7 @@ const textNodes = [
         text: 'You decided not to make any preparations at all and waited patiently for the night to fall over the Hospital. However, due to your lack' +
             ' of preparations the Zombies started climbing through the windows and piling through the door to the abandoned room. You immediately became' +
             ' overwhelmed and with no weapon to defend yourself, you had to accept your fate...' +
-            '<br><b><em>You Died!</em></b><br><br><a href="EndStatistics.html">See Statistics</a>',
+            '</br><b><em>You Died!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
@@ -867,7 +867,7 @@ const textNodes = [
         text: 'You decided not to make any defence preparations at all and waited patiently for the night to consume the Hospital in darkness, confident in' +
             ' the fact that you\'ll be able to survive with just the Bone Saw as your weapon of choice. As night arrives, the Zombies start climbing through' +
             ' the windows and also start piling through the door. Howver you start slashing the zombies down one by one with the Bone saw until there are none left' +
-            '<br><b><em>You Survived!</em></b><br><br><a href="EndStatistics.html">See Statistics</a>',
+            '</br><b><em>You Survived!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
         image: 'assets/images/Victory2_TEST-GIF.gif',
         options: []
@@ -880,7 +880,7 @@ const textNodes = [
         id: 103,
         text: "As the harsh colds and strong winds of the tundra surround you, you can feel your body becoming weaker and weaker by the second, to the point that you can't" +
             " even feel anything, numbed by the cold. With no will left to move, you sit there slowly but surely succumbing to the frozen wasteland's wrath, and eventually..." +
-            "You die of Frostbite...<br><b><em>You Died!</em></b><br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+            "You die of Frostbite...</br><b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
@@ -894,7 +894,7 @@ const textNodes = [
         text: "You decided to eat the Mushrooms instead of trading them for the crowbar, expecting them to be a good source of nutrition and food. However, it turns out" +
             " that the mushrooms are extremely poisonous and slightly hallucinogenic as you start to see hallucinations of what looks to be a tall shadowy figure with" +
             " glowing red eyes towering over the Hospital staring right at you, and as the figure reaches out to you, you collapse and die..." +
-            "<br><b><em>You Died!</em></b><br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+            "</br><b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
