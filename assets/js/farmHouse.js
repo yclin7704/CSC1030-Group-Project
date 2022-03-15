@@ -4,12 +4,14 @@ const optionButtonsElement = document.getElementById('options'); // Buttons
 const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage'); // Image
 const soundElement = document.createElement('audio'); //Sound
-const profession = getProfession();
+const profession = 'Hunter';
 
 
 // This variable stores the current game state
 
 let state = {};
+
+let inventory = {};
 
 // This function is called to start the game. The state is emptied and the first text node is shown.
 
@@ -32,6 +34,7 @@ function startGame(){
     else {
         state = {};
     }
+    inventory = {};
     showTextNode(1);
 }
 
@@ -54,6 +57,7 @@ function showTextNode(textNodeIndex){
             button.innerText = option.text; // Button text is changed to the option text.
             button.classList.add('buttonChoice'); // Sets the button class for styling.
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
+            button.addEventListener('click', () => showInventory());
             optionButtonsElement.appendChild(button); 
         }
     })
@@ -72,6 +76,7 @@ function selectOption(option) {
         return startGame();
     }
     state = Object.assign(state, option.setState);
+    inventory = Object.assign(inventory, option.setInventory);
     showTextNode(nextTextNodeId);
 
 }
@@ -84,6 +89,14 @@ function changeText(){
 function revertText(){
     document.getElementById('handwritten').style.fontFamily = "Reenie Beanie", 'cursive';
     document.getElementById('handwritten').style.fontSize = "2rem";
+}
+
+function showInventory() {
+    for (let [key, value] of Object.entries(inventory)) {
+        if (value === true) {
+            document.getElementById('inventory').innerHTML += "<br>" + key;
+        }
+    }
 }
 
 
@@ -370,6 +383,10 @@ const textNodes = [
             {
                 text: 'Untie the ropes and chains off the wardrobe',
                 nextText: 16
+            },
+            {
+                text: 'Back',
+                nextText: 10
             }
         ]
     },
@@ -419,13 +436,13 @@ const textNodes = [
             },
             {
                 text: 'Pick up firewood',
-                requiredState: (currentState) => currentState.firewood === false,
+                requiredState: (currentState) => !currentState.firewood,
                 setState: {firewood: true},
                 nextText: 14
             },
             {
                 text: 'You have already picked up the firewood',
-                requiredState: (currentState) => currentState.firewood === true,
+                requiredState: (currentState) => currentState.firewood,
                 nextText: 14
             },
             {
@@ -440,7 +457,7 @@ const textNodes = [
         text: 'You go to the kitchen and like the living room, it is in ruins. In there, you see some cupboards and a fridge.',
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/farm-house-kitchen.jpg',
         options: [
             {
                 text: 'Check cupboards',
@@ -460,7 +477,7 @@ const textNodes = [
     {
         id: 16,
         text: 'You untied the ropes and chain, and pops out a zombified little girl that jumps up and bites your neck. As the zombie devours your flesh, as your vision starts to blur, you start to thought what a way to go...<br><br><a href=\"EndStatistics.html\">See Statistics</a>',
-        note: '',
+        note: 'assets/images/farm-house-bedroom.jpg',
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: [
@@ -480,50 +497,53 @@ const textNodes = [
         options: [
             {
                 text: 'Pick out the wood planks from the broken barrels',
-                requiredState: (currentState) => currentState.barricade === false,
+                requiredState: (currentState) => !currentState.barricade,
                 setState: {barricade: true},
                 nextText: 17
             },
             {
                 text: 'You have already pick up the planks',
-                requiredState: (currentState) => currentState.barricade === true,
+                requiredState: (currentState) => currentState.barricade,
                 nextText: 17
             },
             {
                 text: 'Look at all of the notes',
-                requiredState: (currentState) => currentState.note1 === true,
-                requiredState: (currentState) => currentState.note2 === true,
-                requiredState: (currentState) => currentState.note3 === true,
+                requiredState: (currentState) => currentState.note1,
+                requiredState: (currentState) => currentState.note2,
+                requiredState: (currentState) => currentState.note3,
                 nextText: 29
 
             },
             {
                 text: 'Set up your camp',
-                requiredState: (currentState) => currentState.blacket === false,
-                setState: {Blanket: true},
+                requiredState: (currentState) => !currentState.blanket,
+                requiredState: (currentState) => !currentState.firewood,
+                requiredState: (currentState) => !currentState.matches,
+                setState: {camp: true},
                 nextText: 17
             },
             {
-                text: 'You ahve already set up your camp',
-                requiredState: (currentState) => currentState.blacket === true,
+                text: 'You have already set up your camp',
+                requiredState: (currentState) => currentState.blacket,
+                requiredState: (currentState) => currentState.firewood,
+                requiredState: (currentState) => currentState.matches,
                 nextText: 17
             },
             {
                 text: 'Start the night',
-                requiredState: (currentState) => currentState.barricade === false,
-                requiredState: (currentState) => currentState.blacket === false,
+                requiredState: (currentState) => !currentState.barricade,
+                requiredState: (currentState) => !currentState.camp,
                 nextText: 0
             },
             {
                 text: 'Start the night',
-                requiredState: (currentState) => currentState.barricade === true,
-                requiredState: (currentState) => currentState.blacket === false,
+                requiredState: (currentState) => currentState.barricade && !currentState.camp,
                 nextText: 0
             },
             {
                 text: 'Start the night',
-                requiredState: (currentState) => currentState.barricade === true,
-                requiredState: (currentState) => currentState.blacket === true,
+                requiredState: (currentState) => currentState.barricade,
+                requiredState: (currentState) => currentState.camp,
                 nextText: 0
             }
         ]
@@ -534,17 +554,17 @@ const textNodes = [
         text: 'You open the drawer and found some matches.',
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/farm-house-bedroom.jpg',
         options: [
             {
                 text: 'Take the matches',
-                requiredState: (currentState) => currentState.matches === false,
+                requiredState: (currentState) => !currentState.matches,
                 setState: {matches: true},
                 nextText: 18
             },
             {
                 text: 'You have already picked up the matches from the drawer',
-                requiredState: (currentState) => currentState.matches === true,
+                requiredState: (currentState) => currentState.matches,
                 nextText: 18
             },
             {
@@ -559,16 +579,17 @@ const textNodes = [
         text: 'You look on the bed to see what you can take...',
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/farm-house-bedroom.jpg',
         options: [
             {
                 text: 'Take the blanket',
-                requiredState: (currentState) => currentState.blanket === false,
+                requiredState: (currentState) => !currentState.blanket,
                 setState: {blanket: true},
                 nextText: 19
             },
             {
                 text: 'You have already picked up everything from the bed...',
+                requiredState: (currentState) => currentState.blanket,
                 nextText: 19
             },
             {
@@ -583,7 +604,7 @@ const textNodes = [
         text: "You look at the floor, looks like there's nothing useful that will help you but they are lots of syringes with some green residue inside and you wonder what is was...",
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/farm-house-bedroom.jpg',
         options: [
             {
                 text: 'Back',
@@ -597,7 +618,7 @@ const textNodes = [
         text: 'You look at the note, it seems like a recipe to something... but you don`t know what it is for, as the title is scribbled out...<br><button onClick="changeText();" class="changeText">Change Text</button> <button onClick="revertText();" class="changeText">Revert Text</button>',
         note: 'Recipe For Z....<br>1 part Zomium<br>2 part Monster E.<br>0.5 part Uranium Liquid<br>4 part Bloo..<br>2 part Zom. Goo',
         inventory: '',
-        image: '',
+        image: 'assets/images/farm-house-inside.jpg',
         options: [
             {
                 text: 'Back',
@@ -612,7 +633,7 @@ const textNodes = [
         text: 'You read the note, and it says: <br><button onClick="changeText();" class="changeText">Change Text</button> <button onClick="revertText();" class="changeText">Revert Text</button>',
         note: 'Whoever reads this, I am sorry that I have created a deadly virus, it turns people in brain eating zombies.... These cultists kidnapped my daughter and I had no choice but to listen to them...They used my daughter as a test subject. Sh..she turned into one of them... a monster<br>We had no choice but to lock her up in the wardrobe in the bedroom...',
         inventory: '',
-        image: '',
+        image: 'assets/images/farm-house-inside.jpg',
         options: [
             {
                 text: 'Back',
@@ -627,28 +648,28 @@ const textNodes = [
         text: 'You opened the cupboard and found some shotgun ammo and a kitchen knife',
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/farm-house-kitchen.jpg',
         options: [
             {
                 text: 'Take shotgun ammo',
-                requiredState: (currentState) => currentState.shotgunAmmo === false,
+                requiredState: (currentState) => !currentState.shotgunAmmo,
                 setState: {shotgunAmmo: true},
                 nextText: 23
             },
             {
                 text: 'You have already picked up the shotgun ammo',
-                requiredState: (currentState) => currentState.shotgunAmmo === true,
+                requiredState: (currentState) => currentState.shotgunAmmo,
                 nextText: 23
             },
             {
                 text: 'Take kitchen knife',
-                requiredState: (currentState) => currentState.kitchenKnife === false,
+                requiredState: (currentState) => !currentState.kitchenKnife,
                 setState: {kitchenKnife: true},
                 nextText: 23
             },
             {
                 text: 'You have already picked up the kitchen knife',
-                requiredState: (currentState) => currentState.kitchenKnife === true,
+                requiredState: (currentState) => currentState.kitchenKnife,
                 nextText: 23
             },
             {
@@ -663,11 +684,11 @@ const textNodes = [
         text: 'You open the fridge and there is a container with some sort of green liquid inside. Do you want to drink it?',
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/farm-house-kitchen.jpg',
         options: [
             {
                 text: 'Drink the liquid',
-                requiredState: (currentState) => currentState.Medic === false, //If you are a medic, you know that the lidquid is dangerous
+                requiredState: (currentState) => !currentState.Medic, //If you are a medic, you know that the lidquid is dangerous
                 nextText: 28
             },
             {
@@ -680,10 +701,10 @@ const textNodes = [
     //Start the night - no barricade, no camp
     {
         id: 25,
-        text: '',
+        text: 'You start the night with no barricade, no camp. U hear zombies closing into the shelter. you prepare your weapons. The zombies comes through the entrance ',
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/farm-house-basement.jpg',
         options: [
             {
 
@@ -696,7 +717,7 @@ const textNodes = [
         text: '',
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/farm-house-basement.jpg',
         options: [
             {
 
@@ -709,7 +730,7 @@ const textNodes = [
         text: '',
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/farm-house-basement.jpg',
         options: [
             {
 
@@ -722,10 +743,35 @@ const textNodes = [
         text:   'Drinking the weird liquid, you felt funny... It almost tasted like an energy drink from the stores... Later, your body is slowly not responding to you... you look at your hands and they were turning grey. You suddenly thought about human flesh and BRAINS. You then realise, you are slowing turning into a zombie... that drink was... how this outbreak happened',
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/farm-house-kitchen.jpg',
         options: [
             {
 
+            }
+        ]
+    },
+    //Get double barrel shotgun
+    {
+        id: 29,
+        text: "You put the notes beside each other and drawings at the back of the notes starts to come together. The drawing showed that there is a weapon in one of the barrels and under the drawing there's some writting. It reads '97', you look for barrel 97 and found it. There wasn't a lid, you look inside and there was a double barrel shotgun. ",
+        note: '',
+        inventory: '',
+        image: 'assets/images/farm-house-basement.jpg',
+        options: [
+            {
+                text: 'Take the shotgun',
+                requiredState: (currentState) => !currentState.shotgun,
+                setState: {shotgun:true},
+                nextText: 29
+            },
+            {
+                text: 'You have already taken the shotgun',
+                requiredState: (currentState) => currentState.shotgun,
+                nextText: 29
+            },
+            {
+                text: 'Back',
+                nextText: 17
             }
         ]
     }
