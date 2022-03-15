@@ -19,6 +19,10 @@ async function main() {
 
 	checkIfDead();
 
+	showInventory();
+	// DEBUG: For now, I want items to easily be cleared when I refresh the page. Makes debugging easier for now
+	clearInventory();
+
 	if (gameState.isDead) runEvent("alreadyDead");
 	else runEvent("firstVisitOutside");
 }
@@ -129,7 +133,7 @@ async function setChoices(optsId) {
 		let opt = opts.choices[i];
 		let btn = document.createElement("button");
 
-		let requirementsMet = areReqsMet(opt.requiredState);
+		let requirementsMet = areReqsMet(opt.requiredState) && meetsInventoryRequirements(opt.requiredInventory);
 		let isHidden = !requirementsMet && opt.disableMode === "hidden";
 
 		btn.disabled = !requirementsMet;
@@ -163,6 +167,8 @@ async function selectOption(opt) {
 	updateGameState(opt.stateChanges);
 	// Change temperature
 	changeTemp(opt.tempChange);
+	// Update the player's inventory
+	updateInventory(opt.setInventory);
 
 	// Continue to the next event
 	let nextEventId = opt.nextEventId;
