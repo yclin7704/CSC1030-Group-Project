@@ -2,11 +2,11 @@
  * Main function
  */
 async function main() {
-	StopTimer();
+	stopTimer();
 
-	get("temperatureSpan").innerHTML = getTemp();
-	get("timeSpan").innerHTML = getTime();
-	get("professionSpan").innerHTML = sessionStorage.getItem("profession");
+	get("temperatureStatSpan").innerHTML = getTemp();
+	get("timeStatSpan").innerHTML = getTime();
+	get("professionStatSpan").innerHTML = sessionStorage.getItem("profession");
 
 	resetValues();
 }

@@ -47,7 +47,8 @@ const eventOpts = [
 			},
 			{
 				desc: "Venture deeper into the forest",
-				nextEventId: undefined,
+				nextEventId: "visitForestInitial",
+				tempChange: -40,
 			},
 			{
 				desc: "Open your map",
@@ -87,7 +88,8 @@ const eventOpts = [
 			},
 			{
 				desc: "Venture out into the woods and see what you can find",
-				nextEventId: undefined,
+				nextEventId: "visitForestInitial",
+				tempChange: -40,
 			},
 		],
 	},
@@ -316,6 +318,63 @@ const eventOpts = [
 		],
 	},
 	// END: Inside
+
+	// BEGIN: Forest
+	{
+		id: "visitingForestInitial",
+		choices: [
+			{
+				desc: "Try to push yourself out",
+				nextEventId: "icyWaterPush",
+				tempChange: "decrease",
+			},
+			{
+				desc: "Grasp onto the nearby tree and try to pull yourself out",
+				nextEventId: "icyWaterPull",
+				tempChange: 10,
+			},
+		],
+	},
+	{
+		id: "inIcyWater",
+		choices: [
+			{
+				desc: "Grasp onto the nearby tree and try to pull yourself out",
+				nextEventId: "icyWaterPull",
+				tempChange: 10,
+			},
+		],
+	},
+	{
+		id: "outOfIcyWater",
+		choices: [
+			{
+				desc: "Continue",
+			},
+			{
+				desc: "Return to the cabin",
+			},
+		],
+	},
+	// END: Forest
+
+	{
+		id: "tempTooLowCall",
+		choices: [
+			{
+				nextEventId: "tempTooLow",
+			},
+		],
+	},
+	{
+		id: "tempTooHighCall",
+		choices: [
+			{
+				nextEventId: "tempTooHigh",
+			},
+		],
+	},
+
 	{
 		id: "gameOver",
 		choices: [
@@ -465,17 +524,45 @@ const events = [
 
 	// END: Inside cabin
 
+	// BEGIN: Forest
+	{
+		id: "visitForestInitial",
+		text: `Striding through the thick snow, deeper into the forest, it feels as if the sky is being swallowed up above you,
+        the little daylight remaining slowly vanishing as the tree branches thicken. Suddenly, you feel the snow beneath you give way,
+        and your leg plunges into an icy-cold pool of water below.`,
+		optsId: "visitingForestInitial",
+	},
+	{
+		id: "icyWaterPush",
+		text: `As you desperately try to push yourself out, the snow crumbles around you and you slip deeper into the freezing water.`,
+		optsId: "inIcyWater",
+	},
+	{
+		id: "icyWaterPull",
+		text: `Grasping onto the root of the tree, you try desperately to pull yourself out of the icy hole. The root holds, and inch by inch, you claw yourself out.
+        Should you turn back now, or push on and see what you can find?`,
+		optsId: "outOfIcyWater",
+	},
+	// END: Forest
+
 	// BEGIN: Deaths
 	{
 		id: "tempTooLow",
 		text: `As you are enveloped by the strong winds and harsh cold of the surrounding tundra, you feel yourself becoming weaker and weaker.
-        You begin to lose all feeling in your limbs, numbed by cold. With no will left to move, you collapse to the ground and slowly succumb to the wasteland's wintery wrath.`,
+        You begin to lose all feeling in your limbs, numbed by cold. With no will left to move, you collapse to the ground and slowly succumb to the wasteland's wintery wrath.
+        To build a fire...`,
 		img: gifDied,
 		optsId: "gameOver",
 	},
 	{
 		id: "tempTooHigh",
-		text: "Hot",
+		text: `As the flames [TODO]`,
+		img: gifDied,
+		optsId: "gameOver",
+	},
+	{
+		id: "alreadyDead",
+		text: `You're already dead, and refreshing the page can't fix that.`,
 		img: gifDied,
 		optsId: "gameOver",
 	},

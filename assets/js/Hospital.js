@@ -10,6 +10,33 @@ let random = [];
 
 
 
+const text = ["Log Entry 1:</br>Some strange men started appearing in the Hospital recently, with more of them coming and going more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However we'll have to see how it all plays out in the long run...</br></br> Dr. Nallig",
+    "Log Entry 11:</br>A bit of a long entry today. I think I've finally discovered the purpose of these strange men, as recently the tests we've been performing have required human subjects and they've all been failures so far, but these men have somehow managed to keep providing us with what they call \"willing test subjects\". However, although I do doubt that the test subjects were willing to do this, I think it would be best for me to keep my head down and keep running tests as I wouldn't dare question them on where they get the test subjects, as I fear what would happen to me should I do so...</br></br> Dr. Nallig",
+    "Log Entry 27:</br>Unfortuantely, all of our tests keep resulting in failure and we were going to give up. However recently, some of the test subjects have started to experience some extreme side-affects, such as violent tendencies, screaming and scratching themselves as if they're trying to get rid of an itch on their body. I still don't know the cause of this as of yet, but part of me believes it has something to do with the serum that we were asked to test, as after searching through some of the strange men's documents, it seems that they are using the blood of some fossilised creature. I feel like now might be the time to step up and ask some questions, before any more life is wasted at the hands of us and these men...</br></br> Dr. Nallig ",
+    "Log Entry ???:</br>Today I woke up in a strange room that I think might be one of the testing rooms, as there are windows looking out behind the Hospital. However, I fear this might be the last Log Entry I do when my mind is my own, as since I woke up I've been experiencing a strong itching sensation, which probably means that I was injected with the serum and might not have much time left. I knew that asking questions was a bad thing but at least I was able to see the end-result of the test that they were keeping secret even from us. It would seem that the blood samples they were using contained some kind of parasite and/or bacteria that pretty much leads to a partial breakdown of the body making the subjects look like zombie figures. The itching is really bad now like it's under the skin, to whoever reads this, the world is in danger, there's someone that you need to speak to, he created the serum and might know of an antidote his name is.................."
+];
+var position = 0;
+
+function NextText(){
+    position += 1
+    if (position >= text.length) {
+        position = text.length-1;
+    }
+    document.getElementById("handwritten").innerHTML = text[position];
+}
+
+function PreviousText(){
+    position -= 1;
+    if (position < 0) {
+        position = 0;
+    }
+    document.getElementById("handwritten").innerHTML = text[position];
+}
+
+
+
+
+
 // Changes the text from the handwritten style to the normal font
 function changeText(){
     document.getElementById('handwritten').style.fontFamily = "Roboto Mono", 'monospace';
@@ -116,7 +143,7 @@ const textNodes = [
         id: 1,
         text: "You arrive at a Hospital, and judging by its ancient and run-down appearance it's likely that it's been abandoned for at least 17 years." + 
             " Although you feel the need to turn away, curiosity and the concern for what might be waiting for you in the forest beckons you closer to the" +
-            " collosal building, and as you approach it, the air gets colder around you...<br>Around you, you see some <strong>worn-down First Aid kits</strong>" +
+            " collosal building, and as you approach it, the air gets colder around you...</br>Around you, you see some <strong>worn-down First Aid kits</strong>" +
             " , <strong>an abandoned campfire</strong> and a <strong>pathway.</strong> Furthermore, the door to the Hospital seems <strong>locked</strong> but" +
             " something like a crowbar could pry it open.",
         inventory: '',
@@ -124,23 +151,23 @@ const textNodes = [
         options: [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
-                setState: {collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false, ElectricBlanket: false},
+                setState: {collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
                 text2: "decrease",
                 nextText: 5,
             },
             {
                 text: 'Check out the First Aid kits scattered across the ground',
-                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false, ElectricBlanket: false},
+                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
                 nextText: 8
             },
             {
                 text: 'Check out the abandoned campfire',
-                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false, ElectricBlanket: false},
+                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
                 nextText: 10
             },
             {
                 text: "Follow the pathway",
-                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false, ElectricBlanket: false},
+                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
                 nextText: 4
             }
         ]
@@ -152,7 +179,7 @@ const textNodes = [
     {
         id: 2,
         text: "You return to the outside of the Hospital, the air colder than it was than when you first arrived, yet you still feel as if you have unfinished business..." +
-            "<br>Around you, you still see some <strong>worn-down First Aid kits</strong>, <strong>an abandoned campfire</strong> and a <strong>pathway</strong>",
+            "</br>Around you, you still see some <strong>worn-down First Aid kits</strong>, <strong>an abandoned campfire</strong> and a <strong>pathway</strong>",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         options: [
@@ -193,8 +220,8 @@ const textNodes = [
     {
         id: 3,
         text: "You enter the main Lobby of the abandoned Hospital which, upon entering, looks completely decrepit and old. There are broken walls, leaking pipes, water" +
-            " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking among the rooms of the Hospital...<br>As you look into" +
-            " each of the rooms you see a <strong>Bone Saw</strong>, an <strong>Electric Blanket</strong> and <strong>some fuel</strong>. There's also an <strong>abandoned room</strong>" +
+            " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking among the rooms of the Hospital...</br>As you look into" +
+            " each of the rooms you see a <strong>Bone Saw</strong> and <strong>some fuel</strong>. There's also an <strong>abandoned room</strong>" +
             " at the end of the Lobby.",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Inside.jpg',
@@ -210,10 +237,6 @@ const textNodes = [
             {
                 text: 'Check out the Bone Saw',
                 nextText: 12
-            },
-            {
-                text: 'Check out the Electric Blanket',
-                nextText: 14
             },
             {
                 text: 'Check out the Fuel',
@@ -253,9 +276,9 @@ const textNodes = [
     // Player interacts with stranger outside the Hospital
     {
         id: 5,
-        text: 'As you approach the stranger he starts speaking to you.<br><br>"Hello there stranger, the name\'s Charles, I used to be a member of the swiss police, but that\'s a long story. Anywho,' +
-        ' I saw that the door to the Hospital was locked, but you might be able to pry it' +' open with this crowbar. I\'d do it myself but I\'m not as strong as I used to be. However, before I give' +
-        ' them to you, I would be grateful if you could give me some mushrooms. I think there was some near the entrance to the Hospital Grounds."',
+        text: 'As you approach the stranger he starts speaking to you.</br></br>\"Hello there stranger, the name\'s Charles, I used to be a member of the swiss police, but that\'s a long story. Anywho,' +
+        ' I saw that the door to the Hospital was locked, but you might be able to pry it open with this crowbar. I\'d do it myself but I\'m not as strong as I used to be. However, before I give' +
+        ' them to you, I would be grateful if you could give me some mushrooms. I think there was some near the entrance to the Hospital Grounds.\"',
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         options: [
@@ -276,7 +299,7 @@ const textNodes = [
             },
             {
                 text: "Eat the Mushrooms instead",
-                requiredState: (currentState) => currentState.hasMushrooms === true,
+                requiredState: (currentState) => currentState.hasMushrooms === true && currentState.Hunter === true,
                 nextText: 104
             }
         ]
@@ -305,7 +328,7 @@ const textNodes = [
     // You traded the mushrooms for the crowbar
     {
         id: 7,
-        text: '"Thank you kind stranger, and as promised, here\'s the crowbar you need. Good luck!"<br><br>You take the crowbar from him',
+        text: '"Thank you kind stranger, and as promised, here\'s the crowbar you need. Good luck!"</br></br>You take the crowbar from him',
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         options: [
@@ -481,52 +504,6 @@ const textNodes = [
 
 
 
-    // You check out the Electric Blanket
-    {
-        id: 14,
-        text: 'You look under the counter of the Hospital Lobby and find an electric blanket, and with how cold it is in the building, and with hoe it\'s even worse outside' +
-            ' the Hospital, you feel like having the Electric Blanket will prove to be a crucial item to have to keep you warm as the night approaches. Do you take the Electric Blanket?',
-        inventory: '',
-        image:  'assets/images/Hospital/Hospital_Inside.jpg',
-        options: [
-            {
-                text: 'Take the Electric Blanket',
-                requiredState: (currentState) => currentState.ElectricBlanket === false,
-                nextText: 15
-            },
-            {
-                text: 'Don\'t take the Electric Blanket and return to the Hospital Lobby',
-                requiredState: (currentState) => currentState.ElectricBlanket === false,
-                nextText: 3
-            },
-            {
-                text: "You already took the Electric Blanket, you have no business here. Return to the Hospital Lobby",
-                requiredState: (currentState) => currentState.BoneSaw === true,
-                nextText: 3
-            }
-        ]
-    },
-
-
-
-    // You decide to take the Electric Blanket
-    {
-        id: 15,
-        text: 'With freezing hands, you take the Electric Blanket out from under the counter and place it in your bag, hoping that somewhere, you\'ll be able to find an outlet' +
-            ' to plug the blanket into to warm you up.',
-        inventory: '',
-        image: 'assets/images/Hospital/Hospital_Inside.jpg',
-        options: [
-            {
-                text: 'Head back to the main lobby of the Hospital',
-                setState: {ElectricBlanket: true},
-                nextText: 3
-            }
-        ]
-    },
-
-
-
     // You check out the Fuel
     {
         id: 16,
@@ -579,11 +556,12 @@ const textNodes = [
         text: 'You slowly enter the abandoned room, it\'s very quiet and also quite spacious. You feel as if that this might be a good place to camp out for the night and' +
             ' make your <strong>Final Stand</strong>. Do you wish to stay here and prepare for the night ahead?',
         inventory: '',
-        image: 'assets/images/Hospital/Hospital_Inside.jpg',
+        image: 'assets/images/Hospital/Abandoned_Room.jpg',
         options: [
             {
                 text: 'Yes! Make my Final Stand and don\'t look back',
-                nextText: 50
+                setState: {defence1: false, defence2: false, defence3: false},
+                nextText: 29
             },
             {
                 text: 'No! Leave the room and return to the Hospital Lobby',
@@ -624,9 +602,9 @@ const textNodes = [
     // You decide to read the Newspaper
     {
         id: 20,
-        text: "The Newspaper, although mysteriously cut-off, dates back two weeks ago, the 10th March 1999, and it reads...<br>" +
+        text: "The Newspaper, although mysteriously cut-off, dates back two weeks ago, the 10th March 1999, and it reads...</br>" +
             "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
-            " <span class=\"handwritten\" id=\"handwritten\">BREAKING NEWS - Civilians Going Missing!!<br>Recently, it's been reported that up to 30 people from local towns" +
+            " <span class=\"handwritten\" id=\"handwritten\">BREAKING NEWS - Civilians Going Missing!!</br>Recently, it's been reported that up to 30 people from local towns" +
             " and cities have suddenly vanished without trace. Local Police have been investigating the homes of each one of these individuals and what's most astonishing is" +
             " that in every single case there isn't a single piece of evidence left behind by the perpetrators. The Police have advised that you stay on high alert in the" +
             " coming days, by locking door and windows as they continue to search for a conclusion into what's going on. However rumours have begun to spread that it might be.......</span>",
@@ -727,102 +705,14 @@ const textNodes = [
     {
         id: 25,
         text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
-            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 1:<br>Some strange men started appearing in the Hospital recently, with more of them coming and going" +
+            " <button onClick=\"NextText();\" class=\"changeText\"> Next Entry </button> <button onClick=\"PreviousText();\" class=\"changeText\"> Previous Entry </button></br>" +
+            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 1:</br>Some strange men started appearing in the Hospital recently, with more of them coming and going" +
             " more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task" +
             " given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However" +
-            " we'll have to see how it all plays out in the long run...<br><br> Dr. Nallig</span>",
+            " we'll have to see how it all plays out in the long run...</br></br> Dr. Nallig</span>",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         options: [
-            {
-                text: "Read Next Entry",
-                nextText: 26
-            },
-            {
-                text: "Go back to searching the back of the Hospital",
-                nextText: 4
-            }
-        ]
-    },
-
-
-
-    // You decide to keep reading the Hospital Documents - #2
-    {
-        id: 26,
-        text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
-            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 11:<br>A bit of a long entry today. I think I've finally discovered the purpose of these strange men" +
-            ", as recently the tests we've been performing have required human subjects and they've all been failures so far, but these men have somehow managed to keep" +
-            " providing us with what they call \"willing test subjects\". However, although I do doubt that the test subjects were willing to do this, I think it would be" +
-            " best for me to keep my head down and keep running tests as I wouldn't dare question them on where they get the test subjects, as I fear what would happen to me" +
-            " should I do so...<br><br> Dr. Nallig</span>",
-        inventory: '',
-        image: 'assets/images/Hospital/Hospital_Outside.jpg',
-        options: [
-            {
-                text: "Read Next Entry",
-                nextText: 27
-            },
-            {
-                text: "Read Previous Entry",
-                nextText: 25
-            },
-            {
-                text: "Go back to searching the back of the Hospital",
-                nextText: 4
-            }
-        ]
-    },
-
-
-
-    // You decide to keep reading the Hospital Documents - #3
-    {
-        id: 27,
-        text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
-            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 27:<br>Unfortuantely, all of our tests keep resulting in failure and we were going to give up. However" +
-            " recently, some of the test subjects have started to experience some extreme side-affects, such as violent tendencies, screaming and scratching themselves as if" +
-            " they're trying to get rid of an itch on their body. I still don't know the cause of this as of yet, but part of me believes it has something to do with the serum" +
-            " that we were asked to test, as after searching through some of the strange men's documents, it seems that they are using the blood of some fossilised creature." +
-            " I feel like now might be the time to step up and ask some questions, before any more life is wasted at the hands of us and these men...<br><br> Dr. Nallig </span>",
-        inventory: '',
-        image: 'assets/images/Hospital/Hospital_Outside.jpg',
-        options: [
-            {
-                text: "Read Next Entry",
-                nextText: 28
-            },
-            {
-                text: "Read Previous Entry",
-                nextText: 26
-            },
-            {
-                text: "Go back to searching the back of the Hospital",
-                nextText: 4
-            }
-        ]
-    },
-
-
-
-    // You decide to read the final entry
-    {
-        id: 28,
-        text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
-            "<span class=\"handwritten\" id=\"handwritten\">Log Entry ???:<br>Today I woke up in a strange room that I think might be one of the testing rooms, as there are" +
-            " windows looking out behind the Hospital. However, I fear this might be the last Log Entry I do when my mind is my own, as since I woke up I've been experiencing" +
-            " a strong itching sensation, which probably means that I was injected with the serum and might not have much time left. I knew that asking questions was a bad thing" +
-            "  but at least I was able to see the end-result of the test that they were keeping secret even from us. It would seem that the blood samples they were using contained" +
-            " some kind of parasite and/or bacteria that pretty much leads to a partial breakdown of the body making the subjects look like zombie figures. The itching is really bad" +
-            " now like it's under the skin, to whoever reads this, the world is in danger, there's someone that you need to speak to, he created the serum and might know of an antidote" +
-            " his name is..................</span>",
-        inventory: '',
-        image: 'assets/images/Hospital/Hospital_Outside.jpg',
-        options: [
-            {
-                text: "Read Previous Entry",
-                nextText: 27
-            },
             {
                 text: "Go back to searching the back of the Hospital",
                 nextText: 4
@@ -834,34 +724,111 @@ const textNodes = [
 
     // You prepare for the night
     {
-        id: 50,
+        id: 29,
         text: 'You decided to get ready for the night ahead by making some last minute preparations to the abandoned room and just in general so you\'ll suvive...',
         inventory: '',
-        image: 'assets/images/Hospital/Hospital_Inside.jpg',
+        image: 'assets/images/Hospital/Abandoned_Room.jpg',
         options: [
             {
                 text: 'Barricade the windows with the wood from the Campfire',
                 requiredState: (currentState) => currentState.FireWood === true,
-                nextText: 20
+                nextText: 30
             },
             {
                 text: 'Use the Fire Wood from the Campfire to make your own campfire here',
-                requiredState: (currentState) => currentState.FireWood === true,
-                nextText: 21
+                requiredState: (currentState) => currentState.FireWood === true && currentState.matches === true && currentState.Fuel === true,
+                nextText: 31
+            },
+            {
+                text: 'Set a fire trap at the entrance to the abandoned room',
+                requiredState: (currentState) => currentState.Fuel === true && currentState.matches === true,
+                nextText: 33
             },
             {
                 text: 'Start the Night',
-                requiredState: (currentState) => currentState.FirstAid === false &&
-                                                 currentState.FireWood === false &&
-                                                 currentState.BoneSaw === false &&
-                                                 currentState.ElectricBlanket === false &&
-                                                 currentState.Fuel === false,
+                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false && 
+                                                 currentState.defence3 === false && currentState.BoneSaw === false,
                 nextText: 101
             },
             {
                 text: 'Start the Night',
-                requiredState: (currentState) => currentState.BoneSaw === true,
+                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false && 
+                                                 currentState.defence3 === false && currentState.BoneSaw === true,
                 nextText: 102
+            }
+        ]
+    },
+
+
+
+    // You barricade the windows with the wood from the campfire
+    {
+        id: 30,
+        text: "You decide to spend some time barricading all of the windows in the room with the spare wood you got from the abandoned campfire. However, even though you" +
+            " made full use of the wood, you were only able to cover half of the windows",
+        inventory: '',
+        image: 'assets/images/Hospital/Abandoned_Room.jpg',
+        options: [
+            {
+                text: "Go back to preparing for the Night",
+                setState: {FireWood: false, defence1: true},
+                nextText: 29
+            }
+        ]
+    },
+
+
+
+    // You decide to make a makeshift fire in the room for warmth
+    {
+        id: 31,
+        text: "You decide to organise the wood on a metal sheet on the floor of the abandoned room to make a makeshift campfire. However, you're hesitant to light the fire because" +
+            " you wonder if the fuel and matches could be used for something else. Do you light the fire?",
+        inventory: '',
+        image: 'assets/images/Hospital/Abandoned_Room.jpg',
+        options: [
+            {
+                text: "Take the wood and go back to preparing for the Night",
+                nextText: 29
+            },
+            {
+                text: "Light the Fire",
+                nextText: 32
+            }
+        ]
+    },
+
+
+
+    // You decided to light the fire in the abandoned room
+    {
+        id: 32,
+        text: "Using the fuel, you pour all of it onto the wood and then light one of the matches to start the fire",
+        inventory: '',
+        image: 'assets/images/Hospital/Abandoned_Room.jpg',
+        options: [
+            {
+                text: "Go back to preparing for the night",
+                setState: {FireWood: false, Fuel: false, matches: false, defence2: true},
+                nextText: 29
+            }
+        ]
+    },
+
+
+
+    // You decided to create a fire trap at the abandoned room entrance
+    {
+        id: 33,
+        text: "Using the fuel, you pour it all over the entrance to the room, in the hopes that when night starts you can light a match and throw it onto the fuel" +
+            " to start a fire in order to keep the zombies at bay",
+        inventory: '',
+        image: 'assets/images/Hospital/Abandoned_Room.jpg',
+        options: [
+            {
+                text: "Go back to preparing for the night",
+                setState: {Fuel: false, matches: false, defence3: true},
+                nextText: 29
             }
         ]
     },
@@ -872,9 +839,9 @@ const textNodes = [
     {
         id: 100,
         text: 'You try to take the crowbar from the Stranger by force, but as you do so he pulls out a knife and stabs you to death' +
-            ' <br><b><em>You Died!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
+            ' </br><b><em>You Died!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
-        image: 'assets/images/Game_Over_TEST-IMAGE.jpg',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
     },
 
@@ -886,7 +853,7 @@ const textNodes = [
         text: 'You decided not to make any preparations at all and waited patiently for the night to fall over the Hospital. However, due to your lack' +
             ' of preparations the Zombies started climbing through the windows and piling through the door to the abandoned room. You immediately became' +
             ' overwhelmed and with no weapon to defend yourself, you had to accept your fate...' +
-            '<br><b><em>You Died!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
+            '</br><b><em>You Died!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
@@ -900,7 +867,7 @@ const textNodes = [
         text: 'You decided not to make any defence preparations at all and waited patiently for the night to consume the Hospital in darkness, confident in' +
             ' the fact that you\'ll be able to survive with just the Bone Saw as your weapon of choice. As night arrives, the Zombies start climbing through' +
             ' the windows and also start piling through the door. Howver you start slashing the zombies down one by one with the Bone saw until there are none left' +
-            '<br><b><em>You Survived!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
+            '</br><b><em>You Survived!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
         image: 'assets/images/Victory2_TEST-GIF.gif',
         options: []
@@ -913,7 +880,7 @@ const textNodes = [
         id: 103,
         text: "As the harsh colds and strong winds of the tundra surround you, you can feel your body becoming weaker and weaker by the second, to the point that you can't" +
             " even feel anything, numbed by the cold. With no will left to move, you sit there slowly but surely succumbing to the frozen wasteland's wrath, and eventually..." +
-            "You die of Frostbite...<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+            "You die of Frostbite...</br><b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
@@ -927,23 +894,13 @@ const textNodes = [
         text: "You decided to eat the Mushrooms instead of trading them for the crowbar, expecting them to be a good source of nutrition and food. However, it turns out" +
             " that the mushrooms are extremely poisonous and slightly hallucinogenic as you start to see hallucinations of what looks to be a tall shadowy figure with" +
             " glowing red eyes towering over the Hospital staring right at you, and as the figure reaches out to you, you collapse and die..." +
-            "<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+            "</br><b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
     }
 
 ];
-
-
-
-
-/**Ideas that might be easier to implement once an inventory system has been added
- * 
- * @todo - Eating the collected mushrooms instead of trading will cause you to die of poisoning
- * @todo - The Hunter and War Veteran can have the option to break into the Hospital without the need of a crowbar
- *  
-*/
 
 
 

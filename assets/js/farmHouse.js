@@ -216,7 +216,7 @@ const textNodes = [
             {
                 text: 'Turn on torch',
                 requiredState: (currentState) => currentState.torch,
-                nextText: 18
+                nextText: 17
             },
             {
                 text: 'Go back',
@@ -444,11 +444,11 @@ const textNodes = [
         options: [
             {
                 text: 'Check cupboards',
-                nextText: 0
+                nextText: 23
             },
             {
                 text: 'Open the fridge',
-                nextText: 0
+                nextText: 24
             },
             {
                 text: 'Back',
@@ -485,6 +485,16 @@ const textNodes = [
                 nextText: 17
             },
             {
+                text: 'You have already pick up the planks',
+                requiredState: (currentState) => currentState.barricade === true,
+                nextText: 17
+            },
+            {
+                text: 'Look at all of the notes',
+                requiredState: (currentState) => currentState.note1 === true,
+                requiredState: (currentState) => currentState.note2 === true,
+                requiredState: (currentState) => currentState.note3 === true,
+                nextText: 29
 
             },
             {
@@ -494,13 +504,27 @@ const textNodes = [
                 nextText: 17
             },
             {
+                text: 'You ahve already set up your camp',
+                requiredState: (currentState) => currentState.blacket === true,
+                nextText: 17
+            },
+            {
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.barricade === false,
                 requiredState: (currentState) => currentState.blacket === false,
                 nextText: 0
             },
             {
-                
+                text: 'Start the night',
+                requiredState: (currentState) => currentState.barricade === true,
+                requiredState: (currentState) => currentState.blacket === false,
+                nextText: 0
+            },
+            {
+                text: 'Start the night',
+                requiredState: (currentState) => currentState.barricade === true,
+                requiredState: (currentState) => currentState.blacket === true,
+                nextText: 0
             }
         ]
     },
@@ -556,7 +580,7 @@ const textNodes = [
     //Bedroom - look at the floor
     {
         id: 20,
-        text: "You look at the floor, looks like there's nothing useful that will help you",
+        text: "You look at the floor, looks like there's nothing useful that will help you but they are lots of syringes with some green residue inside and you wonder what is was...",
         note: '',
         inventory: '',
         image: '',
@@ -636,12 +660,19 @@ const textNodes = [
     //Kithcen - Fridge
     {
         id: 24,
-        text: '',
+        text: 'You open the fridge and there is a container with some sort of green liquid inside. Do you want to drink it?',
         note: '',
         inventory: '',
         image: '',
         options: [
             {
+                text: 'Drink the liquid',
+                requiredState: (currentState) => currentState.Medic === false, //If you are a medic, you know that the lidquid is dangerous
+                nextText: 28
+            },
+            {
+                text: 'Close the fridge',
+                nextText: 15
 
             }
         ]
@@ -676,6 +707,19 @@ const textNodes = [
     {
         id: 27,
         text: '',
+        note: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+
+            }
+        ]
+    },
+    //Fridge - Drikning the liquid
+    {
+        id: 28,
+        text:   'Drinking the weird liquid, you felt funny... It almost tasted like an energy drink from the stores... Later, your body is slowly not responding to you... you look at your hands and they were turning grey. You suddenly thought about human flesh and BRAINS. You then realise, you are slowing turning into a zombie... that drink was... how this outbreak happened',
         note: '',
         inventory: '',
         image: '',
