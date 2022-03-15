@@ -10,6 +10,33 @@ let random = [];
 
 
 
+const text = ["Log Entry 1:<br>Some strange men started appearing in the Hospital recently, with more of them coming and going more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However we'll have to see how it all plays out in the long run...<br><br> Dr. Nallig",
+    "Log Entry 11:<br>A bit of a long entry today. I think I've finally discovered the purpose of these strange men, as recently the tests we've been performing have required human subjects and they've all been failures so far, but these men have somehow managed to keep providing us with what they call \"willing test subjects\". However, although I do doubt that the test subjects were willing to do this, I think it would be best for me to keep my head down and keep running tests as I wouldn't dare question them on where they get the test subjects, as I fear what would happen to me should I do so...<br><br> Dr. Nallig",
+    "Log Entry 27:<br>Unfortuantely, all of our tests keep resulting in failure and we were going to give up. However recently, some of the test subjects have started to experience some extreme side-affects, such as violent tendencies, screaming and scratching themselves as if they're trying to get rid of an itch on their body. I still don't know the cause of this as of yet, but part of me believes it has something to do with the serum that we were asked to test, as after searching through some of the strange men's documents, it seems that they are using the blood of some fossilised creature. I feel like now might be the time to step up and ask some questions, before any more life is wasted at the hands of us and these men...<br><br> Dr. Nallig ",
+    "Log Entry ???:<br>Today I woke up in a strange room that I think might be one of the testing rooms, as there are windows looking out behind the Hospital. However, I fear this might be the last Log Entry I do when my mind is my own, as since I woke up I've been experiencing a strong itching sensation, which probably means that I was injected with the serum and might not have much time left. I knew that asking questions was a bad thing but at least I was able to see the end-result of the test that they were keeping secret even from us. It would seem that the blood samples they were using contained some kind of parasite and/or bacteria that pretty much leads to a partial breakdown of the body making the subjects look like zombie figures. The itching is really bad now like it's under the skin, to whoever reads this, the world is in danger, there's someone that you need to speak to, he created the serum and might know of an antidote his name is.................."
+];
+var position = 0;
+
+function NextText(){
+    position += 1
+    if (position >= text.length) {
+        position = text.length-1;
+    }
+    document.getElementById("handwritten").innerHTML = text[position];
+}
+
+function PreviousText(){
+    position -= 1;
+    if (position < 0) {
+        position = 0;
+    }
+    document.getElementById("handwritten").innerHTML = text[position];
+}
+
+
+
+
+
 // Changes the text from the handwritten style to the normal font
 function changeText(){
     document.getElementById('handwritten').style.fontFamily = "Roboto Mono", 'monospace';
@@ -124,23 +151,23 @@ const textNodes = [
         options: [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
-                setState: {collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false, ElectricBlanket: false},
+                setState: {collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
                 text2: "decrease",
                 nextText: 5,
             },
             {
                 text: 'Check out the First Aid kits scattered across the ground',
-                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false, ElectricBlanket: false},
+                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
                 nextText: 8
             },
             {
                 text: 'Check out the abandoned campfire',
-                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false, ElectricBlanket: false},
+                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
                 nextText: 10
             },
             {
                 text: "Follow the pathway",
-                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false, ElectricBlanket: false},
+                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
                 nextText: 4
             }
         ]
@@ -194,7 +221,7 @@ const textNodes = [
         id: 3,
         text: "You enter the main Lobby of the abandoned Hospital which, upon entering, looks completely decrepit and old. There are broken walls, leaking pipes, water" +
             " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking among the rooms of the Hospital...<br>As you look into" +
-            " each of the rooms you see a <strong>Bone Saw</strong>, an <strong>Electric Blanket</strong> and <strong>some fuel</strong>. There's also an <strong>abandoned room</strong>" +
+            " each of the rooms you see a <strong>Bone Saw</strong> and <strong>some fuel</strong>. There's also an <strong>abandoned room</strong>" +
             " at the end of the Lobby.",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Inside.jpg',
@@ -210,10 +237,6 @@ const textNodes = [
             {
                 text: 'Check out the Bone Saw',
                 nextText: 12
-            },
-            {
-                text: 'Check out the Electric Blanket',
-                nextText: 14
             },
             {
                 text: 'Check out the Fuel',
@@ -481,52 +504,6 @@ const textNodes = [
 
 
 
-    // You check out the Electric Blanket
-    {
-        id: 14,
-        text: 'You look under the counter of the Hospital Lobby and find an electric blanket, and with how cold it is in the building, and with hoe it\'s even worse outside' +
-            ' the Hospital, you feel like having the Electric Blanket will prove to be a crucial item to have to keep you warm as the night approaches. Do you take the Electric Blanket?',
-        inventory: '',
-        image:  'assets/images/Hospital/Hospital_Inside.jpg',
-        options: [
-            {
-                text: 'Take the Electric Blanket',
-                requiredState: (currentState) => currentState.ElectricBlanket === false,
-                nextText: 15
-            },
-            {
-                text: 'Don\'t take the Electric Blanket and return to the Hospital Lobby',
-                requiredState: (currentState) => currentState.ElectricBlanket === false,
-                nextText: 3
-            },
-            {
-                text: "You already took the Electric Blanket, you have no business here. Return to the Hospital Lobby",
-                requiredState: (currentState) => currentState.BoneSaw === true,
-                nextText: 3
-            }
-        ]
-    },
-
-
-
-    // You decide to take the Electric Blanket
-    {
-        id: 15,
-        text: 'With freezing hands, you take the Electric Blanket out from under the counter and place it in your bag, hoping that somewhere, you\'ll be able to find an outlet' +
-            ' to plug the blanket into to warm you up.',
-        inventory: '',
-        image: 'assets/images/Hospital/Hospital_Inside.jpg',
-        options: [
-            {
-                text: 'Head back to the main lobby of the Hospital',
-                setState: {ElectricBlanket: true},
-                nextText: 3
-            }
-        ]
-    },
-
-
-
     // You check out the Fuel
     {
         id: 16,
@@ -728,6 +705,7 @@ const textNodes = [
     {
         id: 25,
         text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
+            " <button onClick=\"NextText();\" class=\"changeText\"> Next Entry </button> <button onClick=\"PreviousText();\" class=\"changeText\"> Previous Entry </button><br>" +
             "<span class=\"handwritten\" id=\"handwritten\">Log Entry 1:<br>Some strange men started appearing in the Hospital recently, with more of them coming and going" +
             " more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task" +
             " given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However" +
@@ -735,95 +713,6 @@ const textNodes = [
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         options: [
-            {
-                text: "Read Next Entry",
-                nextText: 26
-            },
-            {
-                text: "Go back to searching the back of the Hospital",
-                nextText: 4
-            }
-        ]
-    },
-
-
-
-    // You decide to keep reading the Hospital Documents - #2
-    {
-        id: 26,
-        text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
-            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 11:<br>A bit of a long entry today. I think I've finally discovered the purpose of these strange men" +
-            ", as recently the tests we've been performing have required human subjects and they've all been failures so far, but these men have somehow managed to keep" +
-            " providing us with what they call \"willing test subjects\". However, although I do doubt that the test subjects were willing to do this, I think it would be" +
-            " best for me to keep my head down and keep running tests as I wouldn't dare question them on where they get the test subjects, as I fear what would happen to me" +
-            " should I do so...<br><br> Dr. Nallig</span>",
-        inventory: '',
-        image: 'assets/images/Hospital/Hospital_Outside.jpg',
-        options: [
-            {
-                text: "Read Next Entry",
-                nextText: 27
-            },
-            {
-                text: "Read Previous Entry",
-                nextText: 25
-            },
-            {
-                text: "Go back to searching the back of the Hospital",
-                nextText: 4
-            }
-        ]
-    },
-
-
-
-    // You decide to keep reading the Hospital Documents - #3
-    {
-        id: 27,
-        text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
-            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 27:<br>Unfortuantely, all of our tests keep resulting in failure and we were going to give up. However" +
-            " recently, some of the test subjects have started to experience some extreme side-affects, such as violent tendencies, screaming and scratching themselves as if" +
-            " they're trying to get rid of an itch on their body. I still don't know the cause of this as of yet, but part of me believes it has something to do with the serum" +
-            " that we were asked to test, as after searching through some of the strange men's documents, it seems that they are using the blood of some fossilised creature." +
-            " I feel like now might be the time to step up and ask some questions, before any more life is wasted at the hands of us and these men...<br><br> Dr. Nallig </span>",
-        inventory: '',
-        image: 'assets/images/Hospital/Hospital_Outside.jpg',
-        options: [
-            {
-                text: "Read Next Entry",
-                nextText: 28
-            },
-            {
-                text: "Read Previous Entry",
-                nextText: 26
-            },
-            {
-                text: "Go back to searching the back of the Hospital",
-                nextText: 4
-            }
-        ]
-    },
-
-
-
-    // You decide to read the final entry
-    {
-        id: 28,
-        text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
-            "<span class=\"handwritten\" id=\"handwritten\">Log Entry ???:<br>Today I woke up in a strange room that I think might be one of the testing rooms, as there are" +
-            " windows looking out behind the Hospital. However, I fear this might be the last Log Entry I do when my mind is my own, as since I woke up I've been experiencing" +
-            " a strong itching sensation, which probably means that I was injected with the serum and might not have much time left. I knew that asking questions was a bad thing" +
-            "  but at least I was able to see the end-result of the test that they were keeping secret even from us. It would seem that the blood samples they were using contained" +
-            " some kind of parasite and/or bacteria that pretty much leads to a partial breakdown of the body making the subjects look like zombie figures. The itching is really bad" +
-            " now like it's under the skin, to whoever reads this, the world is in danger, there's someone that you need to speak to, he created the serum and might know of an antidote" +
-            " his name is..................</span>",
-        inventory: '',
-        image: 'assets/images/Hospital/Hospital_Outside.jpg',
-        options: [
-            {
-                text: "Read Previous Entry",
-                nextText: 27
-            },
             {
                 text: "Go back to searching the back of the Hospital",
                 nextText: 4
@@ -1012,16 +901,6 @@ const textNodes = [
     }
 
 ];
-
-
-
-
-/**Ideas that might be easier to implement once an inventory system has been added
- * 
- * @todo - Eating the collected mushrooms instead of trading will cause you to die of poisoning
- * @todo - The Hunter and War Veteran can have the option to break into the Hospital without the need of a crowbar
- *  
-*/
 
 
 
