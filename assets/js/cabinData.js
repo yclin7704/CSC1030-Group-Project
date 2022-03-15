@@ -556,7 +556,13 @@ const events = [
 	},
 	{
 		id: "tempTooHigh",
-		text: "As the flames [TODO]",
+		text: `As the flames [TODO]`,
+		img: gifDied,
+		optsId: "gameOver",
+	},
+	{
+		id: "alreadyDead",
+		text: `You're already dead, and refreshing the page can't fix that.`,
 		img: gifDied,
 		optsId: "gameOver",
 	},

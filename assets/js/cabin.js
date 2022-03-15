@@ -10,13 +10,21 @@ sessionStorage.setItem("profession", "Hunter");
 async function main() {
 	// TODO: Inventory
 	// TODO: Returning to cabin
-	// TODO: Actually test any of this code
-	// TODO: Should display death immediately on refresh
+	// TODO: Save game state to sesion storage on leaving cabin
+
+	StartTimer();
 
 	setTemperatureData(runEvent, tempTooLow, tempTooHigh);
 
-	StartTimer();
-	runEvent("firstVisitOutside");
+	checkIfDead();
+
+	if (gameState.isDead) runEvent("alreadyDead");
+	else runEvent("firstVisitOutside");
+}
+
+function checkIfDead() {
+	changeTemp(0);
+	if (gameState.tempTooHigh || gameState.tempTooLow) gameState.isDead = true;
 }
 
 /**
@@ -26,6 +34,8 @@ async function main() {
 async function runEvent(eventId) {
 	if (typeof eventId === "function") eventId();
 	else if (eventId) {
+		if (eventId.optsId === "gameOver") stopTimer();
+
 		let eventData = getEventData(eventId);
 		// Update the game's state, if needed
 		updateGameState(eventData.stateChanges);
