@@ -32,10 +32,10 @@ function displayTime() {
 		let translatedTime = translateTimeToHours();
 		let timeRemaining;
 		if (time < dayLength) {
-			timeRemaining = `${Math.floor((dayLength - time) / 60)}:${padTime((dayLength - time) % 60)} until night begins`;
+			timeRemaining = `${Math.floor((dayLength - time) / 60)}m ${(dayLength - time) % 60}s until night begins`;
 		} else {
 			let nightTime = time - dayLength;
-			timeRemaining = `${Math.floor((nightLength - nightTime) / 60)}:${padTime((nightLength - nightTime) % 60)} until dawn`;
+			timeRemaining = `${Math.floor((nightLength - nightTime) / 60)}m ${(nightLength - nightTime) % 60}s until dawn`;
 		}
 
 		timeSpan.innerHTML = `<span class="translatedTime">${translatedTime}</span><br /><br />(${timeRemaining})`;
