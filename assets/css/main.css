@@ -200,4 +200,6 @@ input[type="button"][disabled] {
 
 .translatedTime {
 	color: #eeeeee;
+	margin-bottom: 10px;
+	display: inline-block;
 }

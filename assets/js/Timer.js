@@ -38,7 +38,7 @@ function displayTime() {
 			timeRemaining = `${Math.floor((nightLength - nightTime) / 60)}m ${(nightLength - nightTime) % 60}s until dawn`;
 		}
 
-		timeSpan.innerHTML = `<span class="translatedTime">${translatedTime}</span><br /><br />(${timeRemaining})`;
+		timeSpan.innerHTML = `<span class="translatedTime">${translatedTime}</span><br />(${timeRemaining})`;
 	}
 }
 
