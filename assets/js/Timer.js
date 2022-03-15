@@ -16,40 +16,42 @@ function Timer() {
 	time++;
 	saveTime();
 
-	if (timeSpan) {
-		// Time the day starts at (eg 1700 being 5:00pm)
-		const dayStart = 1200;
-		// Time the day ends at (eg 2200 being 10:00pm)
-		const dayEnd = 2200;
-		// Length time of day takes in secconds
-		const dayLength = 250;
+	if (timeSpan) displayTime();
+}
 
-		const nightStart = 2200;
-		const nightEnd = 550;
-		const nightLength = 50;
+function displayTime() {
+	// Time the day starts at (eg 1700 being 5:00pm)
+	const dayStart = 1200;
+	// Time the day ends at (eg 2200 being 10:00pm)
+	const dayEnd = 2200;
+	// Length time of day takes in secconds
+	const dayLength = 250;
 
-		let dayLen = dayEnd - dayStart;
+	const nightStart = 2200;
+	const nightEnd = 550;
+	const nightLength = 50;
 
-		let nightLen;
-		if (nightStart < nightEnd) nightLen = nightEnd - nightStart;
-		else nightLen = nightStart + 24 - nightEnd;
+	let dayLen = dayEnd - dayStart;
 
-		let translatedTime = (dayLen / dayLength) * time;
+	let nightLen;
+	if (nightStart < nightEnd) nightLen = nightEnd - nightStart;
+	else nightLen = nightStart + 24 - nightEnd;
 
-		let hour, minutes;
+	let translatedTime = (dayLen / dayLength) * time;
 
-		if (translatedTime < dayLen) {
-			hour = Math.floor(translatedTime / 100) + dayStart / 100;
-		} else {
-			translatedTime = (nightLen / nightLength) * (time - dayLength);
-			hour = Math.floor(translatedTime / 100) + nightStart / 100;
-		}
+	let hour, minutes;
 
-		minutes = Math.floor(((translatedTime % 100) / 25) * 3);
-		hour = hour % 24;
-
-		timeSpan.innerHTML = `${padTime(hour)}:${padTime(minutes * 5)}`;
+	if (translatedTime < dayLen) {
+		hour = Math.floor(translatedTime / 100) + dayStart / 100;
+	} else {
+		translatedTime = (nightLen / nightLength) * (time - dayLength);
+		hour = Math.floor(translatedTime / 100) + nightStart / 100;
 	}
+
+	minutes = Math.floor(((translatedTime % 100) / 25) * 3);
+	hour = hour % 24;
+
+	timeSpan.innerHTML = `${padTime(hour)}:${padTime(minutes * 5)}`;
 }
 
 function padTime(num) {
