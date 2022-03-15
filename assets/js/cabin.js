@@ -15,6 +15,7 @@ async function main() {
 	StartTimer();
 
 	setTemperatureData(runEvent, tempTooLow, tempTooHigh);
+	setTimerData(runEvent, "onDayEnd", "onNightEnd");
 
 	checkIfDead();
 
