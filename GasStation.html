@@ -11,6 +11,7 @@
 		<script defer src="./assets/js/GasStation.js"></script> <!-- Main JS file for GasStation-->
 		<script src="./assets/js/Timer.js"></script> <!-- Timer -->
 		<script src="./assets/js/Temperature.js"></script> <!-- Temperature function -->
+		<script src="./assets/js/moveTorch.js"></script>
 	</head>
 	<body onload="showInventory();">
 		<div class="wrapper">
@@ -33,7 +34,10 @@
 
 				<!-- Column 2: Image -->
 				<div class="col col2">
-					<img src="assets/images/gasstation.jpg" id="locationImage" />
+					<div id="imageSection" class="col col2" onmousemove="moveTorch()">
+						<div class="torch" id="torch"></div>
+					<img id="locationImage"/>
+					</div>
 				</div>
 
 				<!-- Column 3: Buttons -->

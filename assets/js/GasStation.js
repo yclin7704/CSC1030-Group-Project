@@ -86,7 +86,7 @@ const textNodes = [
         text: 'You find what appears to be an empty gas station. There are no signs of zombies being here, and the area seems to already be fenced off.'
             + 'Maybe it was closed before the outbreak developed... It could be the perfect place to spend the night.',
         inventory: '',
-        image: 'assets/images/GasStation.jpg',
+        image: '/assets/images/GasStation.jpg',
         options: [
             {
                 text: 'Go inside to look for food and supplies',
