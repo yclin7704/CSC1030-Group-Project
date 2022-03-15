@@ -17,6 +17,9 @@ function Timer() {
 	saveTime();
 
 	if (timeSpan) displayTime();
+
+	// TODO: Do something when reaches night
+	// TODO: Do something when over 5 minutes
 }
 
 function displayTime() {
