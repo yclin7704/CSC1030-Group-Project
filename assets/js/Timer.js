@@ -38,7 +38,7 @@ function incrementTime() {
 }
 
 function isTimeOut() {
-	return time < dayLength + nightLength;
+	return time > dayLength + nightLength;
 }
 
 function displayTime() {
