@@ -12,7 +12,7 @@
 		<script src="./assets/js/Timer.js"></script> <!-- Timer -->
 		<script src="./assets/js/Temperature.js"></script> <!-- Temperature function -->
 	</head>
-	<body>
+	<body onload="showInventory();">
 		<div class="wrapper">
 			<div class="row">
 				<!-- Column 1: Map and inventory -->
@@ -26,7 +26,8 @@
 						5:15pm
 					</div>
 					<div class="inventory">
-						<p id="inventory"></p>
+						<p class="heading">Inventory</p>
+						<span id="inventory"></span>
 					</div>
 				</div>
 

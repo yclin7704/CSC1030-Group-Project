@@ -46,6 +46,7 @@ function showTextNode(textNodeIndex) {
             button.innerText = option.text; // Button text is changed to the option text.
             button.classList.add('buttonChoice'); // Sets the button class for styling.
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
+            button.addEventListener('click', () => showInventory());
             optionButtonsElement.appendChild(button);
         }
     })
@@ -69,6 +70,14 @@ function selectOption(option) {
 
 }
 
+function showInventory() {
+    for (let [key, value] of Object.entries(inventory)) {
+        if (value === true) {
+            document.getElementById('inventory').innerHTML += "<br>" + key;
+        }
+    }
+}
+
 // The text nodes for the game are below
 
 const textNodes = [
@@ -81,7 +90,7 @@ const textNodes = [
         options: [
             {
                 text: 'Go inside to look for food and supplies',
-                setState: {Gasoline: false},
+                setInventory: {Gasoline: false},
                 nextText: 2
             },
             {
