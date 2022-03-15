@@ -64,6 +64,7 @@ function padTime(num) {
 
 function stopTimer() {
 	clearTimeout(myTimer);
+	if (timeSpan) displayTime();
 }
 
 function getTime() {

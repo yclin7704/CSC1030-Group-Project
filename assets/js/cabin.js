@@ -34,9 +34,10 @@ function checkIfDead() {
 async function runEvent(eventId) {
 	if (typeof eventId === "function") eventId();
 	else if (eventId) {
-		if (eventId.optsId === "gameOver") stopTimer();
-
 		let eventData = getEventData(eventId);
+
+		if (eventData.optsId === "gameOver") stopTimer();
+
 		// Update the game's state, if needed
 		updateGameState(eventData.stateChanges);
 		// Display the event text
