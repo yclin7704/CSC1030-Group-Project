@@ -276,7 +276,7 @@ const textNodes = [
             },
             {
                 text: "Eat the Mushrooms instead",
-                requiredState: (currentState) => currentState.hasMushrooms === true,
+                requiredState: (currentState) => currentState.hasMushrooms === true && currentState.Hunter === true,
                 nextText: 104
             }
         ]
@@ -579,11 +579,12 @@ const textNodes = [
         text: 'You slowly enter the abandoned room, it\'s very quiet and also quite spacious. You feel as if that this might be a good place to camp out for the night and' +
             ' make your <strong>Final Stand</strong>. Do you wish to stay here and prepare for the night ahead?',
         inventory: '',
-        image: 'assets/images/Hospital/Hospital_Inside.jpg',
+        image: 'assets/images/Hospital/Abandoned_Room.jpg',
         options: [
             {
                 text: 'Yes! Make my Final Stand and don\'t look back',
-                nextText: 50
+                setState: {defence1: false, defence2: false, defence3: false},
+                nextText: 29
             },
             {
                 text: 'No! Leave the room and return to the Hospital Lobby',
@@ -834,34 +835,111 @@ const textNodes = [
 
     // You prepare for the night
     {
-        id: 50,
+        id: 29,
         text: 'You decided to get ready for the night ahead by making some last minute preparations to the abandoned room and just in general so you\'ll suvive...',
         inventory: '',
-        image: 'assets/images/Hospital/Hospital_Inside.jpg',
+        image: 'assets/images/Hospital/Abandoned_Room.jpg',
         options: [
             {
                 text: 'Barricade the windows with the wood from the Campfire',
                 requiredState: (currentState) => currentState.FireWood === true,
-                nextText: 20
+                nextText: 30
             },
             {
                 text: 'Use the Fire Wood from the Campfire to make your own campfire here',
-                requiredState: (currentState) => currentState.FireWood === true,
-                nextText: 21
+                requiredState: (currentState) => currentState.FireWood === true && currentState.matches === true && currentState.Fuel === true,
+                nextText: 31
+            },
+            {
+                text: 'Set a fire trap at the entrance to the abandoned room',
+                requiredState: (currentState) => currentState.Fuel === true && currentState.matches === true,
+                nextText: 33
             },
             {
                 text: 'Start the Night',
-                requiredState: (currentState) => currentState.FirstAid === false &&
-                                                 currentState.FireWood === false &&
-                                                 currentState.BoneSaw === false &&
-                                                 currentState.ElectricBlanket === false &&
-                                                 currentState.Fuel === false,
+                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false && 
+                                                 currentState.defence3 === false && currentState.BoneSaw === false,
                 nextText: 101
             },
             {
                 text: 'Start the Night',
-                requiredState: (currentState) => currentState.BoneSaw === true,
+                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false && 
+                                                 currentState.defence3 === false && currentState.BoneSaw === true,
                 nextText: 102
+            }
+        ]
+    },
+
+
+
+    // You barricade the windows with the wood from the campfire
+    {
+        id: 30,
+        text: "You decide to spend some time barricading all of the windows in the room with the spare wood you got from the abandoned campfire. However, even though you" +
+            " made full use of the wood, you were only able to cover half of the windows",
+        inventory: '',
+        image: 'assets/images/Hospital/Abandoned_Room.jpg',
+        options: [
+            {
+                text: "Go back to preparing for the Night",
+                setState: {FireWood: false, defence1: true},
+                nextText: 29
+            }
+        ]
+    },
+
+
+
+    // You decide to make a makeshift fire in the room for warmth
+    {
+        id: 31,
+        text: "You decide to organise the wood on a metal sheet on the floor of the abandoned room to make a makeshift campfire. However, you're hesitant to light the fire because" +
+            " you wonder if the fuel and matches could be used for something else. Do you light the fire?",
+        inventory: '',
+        image: 'assets/images/Hospital/Abandoned_Room.jpg',
+        options: [
+            {
+                text: "Take the wood and go back to preparing for the Night",
+                nextText: 29
+            },
+            {
+                text: "Light the Fire",
+                nextText: 32
+            }
+        ]
+    },
+
+
+
+    // You decided to light the fire in the abandoned room
+    {
+        id: 32,
+        text: "Using the fuel, you pour all of it onto the wood and then light one of the matches to start the fire",
+        inventory: '',
+        image: 'assets/images/Hospital/Abandoned_Room.jpg',
+        options: [
+            {
+                text: "Go back to preparing for the night",
+                setState: {FireWood: false, Fuel: false, matches: false, defence2: true},
+                nextText: 29
+            }
+        ]
+    },
+
+
+
+    // You decided to create a fire trap at the abandoned room entrance
+    {
+        id: 33,
+        text: "Using the fuel, you pour it all over the entrance to the room, in the hopes that when night starts you can light a match and throw it onto the fuel" +
+            " to start a fire in order to keep the zombies at bay",
+        inventory: '',
+        image: 'assets/images/Hospital/Abandoned_Room.jpg',
+        options: [
+            {
+                text: "Go back to preparing for the night",
+                setState: {Fuel: false, matches: false, defence3: true},
+                nextText: 29
             }
         ]
     },
@@ -872,7 +950,7 @@ const textNodes = [
     {
         id: 100,
         text: 'You try to take the crowbar from the Stranger by force, but as you do so he pulls out a knife and stabs you to death' +
-            ' <br><b><em>You Died!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
+            ' <br><b><em>You Died!</em></b><br><br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
         image: 'assets/images/Game_Over_TEST-IMAGE.jpg',
         options: []
@@ -886,7 +964,7 @@ const textNodes = [
         text: 'You decided not to make any preparations at all and waited patiently for the night to fall over the Hospital. However, due to your lack' +
             ' of preparations the Zombies started climbing through the windows and piling through the door to the abandoned room. You immediately became' +
             ' overwhelmed and with no weapon to defend yourself, you had to accept your fate...' +
-            '<br><b><em>You Died!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
+            '<br><b><em>You Died!</em></b><br><br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
@@ -900,7 +978,7 @@ const textNodes = [
         text: 'You decided not to make any defence preparations at all and waited patiently for the night to consume the Hospital in darkness, confident in' +
             ' the fact that you\'ll be able to survive with just the Bone Saw as your weapon of choice. As night arrives, the Zombies start climbing through' +
             ' the windows and also start piling through the door. Howver you start slashing the zombies down one by one with the Bone saw until there are none left' +
-            '<br><b><em>You Survived!</em></b><br><br><h2><a href="EndStatistics.html">See Statistics</a></h2>',
+            '<br><b><em>You Survived!</em></b><br><br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
         image: 'assets/images/Victory2_TEST-GIF.gif',
         options: []
@@ -913,7 +991,7 @@ const textNodes = [
         id: 103,
         text: "As the harsh colds and strong winds of the tundra surround you, you can feel your body becoming weaker and weaker by the second, to the point that you can't" +
             " even feel anything, numbed by the cold. With no will left to move, you sit there slowly but surely succumbing to the frozen wasteland's wrath, and eventually..." +
-            "You die of Frostbite...<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+            "You die of Frostbite...<br><b><em>You Died!</em></b><br><br><a href=\"EndStatistics.html\">See Statistics</a>",
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
@@ -927,7 +1005,7 @@ const textNodes = [
         text: "You decided to eat the Mushrooms instead of trading them for the crowbar, expecting them to be a good source of nutrition and food. However, it turns out" +
             " that the mushrooms are extremely poisonous and slightly hallucinogenic as you start to see hallucinations of what looks to be a tall shadowy figure with" +
             " glowing red eyes towering over the Hospital staring right at you, and as the figure reaches out to you, you collapse and die..." +
-            "<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+            "<br><b><em>You Died!</em></b><br><br><a href=\"EndStatistics.html\">See Statistics</a>",
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
