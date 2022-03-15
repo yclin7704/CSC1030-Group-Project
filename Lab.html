@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Last Stand</title>
+		<meta name="description" content="Last Stand Text Adventure" />
+
+		<link rel="stylesheet" href="./assets/css/main.css" />
+		<script src="./test/ProfessionDialogue.js"></script>
+		<script defer src="./assets/js/lab.js"></script>
+	</head>
+    <body>
+        <div class="wrapper">
+            <div class="row">
+
+                <!-- Column 1: Map and inventory -->
+                <div class="col col1">
+                    <div class="map">
+                        <img src="assets/images/map.png" />
+                    </div>
+                    <div class="inventory">
+                        <p id="inventory"></p>
+                    </div>
+                </div>
+
+                <!-- Column 2: Image -->
+                <div class="col col2">
+                    <img src="assets/images/lab-out.jpg" style="opacity: 0.8;" id="locationImage" alt='testing centre outside'/>
+                </div>
+
+                <!-- Column 3: Buttons -->
+                <div class="col col3">
+                    <div id="options">
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- Bottom: Dialogue box -->
+            <div class="dialogueOuter">
+                <div class="dialogue textBox centeredText" id="labText"></div>
+            </div>
+        </div>
+    </body>
+</html>
