@@ -7,7 +7,7 @@ let onDayEndId;
 let onNightEndId;
 
 // Length time of day/night takes in secconds
-const dayLength = 5;
+const dayLength = 250;
 const nightLength = 50;
 
 function getSavedTime() {
@@ -35,6 +35,10 @@ function incrementTime() {
 
 	if (time === dayLength) showTextNodeFunctionTimer(onDayEndId);
 	else if (time === dayLength + nightLength) showTextNodeFunctionTimer(onNightEndId);
+}
+
+function isTimeOut() {
+	return time < dayLength + nightLength;
 }
 
 function displayTime() {

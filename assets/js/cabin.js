@@ -25,7 +25,7 @@ async function main() {
 
 function checkIfDead() {
 	changeTemp(0);
-	if (gameState.tempTooHigh || gameState.tempTooLow) gameState.isDead = true;
+	if (gameState.tempTooHigh || gameState.tempTooLow || isTimeOut()) gameState.isDead = true;
 }
 
 /**
