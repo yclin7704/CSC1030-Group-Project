@@ -2,37 +2,68 @@ let time = getSavedTime();
 let myTimer;
 let timeSpan = document.getElementById("timeSpan");
 
+let showTextNodeFunctionTimer;
+let onDayEndId;
+let onNightEndId;
+
+// Length time of day/night takes in secconds
+const dayLength = 250;
+const nightLength = 50;
+
 function getSavedTime() {
 	let saved = parseInt(sessionStorage.getItem("Time"));
 	if (!isNaN(saved)) return saved;
 	else return 0;
 }
 
+function setTimerData(funcName, dayEndId, nightEndId) {
+	showTextNodeFunctionTimer = funcName;
+	onDayEndId = dayEndId;
+	onNightEndId = nightEndId;
+}
+
 function StartTimer() {
 	myTimer = setInterval(incrementTime, 1000);
+	displayTime();
 }
 
 function incrementTime() {
 	time++;
 	saveTime();
 
-	if (timeSpan) displayTime();
+	displayTime();
 
-	// TODO: Do something when reaches night
-	// TODO: Do something when over 5 minutes
+	if (time === dayLength) showTextNodeFunctionTimer(onDayEndId);
+	else if (time === dayLength + nightLength) showTextNodeFunctionTimer(onNightEndId);
+}
+
+function isTimeOut() {
+	return time > dayLength + nightLength;
 }
 
 function displayTime() {
+	if (timeSpan) {
+		let translatedTime = translateTimeToHours();
+		let timeRemaining;
+		if (time < dayLength) {
+			timeRemaining = `${Math.floor((dayLength - time) / 60)}m ${(dayLength - time) % 60}s until night begins`;
+		} else {
+			let nightTime = time - dayLength;
+			timeRemaining = `${Math.floor((nightLength - nightTime) / 60)}m ${(nightLength - nightTime) % 60}s until dawn`;
+		}
+
+		timeSpan.innerHTML = `<span class="translatedTime">${translatedTime}</span><br />(${timeRemaining})`;
+	}
+}
+
+function translateTimeToHours() {
 	// Time the day starts at (eg 1700 being 5:00pm)
 	const dayStart = 1200;
 	// Time the day ends at (eg 2200 being 10:00pm)
 	const dayEnd = 2200;
-	// Length time of day takes in secconds
-	const dayLength = 250;
 
 	const nightStart = 2200;
 	const nightEnd = 550;
-	const nightLength = 50;
 
 	let dayLen = dayEnd - dayStart;
 
@@ -54,7 +85,7 @@ function displayTime() {
 	minutes = Math.floor(((translatedTime % 100) / 25) * 3);
 	hour = hour % 24;
 
-	timeSpan.innerHTML = `${padTime(hour)}:${padTime(minutes * 5)}`;
+	return `${padTime(hour)}:${padTime(minutes * 5)}`;
 }
 
 function padTime(num) {
@@ -64,7 +95,7 @@ function padTime(num) {
 
 function stopTimer() {
 	clearTimeout(myTimer);
-	if (timeSpan) displayTime();
+	displayTime();
 }
 
 function getTime() {

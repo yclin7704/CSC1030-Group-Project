@@ -263,3 +263,13 @@ input[type="button"][disabled] {
 	display: inline-block;
 	margin: 0px;
 }
+
+.time {
+	margin: 5px;
+}
+
+.translatedTime {
+	color: #eeeeee;
+	margin-bottom: 10px;
+	display: inline-block;
+}

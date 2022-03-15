@@ -74,16 +74,15 @@ const eventOpts = [
 			},
 			{
 				desc: "Take some of the logs",
-				requiredState: { hasLargeFirewood: false },
-				stateChanges: { hasLargeFirewood: true },
+				requiredInventory: { Firewood: false },
+				setInventory: { Firewood: true },
 				nextEventId: "takeLargeFirewood",
 				disableMode: "hidden",
 			},
 			{
 				desc: "Make some smaller kindling out of the logs using your saw",
-				requiredState: { hasSaw: true /* That variable may need renamed */, hasKindling: false },
-				// TODO: Inventory?
-				stateChanges: { hasKindling: true },
+				requiredInventory: { Saw: true /* That variable may need renamed */, Kindling: false },
+				setInventory: { Kindling: true },
 				nextEventId: "makeKindling",
 			},
 			{
@@ -112,8 +111,8 @@ const eventOpts = [
 			{
 				desc: "Return the the entrance to the cabin and take some larger blocks of firewood too",
 				nextEventId: "leaveLogs",
-				requiredState: { hasLargeFirewood: false },
-				stateChanges: { hasLargeFirewood: true },
+				requiredInventory: { Firewood: false },
+				setInventory: { Firewood: true },
 			},
 		],
 	},
@@ -545,6 +544,10 @@ const events = [
 	},
 	// END: Forest
 
+	// BEGIN: Night
+	//{},
+	// END: Night
+
 	// BEGIN: Deaths
 	{
 		id: "tempTooLow",
@@ -563,6 +566,12 @@ const events = [
 	{
 		id: "alreadyDead",
 		text: `You're already dead, and refreshing the page can't fix that.`,
+		img: gifDied,
+		optsId: "gameOver",
+	},
+	{
+		id: "onNightEnd",
+		text: `NIGHT`,
 		img: gifDied,
 		optsId: "gameOver",
 	},
