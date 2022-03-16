@@ -314,10 +314,6 @@ const textNodes = [
             {
                 text: 'Go back outside',
                 nextText: 2
-            },
-            {
-                text: 'Wait',
-                nextText: 0
             }
         ]
     },
@@ -352,10 +348,6 @@ const textNodes = [
             {
                 text: 'Go back outside',
                 nextText: 2
-            },
-            {
-                text: 'Wait',
-                nextText: 0
             }
         ]
     },
@@ -796,7 +788,7 @@ const textNodes = [
         text: 'Drinking the weird liquid, you felt funny... It almost tasted like an energy drink from the stores... Later, your body is slowly not responding to you... you look at your hands and they were turning grey. You suddenly thought about human flesh and BRAINS. You then realise, you are slowing turning into a zombie... that drink was... how this outbreak happened',
         note: '',
         inventory: '',
-        image: 'assets/images/farm-house-kitchen.jpg',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
         options: [
             {
 
@@ -831,26 +823,26 @@ const textNodes = [
     //Ending night 1 - no barricade, no camp - Bad
     {
         id: 30,
-        text: 'no camp, no barricade',
+        text: 'Being overwhelmed by zombies, you try your best to kill as many zombies as you can. But there was no hope, the zombies surrounds you. They tore your limbs apart and started eating you, You have died.',
         note: '',
         inventory: '',
-        image: 'assets/images/farm-house-basement.jpg',
+        image: 'assets/images/You-Died-TEST-GIF.gif',
     },
     //Ending night 2 - barricade, no camp - Bad
     {
         id: 31,
-        text: 'barricade, no camp',
+        text: "You kill the zombies as they are trying to break the barricade open. You keep killing and killing and killing... until there was no more. You decided to sleep after a long battle. There was a huge snow storm... You didn't have any warmth to protect you from the cold and you died of hypothermia",
         note: '',
         inventory: '',
-        image: 'assets/images/farm-house-basement.jpg',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
     },
     //Ending night 3 - you survive the night. - Good
     {
         id: 32,
-        text: 'both',
+        text: 'You kill the zombies as they are trying to break the barricade open. You keep killing and killing and killing... until there was no more. You decided to sleep beside the campfire after a long battle. There was a huge snow storm, but luckily you prepared a campfire beforehand and survived the night.',
         note: '',
         inventory: '',
-        image: 'assets/images/farm-house-basement.jpg',
+        image: 'assets/images/Victory2_TEST-GIF.gif',
     }
 ]
 
