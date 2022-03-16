@@ -4,7 +4,7 @@ const optionButtonsElement = document.getElementById('options'); // Buttons
 const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage'); // Image
 const soundElement = document.createElement('audio'); //Sound
-const profession = 'Hunter';
+const profession = sessionStorage.getItem("profession");
 
 
 // This variable stores the current game state
@@ -224,7 +224,7 @@ const textNodes = [
         text: "You go into the shelter and it is completely dark and you can't see anything down here. Maybe you need to find a light source?",
         note: '',
         inventory: '',
-        iamge: '',
+        image: 'assets/images/BlackScreen.jpg',
         options: [
             {
                 text: 'Turn on torch',
@@ -425,7 +425,7 @@ const textNodes = [
     //Look inside the fireplace
     {
         id: 14,
-        text: 'You look inside the fireplace and see a semi-burnt note and some unused firewood',
+        text: 'You look inside the fireplace and see a <u><strong>semi-burnt note</strong></u> and some <u><strong>unused firewood</strong></u>',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-inside.jpg',
@@ -454,7 +454,7 @@ const textNodes = [
     //Go to the kitchen
     {
         id: 15,
-        text: 'You go to the kitchen and like the living room, it is in ruins. In there, you see some cupboards and a fridge.',
+        text: 'You go to the kitchen and like the living room, it is in ruins. In there, you see some <u><strong>cupboards</strong></u> and <u><strong>a fridge</strong></u>.',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-kitchen.jpg',
@@ -497,13 +497,13 @@ const textNodes = [
         options: [
             {
                 text: 'Pick out the wood planks from the broken barrels',
-                requiredState: (currentState) => !currentState.barricade,
-                setState: {barricade: true},
+                requiredState: (currentState) => !currentState.planks,
+                setState: {planks: true},
                 nextText: 17
             },
             {
                 text: 'You have already pick up the planks',
-                requiredState: (currentState) => currentState.barricade,
+                requiredState: (currentState) => currentState.planks,
                 nextText: 17
             },
             {
@@ -515,43 +515,63 @@ const textNodes = [
 
             },
             {
+                text: 'Set up barricade',
+                requiredState: (currentState) => currentState.planks && !currentState.barricade,
+                setState: {barricade:true},
+                nextText: 17
+            },
+            {
+                text: 'You have already set up a barricade',
+                requiredState: (currentState) => currentState.barricade,
+                nextText: 17
+            },
+            {
                 text: 'Set up your camp',
-                requiredState: (currentState) => !currentState.blanket,
-                requiredState: (currentState) => !currentState.firewood,
-                requiredState: (currentState) => !currentState.matches,
+                requiredState: (currentState) => currentState.blanket && currentState.firewood && currentState.matches && !currentState.camp,
                 setState: {camp: true},
                 nextText: 17
             },
             {
                 text: 'You have already set up your camp',
-                requiredState: (currentState) => currentState.blacket,
-                requiredState: (currentState) => currentState.firewood,
-                requiredState: (currentState) => currentState.matches,
+                requiredState: (currentState) => currentState.camp,
                 nextText: 17
             },
             {
+                text: 'Prepare your shotgun',
+                requiredState: (currentState) => currentState.shotgun && currentState.shotgunAmmo && !currentState.shotgunLoaded,
+                setState: {shotgunLoaded: true},
+                nextText: 17
+            },
+            {
+                text: 'You have already prepared your shotgun',
+                requiredState: (currentState) => currentState.shotgunLoaded,
+                nextText: 17
+            },
+            {
+                text: 'Back',
+                nextText: 2
+            },
+            {
                 text: 'Start the night',
-                requiredState: (currentState) => !currentState.barricade,
-                requiredState: (currentState) => !currentState.camp,
-                nextText: 0
+                requiredState: (currentState) => !currentState.barricade && !currentState.camp,
+                nextText: 30
             },
             {
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.barricade && !currentState.camp,
-                nextText: 0
+                nextText: 31
             },
             {
                 text: 'Start the night',
-                requiredState: (currentState) => currentState.barricade,
-                requiredState: (currentState) => currentState.camp,
-                nextText: 0
+                requiredState: (currentState) => currentState.barricade && currentState.camp,
+                nextText: 32
             }
         ]
     },
     //Bedroom - Search the drawers
     {
         id: 18,
-        text: 'You open the drawer and found some matches.',
+        text: 'You open the <u><strong>drawer</strong></u> and found <u><strong>some matches</strong></u>.',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-bedroom.jpg',
@@ -645,7 +665,7 @@ const textNodes = [
     //Kitchen - Cupboards
     {
         id: 23,
-        text: 'You opened the cupboard and found some shotgun ammo and a kitchen knife',
+        text: 'You opened the cupboard and found <u><strong>some shotgun ammo</strong></u> and <u><strong>a kitchen knife</strong></u>',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-kitchen.jpg',
@@ -681,7 +701,7 @@ const textNodes = [
     //Kithcen - Fridge
     {
         id: 24,
-        text: 'You open the fridge and there is a container with some sort of green liquid inside. Do you want to drink it?',
+        text: 'You open the fridge and there is a container with some sort of <u><strong>green liquid inside</strong></u>. Do you want to drink it?',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-kitchen.jpg',
@@ -701,46 +721,79 @@ const textNodes = [
     //Start the night - no barricade, no camp
     {
         id: 25,
-        text: 'You start the night with no barricade, no camp. U hear zombies closing into the shelter. you prepare your weapons. The zombies comes through the entrance ',
+        text: 'You start the night with no barricade, no camp. U hear zombies closing into the shelter. You arm your weapons... The zombies comes through the entrance, you have no choice but to fight...',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-basement.jpg',
         options: [
             {
-
+                text: 'Shoot your gun',
+                requiredState: (currentState) => currentState.shotgunLoaded,
+                nextText: 30
+            },
+            {
+                text: 'Slash the zombies',
+                requiredState: (currentState) => currentState.kitchenKnife,
+                nextText: 30
+            },
+            {
+                text: 'Punch the zombies',
+                nextText: 30
             }
         ]
     },
     //Start the night - barricade, no camp
     {
         id: 26,
-        text: '',
+        text: 'You start the night with barricade but no camp. U hear zombies closing into the shelter. You arm your weapons... The zombies slowing tearing apart the barricade you put up, you have no choice but to fight...',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-basement.jpg',
         options: [
             {
-
+                text: 'Shoot your gun',
+                requiredState: (currentState) => currentState.shotgunLoaded,
+                nextText: 31
+            },
+            {
+                text: 'Slash the zombies',
+                requiredState: (currentState) => currentState.kitchenKnife,
+                nextText: 31
+            },
+            {
+                text: 'Punch the zombies',
+                nextText: 30
             }
         ]
     },
     //Start the night - barricade, camp
     {
         id: 27,
-        text: '',
+        text: 'You start the night with barricade and a camp. U hear zombies closing into the shelter. You arm your weapons... The zombies slowing tearing apart the barricade you put up, you have no choice but to fight...',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-basement.jpg',
         options: [
             {
-
+                text: 'Shoot your gun',
+                requiredState: (currentState) => currentState.shotgunLoaded,
+                nextText: 32
+            },
+            {
+                text: 'Slash the zombies',
+                requiredState: (currentState) => currentState.kitchenKnife,
+                nextText: 32
+            },
+            {
+                text: 'Punch the zombies',
+                nextText: 30
             }
         ]
     },
-    //Fridge - Drikning the liquid
+    //Fridge - Drikning the liquid - ending Drinking zombie liquid
     {
         id: 28,
-        text:   'Drinking the weird liquid, you felt funny... It almost tasted like an energy drink from the stores... Later, your body is slowly not responding to you... you look at your hands and they were turning grey. You suddenly thought about human flesh and BRAINS. You then realise, you are slowing turning into a zombie... that drink was... how this outbreak happened',
+        text: 'Drinking the weird liquid, you felt funny... It almost tasted like an energy drink from the stores... Later, your body is slowly not responding to you... you look at your hands and they were turning grey. You suddenly thought about human flesh and BRAINS. You then realise, you are slowing turning into a zombie... that drink was... how this outbreak happened',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-kitchen.jpg',
@@ -753,7 +806,7 @@ const textNodes = [
     //Get double barrel shotgun
     {
         id: 29,
-        text: "You put the notes beside each other and drawings at the back of the notes starts to come together. The drawing showed that there is a weapon in one of the barrels and under the drawing there's some writting. It reads '97', you look for barrel 97 and found it. There wasn't a lid, you look inside and there was a double barrel shotgun. ",
+        text: "You put the notes beside each other and drawings at the back of the notes starts to come together. The drawing showed that there is a weapon in one of the barrels and under the drawing there's some writting. It reads '97', you look for barrel 97 and found it. There wasn't a lid, you look inside and there was a <u><strong>double barrel shotgun</strong></u>. ",
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-basement.jpg',
@@ -774,6 +827,30 @@ const textNodes = [
                 nextText: 17
             }
         ]
+    },
+    //Ending night 1 - no barricade, no camp - Bad
+    {
+        id: 30,
+        text: 'no camp, no barricade',
+        note: '',
+        inventory: '',
+        image: 'assets/images/farm-house-basement.jpg',
+    },
+    //Ending night 2 - barricade, no camp - Bad
+    {
+        id: 31,
+        text: 'barricade, no camp',
+        note: '',
+        inventory: '',
+        image: 'assets/images/farm-house-basement.jpg',
+    },
+    //Ending night 3 - you survive the night. - Good
+    {
+        id: 32,
+        text: 'both',
+        note: '',
+        inventory: '',
+        image: 'assets/images/farm-house-basement.jpg',
     }
 ]
 
