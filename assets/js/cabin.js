@@ -46,7 +46,7 @@ async function runEvent(eventId) {
 		// Update the game's state, if needed
 		updateGameState(eventData.stateChanges);
 		// Display the event text
-		print(eventData.text, eventId);
+		print(eventData.text);
 		// Update the setting image
 		setImg(eventData.img);
 		// Crossfade audio
