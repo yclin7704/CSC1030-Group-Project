@@ -173,8 +173,9 @@ const eventOpts = [
 			{
 				desc: "Take the stack of planks you found earlier",
 				nextEventId: "",
-				requiredState: { foundPlanks: true, hasPlanks: false },
-				stateChanges: { hasPlanks: true },
+				requiredState: { foundPlanks: true },
+				requiredInventory: { "Wood Planks": false },
+				setInventory: { "Wood Planks": true },
 				disableMode: "hidden",
 			},
 			{
@@ -212,7 +213,7 @@ const eventOpts = [
 		choices: [
 			{
 				desc: "Ignore the safe for now",
-				nextEventId: "inside",
+				nextEventId: "insideCabin",
 			},
 			{
 				desc: "Take a guess at the combination",
@@ -230,29 +231,33 @@ const eventOpts = [
 			{
 				desc: "Take the planks and search the cabin for a hammer and nails",
 				nextEventId: "thoroughlySearchCabin",
-				requiredState: { hasHammer: false, hasNails: false },
-				stateChanges: { hasPlanks: true, thoroughlySearchedCabin: true },
+				requiredInventory: { Hammer: false, Nails: false },
+				stateChanges: { thoroughlySearchedCabin: true },
+				setInventory: { "Wood Planks": true },
 				disableMode: "hidden",
 			},
 			{
 				desc: "Take the planks and search the cabin for some nails",
 				nextEventId: "thoroughlySearchCabin",
-				requiredState: { hasHammer: true, hasNails: false },
-				stateChanges: { hasPlanks: true, thoroughlySearchedCabin: true },
+				requiredInventory: { Hammer: true, Nails: false },
+				stateChanges: { thoroughlySearchedCabin: true },
+				setInventory: { "Wood Planks": true },
 				disableMode: "hidden",
 			},
 			{
 				desc: "Take the planks and search the cabin for a hammer",
 				nextEventId: "thoroughlySearchCabin",
-				requiredState: { hasHammer: false, hasNails: true },
-				stateChanges: { hasPlanks: true, thoroughlySearchedCabin: true },
+				requiredInventory: { Hammer: false, Nails: true },
+				stateChanges: { thoroughlySearchedCabin: true },
+				setInventory: { "Wood Planks": true },
 				disableMode: "hidden",
 			},
 			{
 				desc: "Lucky you've already got both! Take the planks and keep searching for anything else that looks useful",
 				nextEventId: "thoroughlySearchCabin",
-				requiredState: { hasHammer: true, hasNails: true },
-				stateChanges: { hasPlanks: true, thoroughlySearchedCabin: true },
+				requiredInventory: { Hammer: true, Nails: true },
+				stateChanges: { thoroughlySearchedCabin: true },
+				setInventory: { "Wood Planks": true },
 				disableMode: "hidden",
 			},
 			{
@@ -318,13 +323,13 @@ const eventOpts = [
 			{
 				desc: "Cut the lock's shackle using your bolt cutters",
 				nextEventId: "cutHatchLockBolts",
-				requiredState: { hasBoltCutters: true },
+				requiredInventory: { "Bolt Cutters": true },
 				stateChanges: { hatchOpen: true },
 			},
 			{
 				desc: "Use your crowbar to pry open the hatch",
 				nextEventId: "pryOpenHatch",
-				requiredState: { hasCrowbar: true },
+				requiredInventory: { Crowbar: true },
 				stateChanges: { hatchOpen: true },
 			},
 		],
@@ -511,8 +516,9 @@ const events = [
 	},
 	{
 		id: "thoroughlySearchCabin",
-		text: `Hidden in a box at the back of a cupboard, you find [TODO]`,
+		text: `Hidden in a box at the back of a cupboard, you find a red crowbar. It might be useful on that hatch you found earlier, or could help you take down a few zombies.`,
 		optsId: "thoroughlySearchingCabin",
+		setInventory: { Crowbar: true },
 	},
 	{
 		id: "randomSearchCabin",
