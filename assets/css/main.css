@@ -72,6 +72,10 @@ a:link {
 .col2 img {
 	width: 100%;
 	height: 100%;
+	/*
+	object-fit: cover;
+	object-position: center center;
+    */
 }
 
 .col3 {
@@ -123,11 +127,11 @@ a:link {
 }
 
 input:checked + .slider {
-	background-color: #2196F3;
+	background-color: #2196f3;
 }
 
 input:focus + .slider {
-	box-shadow: 0 0 1px #2196F3;
+	box-shadow: 0 0 1px #2196f3;
 }
 
 input:checked + .slider:before {
@@ -152,8 +156,7 @@ input:checked + .slider:before {
 	width: 100%;
 	height: 100%;
 	pointer-events: none;
-	background: radial-gradient(circle at var(--x) var(--y), transparent 10%, 
-	rgba(0,0,0,0.95) 20%);
+	background: radial-gradient(circle at var(--x) var(--y), transparent 10%, rgba(0, 0, 0, 0.95) 20%);
 }
 
 .dialogue {
