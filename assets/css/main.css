@@ -195,10 +195,13 @@ a:link {
 	border-style: none;
 	font-size: 12pt;
 	font-weight: bolder;
+	transition: all .5s ease;
 }
 
 button:enabled:hover {
 	cursor: pointer;
+	color: var(--beige);
+	background-color: var(--background);
 }
 
 button[disabled],
