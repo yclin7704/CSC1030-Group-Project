@@ -63,13 +63,14 @@ function translateTimeToHours() {
 	const dayEnd = 2200;
 
 	const nightStart = 2200;
-	const nightEnd = 550;
+	// Pretty arbitrary, but it allows 1 seccond to be 10 minutes
+	const nightEnd = 634;
 
 	let dayLen = dayEnd - dayStart;
 
 	let nightLen;
 	if (nightStart < nightEnd) nightLen = nightEnd - nightStart;
-	else nightLen = nightStart + 24 - nightEnd;
+	else nightLen = nightEnd + 2400 - nightStart;
 
 	let translatedTime = (dayLen / dayLength) * time;
 
