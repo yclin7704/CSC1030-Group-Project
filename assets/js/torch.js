@@ -1,17 +1,15 @@
-let torchOn = true;
-let torch = document.getElementById('torch');
-let pos = document.documentElement;
+var lamp = document.documentElement;
+var torchOn = true;
 
 function torch() {
-    pos.addEventListener('mousemove', e => {pos.style.setProperty('--x',e.clientX + 'px')
-    pos.style.setProperty('--y', e.clientY + 'px')});
-
+    if (torchOn) {
+        lamp.addEventListener('mousemove', e => {
+            lamp.style.setProperty('--y', e.clientY + 'px');
+            lamp.style.setProperty('--x', e.clientX + 'px');
+        })
+    }
 }
 
 function disableTorch() {
     torchOn = false;
-}
-
-function enableTorch() {
-    torchOn = true;
 }
