@@ -2,38 +2,48 @@ const textElement = document.getElementById('DialogueHospital');          // The
 const optionButtonsElement = document.getElementById('ButtonsHospital');  // The buttons/options available to the player
 const inventoryElement = document.getElementById('inventory');            // The player's inventory
 const imageElement = document.getElementById('ImageDisplay');             // The image to be displayed on-screen
-const profession = sessionStorage.getItem("profession");                                       // This will store the profession
+const profession = sessionStorage.getItem("profession");                  // This will store the profession
 let state = {};                                                           // This will store the game's current/active state
-var buttonActive;
-let random = [];
+let inventory = {};                                                       // This will store the player's inventory
 
 
 
-
-const text = ["Log Entry 1:</br>Some strange men started appearing in the Hospital recently, with more of them coming and going more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However we'll have to see how it all plays out in the long run...<br><br> Dr. Nallig",
+// Contains all of the text entries for the Hospital Documents
+const  entries = ["Log Entry 1:</br>Some strange men started appearing in the Hospital recently, with more of them coming and going more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However we'll have to see how it all plays out in the long run...<br><br> Dr. Nallig",
     "Log Entry 11:<br>A bit of a long entry today. I think I've finally discovered the purpose of these strange men, as recently the tests we've been performing have required human subjects and they've all been failures so far, but these men have somehow managed to keep providing us with what they call \"willing test subjects\". However, although I do doubt that the test subjects were willing to do this, I think it would be best for me to keep my head down and keep running tests as I wouldn't dare question them on where they get the test subjects, as I fear what would happen to me should I do so...<br><br> Dr. Nallig",
     "Log Entry 27:<br>Unfortuantely, all of our tests keep resulting in failure and we were going to give up. However recently, some of the test subjects have started to experience some extreme side-affects, such as violent tendencies, screaming and scratching themselves as if they're trying to get rid of an itch on their body. I still don't know the cause of this as of yet, but part of me believes it has something to do with the serum that we were asked to test, as after searching through some of the strange men's documents, it seems that they are using the blood of some fossilised creature. I feel like now might be the time to step up and ask some questions, before any more life is wasted at the hands of us and these men...<br><br> Dr. Nallig ",
     "Log Entry ???:<br>Today I woke up in a strange room that I think might be one of the testing rooms, as there are windows looking out behind the Hospital. However, I fear this might be the last Log Entry I do when my mind is my own, as since I woke up I've been experiencing a strong itching sensation, which probably means that I was injected with the serum and might not have much time left. I knew that asking questions was a bad thing but at least I was able to see the end-result of the test that they were keeping secret even from us. It would seem that the blood samples they were using contained some kind of parasite and/or bacteria that pretty much leads to a partial breakdown of the body making the subjects look like zombie figures. The itching is really bad now like it's under the skin, to whoever reads this, the world is in danger, there's someone that you need to speak to, he created the serum and might know of an antidote his name is.................."
 ];
-var position = 0;
 
+// Stores the index position for the array
+var entry = 0;
 
-
-
+// Allows the player to move onto the next Entry in the Hospital Documents
 function NextText(){
-    position += 1
-    if (position >= text.length) {
-        position = text.length-1;
+    entry += 1
+    /**
+     * If the next entry to be displayed doesn't exist (is outside the array)
+     * Then change the entry value back to the last entry in the entries array
+     */
+    if (entry >= entries.length) {
+        entry = entries.length-1;
     }
-    document.getElementById("handwritten").innerHTML = text[position];
+    // Displays the appropriate text within the entries array
+    document.getElementById("handwritten").innerHTML = entries[entry];
 }
 
+// Allows the player to move back to the previous Entry in the Hospital Documents
 function PreviousText(){
-    position -= 1;
-    if (position < 0) {
-        position = 0;
+    entry -= 1;
+    /**
+     * If the next entry to be displayed doesn't exist (is outside the array)
+     * Then change the enry value back to the very first entry in the entries array
+     */
+    if (entry < 0) {
+        entry = 0;
     }
-    document.getElementById("handwritten").innerHTML = text[position];
+    // Displays the appropriate text within the entries array
+    document.getElementById("handwritten").innerHTML = entries[entry];
 }
 
 
