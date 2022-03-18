@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Last Stand</title>
+		<title>Last Stand - Hospital </title>
 		<meta name="description" content="Last Stand Text Adventure" />
 
 		<link rel="stylesheet" href="./assets/css/main.css" />
@@ -18,11 +18,20 @@
 				<!-- Column 1: Map and inventory -->
 				<div class="col col1">
 					<div class="map">
-						<img src="assets/images/map.png" />
+						<div class="temperature">
+							<label for="temperatureMeter">Temperature:</label><br>
+							<div id="temperatureMeter" class="temperatureMeter"></div>
+							<span id="TemperatureSpan" class="temperatureSpan">40</span>°C
+						</div>
+						<br>
+						<div class="time">
+							Time:<br>
+							<span id="timeSpan" class="timeSpan">5:15pm</span>
+						</div>
 					</div>
 					<div class="inventory">
-                        <p id="inventory">
-                        </p>
+                        <p class="inventoryHeading">Inventory</p>
+						<span class="inventory" id="inventory"></span>
                     </div>
 				</div>
 
