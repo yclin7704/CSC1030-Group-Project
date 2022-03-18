@@ -74,6 +74,10 @@ function startGame() {
         default: state = {}; break;
     }
 
+    showInventory();
+    // clears the inventory before the game starts
+    clearInventory();
+
 	// The seccond ID should point to dieing due to being too hot
     setTemperatureData(showTextNode, 103, 103);
     
@@ -102,14 +106,7 @@ function showTextNode(textNodeIndex){
             const button = document.createElement('button');              // Creates a new button.
             button.innerText = option.text;                               // Button text is changed to suit the option text
             button.classList.add('buttonChoice');                         // Sets the button class for styling.
-            value = option.text2;
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
-            if (value === "decrease") {
-                button.addEventListener('click', () => changeTemp("decrease"));
-            }
-            else if (value === "increase") {
-                button.addEventListener('click', () => changeTemp("increase"));
-            }
             optionButtonsElement.appendChild(button); 
         }
     })
@@ -164,7 +161,6 @@ const textNodes = [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
                 setState: {collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
-                text2: "decrease",
                 nextText: 5,
             },
             {
@@ -209,7 +205,6 @@ const textNodes = [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
                 requiredState: (currentState) => currentState.crowbar === false,
-                text2: "decrease",
                 nextText: 5
             },
             {
@@ -299,7 +294,6 @@ const textNodes = [
             {
                 text: 'Return to the front of the Hospital',
                 setState: {crowbar: false},
-                text2: "decrease",
                 nextText: 2
             },
             {
@@ -447,7 +441,6 @@ const textNodes = [
             {
                 text: "Sit by the Campfire for warmth",
                 requiredState: (currentState) => currentState.LitFire === true,
-                text2: "increase",
                 nextText: 23
             }
         ]
@@ -669,7 +662,6 @@ const textNodes = [
             {
                 text: "Sit by the Campfire",
                 setState: {LitFire: true},
-                text2: "increase",
                 nextText: 23
             }
         ]
