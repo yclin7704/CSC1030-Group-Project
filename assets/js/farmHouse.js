@@ -11,7 +11,6 @@ const profession = sessionStorage.getItem("profession");
 
 let state = {};
 
-let inventory = {};
 
 // This function is called to start the game. The state is emptied and the first text node is shown.
 
@@ -34,7 +33,8 @@ function startGame(){
     else {
         state = {};
     }
-    inventory = {};
+    showInventory();
+    clearInventory();
     showTextNode(1);
 }
 
@@ -43,7 +43,7 @@ function startGame(){
 function showTextNode(textNodeIndex){
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "dialogue"); // Changes the dialogue box to text stored in the text node.
-    inventoryElement.innerHTML = textNode.inventory;
+    updateInventory(textNode.inventory);
     imageElement.src = textNode.image;
     noteItem.innerHTML = textNode.note;
     crossfadeAudio(textNode.sound);
@@ -57,10 +57,10 @@ function showTextNode(textNodeIndex){
             button.innerText = option.text; // Button text is changed to the option text.
             button.classList.add('buttonChoice'); // Sets the button class for styling.
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
-            button.addEventListener('click', () => showInventory());
-            optionButtonsElement.appendChild(button); 
+            optionButtonsElement.appendChild(button);
         }
-    })
+    }
+    )
 }
 
 // This function shows the current option selected
@@ -78,7 +78,7 @@ function selectOption(option) {
     state = Object.assign(state, option.setState);
     inventory = Object.assign(inventory, option.setInventory);
     showTextNode(nextTextNodeId);
-
+    updateInventory(option.setInventory);
 }
 
 // Change the handwritten text
@@ -91,13 +91,6 @@ function revertText(){
     document.getElementById('handwritten').style.fontSize = "2rem";
 }
 
-function showInventory() {
-    for (let [key, value] of Object.entries(inventory)) {
-        if (value === true) {
-            document.getElementById('inventory').innerHTML += "<br>" + key;
-        }
-    }
-}
 
 
 // The text nodes for the game are below
@@ -160,6 +153,7 @@ const textNodes = [
             {
                 text: 'Take torch',
                 requiredState: (currentState) => !currentState.torch,
+                setInventory: {torch: true},
                 setState: {torch:true},
                 nextText: 2
             },
@@ -205,6 +199,7 @@ const textNodes = [
                 text: 'Take key',
                 requiredState: (currentState) => !currentState.key,
                 setState: {key:true},
+                setInventory: {key:true},
                 nextText: 2
             },
             {
@@ -265,7 +260,14 @@ const textNodes = [
             {
                 text: 'Open the door',
                 requiredState: (currentState) => currentState.key,
+                setState: {key:false, doorUnlocked:true},
+                setInventory: {key:false},
                 nextText: 9
+            },
+            {
+                text: 'Go inside',
+                requiredState: (currentState) => currentState.doorUnlocked,
+                nextText: 10
             },
             {
                 text: 'Pick lock the door',
@@ -275,6 +277,11 @@ const textNodes = [
             {
                 text: 'Shoot the lock off',
                 requiredState: (currentState) => currentState.Hunter, //need to get gun from inventory
+                nextText: 9
+            },
+            {
+                text: 'Kick the door off',
+                requiredState: (currentState) => currentState.WarVeteran,
                 nextText: 9
             },
             {
@@ -429,6 +436,7 @@ const textNodes = [
             {
                 text: 'Pick up firewood',
                 requiredState: (currentState) => !currentState.firewood,
+                setInventory: {firewood:true},
                 setState: {firewood: true},
                 nextText: 14
             },
@@ -469,15 +477,9 @@ const textNodes = [
     {
         id: 16,
         text: 'You untied the ropes and chain, and pops out a zombified little girl that jumps up and bites your neck. As the zombie devours your flesh, as your vision starts to blur, you start to thought what a way to go...<br><br><a href=\"EndStatistics.html\">See Statistics</a>',
-        note: 'assets/images/farm-house-bedroom.jpg',
+        note: '',
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
-        options: [
-            {
-                text: "Play Again?",
-                nextText: -1
-            }
-        ]
     },
     //Turn on the torch in the basement. This is where you will stay for the night.
     {
@@ -490,6 +492,7 @@ const textNodes = [
             {
                 text: 'Pick out the wood planks from the broken barrels',
                 requiredState: (currentState) => !currentState.planks,
+                setInventory: {planks:true},
                 setState: {planks: true},
                 nextText: 17
             },
@@ -509,6 +512,7 @@ const textNodes = [
             {
                 text: 'Set up barricade',
                 requiredState: (currentState) => currentState.planks && !currentState.barricade,
+                setInventory: {planks: false},
                 setState: {barricade:true},
                 nextText: 17
             },
@@ -520,6 +524,20 @@ const textNodes = [
             {
                 text: 'Set up your camp',
                 requiredState: (currentState) => currentState.blanket && currentState.firewood && currentState.matches && !currentState.camp,
+                setInventory: {firewood:false, matches:false, blanket:false},
+                setState: {camp: true},
+                nextText: 17
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => !currentState.blanket && currentState.firewood && currentState.matches && !currentState.camp,
+                setInventory: {firewood:false, matches:false},
+                setState: {camp: true},
+                nextText: 17
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => currentState.firewood && currentState.sticks && currentState.Hunter && !currentState.camp, //gotta check on this for the inventory system...
                 setState: {camp: true},
                 nextText: 17
             },
@@ -531,6 +549,7 @@ const textNodes = [
             {
                 text: 'Prepare your shotgun',
                 requiredState: (currentState) => currentState.shotgun && currentState.shotgunAmmo && !currentState.shotgunLoaded,
+                setInventory: {shotgunLoaded: true, shotgunAmmo: false, shotgun:false},
                 setState: {shotgunLoaded: true},
                 nextText: 17
             },
@@ -571,6 +590,7 @@ const textNodes = [
             {
                 text: 'Take the matches',
                 requiredState: (currentState) => !currentState.matches,
+                setInventory: {matches: true},
                 setState: {matches: true},
                 nextText: 18
             },
@@ -596,6 +616,7 @@ const textNodes = [
             {
                 text: 'Take the blanket',
                 requiredState: (currentState) => !currentState.blanket,
+                setInventory: {blanket: true},
                 setState: {blanket: true},
                 nextText: 19
             },
@@ -665,6 +686,7 @@ const textNodes = [
             {
                 text: 'Take shotgun ammo',
                 requiredState: (currentState) => !currentState.shotgunAmmo,
+                setInventory: {shotgunAmmo:true},
                 setState: {shotgunAmmo: true},
                 nextText: 23
             },
@@ -676,6 +698,7 @@ const textNodes = [
             {
                 text: 'Take kitchen knife',
                 requiredState: (currentState) => !currentState.kitchenKnife,
+                setInventory: {kitchenKnife:true},
                 setState: {kitchenKnife: true},
                 nextText: 23
             },
