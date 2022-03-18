@@ -25,12 +25,14 @@ const eventOpts = [
 				stateChanges: { hasBeenInsideCabin: true },
 				nextEventId: "initialInsideCabin",
 				disableMode: "hidden",
+				tempChange: "decrease",
 			},
 			{
 				desc: "Enter the cabin",
 				requiredState: { hasBeenInsideCabin: true },
 				nextEventId: "insideCabin",
 				disableMode: "hidden",
+				tempChange: "decrease",
 			},
 			{
 				desc: "Search for firewood",
@@ -38,12 +40,14 @@ const eventOpts = [
 				stateChanges: { hasVisitedFirewood: true },
 				nextEventId: "searchForFirewood",
 				disableMode: "hidden",
+				tempChange: "decrease",
 			},
 			{
 				desc: "Return the the pile of firewood",
 				requiredState: { hasVisitedFirewood: true },
 				nextEventId: "visitFirewood",
 				disableMode: "hidden",
+				tempChange: "decrease",
 			},
 			{
 				desc: "Venture deeper into the forest",
@@ -71,6 +75,7 @@ const eventOpts = [
 			{
 				desc: "Ignore the firewood for now and return to the entrance to the cabin",
 				nextEventId: "leaveLogs",
+				tempChange: "decrease",
 			},
 			{
 				desc: "Take some of the logs",
@@ -78,17 +83,20 @@ const eventOpts = [
 				setInventory: { Firewood: true },
 				nextEventId: "takeLargeFirewood",
 				disableMode: "hidden",
+				tempChange: "decrease",
 			},
 			{
 				desc: "Make some smaller kindling out of the logs using your saw",
 				requiredInventory: { Saw: true /* That variable may need renamed */, Kindling: false },
 				setInventory: { Kindling: true },
 				nextEventId: "makeKindling",
+				tempChange: "decrease",
 			},
 			{
 				desc: "Venture out into the woods and see what you can find",
 				nextEventId: "visitForestInitial",
 				tempChange: -40,
+				tempChange: "decrease",
 			},
 		],
 	},
@@ -98,6 +106,7 @@ const eventOpts = [
 			{
 				desc: "Return to the entrance to the cabin with your blocks of firewood",
 				nextEventId: "leaveLogs",
+				tempChange: "decrease",
 			},
 		],
 	},
@@ -107,12 +116,14 @@ const eventOpts = [
 			{
 				desc: "Return to the entrance to the cabin with your kindling",
 				nextEventId: "leaveLogs",
+				tempChange: "decrease",
 			},
 			{
 				desc: "Return the the entrance to the cabin and take some larger blocks of firewood too",
 				nextEventId: "leaveLogs",
 				requiredInventory: { Firewood: false },
 				setInventory: { Firewood: true },
+				tempChange: "decrease",
 			},
 		],
 	},
@@ -134,10 +145,9 @@ const eventOpts = [
 				disableMode: "hidden",
 			},
 			{
-				desc: "SAFE",
-				nextEventId: "openSafe",
-				requiredState: { profession: profHunter, rifledCabin: true, openedSafe: false },
-				stateChanges: { openedSafe: true },
+				desc: "Take a closer look at the safe",
+				nextEventId: "lookAtSafe",
+				requiredState: { openedSafe: false, rifledCabin: true },
 				disableMode: "hidden",
 			},
 			{
@@ -163,8 +173,9 @@ const eventOpts = [
 			{
 				desc: "Take the stack of planks you found earlier",
 				nextEventId: "",
-				requiredState: { foundPlanks: true, hasPlanks: false },
-				stateChanges: { hasPlanks: true },
+				requiredState: { foundPlanks: true },
+				requiredInventory: { "Wood Planks": false },
+				setInventory: { "Wood Planks": true },
 				disableMode: "hidden",
 			},
 			{
@@ -186,10 +197,9 @@ const eventOpts = [
 				stateChanges: { searchedCabin: true },
 			},
 			{
-				desc: "SAFE",
-				nextEventId: "openSafe",
-				requiredState: { profession: profHunter, openedSafe: false },
-				stateChanges: { openedSafe: true },
+				desc: "Take a closer look at the safe",
+				nextEventId: "lookAtSafe",
+				requiredState: { openedSafe: false },
 				disableMode: "hidden",
 			},
 			{
@@ -199,34 +209,55 @@ const eventOpts = [
 		],
 	},
 	{
+		id: "lookingAtSafe",
+		choices: [
+			{
+				desc: "Ignore the safe for now",
+				nextEventId: "insideCabin",
+			},
+			{
+				desc: "Take a guess at the combination",
+				nextEventId: guessCombination,
+			},
+			{
+				desc: "Unlock the safe",
+				nextEventId: "unlockSafe",
+			},
+		],
+	},
+	{
 		id: "continuedSearchingCabin",
 		choices: [
 			{
 				desc: "Take the planks and search the cabin for a hammer and nails",
 				nextEventId: "thoroughlySearchCabin",
-				requiredState: { hasHammer: false, hasNails: false },
-				stateChanges: { hasPlanks: true, thoroughlySearchedCabin: true },
+				requiredInventory: { Hammer: false, Nails: false },
+				stateChanges: { thoroughlySearchedCabin: true },
+				setInventory: { "Wood Planks": true },
 				disableMode: "hidden",
 			},
 			{
 				desc: "Take the planks and search the cabin for some nails",
 				nextEventId: "thoroughlySearchCabin",
-				requiredState: { hasHammer: true, hasNails: false },
-				stateChanges: { hasPlanks: true, thoroughlySearchedCabin: true },
+				requiredInventory: { Hammer: true, Nails: false },
+				stateChanges: { thoroughlySearchedCabin: true },
+				setInventory: { "Wood Planks": true },
 				disableMode: "hidden",
 			},
 			{
 				desc: "Take the planks and search the cabin for a hammer",
 				nextEventId: "thoroughlySearchCabin",
-				requiredState: { hasHammer: false, hasNails: true },
-				stateChanges: { hasPlanks: true, thoroughlySearchedCabin: true },
+				requiredInventory: { Hammer: false, Nails: true },
+				stateChanges: { thoroughlySearchedCabin: true },
+				setInventory: { "Wood Planks": true },
 				disableMode: "hidden",
 			},
 			{
 				desc: "Lucky you've already got both! Take the planks and keep searching for anything else that looks useful",
 				nextEventId: "thoroughlySearchCabin",
-				requiredState: { hasHammer: true, hasNails: true },
-				stateChanges: { hasPlanks: true, thoroughlySearchedCabin: true },
+				requiredInventory: { Hammer: true, Nails: true },
+				stateChanges: { thoroughlySearchedCabin: true },
+				setInventory: { "Wood Planks": true },
 				disableMode: "hidden",
 			},
 			{
@@ -292,13 +323,13 @@ const eventOpts = [
 			{
 				desc: "Cut the lock's shackle using your bolt cutters",
 				nextEventId: "cutHatchLockBolts",
-				requiredState: { hasBoltCutters: true },
+				requiredInventory: { "Bolt Cutters": true },
 				stateChanges: { hatchOpen: true },
 			},
 			{
 				desc: "Use your crowbar to pry open the hatch",
 				nextEventId: "pryOpenHatch",
-				requiredState: { hasCrowbar: true },
+				requiredInventory: { Crowbar: true },
 				stateChanges: { hatchOpen: true },
 			},
 		],
@@ -391,7 +422,7 @@ const events = [
 		text: `Following the path deeper into the dark woods, you stumble across a lone cabin.
         It looks to have been recently abandoned, and you can see signs of zombies nearby.
         The windows have been smashed in and the door is hanging off its hinges.
-        You might be able to find some wood for a fire here, or with some barricades you might even be able to spend the night here.`,
+        You might be able to find some wood for a fire here, or with a rudimentary barricade you might even be able to spend the night here.`,
 		img: imgOutside,
 		audio: audioWind,
 		optsId: "outside",
@@ -453,7 +484,7 @@ const events = [
 	},
 	{
 		id: "insideCabin",
-		text: `Returning to the cabin`,
+		text: `You return to the shelter of the cabin.`,
 		img: imgInside,
 		audio: audioRain,
 		optsId: "inside",
@@ -467,6 +498,17 @@ const events = [
 		optsId: "riflingCabin",
 	},
 	{
+		id: "lookAtSafe",
+		text: `Taking a closer look at the safe, you see it is a fairly simple 3-digit combination lock,
+        but with no signs of the combination being written down nearby this doesn't help you much. You wish you'd learnt how to pick a lock...`,
+		optsId: "lookingAtSafe",
+	},
+	{
+		id: "unlockSafe",
+		text: `UNLOCKED SAFE`,
+		optsId: undefined,
+	},
+	{
 		id: "continueSearchingCabin",
 		text: `Continuing your search, you spot a stack of wooden planks shoved under the bed.
         Not what you'd want to build a cabin out of, but good enough to help barricade, if you can find some nails and a hammer.`,
@@ -474,8 +516,9 @@ const events = [
 	},
 	{
 		id: "thoroughlySearchCabin",
-		text: `Hidden in a box at the back of a cupboard, you find [TODO]`,
+		text: `Hidden in a box at the back of a cupboard, you find a red crowbar. It might be useful on that hatch you found earlier, or could help you take down a few zombies.`,
 		optsId: "thoroughlySearchingCabin",
+		setInventory: { Crowbar: true },
 	},
 	{
 		id: "randomSearchCabin",
@@ -571,7 +614,7 @@ const events = [
 	},
 	{
 		id: "onNightEnd",
-		text: `NIGHT`,
+		text: `As day dawns over your failed defence from the zombie horde, you lie bleeding out on the ground, too exhausted to move. You won't make it to the next night.`,
 		img: gifDied,
 		optsId: "gameOver",
 	},
@@ -650,5 +693,26 @@ function getRandomSearchCabinDialogue() {
 
 function goToStatistics() {
 	window.location.href = "EndStatistics.html";
+}
+
+function guessCombination() {
+	if (!gameState.combination) {
+		gameState.combination = getRandom(0, 999);
+		gameState.combinationGuesses = [];
+	}
+	let guess = getRandom(0, 999);
+
+	while (gameState.combinationGuesses.indexOf(guess) !== -1) guess = getRandom(0, 999);
+	gameState.combinationGuesses.push(guess);
+
+	if (guess === gameState.combination) {
+		runEvent("unlockSafe");
+	} else print(`You try ${padCombination(guess)} at random. It doesn't budge.`);
+}
+
+function padCombination(num) {
+	if (num < 10) return "00" + num;
+	else if (num < 100) return "0" + num;
+	else return num;
 }
 // END: Logic for determining some data

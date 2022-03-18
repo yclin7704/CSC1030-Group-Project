@@ -7,7 +7,7 @@
 		<meta name="description" content="Last Stand Text Adventure" />
 
 		<link rel="stylesheet" href="./assets/css/main.css" />
-		<script src="./test/ProfessionDialogue.js"></script>
+		<script src="./assets/js/profession.js"></script>
 		<script defer src="./assets/js/farmHouse.js"></script>
 		<script src="./assets/js/Typewriter.js"></script>
 		<script src="./assets/js/crossfade.js"></script>
@@ -18,7 +18,16 @@
 				<!-- Column 1: Map and inventory -->
 				<div class="col col1">
 					<div class="map">
-						<img src="assets/images/map.png" />
+						<div class="temperature">
+							<label for="temperatureMeter">Temperature:</label><br />
+							<div id="temperatureMeter" class="temperatureMeter"></div>
+							<span id="temperatureSpan" class="temperatureSpan">40</span>°C
+						</div>
+						<br />
+						<div class="time">
+							Time:<br/>
+							<span id="timeSpan" class="timeSpan">5:15pm</span>
+						</div>
 					</div>
 					<div class="inventory">
 						<p id="inventory"></p>

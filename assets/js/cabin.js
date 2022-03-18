@@ -46,12 +46,14 @@ async function runEvent(eventId) {
 		// Update the game's state, if needed
 		updateGameState(eventData.stateChanges);
 		// Display the event text
-		print(eventData.text, eventId);
+		print(eventData.text);
 		// Update the setting image
 		setImg(eventData.img);
 		// Crossfade audio
 		// DEBUG: Re-enable audio
 		//crossfadeAudio(eventData.audio);
+		// Update the player's inventory
+		updateInventory(eventData.setInventory);
 		// Show the user's options
 		setChoices(eventData.optsId);
 		// Change temperature

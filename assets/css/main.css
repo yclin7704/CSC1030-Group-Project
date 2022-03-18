@@ -72,6 +72,10 @@ a:link {
 .col2 img {
 	width: 100%;
 	height: 100%;
+	/*
+	object-fit: cover;
+	object-position: center center;
+    */
 }
 
 .col3 {
@@ -92,8 +96,7 @@ a:link {
 	width: 100%;
 	height: 100%;
 	pointer-events: none;
-	background: radial-gradient(circle at var(--x) var(--y), transparent 10%, 
-	rgba(0,0,0,0.95) 20%);
+	background: radial-gradient(circle at var(--x) var(--y), transparent 10%, rgba(0, 0, 0, 0.95) 20%);
 }
 
 .dialogue {
@@ -126,8 +129,8 @@ a:link {
 
 .buttonChoice {
 	width: 70%;
-	border-radius: 20px;
-	padding: 10px;
+	border-radius: 15px;
+	padding: 12px;
 	display: block;
 	margin: 10px auto 10px auto;
 	background-color: var(--beige);
@@ -136,10 +139,13 @@ a:link {
 	border-style: none;
 	font-size: 12pt;
 	font-weight: bolder;
+	transition: all 0.25s ease;
 }
 
 button:enabled:hover {
 	cursor: pointer;
+	color: var(--beige);
+	background-color: var(--background);
 }
 
 button[disabled],

@@ -2,7 +2,7 @@ const textElement = document.getElementById('DialogueHospital');          // The
 const optionButtonsElement = document.getElementById('ButtonsHospital');  // The buttons/options available to the player
 const inventoryElement = document.getElementById('inventory');            // The player's inventory
 const imageElement = document.getElementById('ImageDisplay');             // The image to be displayed on-screen
-const profession = getProfession();                                       // This will store the profession
+const profession = sessionStorage.getItem("profession");                                       // This will store the profession
 let state = {};                                                           // This will store the game's current/active state
 var buttonActive;
 let random = [];
@@ -10,12 +10,15 @@ let random = [];
 
 
 
-const text = ["Log Entry 1:</br>Some strange men started appearing in the Hospital recently, with more of them coming and going more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However we'll have to see how it all plays out in the long run...</br></br> Dr. Nallig",
-    "Log Entry 11:</br>A bit of a long entry today. I think I've finally discovered the purpose of these strange men, as recently the tests we've been performing have required human subjects and they've all been failures so far, but these men have somehow managed to keep providing us with what they call \"willing test subjects\". However, although I do doubt that the test subjects were willing to do this, I think it would be best for me to keep my head down and keep running tests as I wouldn't dare question them on where they get the test subjects, as I fear what would happen to me should I do so...</br></br> Dr. Nallig",
-    "Log Entry 27:</br>Unfortuantely, all of our tests keep resulting in failure and we were going to give up. However recently, some of the test subjects have started to experience some extreme side-affects, such as violent tendencies, screaming and scratching themselves as if they're trying to get rid of an itch on their body. I still don't know the cause of this as of yet, but part of me believes it has something to do with the serum that we were asked to test, as after searching through some of the strange men's documents, it seems that they are using the blood of some fossilised creature. I feel like now might be the time to step up and ask some questions, before any more life is wasted at the hands of us and these men...</br></br> Dr. Nallig ",
-    "Log Entry ???:</br>Today I woke up in a strange room that I think might be one of the testing rooms, as there are windows looking out behind the Hospital. However, I fear this might be the last Log Entry I do when my mind is my own, as since I woke up I've been experiencing a strong itching sensation, which probably means that I was injected with the serum and might not have much time left. I knew that asking questions was a bad thing but at least I was able to see the end-result of the test that they were keeping secret even from us. It would seem that the blood samples they were using contained some kind of parasite and/or bacteria that pretty much leads to a partial breakdown of the body making the subjects look like zombie figures. The itching is really bad now like it's under the skin, to whoever reads this, the world is in danger, there's someone that you need to speak to, he created the serum and might know of an antidote his name is.................."
+const text = ["Log Entry 1:</br>Some strange men started appearing in the Hospital recently, with more of them coming and going more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However we'll have to see how it all plays out in the long run...<br><br> Dr. Nallig",
+    "Log Entry 11:<br>A bit of a long entry today. I think I've finally discovered the purpose of these strange men, as recently the tests we've been performing have required human subjects and they've all been failures so far, but these men have somehow managed to keep providing us with what they call \"willing test subjects\". However, although I do doubt that the test subjects were willing to do this, I think it would be best for me to keep my head down and keep running tests as I wouldn't dare question them on where they get the test subjects, as I fear what would happen to me should I do so...<br><br> Dr. Nallig",
+    "Log Entry 27:<br>Unfortuantely, all of our tests keep resulting in failure and we were going to give up. However recently, some of the test subjects have started to experience some extreme side-affects, such as violent tendencies, screaming and scratching themselves as if they're trying to get rid of an itch on their body. I still don't know the cause of this as of yet, but part of me believes it has something to do with the serum that we were asked to test, as after searching through some of the strange men's documents, it seems that they are using the blood of some fossilised creature. I feel like now might be the time to step up and ask some questions, before any more life is wasted at the hands of us and these men...<br><br> Dr. Nallig ",
+    "Log Entry ???:<br>Today I woke up in a strange room that I think might be one of the testing rooms, as there are windows looking out behind the Hospital. However, I fear this might be the last Log Entry I do when my mind is my own, as since I woke up I've been experiencing a strong itching sensation, which probably means that I was injected with the serum and might not have much time left. I knew that asking questions was a bad thing but at least I was able to see the end-result of the test that they were keeping secret even from us. It would seem that the blood samples they were using contained some kind of parasite and/or bacteria that pretty much leads to a partial breakdown of the body making the subjects look like zombie figures. The itching is really bad now like it's under the skin, to whoever reads this, the world is in danger, there's someone that you need to speak to, he created the serum and might know of an antidote his name is.................."
 ];
 var position = 0;
+
+
+
 
 function NextText(){
     position += 1
@@ -32,7 +35,6 @@ function PreviousText(){
     }
     document.getElementById("handwritten").innerHTML = text[position];
 }
-
 
 
 
@@ -64,9 +66,10 @@ function startGame() {
     }
 	
 	// The seccond ID should point to dieing due to being too hot
-    setTemperatureData(showTextNode, 103, 103)
+    setTemperatureData(showTextNode, 103, 103);
     
-    showTextNode(1)  // Will display the first text node (id=1)
+    // Will display the first text node (id=1)
+    showTextNode(1);
 }
 
 
@@ -157,6 +160,7 @@ const textNodes = [
             },
             {
                 text: 'Check out the First Aid kits scattered across the ground',
+                requiredState: (currentState) => currentState.Doctor === true || currentState.WarVeteran === true,
                 setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
                 nextText: 8
             },
@@ -201,6 +205,7 @@ const textNodes = [
             },
             {
                 text: 'Check out the First Aid kits scattered across the ground',
+                requiredState: (currentState) => currentState.Doctor === true || currentState.WarVeteran === true,
                 nextText: 8
             },
             {
@@ -560,7 +565,7 @@ const textNodes = [
         options: [
             {
                 text: 'Yes! Make my Final Stand and don\'t look back',
-                setState: {defence1: false, defence2: false, defence3: false},
+                setState: {defence1: false, defence2: false},
                 nextText: 29
             },
             {
@@ -706,10 +711,10 @@ const textNodes = [
         id: 25,
         text: "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
             " <button onClick=\"NextText();\" class=\"changeText\"> Next Entry </button> <button onClick=\"PreviousText();\" class=\"changeText\"> Previous Entry </button></br>" +
-            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 1:</br>Some strange men started appearing in the Hospital recently, with more of them coming and going" +
+            "<span class=\"handwritten\" id=\"handwritten\">Log Entry 1:<br>Some strange men started appearing in the Hospital recently, with more of them coming and going" +
             " more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task" +
             " given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However" +
-            " we'll have to see how it all plays out in the long run...</br></br> Dr. Nallig</span>",
+            " we'll have to see how it all plays out in the long run...<br><br> Dr. Nallig</span>",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         options: [
@@ -735,26 +740,53 @@ const textNodes = [
                 nextText: 30
             },
             {
-                text: 'Use the Fire Wood from the Campfire to make your own campfire here',
-                requiredState: (currentState) => currentState.FireWood === true && currentState.matches === true && currentState.Fuel === true,
-                nextText: 31
-            },
-            {
                 text: 'Set a fire trap at the entrance to the abandoned room',
                 requiredState: (currentState) => currentState.Fuel === true && currentState.matches === true,
-                nextText: 33
+                nextText: 32
             },
             {
                 text: 'Start the Night',
                 requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false && 
-                                                 currentState.defence3 === false && currentState.BoneSaw === false,
+                                                 currentState.BoneSaw === false && currentState.FirstAid === false,
                 nextText: 101
             },
             {
                 text: 'Start the Night',
                 requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false && 
-                                                 currentState.defence3 === false && currentState.BoneSaw === true,
+                                                 currentState.BoneSaw === true && currentState.FirstAid === false,
                 nextText: 102
+            },
+            {
+                text: 'Start the Night',
+                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false &&
+                                                 currentState.FirstAid === true && currentState.BoneSaw === false,
+                nextText: 105
+            },
+            {
+                text: 'Start the Night',
+                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false &&
+                                                 currentState.FirstAid === true && currentState.BoneSaw === true,
+                nextText: 106
+            },
+            {
+                text: 'Start the Night',
+                requiredState: (currentState) => currentState.defence1 === true && currentState.defence2 === true,
+                nextText: 107
+            },
+            {
+                text: 'Start the Night',
+                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === true,
+                nextText: 108
+            },
+            {
+                text: 'Start the Night',
+                requiredState: (currentState) => currentState.defence1 === true && currentState.defence2 === false,
+                nextText: 109
+            },
+            {
+                text: 'Start the Night',
+                requiredState: (currentState) => currentState.defence1 === true && currentState.defence2 === true,
+                nextText: 110
             }
         ]
     },
@@ -779,47 +811,9 @@ const textNodes = [
 
 
 
-    // You decide to make a makeshift fire in the room for warmth
-    {
-        id: 31,
-        text: "You decide to organise the wood on a metal sheet on the floor of the abandoned room to make a makeshift campfire. However, you're hesitant to light the fire because" +
-            " you wonder if the fuel and matches could be used for something else. Do you light the fire?",
-        inventory: '',
-        image: 'assets/images/Hospital/Abandoned_Room.jpg',
-        options: [
-            {
-                text: "Take the wood and go back to preparing for the Night",
-                nextText: 29
-            },
-            {
-                text: "Light the Fire",
-                nextText: 32
-            }
-        ]
-    },
-
-
-
-    // You decided to light the fire in the abandoned room
-    {
-        id: 32,
-        text: "Using the fuel, you pour all of it onto the wood and then light one of the matches to start the fire",
-        inventory: '',
-        image: 'assets/images/Hospital/Abandoned_Room.jpg',
-        options: [
-            {
-                text: "Go back to preparing for the night",
-                setState: {FireWood: false, Fuel: false, matches: false, defence2: true},
-                nextText: 29
-            }
-        ]
-    },
-
-
-
     // You decided to create a fire trap at the abandoned room entrance
     {
-        id: 33,
+        id: 32,
         text: "Using the fuel, you pour it all over the entrance to the room, in the hopes that when night starts you can light a match and throw it onto the fuel" +
             " to start a fire in order to keep the zombies at bay",
         inventory: '',
@@ -827,7 +821,7 @@ const textNodes = [
         options: [
             {
                 text: "Go back to preparing for the night",
-                setState: {Fuel: false, matches: false, defence3: true},
+                setState: {Fuel: false, matches: false, defence2: true},
                 nextText: 29
             }
         ]
@@ -898,7 +892,9 @@ const textNodes = [
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
-    }
+    },
+
+
 
 ];
 
