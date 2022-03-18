@@ -74,6 +74,8 @@ function startGame() {
         default: state = {}; break;
     }
 
+    state = {Doctor: true};
+    // Displays the inventory
     showInventory();
     // clears the inventory before the game starts
     clearInventory();
@@ -95,7 +97,7 @@ function startGame() {
 function showTextNode(textNodeIndex){
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.                                    
     typeSentence(textNode.text, "DialogueHospital"); // Changes the dialogue box to the text stored in the TextNode.
-    inventoryElement.innerHTML = textNode.inventory;
+    updateInventory(textNode.inventory);
     imageElement.src = textNode.image;
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
@@ -120,7 +122,7 @@ function showTextNode(textNodeIndex){
  * @param option - the option (button) to be displayed on-screen
  */ 
 function showOption(option) {
-    return option.requiredState == null || option.requiredState(state);
+    return (option.requiredState == null || option.requiredState(state)) && meetsInventoryRequirements(option.requiredInventory);
 }
 
 
@@ -136,8 +138,9 @@ function selectOption(option) {
         return startGame();
     }
     state = Object.assign(state, option.setState);
+    inventory = Object.assign(inventory, option.setInventory);
     showTextNode(nextTextNodeId);
-
+    updateInventory(option.setInventory);
 }
 
 
@@ -160,23 +163,23 @@ const textNodes = [
         options: [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
-                setState: {collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
+                setState: {collectMushrooms: true},
                 nextText: 5,
             },
             {
                 text: 'Check out the First Aid kits scattered across the ground',
                 requiredState: (currentState) => currentState.Doctor === true || currentState.WarVeteran === true,
-                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
+                setState: {collectMushrooms: true},
                 nextText: 8
             },
             {
                 text: 'Check out the abandoned campfire',
-                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
+                setState: {collectMushrooms: true},
                 nextText: 10
             },
             {
                 text: "Follow the pathway",
-                setState: {crowbar: false, collectMushrooms: true, FirstAid: false, FireWood: false, matches: false, Fuel: false, BoneSaw: false},
+                setState: {collectMushrooms: true},
                 nextText: 4
             }
         ]
@@ -194,7 +197,7 @@ const textNodes = [
         options: [
             {
                 text: 'Go inside the Hospital',
-                requiredState: (currentState) => currentState.crowbar === true,
+                requiredInventory: {Crowbar: true},
                 nextText: 3
             },
             {
@@ -204,7 +207,7 @@ const textNodes = [
             },
             {
                 text: 'Talk to stranger camping in front of the Hospital',
-                requiredState: (currentState) => currentState.crowbar === false,
+                requiredInventory: {Crowbar: false},
                 nextText: 5
             },
             {
@@ -293,12 +296,11 @@ const textNodes = [
         options: [
             {
                 text: 'Return to the front of the Hospital',
-                setState: {crowbar: false},
                 nextText: 2
             },
             {
                 text: 'Trade the mushrooms for the crowbar',
-                requiredState: (currentState) => currentState.collectMushrooms === false,
+                requiredInventory: {Mushrooms: true},
                 nextText: 7
             },
             {
@@ -307,7 +309,8 @@ const textNodes = [
             },
             {
                 text: "Eat the Mushrooms instead",
-                requiredState: (currentState) => currentState.hasMushrooms === true && currentState.Hunter === true,
+                requiredInventory: {Mushrooms: true},
+                requiredState: (currentState) => currentState.Hunter === true,
                 nextText: 104
             }
         ]
@@ -325,7 +328,8 @@ const textNodes = [
         options: [
             {
                 text: 'Return to the front of the Hospital',
-                setState: {collectMushrooms: false, hasMushrooms: true},
+                setState: {collectMushrooms: false},
+                setInventory: {Mushrooms: true},
                 nextText: 2
             }
         ]
@@ -342,7 +346,7 @@ const textNodes = [
         options: [
             {
                 text: "Return to the front of the Hospital",
-                setState: {crowbar: true},
+                setInventory: {Crowbar: true, Mushrooms: false},
                 nextText: 2
             }
         ]
@@ -361,18 +365,17 @@ const textNodes = [
         options: [
             {
                 text: 'You have already salvaged the First Aid kits, you have no more business here',
-                requiredState: (currentState) => currentState.FirstAid === true,
+                requiredInventory: {'First Aid Kits': true},
                 nextText: 2
             },
             {
                 text: 'Don\'t salvage the First Aid kits and instead return to the front of the Hospital',
-                requiredState: (currentState) => currentState.FirstAid === false,
+                requiredInventory: {'First Aid Kits': false},
                 nextText: 2
             },
             {
                 text: 'Salvage the First Aid kits',
-                requiredState: (currentState) => currentState.FirstAid === false,
-                setState: {FirstAid: true},
+                requiredInventory: {'First Aid Kits': false},
                 nextText: 9
             },
             {
@@ -396,6 +399,7 @@ const textNodes = [
         options: [
             {
                 text: 'Return to the front of the Hospital',
+                setInventory: {'First Aid Kits': true},
                 nextText: 2
             }
         ]
@@ -413,18 +417,17 @@ const textNodes = [
         options: [
             {
                 text: 'You already collected all the wood from the campfire, there\'s no need for you to be here. Return to the front of the Hospital',
-                requiredState: (currentState) => currentState.FireWood === true,
+                requiredInventory: {'Fire Wood': true},
                 nextText: 2
             },
             {
                 text: 'Leave the campfire alone for now, as you feel like you might be able to make use of it later',
-                requiredState: (currentState) => currentState.FireWood === false,
+                requiredInventory: {'Fire Wood': false},
                 nextText: 2
             },
             {
                 text: 'Take the Fire Wood from the campfire to use later',
-                requiredState: (currentState) => currentState.FireWood === false,
-                setState: {FireWood:true},
+                requiredInventory: {'Fire Wood': false},
                 nextText: 11
             },
             {
@@ -434,8 +437,8 @@ const textNodes = [
             },
             {
                 text: "Light the smoldering campfire for warmth",
-                requiredState: (currentState) => currentState.Fuel === true && currentState.matches === true,
-                setState: {Fuel: false, matches: false},
+                requiredInventory: {Matches: true, Fuel: true},
+                setInventory: {Matches: false, Fuel: false},
                 nextText: 22    
             },
             {
@@ -458,6 +461,7 @@ const textNodes = [
         options: [
             {
                 text: 'Return to the front of the Hospital',
+                setInventory: {'Fire Wood': true},
                 nextText: 2
             }
         ]
@@ -475,17 +479,17 @@ const textNodes = [
         options: [
             {
                 text: 'Take the Bone Saw',
-                requiredState: (currentState) => currentState.BoneSaw === false,
+                requiredInventory: {'Bone Saw': false},
                 nextText: 13
             },
             {
                 text: 'Don\'t take the Bone Saw and return to main lobby of the Hospital',
-                requiredState: (currentState) => currentState.BoneSaw === false,
+                requiredInventory: {'Bone Saw': false},
                 nextText: 3
             },
             {
                 text: "You already took the Bone Saw as a weaopn, you have no business here. Return to the Hospital Lobby",
-                requiredState: (currentState) => currentState.BoneSaw === true,
+                requiredInventory: {'Bone Saw': true},
                 nextText: 3
             }
         ]
@@ -503,7 +507,7 @@ const textNodes = [
         options: [
             {
                 text: 'Head back to the main lobby of the Hospital',
-                setState: {BoneSaw: true},
+                setInventory: {'Bone Saw': true},
                 nextText: 3
             }
         ]
@@ -521,17 +525,17 @@ const textNodes = [
         options: [
             {
                 text: 'Take the Fuel',
-                requiredState: (currentState) => currentState.Fuel === false,
+                requiredInventory: {Fuel: false},
                 nextText: 17
             },
             {
                 text: 'Don\'t take the Fuel and return to the Hospital Lobby',
-                requiredState: (currentState) => currentState.Fuel === false,
+                requiredInventory: {Fuel: false},
                 nextText: 3
             },
             {
                 text: "You've already taken the fuel, you have no business here. Return to the Hospital Lobby",
-                requiredState: (currentState) => currentState.Fuel === true,
+                requiredInventory: {Fuel: true},
                 nextText: 3
             }
         ]
@@ -549,7 +553,7 @@ const textNodes = [
         options: [
             {
                 text: 'Head back to the main lobby of the Hospital',
-                setState: {Fuel: true},
+                setInventory: {Fuel: true},
                 nextText: 3
             }
         ]
@@ -598,7 +602,7 @@ const textNodes = [
             },
             {
                 text: "Take the matches",
-                requiredState: (currentState) => currentState.matches === false,
+                requiredInventory: {Matches: false},
                 nextText: 21
             }
         ]
@@ -637,7 +641,7 @@ const textNodes = [
         options: [
             {
                 text: "Return to looking at the crates",
-                setState: {matches: true},
+                setInventory: {Matches: true},
                 nextText: 19
             }
         ]
@@ -737,36 +741,36 @@ const textNodes = [
         options: [
             {
                 text: 'Barricade the windows with the wood from the Campfire',
-                requiredState: (currentState) => currentState.FireWood === true,
+                requiredInventory: {'Fire Wood': true},
                 nextText: 30
             },
             {
                 text: 'Set a fire trap at the entrance to the abandoned room',
-                requiredState: (currentState) => currentState.Fuel === true && currentState.matches === true,
+                requiredInventory: {Fuel: true, Matches: true},
                 nextText: 32
             },
             {
                 text: 'Start the Night',
-                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false && 
-                                                 currentState.BoneSaw === false && currentState.FirstAid === false,
+                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false, 
+                requiredInventory: {'First Aid Kits': false, 'Bone Saw': false},
                 nextText: 101
             },
             {
                 text: 'Start the Night',
-                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false && 
-                                                 currentState.BoneSaw === true && currentState.FirstAid === false,
+                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false,
+                requiredInventory: {'First Aid Kits': false, 'Bone Saw': true},
                 nextText: 102
             },
             {
                 text: 'Start the Night',
-                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false &&
-                                                 currentState.FirstAid === true && currentState.BoneSaw === false,
+                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false,
+                requiredInventory: {'First Aid Kits': true, 'Bone Saw': false},
                 nextText: 105
             },
             {
                 text: 'Start the Night',
-                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false &&
-                                                 currentState.FirstAid === true && currentState.BoneSaw === true,
+                requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false,
+                requiredInventory: {'First Aid Kits': true, 'Bone Saw': true},
                 nextText: 106
             },
             {
@@ -804,7 +808,8 @@ const textNodes = [
         options: [
             {
                 text: "Go back to preparing for the Night",
-                setState: {FireWood: false, defence1: true},
+                setState: {defence1: true},
+                setInventory: {'Fire Wood': false},
                 nextText: 29
             }
         ]
@@ -822,7 +827,8 @@ const textNodes = [
         options: [
             {
                 text: "Go back to preparing for the night",
-                setState: {Fuel: false, matches: false, defence2: true},
+                setState: {defence2: true},
+                setInventory: {Fuel: false},
                 nextText: 29
             }
         ]
