@@ -73,7 +73,7 @@ function startGame() {
         case "Priest": state = {Priest: true}; break;
         default: state = {}; break;
     }
-	
+
 	// The seccond ID should point to dieing due to being too hot
     setTemperatureData(showTextNode, 103, 103);
     
