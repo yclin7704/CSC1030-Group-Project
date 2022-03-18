@@ -60,7 +60,8 @@ function showTextNode(textNodeIndex){
             button.addEventListener('click', () => showInventory());
             optionButtonsElement.appendChild(button); 
         }
-    })
+    }
+    )
 }
 
 // This function shows the current option selected
@@ -278,6 +279,11 @@ const textNodes = [
                 nextText: 9
             },
             {
+                text: 'Kick the door off',
+                requiredState: (currentState) => currentState.WarVeteran,
+                nextText: 9
+            },
+            {
                 text: 'back',
                 nextText: 2
             }
@@ -474,8 +480,7 @@ const textNodes = [
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: [
             {
-                text: "Play Again?",
-                nextText: -1
+                
             }
         ]
     },
@@ -520,6 +525,18 @@ const textNodes = [
             {
                 text: 'Set up your camp',
                 requiredState: (currentState) => currentState.blanket && currentState.firewood && currentState.matches && !currentState.camp,
+                setState: {camp: true},
+                nextText: 17
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => !currentState.blanket && currentState.firewood && currentState.matches && !currentState.camp,
+                setState: {camp: true},
+                nextText: 17
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => currentState.firewood && currentState.sticks && currentState.Hunter && !currentState.camp,
                 setState: {camp: true},
                 nextText: 17
             },
