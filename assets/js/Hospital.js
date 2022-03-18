@@ -4,7 +4,6 @@ const inventoryElement = document.getElementById('inventory');            // The
 const imageElement = document.getElementById('ImageDisplay');             // The image to be displayed on-screen
 const profession = sessionStorage.getItem("profession");                  // This will store the profession
 let state = {};                                                           // This will store the game's current/active state
-let inventory = {};                                                       // This will store the player's inventory
 
 
 
