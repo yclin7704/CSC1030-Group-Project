@@ -32,6 +32,7 @@ function startGame() {
 // This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.
 
 function showTextNode(textNodeIndex) {
+
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "dialogue", 15); // Changes the dialogue box to text stored in the text node.
     inventoryElement.innerHTML = textNode.inventory;
@@ -41,6 +42,7 @@ function showTextNode(textNodeIndex) {
     }
 
     textNode.options.forEach(option => {
+
         if (showOption(option)) {
             const button = document.createElement('button'); // Creates a button.
             button.innerText = option.text; // Button text is changed to the option text.
@@ -86,11 +88,12 @@ const textNodes = [
         text: 'You find what appears to be an empty gas station. There are no signs of zombies being here, and the area seems to already be fenced off.'
             + 'Maybe it was closed before the outbreak developed... It could be the perfect place to spend the night.',
         inventory: '',
-        image: '/assets/images/GasStation.jpg',
+        image: '/assets/images/gasStation.jpg',
         options: [
             {
                 text: 'Go inside to look for food and supplies',
-                setInventory: {Gasoline: false},
+                setInventory: { Gasoline: false },
+                setState: { LightsOn: true },
                 nextText: 2
             },
             {
@@ -152,7 +155,8 @@ const textNodes = [
             },
             {
                 text: 'Go back outside to search for supplies',
-                requiredState: (currentState) => currentState.Gasoline === false,
+                setState: { LightsOn: false },
+                requiredInventory: (currentInventory) => currentInventory.Gasoline === false,
                 nextText: 3
             }
         ]
@@ -233,12 +237,14 @@ const textNodes = [
             {
                 text: 'Take the old lighter and search the back of the stock room',
                 nextText: 10,
-                setState: { Lighter: true }
+                setState: { Lighter: true },
+                setState: {LighterMissing: false}
             },
             {
                 text: 'Leave the old lighter and search the back of the stock room',
                 nextText: 10,
-                setState: { Lighter: false }
+                setState: { Lighter: false },
+                setState: {LighterMissing: true},
             }
         ]
     },
@@ -270,14 +276,131 @@ const textNodes = [
         ]
     },
     {
-        id: 11,
-        text: 'The man goes outside to fix his car. It is almost night time and you need to find somewhere to sleep. ' +
+        id: 29,
+        text: 'It is almost night time and you need to find somewhere to sleep. ' +
             'Barricade the doors or windows to prevent zombies from attacking you.',
         inventory: '',
         image: '',
         options: [
             {
-                text: ''
+                text: 'Break up the shelves for wood',
+                nextText: 30,
+                setInventory: { Wood: true }
+            },
+            {
+                text: 'Barricade the windows using wood from the shelves',
+                nextText: 31,
+                setState: { Windows: true },
+                requiredInventory: (currentInventory) => currentInventory.Wood
+            },
+            {
+                text: 'Barricade the doors using wood from the shelves',
+                nextText: 32,
+                setState: { Doors: true },
+                requiredInventory: (currentInventory) => currentInventory.Wood
+            },
+            {
+                text: 'Prepare a fire using wood from the shelves and the gasoline',
+                nextText: 33,
+                setState: { Fire: true },
+                requiredInventory: (currentInventory) => currentInventory.Gasoline,
+                requiredInventory: (currentInventory) => currentInventory.Wood
+            },
+            {
+                text: 'Light the fire using the lighter',
+                nextText: 34,
+                setState: { FireLit: true },
+                requiredInventory: (currentInventory) => currentInventory.Lighter
+            },
+            {
+                text: 'Finish preparation',
+                nextText: 35,
+                setState: { Finished: true },
+            }
+        ]
+    },
+    {
+            id: 30,
+            text: 'You pull the shelves apart into planks of wood. Maybe this can be used to barricade the area or to build a fire.',
+            inventory: '',
+            image: '',
+            options: [
+            {
+                text: 'Continue preparation',
+                nextText: 29
+            },
+            {
+                text: 'Finish preparation',
+                nextText: 35,
+                setState: { Finished: true }
+            }
+        ]
+    },
+    {
+        id: 31,
+        text: 'You use the planks from the shelves to barricade the windows to prevent zombies from entering during the night.',
+        inventory: '',
+        image: '',
+        options: [
+        {
+            text: 'Continue preparation',
+            nextText: 29
+        },
+        {
+            text: 'Finish preparation',
+            nextText: 35,
+            setState: { Finished: true }
+        }
+    ]
+    },
+    {
+        id: 32,
+        text: 'You use the planks from the shelves to barricade the doors to prevent zombies from entering during the night.',
+        inventory: '',
+        image: '',
+        options: [
+        {
+            text: 'Continue preparation',
+            nextText: 29
+        },
+        {
+            text: 'Finish preparation',
+            nextText: 35,
+            setState: {Finished:true}
+        }
+    ]
+    },
+    {
+        id: 33,
+        text: 'You set up for a fire using the planks from the shelves and pour gasoline over them. You need something to start the fire with.',
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text:'Use the lighter',
+                requiredInventory: (currentInventory) => currentInventory.Lighter,
+                nextText: 34
+            },
+            {
+                text: 'Look for a lighter',
+                requiredState: (currentState) => currentState.LighterMissing,
+                nextText: 9
+            }
+        ]
+    },
+    {
+        id: 34,
+        text: 'You manage to get the fire going, and the temperature starts to rise again.',
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: 'Continue preparation',
+                nextText: 29
+            },
+            {
+                text: 'Finish preparation',
+                nextText: 35
             }
         ]
     },

@@ -8,13 +8,13 @@
 
 		<link rel="stylesheet" href="./assets/css/main.css" />
 		<script src="./assets/js/Typewriter.js"></script> <!-- Typewriter effect for text -->
-		<script defer src="./assets/js/GasStation.js"></script> <!-- Main JS file for GasStation-->
+		<script defer src="./assets/js/gasStation.js"></script> <!-- Main JS file for GasStation-->
 		<script src="./assets/js/Timer.js"></script> <!-- Timer -->
 		<script src="./assets/js/Temperature.js"></script> <!-- Temperature function -->
-		<script src="./assets/js/moveTorch.js"></script>
+		<script src="./assets/js/torch.js"></script>
 	</head>
 	<body onload="showInventory();">
-		<div class="wrapper">
+		<div class="wrapper" onmousemove="torch();">
 			<div class="row">
 				<!-- Column 1: Map and inventory -->
 				<div class="col col1">
@@ -34,7 +34,7 @@
 
 				<!-- Column 2: Image -->
 				<div class="col col2">
-					<div id="imageSection" class="col col2" onmousemove="moveTorch()">
+					<div id="imageSection" class="col col2">
 						<div class="torch" id="torch"></div>
 					<img id="locationImage"/>
 					</div>
