@@ -852,9 +852,10 @@ const textNodes = [
     {
         id: 101,
         text: 'You decided not to make any preparations at all and waited patiently for the night to fall over the Hospital. However, due to your lack' +
-            ' of preparations the Zombies started climbing through the windows and piling through the door to the abandoned room. You immediately became' +
+            ' of preparations the zombies started climbing through the windows and piling through the door to the abandoned room. You immediately became' +
             ' overwhelmed and with no weapon to defend yourself, you had to accept your fate...' +
             '</br><b><em>You Died!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
+            '<b><em>You Died!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
@@ -863,12 +864,15 @@ const textNodes = [
 
 
     // You deicded to start the night while only having the Bone Saw as a weapon - ENDING 3
+    // You deicded to start the night while only having the Bone Saw as a weapon - ENDING 3 - GOOD
     {
         id: 102,
         text: 'You decided not to make any defence preparations at all and waited patiently for the night to consume the Hospital in darkness, confident in' +
             ' the fact that you\'ll be able to survive with just the Bone Saw as your weapon of choice. As night arrives, the Zombies start climbing through' +
             ' the windows and also start piling through the door. Howver you start slashing the zombies down one by one with the Bone saw until there are none left' +
             '</br><b><em>You Survived!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
+            ' the windows and also start piling through the door. Howver you start slashing the zombies down one by one with the Bone saw until there are none left...' +
+            '<b><em>You Survived!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
         image: 'assets/images/Victory2_TEST-GIF.gif',
         options: []
@@ -876,12 +880,12 @@ const textNodes = [
 
 
 
-    // You died to Frostbite - ENDING 4
+    // You died to Frostbite - ENDING 4 - BAD
     {
         id: 103,
         text: "As the harsh colds and strong winds of the tundra surround you, you can feel your body becoming weaker and weaker by the second, to the point that you can't" +
             " even feel anything, numbed by the cold. With no will left to move, you sit there slowly but surely succumbing to the frozen wasteland's wrath, and eventually..." +
-            "You die of Frostbite...</br><b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+            "You succumb of Frostbite...<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
@@ -889,17 +893,116 @@ const textNodes = [
 
 
 
-    // You died as a result of poisoning by eating the Mushrooms - ENDING 5
+    // You died as a result of poisoning by eating the Mushrooms - ENDING 5 - BAD
     {
         id: 104,
         text: "You decided to eat the Mushrooms instead of trading them for the crowbar, expecting them to be a good source of nutrition and food. However, it turns out" +
             " that the mushrooms are extremely poisonous and slightly hallucinogenic as you start to see hallucinations of what looks to be a tall shadowy figure with" +
             " glowing red eyes towering over the Hospital staring right at you, and as the figure reaches out to you, you collapse and die..." +
             "</br><b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+            " much and you knew that before long you'd become like them..." +
+            "<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
     },
+
+
+
+    // You decided to start the night having made no preparations but do have the Bone Saw and the First Aid Kits - ENDING 7 - GOOD
+    {
+        id: 106,
+        text: "You decided not to make any preparations or defences, but instead patiently waited for the night to fall over the Hospital, but you stand confident, believing" +
+            " that having the Bone Saw, as a weapon, and the First Aid kits, as supplies, will be able to keep you alive for the night. As the night carries on and the screams" +
+            " of both zombies and people pollute the silence, and you grow more and more tense. Then suddenly, without warning, zombies start to fill the abandoned room. However," +
+            " wielding the Bone Saw as a weapon you are able to make easy work of the zombies as they keep coming. After many hours of standing your ground you managed to defeat the" +
+            " zombies, but you did suffer some minor wounds on your body, fortunately though you were able to patch them up using the First Aid Kits you salvaged earlier..." +
+            "<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+        inventory: '',
+        image: 'assets/images/Victory2_TEST-GIF.gif',
+        options: []
+    },
+
+
+
+    // You decided to start the night having barricaded the windows and made a fire trap - ENDING 8 - GOOD
+    {
+        id: 107,
+        text: " Before the night started you made the smart decision to not only barricade most of the windows in the room, but you also decided to create a fire trap for the zombies" +
+            " using the fuel you acquired earlier, confident in your preparations you patiently wait for the fall of night. After some hours pass, you finally start to hear the zombies" +
+            " outside the Hospital. They start to scream as they climnb up to the windows but can't get through becuase you barricaded them up, but zombies start arriving en masse at" +
+            " the entrance to the room. This was what you were waiting for, with no hesitation you light a match and, with good aim, throw it at the fuel you poured over the entrance," +
+            " and almost instantly a fire roared to life, burning the zombies as they gave off piercing shrieks in pain. Thankfully, the wood beneath them burned and shattered, dropping" +
+            " the zombies to the floor below, and leaving the rest on the other side of a large gap. Many more hours passed, and some zombies did climb through the un-barricaded windows" +
+            " but you were able to knock them off with the crowbar, defending your position until the night was finally over..." +
+            "<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+        inventory: '',
+        image: 'assets/images/Victory2_TEST-GIF.gif',
+        options: []
+    },
+
+
+
+    // You decided to start the night having only laid the fire trap at the entrance to the room - ENDING 9 - GOOD
+    {
+        id: 108,
+        text: "Before the night started you decided that it would be wise to lay a fire trap for the zombies at the entrance of the abandoned room, in the hopes that it will be" +
+            " able to keep the zombies at bay for the whole night in order to survive. After many hours pass, and the night continues to cover the Hospital in darkness, in the" +
+            " distance you begin to hear the shrieks of the zombies as they approach the Hospital, and so you prepare to stand your ground. Numerous zombies started to pile" +
+            " through the door to the abandoned room, their screams piercing your ears, but this is what you wanted to happen. Without any hesitation you lit a match and threw" +
+            " it at the fuel you poured on the floor, and instantly a fire roared to life, quickly burning the zombies and also the wood below them, which gave way and collapsed" +
+            " causing the zombies to fall to the floor below them. Thankfully this also prevented any more zombies from getting to you via the door because of, the now massive, gap between" +
+            " it and you. Some of the zombies were able to climb up to the windows, but with you being able to give them your undivided attention" +
+            " you were able to kick and punch them down for the rest of the night..." +
+            "<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+        inventory: '',
+        image: 'assets/images/Victory2_TEST-GIF.gif',
+        options: []
+    },
+
+
+
+    // You decided to start the night having only barricaded most of the windows in the room - ENDING 10 - BAD
+    {
+        id: 109,
+        text: "Before the night started, the only preparations you made were the barricades that you put on most of the windows using the spare fire wood you collected earlier. However" +
+            " you were fearful for how the night would end because you didn't even have a good weapon to defend yourself. After some hours passed you could hear the zombies arriving" +
+            " at the Hospital, their screams being all too familiar to you. As the zombies started coming through the door you were able to kill most of them using the crowbar you" +
+            " acquired earlier but due to the rust it had sustained over the years it eventually snapped in half, and with zombies starting to come through the windows that you weren't" +
+            " able to board up, you quickly became overwhelmed and accepted your fate..." +
+            "<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+        options: []
+    },
+
+
+
+    // You decided to start the night having only barricaded most of the windows in the room, while also having the Bone Saw - ENDING 11 - GOOD
+    {
+        id: 110,
+        text: "Before the night started, the only preparations you made were the barricades that you put on most of the windows using the spare fire wood you collected earlier. However" +
+            " you were feeling slightly confident because you had the Bone Saw to use as a weapon to defend yourself. After some hours passed you could hear the zombies arriving" +
+            " at the Hospital, their screams being all too familiar to you. As the zombies started coming through the door you were able to kill most of them using the Bone Saw you" +
+            " acquired earlier, and thankfully it was able to hold up as well, and even though some zombies started coming through the windows that you weren't able to board up, you" +
+            " were able to make quick work of them thanks to the Bone Saw. Eventually, the zombies stopped coming after you and you were able to rest for the rest of the night..." +
+            "<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+        inventory: '',
+        image: 'assets/images/Victory2_TEST-GIF.gif',
+        options: []
+    },
+
+
+
+    // You died to due to heat stroke - ENDING 12 - BAD
+    {
+        id: 111,
+        text: "In your attempt to warm yourself up, you became too warm and without any adequate treatmnent to help you, you unfortunately succumbed to heat stroke..." +
+            "<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+        options: []
+    }
 
 
 
