@@ -80,8 +80,8 @@ function startGame() {
     // clears the inventory before the game starts
     clearInventory();
 
-	// The seccond ID should point to dieing due to being too hot
-    setTemperatureData(showTextNode, 103, 103);
+	// This will take the player to the appropriate Text Node if they die of frostbite or heat stroke
+    setTemperatureData(showTextNode, 103, 111);
     
     // Will display the first text node (id=1)
     showTextNode(1);
