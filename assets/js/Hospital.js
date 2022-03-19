@@ -788,11 +788,6 @@ const textNodes = [
                 requiredState: (currentState) => currentState.defence1 === true && currentState.defence2 === false,
                 nextText: 109
             },
-            {
-                text: 'Start the Night',
-                requiredState: (currentState) => currentState.defence1 === true && currentState.defence2 === true,
-                nextText: 110
-            }
         ]
     },
 
@@ -836,11 +831,11 @@ const textNodes = [
 
 
 
-    // You try to forcefully take the crowbar - ENDING 1
+    // You try to forcefully take the crowbar - ENDING 1 - BAD
     {
         id: 100,
-        text: 'You try to take the crowbar from the Stranger by force, but as you do so he pulls out a knife and stabs you to death' +
-            ' </br><b><em>You Died!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
+        text: 'You try to take the crowbar from the Stranger by force, but as you do so he pulls out a knife and stabs you to death...' +
+            ' <b><em>You Died!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
         options: []
@@ -848,13 +843,12 @@ const textNodes = [
 
 
 
-    // You decided to start the Night without making any preparations - ENDING 2
+    // You decided to start the Night without making any preparations - ENDING 2 - BAD
     {
         id: 101,
         text: 'You decided not to make any preparations at all and waited patiently for the night to fall over the Hospital. However, due to your lack' +
             ' of preparations the zombies started climbing through the windows and piling through the door to the abandoned room. You immediately became' +
             ' overwhelmed and with no weapon to defend yourself, you had to accept your fate...' +
-            '</br><b><em>You Died!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
             '<b><em>You Died!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
@@ -863,14 +857,11 @@ const textNodes = [
 
 
 
-    // You deicded to start the night while only having the Bone Saw as a weapon - ENDING 3
     // You deicded to start the night while only having the Bone Saw as a weapon - ENDING 3 - GOOD
     {
         id: 102,
         text: 'You decided not to make any defence preparations at all and waited patiently for the night to consume the Hospital in darkness, confident in' +
-            ' the fact that you\'ll be able to survive with just the Bone Saw as your weapon of choice. As night arrives, the Zombies start climbing through' +
-            ' the windows and also start piling through the door. Howver you start slashing the zombies down one by one with the Bone saw until there are none left' +
-            '</br><b><em>You Survived!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
+            ' the fact that you\'ll be able to survive with just the Bone Saw as your weapon of choice. As night arrives, the zombies start climbing through' +
             ' the windows and also start piling through the door. Howver you start slashing the zombies down one by one with the Bone saw until there are none left...' +
             '<b><em>You Survived!</em></b></br></br><a href="EndStatistics.html">See Statistics</a>',
         inventory: '',
@@ -899,7 +890,21 @@ const textNodes = [
         text: "You decided to eat the Mushrooms instead of trading them for the crowbar, expecting them to be a good source of nutrition and food. However, it turns out" +
             " that the mushrooms are extremely poisonous and slightly hallucinogenic as you start to see hallucinations of what looks to be a tall shadowy figure with" +
             " glowing red eyes towering over the Hospital staring right at you, and as the figure reaches out to you, you collapse and die..." +
-            "</br><b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+            "<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+        options: []
+    },
+
+
+
+    // You decided to start the night having made no preparations and only carrying First Aid Kits - ENDING 6 - BAD
+    {
+        id: 105,
+        text: "You decided not to make any defence preparations and waited patiently for the night to fall over the Hospital, hoping for some good luck to fall onto" +
+            " you yourself. As the night went on you could hear the shrieks of zombies outside, and eventually they made their way into the room in which you were taking" +
+            " refuge. You tried to hold your ground using the old crowbar you acquired earlier but due to all the rust it eventually snapped in half and with one zombie left," +
+            " it managed to bite you before you kicked it out of one of the windows. Remembering you had the First Aid Kits you tried to heal your wounds but the damage was too" +
             " much and you knew that before long you'd become like them..." +
             "<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
         inventory: '',
