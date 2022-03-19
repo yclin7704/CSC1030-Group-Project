@@ -786,8 +786,15 @@ const textNodes = [
             {
                 text: 'Start the Night',
                 requiredState: (currentState) => currentState.defence1 === true && currentState.defence2 === false,
+                requiredInventory: {'Bone Saw': false},
                 nextText: 109
             },
+            {
+                text: 'Start the Night',
+                requiredState: (currentState) => currentState.defence1 === true && currentState.defence2 === false,
+                requiredInventory: {'Bone Saw': true},
+                nextText: 110
+            }
         ]
     },
 
