@@ -33,6 +33,8 @@ function startGame(){
     else {
         state = {};
     }
+    setTimerData(showTextNode, 17, 33);
+    setTemperatureData(showTextNode, 34, 34);
     showInventory();
     clearInventory();
     showTextNode(1);
@@ -66,7 +68,7 @@ function showTextNode(textNodeIndex){
 // This function shows the current option selected
 
 function showOption(option) {
-    return option.requiredState == null || option.requiredState(state);
+    return option.requiredState == null || option.requiredState(state) && meetsInventoryRequirements(option.requiredInventory);
 }
 
 
@@ -224,7 +226,7 @@ const textNodes = [
             {
                 text: 'Turn on torch',
                 requiredState: (currentState) => currentState.torch,
-                nextText: 17
+                nextText: 35
             },
             {
                 text: 'Go back',
@@ -244,6 +246,7 @@ const textNodes = [
         options: [
             {
                 text: 'Back',
+                setInventory: {note1:true},
                 setState: {note1:true},
                 nextText: 2
             }
@@ -259,8 +262,8 @@ const textNodes = [
         options: [
             {
                 text: 'Open the door',
-                requiredState: (currentState) => currentState.key,
-                setState: {key:false, doorUnlocked:true},
+                requiredState: (currentState) => currentState.key && !currentState.doorUnlocked,
+                setState: {doorUnlocked:true, key:false},
                 setInventory: {key:false},
                 nextText: 9
             },
@@ -271,17 +274,20 @@ const textNodes = [
             },
             {
                 text: 'Pick lock the door',
-                requiredState: (currentState) => currentState.Mechanic,
+                requiredState: (currentState) => currentState.Mechanic  && !currentState.doorUnlocked,
+                setState: {doorUnlocked:true},
                 nextText: 9
             },
             {
                 text: 'Shoot the lock off',
-                requiredState: (currentState) => currentState.Hunter, //need to get gun from inventory
+                requiredState: (currentState) => currentState.Hunter && !currentState.doorUnlocked, //need to get gun from inventory
+                setState: {doorUnlocked:true},
                 nextText: 9
             },
             {
                 text: 'Kick the door off',
-                requiredState: (currentState) => currentState.WarVeteran,
+                requiredState: (currentState) => currentState.WarVeteran  && !currentState.doorUnlocked,
+                setState: {doorUnlocked:true},
                 nextText: 9
             },
             {
@@ -506,12 +512,15 @@ const textNodes = [
                 requiredState: (currentState) => currentState.note1,
                 requiredState: (currentState) => currentState.note2,
                 requiredState: (currentState) => currentState.note3,
+                requiredInventory: {note1:true, note2:true, note3:true},
+                setInventory: {note1:false, note2:false, note3:false},
                 nextText: 29
 
             },
             {
                 text: 'Set up barricade',
-                requiredState: (currentState) => currentState.planks && !currentState.barricade,
+                requiredState: (currentState) => !currentState.barricade,
+                requiredInventory: {planks:true},
                 setInventory: {planks: false},
                 setState: {barricade:true},
                 nextText: 17
@@ -523,21 +532,24 @@ const textNodes = [
             },
             {
                 text: 'Set up your camp',
-                requiredState: (currentState) => currentState.blanket && currentState.firewood && currentState.matches && !currentState.camp,
+                requiredState: (currentState) => !currentState.camp,
+                requiredInventory: {blanket:true, firewood:true, matches:true},
                 setInventory: {firewood:false, matches:false, blanket:false},
                 setState: {camp: true},
                 nextText: 17
             },
             {
                 text: 'Set up your camp',
-                requiredState: (currentState) => !currentState.blanket && currentState.firewood && currentState.matches && !currentState.camp,
+                requiredState: (currentState) => !currentState.camp,
+                requiredInventory: {firewood:true, matches:true, blanket:false},
                 setInventory: {firewood:false, matches:false},
                 setState: {camp: true},
                 nextText: 17
             },
             {
                 text: 'Set up your camp',
-                requiredState: (currentState) => currentState.firewood && currentState.sticks && currentState.Hunter && !currentState.camp, //gotta check on this for the inventory system...
+                requiredState: (currentState) => currentState.Hunter && !currentState.camp, //gotta check on this for the inventory system...
+                requiredInventory: {firewood:true, sticks:true},
                 setState: {camp: true},
                 nextText: 17
             },
@@ -548,7 +560,8 @@ const textNodes = [
             },
             {
                 text: 'Prepare your shotgun',
-                requiredState: (currentState) => currentState.shotgun && currentState.shotgunAmmo && !currentState.shotgunLoaded,
+                requiredState: (currentState) => !currentState.shotgunLoaded,
+                requiredInventory: {shotgun:true, shotgunAmmo:true},
                 setInventory: {shotgunLoaded: true, shotgunAmmo: false, shotgun:false},
                 setState: {shotgunLoaded: true},
                 nextText: 17
@@ -557,10 +570,6 @@ const textNodes = [
                 text: 'You have already prepared your shotgun',
                 requiredState: (currentState) => currentState.shotgunLoaded,
                 nextText: 17
-            },
-            {
-                text: 'Back',
-                nextText: 2
             },
             {
                 text: 'Start the night',
@@ -655,6 +664,7 @@ const textNodes = [
         options: [
             {
                 text: 'Back',
+                setInventory: {note2:true},
                 setState: {note2: true},
                 nextText: 10
             }
@@ -670,6 +680,7 @@ const textNodes = [
         options: [
             {
                 text: 'Back',
+                setInventory: {note3:true},
                 setState: {note3:true},
                 nextText: 10
             }
@@ -743,12 +754,12 @@ const textNodes = [
         options: [
             {
                 text: 'Shoot your gun',
-                requiredState: (currentState) => currentState.shotgunLoaded,
+                requiredInventory: {shotgunLoaded:true},
                 nextText: 30
             },
             {
                 text: 'Slash the zombies',
-                requiredState: (currentState) => currentState.kitchenKnife,
+                requiredInventory: {kitchenKnife:true},
                 nextText: 30
             },
             {
@@ -767,12 +778,12 @@ const textNodes = [
         options: [
             {
                 text: 'Shoot your gun',
-                requiredState: (currentState) => currentState.shotgunLoaded,
+                requiredInventory: {shotgunLoaded:true},
                 nextText: 31
             },
             {
                 text: 'Slash the zombies',
-                requiredState: (currentState) => currentState.kitchenKnife,
+                requiredInventory: {kitchenKnife:true},
                 nextText: 31
             },
             {
@@ -791,12 +802,12 @@ const textNodes = [
         options: [
             {
                 text: 'Shoot your gun',
-                requiredState: (currentState) => currentState.shotgunLoaded,
+                requiredInventory: {shotgunLoaded:true},
                 nextText: 32
             },
             {
                 text: 'Slash the zombies',
-                requiredState: (currentState) => currentState.kitchenKnife,
+                requiredInventory: {kitchenKnife:true},
                 nextText: 32
             },
             {
@@ -829,6 +840,7 @@ const textNodes = [
             {
                 text: 'Take the shotgun',
                 requiredState: (currentState) => !currentState.shotgun,
+                setInventory: {shotgun:true},
                 setState: {shotgun:true},
                 nextText: 29
             },
@@ -866,6 +878,40 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/Victory2_TEST-GIF.gif',
+    },
+    //Ending running out of time
+    {
+        id: 33,
+        text: "As day dawns over your failed defence from the zombie horde, you lie bleeding out on the ground, too exhausted to move. You won't make it to the next night. <br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+        note: '',
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+    },
+    //Ending dying because of the cold
+    {
+        Id: 34,
+        text: "You feel cold all throughout your body... You feel that you can just sleep on the ground... You are slowly passing out... You couldn't feel anything that you realised that you're dying from hypothermia. <br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+        note: '',
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+    },
+    //Go to the shelter
+    {
+        id: 35,
+        text: 'Would you like to go the shelter. There is no going back now.',
+        note: '',
+        inventory: '',
+        image: 'assets/images/BlackScreen.jpg',
+        options: [
+            {
+                text: 'Yes',
+                nextText: 17
+            },
+            {
+                text: 'No',
+                nextText: 6
+            }
+        ]
     }
 ]
 
