@@ -6,8 +6,7 @@ const imageElement = document.getElementById('locationImage'); // Image
 const soundElement = document.createElement('audio'); //Sound
 const profession = sessionStorage.getItem("profession");
 
-
-// This variable stores the current game state
+//Variables for collectables
 let secretCollectable = 0;
 let secret1 = true;
 let secret2 = true;
@@ -16,6 +15,8 @@ let secret4 = true;
 let secret5 = true;
 let secret6 = true;
 let secret7 = true;
+
+// This variable stores the current game state
 let state = {};
 
 
