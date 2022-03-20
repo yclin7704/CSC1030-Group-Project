@@ -8,14 +8,9 @@
 	<meta name="description" content="Last Stand Text Adventure" />
 
 	<link rel="stylesheet" href="./assets/css/main.css" />
-	<script src="./assets/js/Typewriter.js"></script> <!-- Typewriter effect for text -->
-	<script defer src="./assets/js/gasStation.js"></script> <!-- Main JS file for GasStation-->
-	<script src="./assets/js/Timer.js"></script> <!-- Timer -->
-	<script src="./assets/js/Temperature.js"></script> <!-- Temperature function -->
-	<script src="./assets/js/torch.js"></script>
 </head>
 
-<body onload="showInventory()" onmousemove="torch();">
+<body>
 	<div class="wrapper">
 		<div class="row">
 			<!-- Column 1: Map and inventory -->
@@ -26,11 +21,11 @@
 					<span id="temperatureSpan" class="temperatureSpan">40</span>°C<br />
 					<br />
 					Time:<br />
-					5:15pm
+					<span  id="timeSpan" class="timeSpan"></span>
 				</div>
 				<div class="inventory">
-					<p class="heading">Inventory</p>
-					<span id="inventory"></span>
+					<p class="inventoryHeading">Inventory</p>
+					<span class = "inventory" id="inventory"></span>
 				</div>
 			</div>
 
@@ -39,7 +34,7 @@
 				<div id="imageSection" class="col col2">
 					<div id="imageContainer">
 						<img id="locationImage">
-						<div class="torch"></div>
+						<div id="torchId"></div>
 					</div>
 
 					<!--
@@ -69,6 +64,12 @@
 				<span id="timer"></span>
 			</div>
 		</div>
+		<script src="./assets/js/Typewriter.js"></script> <!-- Typewriter effect for text -->
+		<script defer src="./assets/js/gasStation.js"></script> <!-- Main JS file for GasStation-->
+		<script src="./assets/js/inventory.js"></script>
+		<script src="./assets/js/Timer.js"></script> <!-- Timer -->
+		<script src="./assets/js/Temperature.js"></script> <!-- Temperature function -->
+		<script src="./assets/js/torch.js"></script>
 	</div>
 </body>
 
