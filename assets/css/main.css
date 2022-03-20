@@ -331,3 +331,6 @@ input[type="button"][disabled] {
 	background: radial-gradient(circle at var(--x) var(--y), transparent 2%, rgba(0, 0, 0, 0.95) 25%);
 }
 
+.collectable{
+	color: var(--background);
+}

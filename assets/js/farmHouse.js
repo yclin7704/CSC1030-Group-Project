@@ -8,7 +8,14 @@ const profession = sessionStorage.getItem("profession");
 
 
 // This variable stores the current game state
-
+let secretCollectable = 0;
+let secret1 = true;
+let secret2 = true;
+let secret3 = true;
+let secret4 = true;
+let secret5 = true;
+let secret6 = true;
+let secret7 = true;
 let state = {};
 
 
@@ -60,6 +67,7 @@ function showTextNode(textNodeIndex){
             button.classList.add('buttonChoice'); // Sets the button class for styling.
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
             optionButtonsElement.appendChild(button);
+            sessionStorage.setItem('collectable', secretCollectable);
         }
     }
     )
@@ -88,9 +96,18 @@ function changeText(){
    document.getElementById('handwritten').style.fontFamily = "Roboto Mono", 'monospace';
    document.getElementById('handwritten').style.fontSize = "1rem";
 }
+
 function revertText(){
     document.getElementById('handwritten').style.fontFamily = "Reenie Beanie", 'cursive';
     document.getElementById('handwritten').style.fontSize = "2rem";
+}
+
+function addCollectable(clicked){
+    if(clicked === true){
+    secretCollectable++;
+    console.log(secretCollectable);
+    textElement.innerHTML += '<br><br> You found a collectable';
+    }
 }
 
 
@@ -147,26 +164,26 @@ const textNodes = [
     //Look inside the wheel barrow
     {
         id: 3,
-        text: 'You look inside the wheel barrow',
+        text: 'You look inside the wheel barrow and found a lamp',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
         options: [
             {
-                text: 'Take torch',
-                requiredState: (currentState) => !currentState.torch,
-                setInventory: {torch: true},
-                setState: {torch:true},
+                text: 'Take lamp',
+                requiredState: (currentState) => !currentState.lamp,
+                setInventory: {lamp: true},
+                setState: {lamp:true},
                 nextText: 2
             },
             {
                 text: 'Leave the torch',
-                requiredState: (currentState) => !currentState.torch,
+                requiredState: (currentState) => !currentState.lamp,
                 nextText: 2
             },
             {
-                text: 'You have already picked up the torch',
-                requiredState: (currentState) => currentState.torch,
+                text: 'You have already picked up the lamp',
+                requiredState: (currentState) => currentState.lamp,
                 nextText: 2
             }
         ]
@@ -224,9 +241,16 @@ const textNodes = [
         image: 'assets/images/BlackScreen.jpg',
         options: [
             {
-                text: 'Turn on torch',
-                requiredState: (currentState) => currentState.torch,
-                nextText: 35
+                text: 'Turn on lamp',
+                requiredState: (currentState) => currentState.lamp && !currentState.lampOn,
+                setInventory: {lamp:false},
+                setState: {lampOn:true, lamp:false},
+                nextText: 17
+            },
+            {
+                text: 'Go in th shelter',
+                requiredState: (currentState) => currentState.lampOn,
+                nextText: 17
             },
             {
                 text: 'Go back',
@@ -416,7 +440,7 @@ const textNodes = [
     //Look at the painting
     {
         id: 13,
-        text: "You look at the painting, and you see there's a message on the frame and it says 'find the notes'. You wonder what could this possibly mean?",
+        text: 'You look at the painting, and you see there is a message on the frame and it says <a href="#" id="collect1" class="collectable" onClick="addCollectable(secret1); secret1=false">`find the notes`</a>. You wonder what could this possibly mean?',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-inside.jpg',
@@ -486,11 +510,14 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
+        options:[
+            
+        ]
     },
     //Turn on the torch in the basement. This is where you will stay for the night.
     {
         id: 17,
-        text: 'You turned your torch and see there are barrels... Lots of them, it seems like it was a wine cellar instead.',
+        text: 'You turned your lamp and see there are barrels... Lots of them, it seems like it was a wine cellar instead.',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-basement.jpg',
@@ -518,73 +545,12 @@ const textNodes = [
 
             },
             {
-                text: 'Set up barricade',
-                requiredState: (currentState) => !currentState.barricade,
-                requiredInventory: {planks:true},
-                setInventory: {planks: false},
-                setState: {barricade:true},
-                nextText: 17
+                text: 'Back',
+                nextText: 2
             },
             {
-                text: 'You have already set up a barricade',
-                requiredState: (currentState) => currentState.barricade,
-                nextText: 17
-            },
-            {
-                text: 'Set up your camp',
-                requiredState: (currentState) => !currentState.camp,
-                requiredInventory: {blanket:true, firewood:true, matches:true},
-                setInventory: {firewood:false, matches:false, blanket:false},
-                setState: {camp: true},
-                nextText: 17
-            },
-            {
-                text: 'Set up your camp',
-                requiredState: (currentState) => !currentState.camp,
-                requiredInventory: {firewood:true, matches:true, blanket:false},
-                setInventory: {firewood:false, matches:false},
-                setState: {camp: true},
-                nextText: 17
-            },
-            {
-                text: 'Set up your camp',
-                requiredState: (currentState) => currentState.Hunter && !currentState.camp, //gotta check on this for the inventory system...
-                requiredInventory: {firewood:true, sticks:true},
-                setState: {camp: true},
-                nextText: 17
-            },
-            {
-                text: 'You have already set up your camp',
-                requiredState: (currentState) => currentState.camp,
-                nextText: 17
-            },
-            {
-                text: 'Prepare your shotgun',
-                requiredState: (currentState) => !currentState.shotgunLoaded,
-                requiredInventory: {shotgun:true, shotgunAmmo:true},
-                setInventory: {shotgunLoaded: true, shotgunAmmo: false, shotgun:false},
-                setState: {shotgunLoaded: true},
-                nextText: 17
-            },
-            {
-                text: 'You have already prepared your shotgun',
-                requiredState: (currentState) => currentState.shotgunLoaded,
-                nextText: 17
-            },
-            {
-                text: 'Start the night',
-                requiredState: (currentState) => !currentState.barricade && !currentState.camp,
-                nextText: 30
-            },
-            {
-                text: 'Start the night',
-                requiredState: (currentState) => currentState.barricade && !currentState.camp,
-                nextText: 31
-            },
-            {
-                text: 'Start the night',
-                requiredState: (currentState) => currentState.barricade && currentState.camp,
-                nextText: 32
+               text: 'Prepare for the night',
+               nextText: 35
             }
         ]
     },
@@ -643,7 +609,7 @@ const textNodes = [
     //Bedroom - look at the floor
     {
         id: 20,
-        text: "You look at the floor, looks like there's nothing useful that will help you but they are lots of syringes with some green residue inside and you wonder what is was...",
+        text: 'You look at the floor, looks like there is nothing useful that will help you but they are <a href="#" id="collect2" class="collectable" onClick="addCollectable(secret2); secret2=false">`lots of syringes`</a> with some green residue inside and you wonder what is was...',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-bedroom.jpg',
@@ -898,18 +864,96 @@ const textNodes = [
     //Go to the shelter
     {
         id: 35,
-        text: 'Would you like to go the shelter. There is no going back now.',
+        text: 'Would you like to prepare for the night. There is no going back now.',
         note: '',
         inventory: '',
         image: 'assets/images/BlackScreen.jpg',
         options: [
             {
                 text: 'Yes',
-                nextText: 17
+                nextText: 36
             },
             {
                 text: 'No',
-                nextText: 6
+                nextText: 17
+            }
+        ]
+    },
+    {
+        id: 36,
+        text: 'You prepare for the cold night...',
+        note: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: 'Set up barricade',
+                requiredState: (currentState) => !currentState.barricade,
+                requiredInventory: {planks:true},
+                setInventory: {planks: false},
+                setState: {barricade:true},
+                nextText: 36
+            },
+            {
+                text: 'You have already set up a barricade',
+                requiredState: (currentState) => currentState.barricade,
+                nextText: 36
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => !currentState.camp,
+                requiredInventory: {blanket:true, firewood:true, matches:true},
+                setInventory: {firewood:false, matches:false, blanket:false},
+                setState: {camp: true},
+                nextText: 36
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => !currentState.camp,
+                requiredInventory: {firewood:true, matches:true, blanket:false},
+                setInventory: {firewood:false, matches:false},
+                setState: {camp: true},
+                nextText: 36
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => currentState.Hunter && !currentState.camp, //gotta check on this for the inventory system...
+                requiredInventory: {firewood:true, sticks:true},
+                setState: {camp: true},
+                nextText: 36
+            },
+            {
+                text: 'You have already set up your camp',
+                requiredState: (currentState) => currentState.camp,
+                nextText: 136
+            },
+            {
+                text: 'Prepare your shotgun',
+                requiredState: (currentState) => !currentState.shotgunLoaded,
+                requiredInventory: {shotgun:true, shotgunAmmo:true},
+                setInventory: {shotgunLoaded: true, shotgunAmmo: false, shotgun:false},
+                setState: {shotgunLoaded: true},
+                nextText: 36
+            },
+            {
+                text: 'You have already prepared your shotgun',
+                requiredState: (currentState) => currentState.shotgunLoaded,
+                nextText: 36
+            },
+            {
+                text: 'Start the night',
+                requiredState: (currentState) => !currentState.barricade && !currentState.camp,
+                nextText: 30
+            },
+            {
+                text: 'Start the night',
+                requiredState: (currentState) => currentState.barricade && !currentState.camp,
+                nextText: 31
+            },
+            {
+                text: 'Start the night',
+                requiredState: (currentState) => currentState.barricade && currentState.camp,
+                nextText: 32
             }
         ]
     }

@@ -7,8 +7,20 @@ async function main() {
 	get("temperatureStatSpan").innerHTML = getTemp();
 	get("timeStatSpan").innerHTML = getTime();
 	get("professionStatSpan").innerHTML = sessionStorage.getItem("profession");
-
+	get("secrets").innerHTML = listingCollectable();
 	resetValues();
+}
+
+function listingCollectable() {
+	var collectable = ['C','S','C','1','0','3','0'];
+	var numberOfCollectable = sessionStorage.getItem("collectable");
+	var stringOfCollectable = "";
+	for(var i = 0; i < numberOfCollectable; i++){
+		stringOfCollectable += collectable[i];
+	}
+	console.log(numberOfCollectable);
+	console.log(stringOfCollectable);
+	return stringOfCollectable;
 }
 
 async function resetValues() {
