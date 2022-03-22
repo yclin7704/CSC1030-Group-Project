@@ -217,19 +217,19 @@ const textNodes = [
         options: [
             {
                 text: 'Take key',
-                requiredState: (currentState) => !currentState.key,
+                requiredState: (currentState) => !currentState.key && !currentState.doorUnlocked,
                 setState: {key:true},
                 setInventory: {key:true},
                 nextText: 2
             },
             {
                 text: 'Ignore the key',
-                requiredState: (currentState) => !currentState.key,
+                requiredState: (currentState) => !currentState.key && !currentState.doorUnlocked,
                 nextText: 2
             },
             {
                 text: 'U have already picked up the key',
-                requiredState: (currentState) => currentState.key,
+                requiredState: (currentState) => currentState.key || currentState.doorUnlocked,
                 nextText: 2
             }
         ]
@@ -722,11 +722,13 @@ const textNodes = [
             {
                 text: 'Shoot your gun',
                 requiredInventory: {shotgunLoaded:true},
+                requiredState: (currentState) => currentState.shotgunLoaded,
                 nextText: 30
             },
             {
                 text: 'Slash the zombies',
                 requiredInventory: {kitchenKnife:true},
+                requiredState: (currentState) => currentState.kitchenKnife,
                 nextText: 30
             },
             {
@@ -746,11 +748,13 @@ const textNodes = [
             {
                 text: 'Shoot your gun',
                 requiredInventory: {shotgunLoaded:true},
+                requiredState: (currentState) => currentState.shotgunLoaded,
                 nextText: 31
             },
             {
                 text: 'Slash the zombies',
                 requiredInventory: {kitchenKnife:true},
+                requiredState: (currentState) => currentState.kitchenKnife,
                 nextText: 31
             },
             {
@@ -770,11 +774,13 @@ const textNodes = [
             {
                 text: 'Shoot your gun',
                 requiredInventory: {shotgunLoaded:true},
+                requiredState: (currentState) => currentState.shotgunLoaded,
                 nextText: 32
             },
             {
                 text: 'Slash the zombies',
                 requiredInventory: {kitchenKnife:true},
+                requiredState: (currentState) => currentState.kitchenKnife,
                 nextText: 32
             },
             {
@@ -790,11 +796,6 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
-        options: [
-            {
-
-            }
-        ]
     },
     //Get double barrel shotgun
     {
@@ -828,7 +829,7 @@ const textNodes = [
         text: 'Being overwhelmed by zombies, you try your best to kill as many zombies as you can. But there was no hope, the zombies surrounds you. They tore your limbs apart and started eating you, You have died.<br><br><a href=\"EndStatistics.html\">See Statistics</a>',
         note: '',
         inventory: '',
-        image: 'assets/images/You-Died-TEST-GIF.gif',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
     },
     //Ending night 2 - barricade, no camp - Bad
     {
@@ -868,7 +869,7 @@ const textNodes = [
         text: 'Would you like to prepare for the night. There is no going back now.',
         note: '',
         inventory: '',
-        image: 'assets/images/BlackScreen.jpg',
+        image: 'assets/images/farm-house-basement.jpg',
         options: [
             {
                 text: 'Yes',
@@ -880,12 +881,13 @@ const textNodes = [
             }
         ]
     },
+    //started the night
     {
         id: 36,
         text: 'You prepare for the cold night...',
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/farm-house-basement.jpg',
         options: [
             {
                 text: 'Set up barricade',
@@ -926,7 +928,7 @@ const textNodes = [
             {
                 text: 'You have already set up your camp',
                 requiredState: (currentState) => currentState.camp,
-                nextText: 136
+                nextText: 36
             },
             {
                 text: 'Prepare your shotgun',
@@ -944,17 +946,17 @@ const textNodes = [
             {
                 text: 'Start the night',
                 requiredState: (currentState) => !currentState.barricade && !currentState.camp,
-                nextText: 30
+                nextText: 25
             },
             {
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.barricade && !currentState.camp,
-                nextText: 31
+                nextText: 26
             },
             {
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.barricade && currentState.camp,
-                nextText: 32
+                nextText: 27
             }
         ]
     }
