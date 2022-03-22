@@ -315,6 +315,12 @@ input[type="button"][disabled] {
 	display: inline-block;
 }
 
+#imageContainer {
+	background-size: cover;
+	height: 100vh;
+	background-position: 100vh;
+}
+
 .torch {
 	position: fixed;
 	left: 0;

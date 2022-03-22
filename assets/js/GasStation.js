@@ -29,8 +29,6 @@ function startGame() {
     clearInventory();
 
     showTextNode(1);
-
-    enableTorch();
 }
 
 // Changes the text from the handwritten style to the normal font
@@ -47,7 +45,13 @@ function revertText() {
 // This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.
 
 function showTextNode(textNodeIndex) {
+    const torchOn = [2, 3, 26];
 
+    for (i = 0; i < torchOn.length; i++) {
+        if (textNodeIndex === torchOn[i] && state.TorchOn) {
+            toggleTorch();
+        }
+    }
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "dialogue", 15); // Changes the dialogue box to text stored in the text node.
     updateInventory(textNode.inventory);
@@ -58,7 +62,6 @@ function showTextNode(textNodeIndex) {
     }
 
     textNode.options.forEach(option => {
-
 
         if (showOption(option)) {
             const button = document.createElement('button'); // Creates a button.
@@ -88,6 +91,13 @@ function selectOption(option) {
     updateInventory(option.setInventory);
 }
 
+function selectEnding() {
+    if (state.Doors && state.Windows && state.Knife) {
+        return 35;
+    } else {
+        return 36;
+    }
+}
 
 // The text nodes for the game are below
 
@@ -96,16 +106,17 @@ const textNodes = [
         id: 1,
         text: 'You find what appears to be an empty gas station. There are no signs of zombies being here, and the area seems to already be fenced off.'
             + 'You spot an old car parked around the side, however, it appears too old and beaten up to be driven anywhere. There may be some supplies in it.',
-        image: '',
+        image: '/assets/images/gasstation.jpg',
         options: [
             {
                 text: 'Go inside to look for food and supplies',
                 nextEventId: 2,
-                setState: {FlashOn:true}
+                setInventory: { Gasoline: false },
+                setState: { TorchOn: true }
             },
             {
                 text: 'Look around outside for supplies',
-                requiredInventory: (currentInventory) => currentInventory.Gasoline === false,
+                requiredInventory: { 'Gasoline': false },
                 nextEventId: 3
             }
         ]
@@ -113,7 +124,7 @@ const textNodes = [
     {
         id: 2,
         text: 'You quietly open the door of the gas station and a bell above the door rings. This alarms you, but there does not seem to be anybody inside.'
-        + ' It\'s dark inside and the light switches don\'t seem to be working. Maybe there is a backup generator to bring the power back. ',
+            + ' It\'s dark inside and the light switches don\'t seem to be working. Maybe there is a backup generator to bring the power back. ',
         image: '/assets/images/gas-station-inside.jpg',
         options: [
             {
@@ -129,7 +140,7 @@ const textNodes = [
     {
         id: 28,
         text: 'You look behind the counter and find what appears to be a backup generator. You try switching it on but nothing'
-        + ' happens. Upon further inspection, it looks like either a fuse is blown or the circuit breaker has tripped.',
+            + ' happens. Upon further inspection, it looks like either a fuse is blown or the circuit breaker has tripped.',
         image: '/assets/images/gas-station-inside.jpg',
         options: [
             {
@@ -139,12 +150,12 @@ const textNodes = [
             {
                 text: 'Replace the fuse',
                 nextEventId: 26,
-                requiredInventory: (currentInventory) => currentInventory.Fuse
+                requiredInventory: { 'Fuse': true },
             },
             {
                 text: 'Search for a new fuse',
-                nextEventId: 25,
-                requiredInventory: (currentInventory) => currentInventory.Fuse === false
+                nextEventId: 4,
+                requiredInventory: { 'Fuse': false }
             }
         ]
     },
@@ -155,19 +166,30 @@ const textNodes = [
         options: [
             {
                 text: 'Replace the fuse',
-                requiredInventory: (currentInventory) => currentInventory.Fuse,
+                requiredInventory: { 'Fuse': true },
                 nextEventId: 26
             },
             {
                 text: 'Search for a new fuse',
                 nextEventId: 4,
-                requiredInventory: (currentInventory) => currentInventory.Fuse === false
+                requiredInventory: { 'Fuse': false }
             }
         ]
     },
     {
-        id: 25,
-        text: ''
+        id: 26,
+        text: 'You start the generator and the lights come back on. You notice an old <strong>newspaper</strong> lying on the ground.',
+        image: '/assets/images/gas-station-inside.jpg',
+        options: [
+            {
+                text: 'Read the newspaper',
+                nextEventId: 5
+            },
+            {
+                text: 'Continue searching for supplies',
+                nextEventId: 4
+            }
+        ]
     },
     {
         id: 3,
@@ -193,15 +215,15 @@ const textNodes = [
             {
                 text: 'Take the spare parts',
                 nextEventId: 4,
-                requiredInventory: (currentInventory) => currentInventory.Parts === false,
+                requiredInventory: { 'Parts': false },
                 setInventory: { Parts: true },
 
             },
             {
                 text: 'Take the fuse',
                 nextEventId: 4,
-                setInventory: {Fuse: true},
-                requiredInventory: (currentInventory) => currentInventory.Fuse === false,
+                setInventory: { Fuse: true },
+                requiredInventory: { 'Fuse': false }
             },
             {
                 text: 'Continue to search the stock room',
@@ -213,8 +235,8 @@ const textNodes = [
             },
             {
                 text: 'Go back outside to search for supplies',
-                setState: { FlashOff: true },
-                requiredInventory: (currentInventory) => currentInventory.Gasoline === false,
+                requiredInventory: { 'Gasoline': false },
+                setState: { TorchOff: true },
                 nextEventId: 3
             }
         ]
@@ -284,7 +306,8 @@ const textNodes = [
             },
             {
                 text: 'Give the man the spare parts you found',
-                requiredInventory: (currentInventory) => currentInventory.Parts,
+                requiredInventory: { 'Parts': true },
+                setInventory: { Parts: false },
                 nextEventId: 11
             },
             {
@@ -299,12 +322,14 @@ const textNodes = [
     },
     {
         id: 11,
-        text: 'You give the man the spare parts you found previously and he is grateful. He gives you a lighter in return. Night time is'
-        + ' soon approaching, and this may be useful for lighting a fire.',
+        text: 'You give the man the spare parts you found previously and he is grateful. He gives you a <strong>Hunter\'s Knife</strong> in return.'
+            + ' Night time is soon approaching, and this may be useful for lighting a fire.',
         image: '',
         options: [
             {
-                text: ''
+                text: 'Take the Hunter\'s Knife',
+                setInventory: { Knife: true },
+                nextEventId: 29
             }
         ]
     },
@@ -369,11 +394,13 @@ const textNodes = [
         options: [
             {
                 text: 'Replace the spark plugs',
-                requiredInventory: (currentInventory) => currentInventory.Parts,
+                requiredInventory: { 'Parts': true },
+                setInventory: { Parts: false },
                 nextEventId: 20
             },
             {
                 text: 'Look for spare parts inside',
+                requiredInventory: { 'Parts': false },
                 nextEventId: 4
             },
             {
@@ -420,7 +447,8 @@ const textNodes = [
     {
         id: 21,
         text: 'As you are driving along the highway, the man suddenly brakes the car and attacks you. He pushes you out of the car and drives off.'
-        + 'You are attacked by zombies and killed.',
+            + 'You are attacked by zombies and killed.'
+            + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
         image: '/assets/images/You-Died_TEST-GIF.gif'
     },
 
@@ -430,6 +458,7 @@ const textNodes = [
         id: 23,
         text: 'You push the man to the ground and drive away in his car. You look in the rear view mirror and see him getting attacked'
             + ' by zombies. You survive the night and escape.'
+            + '<b><em>You Escaped!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>'
     },
 
     {
@@ -452,32 +481,35 @@ const textNodes = [
             {
                 text: 'Break up the shelves for wood',
                 nextEventId: 30,
-                setInventory: { Wood: true }
+                setInventory: { Shelves: true }
             },
             {
-                text: 'Barricade the windows using wood from the shelves',
+                text: 'Barricade the windows using the wood from the shelves',
                 nextEventId: 31,
                 setState: { Windows: true },
-                requiredInventory: (currentInventory) => currentInventory.Wood
+                requiredInventory: { 'Shelves': true },
+                setInventory: { Shelves: false }
             },
             {
-                text: 'Barricade the doors using wood from the shelves',
+                text: 'Barricade the doors using the wood from the shelves',
                 nextEventId: 32,
                 setState: { Doors: true },
-                requiredInventory: (currentInventory) => currentInventory.Wood
+                requiredInventory: { 'Shelves': true },
+                setInventory: { Shelves: false }
             },
             {
                 text: 'Prepare a fire using wood from the shelves and the gasoline',
                 nextEventId: 33,
-                setState: { Fire: true },
                 requiredInventory: (currentInventory) => currentInventory.Gasoline,
-                requiredInventory: (currentInventory) => currentInventory.Wood
+                requiredInventory: (currentInventory) => currentInventory.Wood,
+                setInventory: { Shelves: false },
+                setInventory: { Gasoline: false }
             },
             {
                 text: 'Light the fire using the lighter',
                 nextEventId: 34,
                 setState: { FireLit: true },
-                requiredInventory: (currentInventory) => currentInventory.Lighter
+                requiredInventory: { 'Lighter': true }
             },
             {
                 text: 'Finish preparation',
@@ -542,13 +574,14 @@ const textNodes = [
         options: [
             {
                 text: 'Use the lighter',
-                requiredInventory: (currentInventory) => currentInventory.Lighter,
+                requiredInventory: { 'Lighter': true },
+                setInventory: { Lighter: false },
                 nextEventId: 34
             },
             {
-                text: 'Look for a lighter',
-                requiredState: (currentState) => currentState.LighterMissing,
-                nextEventId: 9
+                text: 'Abandon the fire',
+                requiredInventory: { 'Lighter': false },
+                nextEventId: 36
             }
         ]
     },
@@ -569,14 +602,63 @@ const textNodes = [
     },
     {
         /*
-        Bad ending 1: In an attempt to attack a survivor for supplies, he stabs you in self defence and you bleed to death. 
+        * Bad ending 1: In an attempt to attack a survivor for supplies, he stabs you in self defence and you bleed to death. 
         */
 
         id: 12,
         text: 'The man panics and stabs you with a piece of glass from one of the broken windows. He leaves and you bleed out and die.',
+        image: '/assets/images/You-Died_TEST-GIF.gif'
+            + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
+        options: []
+    },
+    {
+
+        /**
+         * Bad ending 3: You fail to barricade the doors and defend yourself from the zombies that break inside.
+         */
+
+        id: 35,
+        text: 'In your preparation for the night time, you didn\'t barricade the doors of the gas station. In the middle of the night, zombies'
+            + ' attacked the station and broke down the doors. You were outnumbered; the zombies cornered you and you didn\'t have any weapons to defend'
+            + ' yourself. You were eaten alive.'
+            + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
         image: '/assets/images/You-Died_TEST-GIF.gif',
         options: []
+    },
+    {
+
+        /**
+         * Bad ending 4: You fail to barricade the windows and defend yourself from the zombies that break inside.
+         */
+
+        id: 36,
+        text: 'In your preparation for the night time, you didn\'t barricade the windows of the gas station. In the middle of the night, zombies'
+            + ' attacked and broke through the windows. You were outnumbered; the zombies cornered you and you didn\'t have any weapons to defend'
+            + ' yourself. You were eaten alive.'
+            + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
+        image: '/assets/images/You-Died_TEST-GIF.gif',
+        options: []
+    },
+    {
+
+        /**
+         * Bad ending 5: You die from hypothermia as a result of cold temperature
+         */
+
+        id: 37,
+        text: 'Your body temperature falls below 35 degrees celcius. Symptoms of hypothermia develop and you start to shiver, followed by '
+            + 'a feeling of shortness of breath and a lack of co-ordination. Eventually, your eyes slowly close and you lose consciousness. '
+            + 'You later die from the hypothermia. '
+            + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
+        image: '/assets/images/You-Died_TEST-GIF.gif',
+        options: []
+    },
+    {
+        id: 38,
+        text: '<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>'
+            + 'However, you m'
     }
+
 
 ]
 
