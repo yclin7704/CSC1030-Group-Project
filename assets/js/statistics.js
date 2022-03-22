@@ -31,6 +31,8 @@ async function resetValues() {
 	// Reset temperature etc.
 	setTemp(40, false);
 	saveTime(0);
+	//clears the sesstion storage ?
+	sessionStorage.clear();
 }
 
 async function playAgain() {
