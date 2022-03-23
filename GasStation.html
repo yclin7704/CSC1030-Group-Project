@@ -10,12 +10,13 @@
 	<link rel="stylesheet" href="./assets/css/main.css" />
 </head>
 
-<body onload="enableTorch();">
+<body onload="enableTorch(), StartTimer();">
 	<div class="wrapper">
 		<div class="row">
 			<!-- Column 1: Map and inventory -->
 			<div class="col col1">
 				<div class="map">
+					<span id="playerSpan"></span>
 					<label for="temperatureMeter">Temperature:</label><br />
 					<div id="temperatureMeter" class="temperatureMeter"></div>
 					<span id="temperatureSpan" class="temperatureSpan">40</span>°C<br />

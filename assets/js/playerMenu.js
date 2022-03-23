@@ -1,3 +1,15 @@
+function setPlayerName() {
+    let name;
+    let select = document.getElementById('playerNameInput').value;
+    if (select.trim() === "") {
+        name = "Player"
+    } else {
+        name = select;
+    }
+    sessionStorage.setItem("playerName", name);
+}
+
+
 function displayProfession() {
     let select = document.getElementById('profession').value; // Value of select box
     let dialogue = document.getElementById('dialogue') // Span element to display dialogue

@@ -5,80 +5,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Festive&family=Poppins&family=Reenie+Beanie&family=Roboto+Mono&display=swap%27');
-
-        * {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 24pt;
-            text-align: center;
-        }
-
-        body {
-            color:#24171b;
-            background-color: rgb(59, 57, 57);
-        }
-
-        .box {
-            width: 50%;
-            margin: auto;
-            max-height: 75%;
-            padding: 30px;
-            background-color: #a09d9b;
-            border-radius: 20px;
-            border-style: none;
-            box-shadow: 0 0 10px 2px;
-            overflow: scroll;
-        }
-
-        .button {
-            border-radius: 20px;
-            padding: 10px;
-            border-style: none;
-            background-color:#24171b;
-            color: #a09d9b;
-        }
-
-        .centered {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        #options {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-
-        }
-
-        #dialogue {
-            font-size: 0.5em;
-            line-height: 0.5px;
-        }
-
-        #profession:focus {
-            outline: none;
-        }
-        
-        .menuText {
-            margin: 20px;
-        }
-    </style>
-
+    <link rel="stylesheet" href="./assets/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/playerMenu.css">
     <script type = "text/javascript" src="./assets/js/Typewriter.js"></script>
-    <script type="text/javascript" src="./assets/js/profession.js"></script>
+    <script type="text/javascript" src="./assets/js/playerMenu.js"></script>
     <title>Last Stand</title>
 </head>
 
 <body onload="displayProfession();"> 
+    <div id="wrapper">
     <div class="box centered">
+        <div class="menuText">
+        <h1>Player name:</h1>
+        </div>
+        <div class="formInput">
+            <input id="playerNameInput" class = "textInput" type="text" name="playerName" size="50" placeholder="Player name" >
+        </div>
         <div class="menuText">
         <h1>Choose your profession:</h1>
         </div>
         <div id="options">
-        <form action="/GasStation.html">
+        <form action="/GasStation.html" onsubmit="setPlayerName();">
             <select name="profession" id="profession" onchange="displayProfession();">
                 <option value="Hunter">Hunter</option>
                 <option value="War Veteran">War Veteran</option>
@@ -93,6 +40,7 @@
             </div>
             <input type = "submit" class="button" value="Play">
             </form>
+    </div>
     </div>
 </body>
 
