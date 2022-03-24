@@ -57,6 +57,7 @@ function showTextNode(textNodeIndex){
     imageElement.src = textNode.image;
     noteItem.innerHTML = textNode.note;
     crossfadeAudio(textNode.sound);
+    changeTemp(textNode.tempChange);
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
     }
@@ -139,6 +140,7 @@ const textNodes = [
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
         sound: 'assets/sounds/wind.wav',
+        tempChange: 'decrease',
         options: [
             {
                 text: 'Walk up to the door',
@@ -169,6 +171,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
+        tempChange: 'decrease',
         options: [
             {
                 text: 'Take lamp',
@@ -196,6 +199,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
+        tempChange: 'decrease',
         options: [
             {
                 text: 'Read Note',
@@ -214,6 +218,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
+        tempChange: 'decrease',
         options: [
             {
                 text: 'Take key',
@@ -249,7 +254,7 @@ const textNodes = [
                 nextText: 17
             },
             {
-                text: 'Go in th shelter',
+                text: 'Go in the shelter',
                 requiredState: (currentState) => currentState.lampOn,
                 nextText: 17
             },
@@ -284,6 +289,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
+        tempChange: 'decrease',
         options: [
             {
                 text: 'Open the door',
@@ -328,6 +334,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-inside.jpg',
+        tempChange: 'increase',
         options: [
             {
                 text: 'Go to Bedroom',
@@ -718,6 +725,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-basement.jpg',
+        tempChange: 'decrease',
         options: [
             {
                 text: 'Shoot your gun',
@@ -744,6 +752,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-basement.jpg',
+        tempChange: 'decrease',
         options: [
             {
                 text: 'Shoot your gun',
@@ -857,7 +866,7 @@ const textNodes = [
     },
     //Ending dying because of the cold
     {
-        Id: 34,
+        id: 34,
         text: "You feel cold all throughout your body... You feel that you can just sleep on the ground... You are slowly passing out... You couldn't feel anything that you realised that you're dying from hypothermia. <br><br><a href=\"EndStatistics.html\">See Statistics</a>",
         note: '',
         inventory: '',
@@ -870,6 +879,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-basement.jpg',
+        tempChange: 'decrease',
         options: [
             {
                 text: 'Yes',
@@ -888,6 +898,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-basement.jpg',
+        tempChange: 'decrease',
         options: [
             {
                 text: 'Set up barricade',
