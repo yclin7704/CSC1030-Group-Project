@@ -3,9 +3,9 @@
  */
 async function main() {
 	stopTimer();
-
 	get("temperatureStatSpan").innerHTML = getTemp();
 	get("timeStatSpan").innerHTML = getTime();
+	sessionStorage.setItem("time", getTime());
 	get("professionStatSpan").innerHTML = sessionStorage.getItem("profession");
 	get("secrets").innerHTML = listingCollectable();
 	resetValues();

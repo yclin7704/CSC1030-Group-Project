@@ -4,6 +4,7 @@ const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage');
 
 const profession = sessionStorage.getItem("profession");
+const playerName = sessionStorage.getItem("playerName");
 
 
 // This variable stores the current game state
@@ -13,6 +14,7 @@ let state = {};
 
 function startGame() {
     console.log(profession);
+    console.log(playerName);
 
     switch (profession) {
         case "Mechanic": state = { Mechanic: true }; break;
@@ -29,6 +31,12 @@ function startGame() {
     clearInventory();
 
     showTextNode(1);
+
+    displayPlayerName()
+}
+
+function displayPlayerName() {
+    document.getElementById('playerSpan').innerHTML = playerName + '<br>' ;
 }
 
 // Changes the text from the handwritten style to the normal font
@@ -45,10 +53,10 @@ function revertText() {
 // This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.
 
 function showTextNode(textNodeIndex) {
-    const torchOn = [2, 3, 26];
+    const torchOn = [2, 26];
 
     for (i = 0; i < torchOn.length; i++) {
-        if (textNodeIndex === torchOn[i] && state.TorchOn) {
+        if (textNodeIndex === torchOn[i]) {
             toggleTorch();
         }
     }
@@ -104,31 +112,33 @@ function selectEnding() {
 const textNodes = [
     {
         id: 1,
-        text: 'You find what appears to be an empty gas station. There are no signs of zombies being here, and the area seems to already be fenced off.'
-            + 'You spot an old car parked around the side, however, it appears too old and beaten up to be driven anywhere. There may be some supplies in it.',
-        image: '/assets/images/gasstation.jpg',
+        text: 'You make it out of the woods and stumble across an old gas station at the side of the road. The area is fenced'
+            + ' off and you notice a car parked outside, however, it looks too old and beaten up to be driven anywhere. There is a message'
+            + ' sprayed on the wall: <i><strong>"Don\'t trust anybody!"</strong></i>. You find a gap in the fence and stand outside the front entrance.',
+        image: '/assets/images/gas-station.jpg',
+        inventory: '',
         options: [
             {
-                text: 'Go inside to look for food and supplies',
+                text: 'Go inside',
                 nextEventId: 2,
                 setInventory: { Gasoline: false },
-                setState: { TorchOn: true }
+                setState: { LightsOff: true }
             },
             {
-                text: 'Look around outside for supplies',
-                requiredInventory: { 'Gasoline': false },
+                text: 'Look around outside',
                 nextEventId: 3
             }
         ]
     },
     {
         id: 2,
-        text: 'You quietly open the door of the gas station and a bell above the door rings. This alarms you, but there does not seem to be anybody inside.'
-            + ' It\'s dark inside and the light switches don\'t seem to be working. Maybe there is a backup generator to bring the power back. ',
-        image: '/assets/images/gas-station-inside.jpg',
+        text: 'You slowly open the door and a bell above you rings. This startles you, but there does not seem to be any zombies inside or nearby... not yet at least.'
+            + ' It\'s dark inside and the light switches don\'t seem to be working. You have a flashlight, but maybe there is a backup generator to bring the power back. ',
+        image: '/assets/images/gas-station_inside.jpg',
+        inventory: '',
         options: [
             {
-                text: 'Begin searching for food and supplies',
+                text: 'Search for supplies',
                 nextEventId: 4,
             },
             {
@@ -139,9 +149,11 @@ const textNodes = [
     },
     {
         id: 28,
-        text: 'You look behind the counter and find what appears to be a backup generator. You try switching it on but nothing'
-            + ' happens. Upon further inspection, it looks like either a fuse is blown or the circuit breaker has tripped.',
-        image: '/assets/images/gas-station-inside.jpg',
+        text: 'You look behind the counter and find a backup generator. You try switching it on but nothing'
+            + ' happens. Upon further inspection, it looks like either a fuse has blown or the circuit breaker has tripped. There'
+            + ' might be some spare fuses on one of the shelves.',
+        image: '/assets/images/gas-station_inside.jpg',
+        inventory: '',
         options: [
             {
                 text: 'Reset the breaker',
@@ -151,6 +163,7 @@ const textNodes = [
                 text: 'Replace the fuse',
                 nextEventId: 26,
                 requiredInventory: { 'Fuse': true },
+                setState: { LightsOn: true }
             },
             {
                 text: 'Search for a new fuse',
@@ -161,12 +174,15 @@ const textNodes = [
     },
     {
         id: 27,
-        text: 'You reset the circuit breaker and try to start the generator. Nothing happens. It looks like the fuse needs replaced.',
-        image: '',
+        text: 'You reset the circuit breaker in the generator and try switching it on...\nNothing happens. It looks like the fuse needs replaced'
+            + ' There might be some spare fuses on one of the shelves.',
+        image: '/assets/images/gas-station_inside.jpg',
+        inventory: '',
         options: [
             {
                 text: 'Replace the fuse',
                 requiredInventory: { 'Fuse': true },
+                setState: { LightsOff: false },
                 nextEventId: 26
             },
             {
@@ -178,79 +194,190 @@ const textNodes = [
     },
     {
         id: 26,
-        text: 'You start the generator and the lights come back on. You notice an old <strong>newspaper</strong> lying on the ground.',
-        image: '/assets/images/gas-station-inside.jpg',
+        text: 'You replace the fuse in the generator and try switching it on...\nThe lights come back on and the electricity is restored.'
+            + ' You start to look for supplies when you notice an old <strong>newspaper</strong> lying on the ground.',
+        image: '/assets/images/gas-station_inside.jpg',
+        inventory: '',
         options: [
             {
-                text: 'Read the newspaper',
+                text: 'Pick up and read the newspaper',
                 nextEventId: 5
             },
             {
-                text: 'Continue searching for supplies',
+                text: 'Search for supplies',
                 nextEventId: 4
             }
         ]
     },
     {
         id: 3,
-        text: 'You walk around to the side of the gas station and find an old car. You cannot find the key anywhere. Maybe it was abandoned.',
+        text: 'You approach the car you found earlier in the hope that you can find some useful supplies inside. You open the glovebox and'
+            + ' find a <strong>lighter</strong> inside. You open the boot and find a can of <strong>gasoline</strong>. These items could be useful'
+            + ' for lighting a fire to keep warm.',
         image: '/assets/images/car.jpg',
+        inventory: '',
         options: [
             {
-                text: 'Search for supplies in the car',
-                nextEventId: 6
+                text: 'Take the lighter',
+                nextEventId: 39,
+                requiredInventory: { 'Lighter': false },
+                setInventory: { Lighter: true }
             },
             {
-                text: 'Go inside the gas station',
+                text: 'Take the gasoline',
+                nextEventId: 40,
+                requiredInventory: { 'Gasoline': false },
+                setInventory: { Gasoline: true }
+            },
+            {
+                text: 'Go inside',
+                nextEventId: 2
+            }
+        ]
+    },
+    {
+        id: 39,
+        text: 'You take the <strong>lighter</strong>.',
+        image: '/assets/images/car.jpg',
+        inventory: '',
+        options: [
+            {
+                text: 'Take the gasoline',
+                nextEventId: 40,
+                requiredInventory: { 'Gasoline': false },
+                setInventory: { Gasoline: true }
+            },
+            {
+                text: 'Go inside',
+                nextEventId: 2
+            }
+        ]
+    },
+    {
+        id: 40,
+        text: 'You take the <strong>gasoline</strong>.',
+        image: '/assets/images/car.jpg',
+        inventory: '',
+        options: [
+            {
+                text: 'Take the lighter',
+                nextEventId: 39,
+                requiredInventory: { 'Lighter': false },
+                setInventory: { Lighter: true }
+            },
+            {
+                text: 'Go inside',
                 nextEventId: 2
             }
         ]
     },
     {
         id: 4,
-        text: 'You continue to search through each aisle of the gas station for supplies and you find some <strong>spare parts</strong> and a <strong>fuse</strong> on one of the shelves.' +
-            'It looks like the place has been looted, as you are unable to find anything else.',
-        image: '/assets/images/gas-station-inside.jpg',
+        text: 'You wander through each aisle of the gas station and you find some spare <strong>parts</strong> and a <strong>fuse</strong>.'
+            + ' You tear the place apart and fail to find anything else. The stock room may have some useful'
+            + ' supplies.',
+        image: '/assets/images/gas-station_inside.jpg',
+        inventory: '',
         options: [
             {
-                text: 'Take the spare parts',
-                nextEventId: 4,
+                text: 'Take the parts',
+                nextEventId: 45,
                 requiredInventory: { 'Parts': false },
                 setInventory: { Parts: true },
 
             },
             {
                 text: 'Take the fuse',
-                nextEventId: 4,
+                nextEventId: 41,
                 setInventory: { Fuse: true },
                 requiredInventory: { 'Fuse': false }
             },
             {
-                text: 'Continue to search the stock room',
+                text: 'Search the stock room',
                 nextEventId: 8,
             },
             {
                 text: 'Go back to fix the generator',
                 nextEventId: 28,
-            },
-            {
-                text: 'Go back outside to search for supplies',
-                requiredInventory: { 'Gasoline': false },
-                setState: { TorchOff: true },
-                nextEventId: 3
+                requiredState: (currentState) => currentState.LightsOff
             }
         ]
 
     },
     {
+        id: 45,
+        text: 'You take the parts.',
+        image: '/assets/images/gas-station_inside.jpg',
+        inventory: '',
+        options: [
+            {
+                text: 'Take the fuse',
+                nextEventId: 41,
+                requiredInventory: { 'Fuse': false },
+                requiredState: (currentState) => currentState.SearchParts === false
+            },
+            {
+                text: 'Search the stock room',
+                nextEventId: 8,
+                requiredState: (currentState) => currentState.SearchParts === false
+            },
+            {
+                text: 'Go back and fix the generator',
+                nextEventId: 28,
+                requiredState: (currentState) => currentState.LightsOff
+            },
+            {
+                text: 'Give the man the parts you found',
+                nextEventId: 11,
+                requiredState: (currentState) => currentState.SearchParts
+            }
+        ]
+    },
+    {
+        id: 41,
+        text: 'You take the fuse.',
+        image: '/assets/images/gas-station_inside.jpg',
+        inventory: '',
+        options: [
+            {
+                text: 'Take the parts',
+                nextEventId: 45,
+                requiredInventory: { 'Parts': false }
+            },
+            {
+                text: 'Search the stock room',
+                nextEventId: 8
+            },
+            {
+                text: 'Go back and fix the generator',
+                nextEventId: 28,
+                requiredState: (currentState) => currentState.LightsOff
+            }
+        ]
+    },
+    {
+        id: 42,
+        text: 'You return back to the shop floor to search for the parts. You find some spare <strong>parts</strong> lying'
+            + ' amongst the rubble.',
+        image: '/assets/images/gas-station_inside.jpg',
+        inventory: '',
+        options: [
+            {
+                text: 'Take the parts',
+                nextEventId: 45
+            }
+        ]
+    },
+    {
         id: 5,
         text: 'The newspaper dates back 4 weeks ago, the 24th February, 1999. The article on the front page reads...<br>: ' +
-            "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
-            " <span class=\"handwritten\" id=\"handwritten\">BREAKING NEWS - First case of a new virus discovered in Alaska!!<br>An unknown virus has been discovered " +
-            "in a young man - aged 32, here in Alaska. The origin of the virus is currently unknown, however, symptoms appear to include increased aggression, cognitive decline " +
-            " ,foaming at the mouth and a desire to bite. Those infected are deemed to be dangerous. Currently, advice from our government is to continue as normal until more information " +
-            "on the virus can be provided and to remain calm. Some people have started to panic buy essential products and fuel, which has caused a spike in fuel prices. </span>",
-        image: '/assets/images/gas-station-inside.jpg',
+            '<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>' +
+            ' <span class=\"handwritten\" id=\"handwritten\">BREAKING NEWS - First case of a new virus discovered in Alaska!!<br>An unknown virus has been discovered ' +
+            ' in a young man - aged 32, here in Alaska. The origin of the virus is currently unknown, however, symptoms appear to include increased aggression, cognitive decline ' +
+            ' ,foaming at the mouth and a desire to bite. Those infected are deemed to be dangerous. Currently, advice from our government is to continue as normal until more information ' +
+            ' on the virus can be provided and to remain calm. Some people have started to panic buy essential products and fuel, which has caused a spike in fuel prices. </span>',
+        image: '/assets/images/gas-station_inside.jpg',
+        inventory: '',
         options: [
             {
                 text: 'Continue searching for food and supplies',
@@ -259,75 +386,61 @@ const textNodes = [
         ]
     },
     {
-        id: 6,
-        text: 'You find a can of petrol in the boot of the car. It is only half-full, however, night time is approaching, and it may be useful to light a fire.',
-        image: '/assets/images/car.jpg',
-        options: [
-            {
-                text: 'Take the can of gasoline and go inside',
-                setInventory: { Gasoline: true },
-                inventory: 'Gasoline',
-                nextEventId: 2
-            },
-            {
-                text: 'Leave the can of gasoline and go inside',
-                setInventory: { Gasoline: false },
-                nextEventId: 2
-            }
-        ]
-    },
-    {
         id: 8,
-        text: 'You enter the stock room and feel a sudden drop in temperature. You are searching for '
-            + 'supplies when you hear a noise at the back of the stock room.',
-        image: '',
+        text: 'You barge through the jammed door of the stock room and feel the temperature suddenly drop. You look for supplies, but'
+            + ' everything seems to have been taken. This could be a safe location to spend the night with a bit of preparation.'
+            + ' You hear a noise coming from outside...',
+        image: '/assets/images/gas-station_stock-room.jpg',
+        inventory: '',
         options: [
             {
                 text: 'Investigate the noise',
                 nextEventId: 10
             },
+            {
+                text: 'Prepare for the night',
+                nextEventId: 29
+            }
         ]
     },
     {
         id: 10,
-        text: 'You find a survivor searching for spare parts. He approaches you slowly with his hands in the air, exclaiming to you that he is trying to' +
-            'fix his car so that he can leave.',
-        image: '',
+        text: 'You find another survivor searching for supplies. You approach him slowly and he says: '
+            + '\n<i>"I don\'t mean you any harm. I\'m trying to fix my car so I came here in the hope I could find some parts, but '
+            + 'I haven\'t been able to find anything. Can you help me find the parts I need?"</i>',
+        image: '/assets/images/gas-station_stock-room.jpg',
+        inventory: '',
         options: [
             {
-                text: 'Offer to help the man fix his car',
+                text: 'Offer to help fix his car',
                 requiredState: (currentState) => currentState.Mechanic,
                 nextEventId: 14
             },
             {
-                text: 'Ask him if he has any spare food or supplies',
-                requiredState: (currentState) => currentState.Priest,
-                nextEventId: 13
-            },
-            {
-                text: 'Give the man the spare parts you found',
+                text: 'Give him the parts you found',
                 requiredInventory: { 'Parts': true },
                 setInventory: { Parts: false },
                 nextEventId: 11
             },
             {
-                text: 'Leave the man alone',
-                nextEventId: 21
+                text: 'Help him search for the parts',
+                setState: { SearchParts: true },
+                nextEventId: 42
             },
             {
-                text: 'Attack the man to steal his food and supplies',
+                text: 'Attack him and steal his supplies',
                 nextEventId: 12
             }
         ]
     },
     {
         id: 11,
-        text: 'You give the man the spare parts you found previously and he is grateful. He gives you a <strong>Hunter\'s Knife</strong> in return.'
-            + ' Night time is soon approaching, and this may be useful for lighting a fire.',
-        image: '',
+        text: '<i>"Thank you! I\'ve been searching everywhere for these. Take this <strong>knife</strong> to protect yourself from the zombies."</i>',
+        image: '/assets/images/gas-station_stock-room.jpg',
+        inventory: '',
         options: [
             {
-                text: 'Take the Hunter\'s Knife',
+                text: 'Prepare for the night',
                 setInventory: { Knife: true },
                 nextEventId: 29
             }
@@ -335,9 +448,10 @@ const textNodes = [
     },
     {
         id: 14,
-        text: 'You offer the man to help fix his car and he is grateful. He tells you he will give you a lift out of the area if you can'
-            + ' get the car driving again. He gives you the key to try and start the vehicle.',
+        text: 'You tell the man you\'re a mechanic and offer to help him fix his car. He says:'
+            + '\n<i>"Really?! I\'d really appreaciate that. If you can get her driving again, I\'ll take you anywhere you need to go."</i>',
         image: '/assets/images/car.jpg',
+        inventory: '',
         options: [
             {
                 text: 'Try start the vehicle',
@@ -347,39 +461,42 @@ const textNodes = [
     },
     {
         id: 15,
-        text: 'You turn the key and the car fails to start.',
+        text: 'You push the clutch in and turn the key...\nThe car doesn\'t start.',
         image: '/assets/images/car.jpg',
+        inventory: '',
         options: [
             {
                 text: 'Open the bonnet',
                 nextEventId: 16
             },
             {
-                text: 'Check the fuel tank',
+                text: 'Check if there\'s fuel left',
                 nextEventId: 17
             }
         ]
     },
     {
         id: 16,
-        text: 'You open the bonnet of a car and check the levels of all the fluids. Everything appears to be fine. It could be the'
-            + ' fuel injectors or the spark plugs.',
-        image: '/assets/images/car.jpg',
+        text: 'You open the bonnet of a car and at a first glance, everything appears to be fine. Upon further inspection, it looks like it could be faulty'
+            + ' fuel injectors or spark plugs.',
+        image: '/assets/images/car_engine-bay.jpg',
+        inventory: '',
         options: [
             {
-                text: 'Check the spark plugs',
+                text: 'Inspect the spark plugs',
                 nextEventId: 18
             },
             {
-                text: 'Check the fuel injectors',
+                text: 'Inspect the fuel injectors',
                 nextEventId: 19
             }
         ]
     },
     {
         id: 17,
-        text: 'You check the fuel tank of the car and there appears to be some petrol left. This does not look to be the problem.',
+        text: 'You check the fuel level and there is some petrol left. This doesn\'t look to be the problem.',
         image: '/assets/images/car.jpg',
+        inventory: '',
         options: [
             {
                 text: 'Open the bonnet',
@@ -389,8 +506,9 @@ const textNodes = [
     },
     {
         id: 18,
-        text: 'You pull out one of the spark plugs and it appears corroded. This could be what is preventing the car from starting. ',
-        image: '/assets/images/car.jpg',
+        text: 'You inspect one of the spark plugs and it appears to be corroded.',
+        image: '/assets/images/car_engine-bay.jpg',
+        inventory: '',
         options: [
             {
                 text: 'Replace the spark plugs',
@@ -411,29 +529,32 @@ const textNodes = [
     },
     {
         id: 19,
-        text: 'You check the fuel injectors and they do not appear to be corroded or damaged. You give them a clean and try to start '
-            + 'the car again. The car fails to start, therefore this is not the problem.',
-        image: '/assets/images/car.jpg',
+        text: 'You inspect the fuel injectors and they do not appear to be corroded or damaged. You clean them and try to start '
+            + 'the car again...\nThe car fails to start, therefore the fuel injectors are not the problem.',
+        image: '/assets/images/car_engine-bay.jpg',
+        inventory: '',
         options: [
             {
-                text: 'Check the spark plugs',
+                text: 'Inspect the spark plugs',
                 nextEventId: 18
             }
         ]
     },
     {
         id: 20,
-        text: 'You install the new spark plugs you found inside the gas station and turn the key to start the vehicle. Although a '
-            + 'struggle, the car starts. The man sticks to his word and offers you a ride.',
+        text: 'You install the new spark plugs you found inside the gas station and turn the key to start the vehicle...\nAlthough a '
+            + 'struggle, the car starts.'
+            + '\n<i>"Wow! You fixed it! Thanks so much! Where would you like to go?"</i>',
         image: '/assets/images/car.jpg',
+        inventory: '',
         options: [
             {
-                text: 'Go with him in the vehicle',
+                text: 'Go with the man in his vehicle',
                 nextEventId: 21
             },
             {
-                text: 'Stay at the gas station',
-                nextEventId: 22
+                text: 'Stay at the gas station and prepare for the night',
+                nextEventId: 29
             },
             {
                 text: 'Attempt to steal the vehicle',
@@ -446,10 +567,12 @@ const textNodes = [
 
     {
         id: 21,
-        text: 'As you are driving along the highway, the man suddenly brakes the car and attacks you. He pushes you out of the car and drives off.'
-            + 'You are attacked by zombies and killed.'
+        text: 'You are driving along the highway when the man suddenly brakes the car and attacks you. He pushes you out of the car and '
+            + 'you are attacked by zombies as you watch him driving away... \n Remember: don\'t trust anybody.'
             + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
-        image: '/assets/images/You-Died_TEST-GIF.gif'
+        image: '/assets/images/You-Died_TEST-GIF.gif',
+        inventory: '',
+        options: []
     },
 
     /* Good ending 1: You survive the night and escape in a car. */
@@ -458,51 +581,48 @@ const textNodes = [
         id: 23,
         text: 'You push the man to the ground and drive away in his car. You look in the rear view mirror and see him getting attacked'
             + ' by zombies. You survive the night and escape.'
-            + '<b><em>You Escaped!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>'
-    },
-
-    {
-        id: 22,
-        text: 'You decide to stay at the gas station and the man leaves in his car.',
-        image: '',
-        options: [
-            {
-                text: 'Prepare for the night',
-                nextEventId: 29
-            }
-        ]
+            + '<b><em>You Escaped!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
+        image: '/assets/Victory2_TEST-GIF.gif',
+        inventory: '',
+        options: []
     },
     {
         id: 29,
-        text: 'It is almost night time and you need to find somewhere to sleep. ' +
-            'Barricade the doors or windows to prevent zombies from attacking you.',
-        image: '',
+        text: 'You need to prepare to survive through the night.' +
+            ' You can barricade the doors or windows to prevent zombies from attacking you. You can also light a fire to prevent'
+            + ' developing hypothermia from the freezing temperatures.',
+        image: '/assets/images/gas-station_stock-room.jpg',
+        inventory: '',
         options: [
             {
                 text: 'Break up the shelves for wood',
                 nextEventId: 30,
-                setInventory: { Shelves: true }
+                setInventory: { Wood: true },
+                setState: { Wood: true },
+                requiredInventory: { 'Wood': false },
+                requiredState: (currentState) => currentState.Wood === false
             },
             {
                 text: 'Barricade the windows using the wood from the shelves',
                 nextEventId: 31,
                 setState: { Windows: true },
-                requiredInventory: { 'Shelves': true },
-                setInventory: { Shelves: false }
+                requiredState: (currentState) => currentState.Windows === false,
+                requiredInventory: { 'Wood': true },
+                setInventory: { Wood: false }
             },
             {
                 text: 'Barricade the doors using the wood from the shelves',
                 nextEventId: 32,
                 setState: { Doors: true },
-                requiredInventory: { 'Shelves': true },
-                setInventory: { Shelves: false }
+                requiredInventory: { 'Wood': true },
+                setInventory: { Wood: false }
             },
             {
                 text: 'Prepare a fire using wood from the shelves and the gasoline',
                 nextEventId: 33,
                 requiredInventory: (currentInventory) => currentInventory.Gasoline,
                 requiredInventory: (currentInventory) => currentInventory.Wood,
-                setInventory: { Shelves: false },
+                setInventory: { Wood: false },
                 setInventory: { Gasoline: false }
             },
             {
@@ -520,9 +640,9 @@ const textNodes = [
     },
     {
         id: 30,
-        text: 'You pull the shelves apart into planks of wood. Maybe this can be used to barricade the area or to build a fire.',
-
-        image: '',
+        text: 'You break the shelves into planks of wood. These can be used to barricade the windows or doors.',
+        image: '/assets/images/gas-station_stock-room.jpg',
+        inventory: '',
         options: [
             {
                 text: 'Continue preparation',
@@ -537,8 +657,9 @@ const textNodes = [
     },
     {
         id: 31,
-        text: 'You use the planks from the shelves to barricade the windows to prevent zombies from entering during the night.',
-        image: '',
+        text: 'You use the wood planks to barricade the windows.',
+        image: '/assets/images/gas-station_stock-room.jpg',
+        inventory: '',
         options: [
             {
                 text: 'Continue preparation',
@@ -553,8 +674,9 @@ const textNodes = [
     },
     {
         id: 32,
-        text: 'You use the planks from the shelves to barricade the doors to prevent zombies from entering during the night.',
-        image: '',
+        text: 'You use the wood planks to barricade the doors.',
+        image: '/assets/images/gas-station_stock-room.jpg',
+        inventory: '',
         options: [
             {
                 text: 'Continue preparation',
@@ -569,8 +691,9 @@ const textNodes = [
     },
     {
         id: 33,
-        text: 'You set up for a fire using the planks from the shelves and pour gasoline over them. You need something to start the fire with.',
-        image: '',
+        text: 'You set up a fire using the wood planks and pour gasoline over them. You need something to start the fire with.',
+        image: '/assets/images/gas-station_stock-room',
+        inventory: '',
         options: [
             {
                 text: 'Use the lighter',
@@ -587,8 +710,9 @@ const textNodes = [
     },
     {
         id: 34,
-        text: 'You manage to get the fire going, and the temperature starts to rise again.',
-        image: '',
+        text: 'You light the fire and the temperature starts to rise again.',
+        image: '/assets/images/gas-station_stock-room',
+        inventory: '',
         options: [
             {
                 text: 'Continue preparation',
@@ -606,9 +730,11 @@ const textNodes = [
         */
 
         id: 12,
-        text: 'The man panics and stabs you with a piece of glass from one of the broken windows. He leaves and you bleed out and die.',
-        image: '/assets/images/You-Died_TEST-GIF.gif'
-            + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
+        text: 'You try pushing the man to the ground and he quickly grabs a knife from his pocket and pushes it into your stomach. Your eyes slowly close'
+            + ' as you bleed to death.'
+            + '<b><em> You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
+        image: '/assets/images/You-Died_TEST-GIF.gif',
+        inventory: '',
         options: []
     },
     {
@@ -619,10 +745,11 @@ const textNodes = [
 
         id: 35,
         text: 'In your preparation for the night time, you didn\'t barricade the doors of the gas station. In the middle of the night, zombies'
-            + ' attacked the station and broke down the doors. You were outnumbered; the zombies cornered you and you didn\'t have any weapons to defend'
+            + ' attacked and broke down the doors. You were outnumbered. The zombies cornered you and you didn\'t have any weapons to defend'
             + ' yourself. You were eaten alive.'
             + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
         image: '/assets/images/You-Died_TEST-GIF.gif',
+        inventory: '',
         options: []
     },
     {
@@ -633,10 +760,11 @@ const textNodes = [
 
         id: 36,
         text: 'In your preparation for the night time, you didn\'t barricade the windows of the gas station. In the middle of the night, zombies'
-            + ' attacked and broke through the windows. You were outnumbered; the zombies cornered you and you didn\'t have any weapons to defend'
+            + ' attacked and broke through the windows. You were outnumbered. The zombies cornered you and you didn\'t have any weapons to defend'
             + ' yourself. You were eaten alive.'
             + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
         image: '/assets/images/You-Died_TEST-GIF.gif',
+        inventory: '',
         options: []
     },
     {
@@ -646,17 +774,20 @@ const textNodes = [
          */
 
         id: 37,
-        text: 'Your body temperature falls below 35 degrees celcius. Symptoms of hypothermia develop and you start to shiver, followed by '
+        text: 'Your body temperature falls below 35 degrees celcius.  The symptoms of hypothermia develop. You start to shiver, followed by '
             + 'a feeling of shortness of breath and a lack of co-ordination. Eventually, your eyes slowly close and you lose consciousness. '
             + 'You later die from the hypothermia. '
             + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
         image: '/assets/images/You-Died_TEST-GIF.gif',
+        inventory: '',
         options: []
     },
     {
         id: 38,
-        text: '<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>'
-            + 'However, you m'
+        text: '<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
+        image: '/assets/images/Victory_TEST-GIF',
+        inventory: '',
+        options: []
     }
 
 
