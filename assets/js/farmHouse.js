@@ -44,7 +44,7 @@ function startGame(){
     setTimerData(showTextNode, 17, 33);
     setTemperatureData(showTextNode, 34, 34);
     showInventory();
-    clearInventory();
+    //clearInventory(); //This clears the inventory
     showTextNode(1);
 }
 
@@ -56,8 +56,8 @@ function showTextNode(textNodeIndex){
     updateInventory(textNode.inventory);
     imageElement.src = textNode.image;
     noteItem.innerHTML = textNode.note;
-    crossfadeAudio(textNode.sound);
-    changeTemp(textNode.tempChange);
+    crossfadeAudio(textNode.sound); //The audio System.
+    changeTemp(textNode.tempChange); //The temperature system
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
     }
