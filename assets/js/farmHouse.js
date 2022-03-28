@@ -44,7 +44,7 @@ function startGame(){
     setTimerData(showTextNode, 17, 33);
     setTemperatureData(showTextNode, 34, 34);
     showInventory();
-    clearInventory();
+    //clearInventory(); //This clears the inventory
     showTextNode(1);
 }
 
@@ -56,8 +56,8 @@ function showTextNode(textNodeIndex){
     updateInventory(textNode.inventory);
     imageElement.src = textNode.image;
     noteItem.innerHTML = textNode.note;
-    crossfadeAudio(textNode.sound);
-    changeTemp(textNode.tempChange);
+    crossfadeAudio(textNode.sound); //The audio System.
+    changeTemp(textNode.tempChange); //The temperature system
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
     }
@@ -120,7 +120,7 @@ const textNodes = [
     //First visit to outside of the farm house
     {
         id: 1,
-        text: "Moving away from the infected city, you have stumbled upon what looks like to be and old, damaged farm house that hasn't been occupied in years. You walk toward the garden or what could have once been a lovely rose garden was now a deserted wasteland...",
+        text: 'Moving away from the <a href="#" id="collect3" class="collectable" onClick="addCollectable(secret3); secret3=false">infected town</a>, you have stumbled upon what looks like to be and old, damaged farm house that has not been occupied in years. You walk toward the garden or what could have once been a lovely rose garden was now a deserted wasteland...',
         note: '',
         inventory: "",
         image: 'assets/images/farm-house-outside.jpg',
@@ -135,7 +135,7 @@ const textNodes = [
     //Outside of the farm house
     {
         id: 2,
-        text: 'You look around the vicinity and you see a <u><strong>wheel barrow</strong></u>, <u><strong>a suspicious flower pot</strong></u>, <u><strong>a dirty welcome mat</strong></u> and at the side of the farm house you see what looks to be <u><strong>a shelter of some sort</strong></u>.',
+        text: 'You look around the vicinity and you see a <u><strong>wheel barrow</strong></u>, <u><strong>a suspicious flower pot</strong></u>, <u><strong>a dirty welcome mat</strong></u> and at the side of the <a href="#" id="collect4" class="collectable" onClick="addCollectable(secret4); secret4=false">farm house</a> you see what looks to be <u><strong>a shelter of some sort</strong></u>.',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
@@ -161,6 +161,10 @@ const textNodes = [
             {
                 text: 'Go inside the shelter',
                 nextText: 6
+            },
+            {
+                text: 'Back',
+                nextText: 1
             }
         ]
     },
@@ -492,7 +496,7 @@ const textNodes = [
     //Go to the kitchen
     {
         id: 15,
-        text: 'You go to the kitchen and like the living room, it is in ruins. In there, you see some <u><strong>cupboards</strong></u> and <u><strong>a fridge</strong></u>.',
+        text: 'You go to the <a href="#" id="collect7" class="collectable" onClick="addCollectable(secret7); secret7=false">kitchen</a> and like the living room, it is in ruins. In there, you see some <u><strong>cupboards</strong></u> and <u><strong>a fridge</strong></u>.',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-kitchen.jpg',
@@ -525,7 +529,7 @@ const textNodes = [
     //Turn on the torch in the basement. This is where you will stay for the night.
     {
         id: 17,
-        text: 'You turned your lamp and see there are barrels... Lots of them, it seems like it was a wine cellar instead.',
+        text: 'You turned your lamp and see there are <a href="#" id="collect6" class="collectable" onClick="addCollectable(secret6); secret6=false">barrels</a>... Lots of them, it seems like it was a wine cellar instead.',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-basement.jpg',
@@ -701,7 +705,7 @@ const textNodes = [
     //Kithcen - Fridge
     {
         id: 24,
-        text: 'You open the fridge and there is a container with some sort of <u><strong>green liquid inside</strong></u>. Do you want to drink it?',
+        text: 'You open the fridge and there is a container with some sort of <u><strong><a href="#" id="collect5" class="collectable" onClick="addCollectable(secret5); secret5=false">Green Liquid inside</a></strong></u>. Do you want to drink it?',
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-kitchen.jpg',
