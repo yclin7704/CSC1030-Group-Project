@@ -527,7 +527,7 @@ const events = [
 	},
 	{
 		id: "testBarricadingFurniture",
-		text: `Barricading`,
+		text: `As you begin to see what furniture you can push around to help your makeshift `,
 	},
 
 	// BEGIN: Hatch

@@ -100,11 +100,6 @@ a:link {
 }
 
 .dialogue {
-	/*
-	TODO: Text is currently too wide. Consider something like:
-	width: min(180ch, 87%);
-	or rearranging panels
-	*/
 	margin: 10px;
 }
 
@@ -281,7 +276,6 @@ input[type="button"][disabled] {
 
 */
 
-/* TODO: Remove if we don't decide to use this */
 .temperature {
 	margin: 5px;
 }
@@ -325,6 +319,6 @@ input[type="button"][disabled] {
 	background: radial-gradient(circle at var(--x) var(--y), transparent 2%, rgba(0, 0, 0, 0.95) 25%);
 }
 
-.collectable{
+.collectable {
 	color: var(--background);
 }
