@@ -8,7 +8,6 @@ sessionStorage.setItem("profession", "Hunter");
  * Main function
  */
 async function main() {
-	// TODO: Inventory
 	// TODO: Returning to cabin
 	// TODO: Save game state to sesion storage on leaving cabin
 
