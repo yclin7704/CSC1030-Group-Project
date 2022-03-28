@@ -291,17 +291,17 @@ const textNodes = [
         options: [
             {
                 text: 'Return to the front of the Hospital',
-                tempChange: 'decrease',
+                tempChange: -1,
                 nextText: 2
             },
             {
                 text: "Search the crates",
-                tempChange: 'decrease',
+                tempChange: -1,
                 nextText: 19
             },
             {
                 text: "Look at the discarded documents",
-                tempChange: 'decrease',
+                tempChange: -1,
                 nextText: 24
             }
         ]
@@ -643,18 +643,18 @@ const textNodes = [
         options: [
             {
                 text: "Return to the back of the Hospital",
-                tempChange: 'decrease',
+                tempChange: -1,
                 nextText: 4
             },
             {
                 text: "Read the Old Newspaper",
-                tempChange: 'decrease',
+                tempChange: -1,
                 nextText: 20
             },
             {
                 text: "Take the matches",
                 requiredInventory: {Matches: false},
-                tempChange: 'decrease',
+                tempChange: -1,
                 nextText: 21
             }
         ]
@@ -676,7 +676,7 @@ const textNodes = [
         options: [
             {
                 text: "Go back to looking at the crates",
-                tempChange: 'decrease',
+                tempChange: -1,
                 nextText: 19
             }
         ]
@@ -757,12 +757,12 @@ const textNodes = [
         options: [
             {
                 text: "Go back to searching the back of the Hospital",
-                tempChange: 'decrease',
+                tempChange: -1,
                 nextText: 4
             },
             {
                 text: "Keep reading the Hospital documents",
-                tempChange: 'decrease',
+                tempChange: -1,
                 nextText: 25
             }
         ]
