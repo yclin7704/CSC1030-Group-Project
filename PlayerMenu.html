@@ -1,47 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./assets/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="./assets/css/playerMenu.css" />
+		<script type="text/javascript" src="./assets/js/playerMenu.js"></script>
+		<title>Last Stand</title>
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="./assets/css/playerMenu.css">
-    <script type = "text/javascript" src="./assets/js/Typewriter.js"></script>
-    <script type="text/javascript" src="./assets/js/playerMenu.js"></script>
-    <title>Last Stand</title>
-</head>
-
-<body onload="displayProfession();"> 
-    <div id="wrapper">
-    <div class="box centered">
-        <div class="menuText">
-        <h1>Player name:</h1>
-        </div>
-        <div class="formInput">
-            <input id="playerNameInput" class = "textInput" type="text" name="playerName" size="50" placeholder="Player name" >
-        </div>
-        <div class="menuText">
-        <h1>Choose your profession:</h1>
-        </div>
-        <div id="options">
-        <form action="/GasStation.html" onsubmit="setPlayerName();">
-            <select name="profession" id="profession" onchange="displayProfession();">
-                <option value="Hunter">Hunter</option>
-                <option value="War Veteran">War Veteran</option>
-                <option value="Mechanic">Mechanic</option>
-                <option value="Medic">Medic</option>
-                <option value="Priest">Priest</option>
-            </select>
-            </div>
-        <br>
-            <div class="menuText">
-            <span id="dialogue" class="dialogue"></span>
-            </div>
-            <input type = "submit" class="button" value="Play">
-            </form>
-    </div>
-    </div>
-</body>
-
+	<body onload="displayProfession();">
+		<div id="wrapper">
+			<div class="box centered">
+				<div class="menuText">
+					<h1>Player name:</h1>
+				</div>
+				<div class="formInput">
+					<input id="playerNameInput" class="textInput" type="text" name="playerName" size="50" placeholder="Player name" />
+				</div>
+				<div class="menuText">
+					<h1>Choose your profession:</h1>
+				</div>
+				<div id="options">
+					<form action="/GasStation.html" onsubmit="setPlayerName();">
+						<select name="profession" id="profession" onchange="displayProfession();">
+							<option value="Hunter">Hunter</option>
+							<option value="War Veteran">War Veteran</option>
+							<option value="Mechanic">Mechanic</option>
+							<option value="Medic">Medic</option>
+							<option value="Priest">Priest</option>
+						</select>
+						<br />
+						<div class="menuText">
+							<span id="dialogue" class="dialogue"></span>
+						</div>
+						<input type="submit" class="button" value="Play" />
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
