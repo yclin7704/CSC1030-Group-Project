@@ -72,6 +72,8 @@ a:link {
 .col2 img {
 	width: 100%;
 	height: 100%;
+	/* This code centres the images and stops them from being stretched.
+    Unfortunately, it cuts some of them off, so it's unused for now. */
 	/*
 	object-fit: cover;
 	object-position: center center;
