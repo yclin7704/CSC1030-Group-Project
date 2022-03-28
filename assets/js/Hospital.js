@@ -3,6 +3,7 @@ const optionButtonsElement = document.getElementById('ButtonsHospital');  // The
 const inventoryElement = document.getElementById('inventory');            // The player's inventory
 const imageElement = document.getElementById('ImageDisplay');             // The image to be displayed on-screen
 const profession = sessionStorage.getItem("profession");                  // This will store the profession
+const soundElement = document.createElement("audio");                     // The audio to be played in the background
 let state = {};                                                           // This will store the game's current/active state
 
 
@@ -98,6 +99,7 @@ function showTextNode(textNodeIndex){
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.                                    
     typeSentence(textNode.text, "DialogueHospital"); // Changes the dialogue box to the text stored in the TextNode.
     updateInventory(textNode.inventory);
+    crossfadeAudio(textNode.sound);
     imageElement.src = textNode.image;
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
@@ -160,6 +162,7 @@ const textNodes = [
             " something like a crowbar could pry it open.",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
+        sound: 'assets/sounds/wind2.mp3',
         options: [
             {
                 text: 'Talk to stranger camping in front of the Hospital',
@@ -194,6 +197,7 @@ const textNodes = [
             "</br>Around you, you still see some <strong>worn-down First Aid kits</strong>, <strong>an abandoned campfire</strong> and a <strong>pathway</strong>",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
+        sound: 'assets/sounds/wind2.mp3',
         options: [
             {
                 text: 'Go inside the Hospital',
@@ -237,6 +241,7 @@ const textNodes = [
             " at the end of the Lobby.",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Inside.jpg',
+        sound: 'assets/sounds/WaterDripping.mp3',
         options: [
             {
                 text: 'Go outside the Hospital',
@@ -259,7 +264,7 @@ const textNodes = [
 
 
 
-    // Every visit to the inside of the Hospital after the first one
+    // You followed the pathway that leads to the back of the Hospital
     {
         id: 4,
         text: "You followed the pathway through brambles and <strong>Mushrooms</strong> and it led to the back of the Hospital, which is just as overgrown as the front of the Hospital. However, now that you're behind" +
@@ -267,6 +272,7 @@ const textNodes = [
             " by shattered pieces of glass, you see what looks to be like <strong>documents</strong>",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
+        sound: 'assets/sounds/wind2.mp3',
         options: [
             {
                 text: 'Return to the front of the Hospital',
@@ -293,6 +299,7 @@ const textNodes = [
         ' them to you, I would be grateful if you could give me some mushrooms. I think there was some near the entrance to the Hospital Grounds.\"',
         inventory: '',
         image: 'assets/images/Hospital/OldTent.jpg',
+        sound: 'assets/sounds/wind2.mp3',
         options: [
             {
                 text: 'Return to the front of the Hospital',
@@ -362,6 +369,7 @@ const textNodes = [
             ' have been salvaging them. Nearby you also notice that there are a lot of <strong>Mushrooms.</strong> Do you attempt to salvage the First Aid kits?',
         inventory: '',
         image: 'assets/images/Hospital/FirstAidKit.jpg',
+        sound: 'assets/sounds/wind2.mp3',
         options: [
             {
                 text: 'You have already salvaged the First Aid kits, you have no more business here',
@@ -396,6 +404,7 @@ const textNodes = [
             ' from the First Aid kits.',
         inventory: '',
         image: 'assets/images/Hospital/FirstAidKit.jpg',
+        sound: 'assets/sounds/ZippingBag.mp3',
         options: [
             {
                 text: 'Return to the front of the Hospital',
@@ -414,6 +423,7 @@ const textNodes = [
             ' worryingly. However, beside the smoldering campfire there is some spare leftover Fire Wood, do you take it? ',
         inventory: '',
         image: 'assets/images/Hospital/AbandonedCampfire.jpg',
+        sound: 'assets/sounds/wind2.mp3',
         options: [
             {
                 text: 'You already collected all the wood from the campfire, there\'s no need for you to be here. Return to the front of the Hospital',
@@ -476,6 +486,7 @@ const textNodes = [
             ' you feel as if it might be a good idea to take this with you as a weapon in case you need to defend yourself. Do you take the Bone Saw?',
         inventory: '',
         image: 'assets/images/Hospital/BoneSaw.jpg',
+        sound: 'assets/sounds/WaterDripping.mp3',
         options: [
             {
                 text: 'Take the Bone Saw',
@@ -522,6 +533,7 @@ const textNodes = [
             ' might be useful to have. Do you try to take the Fuel?',
         inventory: '',
         image: 'assets/images/Hospital/Fuel.jpg',
+        sound: 'assets/sounds/WaterDripping.mp3',
         options: [
             {
                 text: 'Take the Fuel',
@@ -568,6 +580,7 @@ const textNodes = [
             ' make your <strong>Final Stand</strong>. Do you wish to stay here and prepare for the night ahead?',
         inventory: '',
         image: 'assets/images/Hospital/Abandoned_Room.jpg',
+        sound: 'assets/sounds/WaterDripping.mp3',
         options: [
             {
                 text: 'Yes! Make my Final Stand and don\'t look back',
@@ -591,6 +604,7 @@ const textNodes = [
             " which you feel could be very useful to have.",
         inventory: '',
         image: 'assets/images/Hospital/Wooden_Crates.jpg',
+        sound: 'assets/sounds/wind2.mp3',
         options: [
             {
                 text: "Return to the back of the Hospital",
@@ -657,6 +671,7 @@ const textNodes = [
             " cover your body which feels nice as opposed to the freezing cold of the Tundra",
         inventory: '',
         image: 'assets/images/Hospital/AbandonedCampfire.jpg',
+        sound: 'assets/sounds/Fire.mp3',
         options: [
             {
                 text: "Go back to searching the Campfire and its surroundings",
@@ -679,6 +694,7 @@ const textNodes = [
         text: "You sit in silence in front of the Campfire allowing you to warm yourself up before returning to your search of the area...",
         inventory: '',
         image: 'assets/images/Hospital/AbandonedCampfire.jpg',
+        sound: 'assets/sounds/Fire.mp3',
         options: [
             {
                 text: "Go back to searching the Campfire and its surroundings",
@@ -738,6 +754,7 @@ const textNodes = [
         text: 'You decided to get ready for the night ahead by making some last minute preparations to the abandoned room and just in general so you\'ll suvive...',
         inventory: '',
         image: 'assets/images/Hospital/Abandoned_Room.jpg',
+        sound: 'assets/sounds/WaterDripping.mp3',
         options: [
             {
                 text: 'Barricade the windows with the wood from the Campfire',
