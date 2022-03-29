@@ -2,12 +2,11 @@ const textElement = document.getElementById('labText'); // Lab Text
 const optionButtonsElement = document.getElementById('options'); // Buttoms for the user
 const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage'); //Location
-const profession = getProfession(); //Getting Profession
+const profession = sessionStorage.getItem("profession"); //Profession
 
 // This variable stores the current game state
 
 let state = {};
-let inventory = {};
 
 // Starting the game
 
@@ -36,7 +35,7 @@ function startGame()
     clearInventory();
 
 	// This will take the player to the appropriate Text Node if they die of frostbite or heat stroke
-    setTemperatureData(showTextNode, 103, 111);
+    //setTemperatureData(showTextNode, coldid, hotid);
     
     // Will display the first text node (id=1)
     showTextNode(1);
@@ -166,6 +165,18 @@ const textNodes = [
         options: [
             {
                 text: 'Go into the left room',
+                requiredState: (currentState) => !currentState.scienceSaved,
+                requiredState: (currentState) => !currentState.scienceKilled,
+                nextText: 3.1
+            },
+            {
+                text: 'Go into the left room',
+                requiredState: (currentState) => currentState.scienceSaved,
+                nextText: 3.1
+            },
+            {
+                text: 'Go into the left room',
+                requiredState: (currentState) => currentState.scienceKilled,
                 nextText: 3.1
             },
             {
@@ -198,12 +209,12 @@ const textNodes = [
             },
             {
                 text: 'Sneak up and stab him with the syringe',
-                requiredState: (currentState) => currentState.vaccineTrue,
+                requiredInventory: { 'vaccineReal': true },
                 nextText: 3.13
             },
             {
                 text: 'Sneak up and stab him with the syringe',
-                requiredState: (currentState) => currentState.vaccineFake,
+                requiredInventory: { 'vaccineFake': true },
                 nextText: 3.14
             },
             {
@@ -227,6 +238,7 @@ const textNodes = [
             {
                 text: 'Inspect the room',
                 requiredState: (currentState) => !currentState.WarVeteran,
+                currentState: scienceKilled = true,
                 nextText: 3.111           
             },
         ]
@@ -246,7 +258,7 @@ const textNodes = [
         options: [
             {
                 text: 'Explain the situation',
-                currentState: scienceSaved,
+                currentState: scienceSaved = true,
                 nextText: 3.141         
             },
         ]
@@ -320,14 +332,176 @@ const textNodes = [
         ]
     },
     {
-        id: 3.111, //w
-        text: `The room is relatively tiny with a window leading to the outside, there is a wooden cabinet here with many scratches over but can't seem to be opened without bashing it. `,
+        id: 3.111,
+        text: `The room is relatively tiny with a window leading to the outside, there is a wooden cabinet here with many scratches over but can't seem to be opened without bashing it with something. The rooms is covered in various "fluids" ranging from blood to questionable matters, ideally you want to leave the room soon as possible however judging from the zombie in the room, it seems that they attracted to this room, you might be able to use that to your advantage.`,
         inventory: '',
         image: '',
         options: [
             {
-                text: "Look around the room",
+                text: "Setup Camp",
+                currentState: bloodRoom = true,
+                nextText: "camp"   
+            },
+            {
+                text: "Inspect the cabinet",
+                requiredInventory: { 'bodyPart': false },
+                nextText: 3.1112    
+            },
+            {
+                text: "Leave the room",
+                nextText: 3    
+            },
+        ]
+    },
+    {
+        id: 3.1112,
+        text: `The cabinet infront of you seems to be badly damaged with multiple scratches all over it with a lock that looks like that won't work anymore. The only option seems to brute force the cabinet open however as you approach the cabinet it has a really foul smell coming out of it. You have a bad feeling about this.`,
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: "Break the cabinet open with a hammer",
+                requiredInventory: { 'bodyPart': false },
+                requiredInventory: { 'hammer': true },
+                nextText: 3.11121
+            },
+            {
+                text: "Look at the body parts",
+                requiredState: (currentState) => currentState.bodyPartSeen === true,
                 nextText: 3.111     
+            },
+            {
+                text: "Trust your instinct and leave",
+                nextText: 3.111     
+            },
+        ]
+    },
+    {
+        id: 3.144,
+        text: `Nothing could've prepared you for what was in that cabinet...multiple pieces of dismembered human body parts from different humans were in there ranging from the head to legs to hands, oh god I think I'm going to puke.`,
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: "Pick up the body parts",
+                requiredInventory: { 'bodyPart': false },
+                setInventory: { bodyPart: true },
+                currentState: bodyPartSeen = true,
+                nextText: 3.144     
+            },
+            {
+                text: "Leave before you puke",
+                nextText: 3.111     
+            },
+        ]
+    },
+    {
+        id: 3.2,
+        text: `You walk down stairs to be faced with a metallic iron door, upon opening said door, it reveals to be a storage of medicine and chemicals for the lab however upon further inspection, it seems to have been converted to in a bunker by the previous occupant, not that you are complaining with plenty of food and water. There is also a toolbox here if you want to repair things?`,
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: "Setup camp",
+                currentState: basement = true,
+                nextText: "camp"
+            },
+            {
+                text: "Check the toolbox",
+                nextText: 3.22 
+            },
+            {
+                text: "Check the large amount of chemicals",
+                requiredState: (currentState) => !currentState.Doctor,
+                requiredState: (currentState) => currentState.seenRecipe,
+                nextText: 3.231   
+            },
+            {
+                text: "Check the large amount of chemicals",
+                requiredState: (currentState) => currentState.Doctor,
+                requiredState: (currentState) => currentState.seenRecipe,
+                nextText: 3.232   
+            },
+            {
+                text: "Stomp on the ground really hard",
+                requiredState: (currentState) => currentState.heatAsk,
+                requiredState: (currentState) => !currentState.basementHeat,
+                currentState: basementHeat = true,
+                nextText: 3.24  
+            },
+        ]
+    },
+    {
+        id: 3.22,
+        text: `You inspect the toolbox before you, most of the tools inside are very rusted due humidity of the storage room however there is a miniature platinum hammer that seems to be in pristine condition. You want to question how much this costed the owner but right now you're just glad to find one functioning tool. Well...there is also dropper in here?`,
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: "Pick up the hammer",
+                requiredInventory: { 'hammer': false },
+                setInventory: { hammer: true },
+                currentState: bodyPartSeen = true,
+                nextText: 3.22  
+            },
+            {
+                text: "Pick up the dropper",
+                requiredInventory: { 'dropper': false },
+                setInventory: { dropper: true },
+                currentState: bodyPartSeen = true,
+                nextText: 3.22  
+            },
+            {
+                text: "Go back",
+                nextText: 3.2
+            },
+        ]
+    },
+    {
+        id: 3.231,
+        text: `After searching through all the chemical in the storage you found a box labelled "top secret" in a child like scribble. Upon opening you see five power like substance contained each in their little containers but of course none of them have labels attached to them. In no particular order the colour of the power were blue, gray, white, white and well white`,
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: "Pick up all the chemical",
+                requiredInventory: { 'chemicalDumb': false },
+                setInventory: { chemicalDumb: true },
+                nextText: 3.231     
+            },
+            {
+                text: "Go back",
+                nextText: 3.2    
+            },
+        ]
+    },
+    {
+        id: 3.232,
+        text: `After searching through all the chemical in the storage you found a box labelled "top secret" in a child like scribble. Upon opening you see five power like substance contained each in their little containers but of course none of them have labels attached to them. With your background knowledge in basic chemistry they seem to be Copper (II) sulfate, Lithium chloride, Calcium carbonate, Potassium chloride and Sodium borate`,
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: "Pick up all the chemical",
+                requiredInventory: { 'chemical': false },
+                setInventory: { chemical: true },
+                nextText: 3.231     
+            },
+            {
+                text: "Go back",
+                nextText: 3.2    
+            },
+        ]
+    },
+    {
+        id: 3.24,
+        text: `After stomping on the ground like a lunatic, it seems like you triggered some hidden mechanic of the building with the lights flashing to red and the following messaged being heard "emergency generator activated" as you pondered if that did anything, the basement suddenly gotten warmer.`,
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: "Ponder what to do next",
+                nextText: 3.2    
             },
         ]
     },
@@ -411,7 +585,7 @@ const textNodes = [
         options: [
             {
                 text: 'Go back to the front',
-                setInventory: {blueFungus: true},
+                setInventory: { blueFungus: true },
                 currentState: blueFungus = true,
                 nextText: 2
             },
