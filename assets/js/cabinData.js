@@ -195,7 +195,59 @@ const eventOpts = [
 		id: "testingBarricadingFurniture",
 		choices: [
 			{
-				desc: "",
+				desc: "Duck past the zombie",
+				nextEventId: "duckPastZombie",
+			},
+			{
+				desc: "Attack the zombie with your crowbar",
+				requiredInventory: { Crowbar: true },
+				nextEventId: "attackZombieCrowbar",
+			},
+			{
+				desc: "Shoot the zombie with []",
+				// TODO
+				requiredInventory: {},
+				nextEventId: "attackZombieGun",
+			},
+			{
+				desc: "Escape through the window",
+				nextEventId: "escapeZombie",
+			},
+		],
+	},
+	{
+		id: "duckingPastZombie",
+		choices: [
+			{
+				desc: "Dodge left",
+				nextEventId: dodgeZombie,
+			},
+			{
+				desc: "Run right at the zombie",
+				nextEventId: "runAtZombie",
+			},
+			{
+				desc: "Dodge right",
+				nextEventId: dodgeZombie,
+			},
+		],
+	},
+	{
+		id: "dodgedPastZombie",
+		choices: [
+			{
+				desc: "Phew, that was close!",
+				nextEventId: "leaveCabin",
+				stateChanges: { zombieInCabin: true },
+			},
+		],
+	},
+	{
+		id: "dyingToZombie",
+		choices: [
+			{
+				desc: "But maybe you can...",
+				nextEventId: "diedToZombie",
 			},
 		],
 	},
@@ -536,12 +588,42 @@ const events = [
 		text: getRandomSearchCabinDialogue,
 		optsId: "randomlySearchingCabin",
 	},
+
+	// BEGIN: Barricading setup
 	{
 		id: "testBarricadingFurniture",
 		text: `As you begin to see what furniture you can push around to help your makeshift barricade, you hear the floorboards creak as a zombie stubles through 
         the open door behind you, probably attracted by the noise.<br />Luckily you spotted it as it came in, and it's shambling quite slowly, but it's got you cornered.`,
 		optsId: "testingBarricadingFurniture",
 	},
+	{
+		id: "duckPastZombie",
+		text: `The zombie already knows you're here, so there's no hope in sneaking past it. Taking a few steps for a run up, you try to sprint past the zombie right in front of you.`,
+		optsId: "duckingPastZombie",
+	},
+	{
+		id: "runAtZombie",
+		text: `You run straight at it, hoping you can shove it out of your way. You realise too late this leaves you no chance of dodging the zombie,
+        which is already beginning to lunge towards you. <br />The zombie was heavier than you expected, and as its full weight dives towards you you realise you've got no chance against it like this.`,
+		optsId: "dyingToZombie",
+	},
+	{
+		id: "failedDodgeZombie",
+		text: `As you try to leap past the zombie, you realise you were too late. It had already begun to lunge towards you,
+        and you see you won't have time to get up before it lands on top of you.`,
+		optsId: "dyingToZombie",
+	},
+	{
+		id: "dodgedPastZombie",
+		text: `As you leap past the zombie, it begins to lunge towards you, but you manage to scramble to your feet quickly enough and escape out the door.`,
+		optsId: "dodgedPastZombie",
+		img: imgOutside,
+	},
+	{
+		id: "escapeZombie",
+		text: `Scramble out window TODO`,
+	},
+	// END: Barricading setup
 
 	// BEGIN: Hatch
 	{
@@ -616,6 +698,13 @@ const events = [
 	{
 		id: "tempTooHigh",
 		text: `As the flames [TODO]`,
+		img: gifDied,
+		optsId: "gameOver",
+	},
+	{
+		id: "diedToZombie",
+		text: `As the zombie lands on top of you, you try your best to push it off. It's no use, and you cry out in pain as you feel the zombie's teeth sink into your arm.
+        TODO: Could probably expand even further on this`,
 		img: gifDied,
 		optsId: "gameOver",
 	},
@@ -727,5 +816,10 @@ function padCombination(num) {
 	if (num < 10) return "00" + num;
 	else if (num < 100) return "0" + num;
 	else return num;
+}
+
+function dodgeZombie() {
+	if (getRandom(0, 50) < 2) runEvent("dodgedPastZombie");
+	else runEvent("failedDodgeZombie");
 }
 // END: Logic for determining some data
