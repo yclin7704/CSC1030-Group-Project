@@ -252,7 +252,7 @@ const textNodes = [
             " at the end of the Lobby.",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Inside.jpg',
-        sound: 'assets/sounds/WaterDripping.mp3',
+        sound: 'assets/sounds/WaterDripping.wav',
         options: [
             {
                 text: 'Go outside the Hospital',
@@ -428,7 +428,7 @@ const textNodes = [
             ' from the First Aid kits.',
         inventory: '',
         image: 'assets/images/Hospital/FirstAidKit.jpg',
-        sound: 'assets/sounds/ZippingBag.mp3',
+        sound: 'assets/sounds/ZippingBag.wav',
         options: [
             {
                 text: 'Return to the front of the Hospital',
@@ -515,7 +515,7 @@ const textNodes = [
             ' you feel as if it might be a good idea to take this with you as a weapon in case you need to defend yourself. Do you take the Bone Saw?',
         inventory: '',
         image: 'assets/images/Hospital/BoneSaw.jpg',
-        sound: 'assets/sounds/WaterDripping.mp3',
+        sound: 'assets/sounds/WaterDripping.wav',
         options: [
             {
                 text: 'Take the Bone Saw',
@@ -564,7 +564,7 @@ const textNodes = [
             ' might be useful to have. Do you try to take the Fuel?',
         inventory: '',
         image: 'assets/images/Hospital/Fuel.jpg',
-        sound: 'assets/sounds/WaterDripping.mp3',
+        sound: 'assets/sounds/WaterDripping.wav',
         options: [
             {
                 text: 'Take the Fuel',
@@ -613,7 +613,7 @@ const textNodes = [
             ' make your <strong>Final Stand</strong>. Do you wish to stay here and prepare for the night ahead?',
         inventory: '',
         image: 'assets/images/Hospital/Abandoned_Room.jpg',
-        sound: 'assets/sounds/WaterDripping.mp3',
+        sound: 'assets/sounds/WaterDripping.wav',
         options: [
             {
                 text: 'Yes! Make my Final Stand and don\'t look back',
@@ -710,7 +710,7 @@ const textNodes = [
             " cover your body which feels nice as opposed to the freezing cold of the Tundra",
         inventory: '',
         image: 'assets/images/Hospital/AbandonedCampfire.jpg',
-        sound: 'assets/sounds/Fire.mp3',
+        sound: 'assets/sounds/Fire.wav',
         options: [
             {
                 text: "Go back to searching the Campfire and its surroundings",
@@ -735,7 +735,7 @@ const textNodes = [
         text: "You sit in silence in front of the Campfire allowing you to warm yourself up before returning to your search of the area...",
         inventory: '',
         image: 'assets/images/Hospital/AbandonedCampfire.jpg',
-        sound: 'assets/sounds/Fire.mp3',
+        sound: 'assets/sounds/Fire.wav',
         options: [
             {
                 text: "Go back to searching the Campfire and its surroundings",
@@ -798,7 +798,7 @@ const textNodes = [
         text: 'You decided to get ready for the night ahead by making some last minute preparations to the abandoned room and just in general so you\'ll suvive...',
         inventory: '',
         image: 'assets/images/Hospital/Abandoned_Room.jpg',
-        sound: 'assets/sounds/WaterDripping.mp3',
+        sound: 'assets/sounds/WaterDripping.wav',
         options: [
             {
                 text: 'Barricade the windows with the wood from the Campfire',
