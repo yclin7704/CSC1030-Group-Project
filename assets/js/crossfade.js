@@ -9,6 +9,7 @@ let audioTrack = 0;
 
 /**
  * Linear crossfade between the current audio track and the next one
+ * Meant to be used with ambient sound
  * @param {string} newSource The location of the new audio source
  */
 async function crossfadeAudio(newSource) {
@@ -62,5 +63,18 @@ async function crossfadeAudio(newSource) {
 				audioIn.volume = 1;
 			}
 		}, fadeInTime * fadeInStep);
+	}
+}
+
+/**
+ * Play the given sound
+ * Meant to be used for short, non-looping individual sounds
+ * @param {string} source The location of the audio source
+ */
+async function playSound(source) {
+	if (source) {
+		let player = document.createElement("audio");
+		player.src = source;
+		player.play();
 	}
 }

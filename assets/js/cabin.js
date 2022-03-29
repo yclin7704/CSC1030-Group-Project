@@ -170,6 +170,8 @@ async function selectOption(opt) {
 	changeTemp(opt.tempChange);
 	// Update the player's inventory
 	updateInventory(opt.setInventory);
+	// Play the sound associated with the given choice
+	playSound(opt.sound);
 
 	// Continue to the next event
 	let nextEventId = opt.nextEventId;

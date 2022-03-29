@@ -6,6 +6,7 @@ const gifDied = "assets/images/You-Died_TEST-GIF.gif";
 
 const audioWind = "assets/sounds/wind.wav";
 const audioRain = "assets/sounds/rain_2.wav";
+const soundTest = "assets/sounds/ZippingBag.mp3";
 
 const profHunter = "Hunter";
 const profMechanic = "Mechanic";
@@ -26,6 +27,7 @@ const eventOpts = [
 				nextEventId: "initialInsideCabin",
 				disableMode: "hidden",
 				tempChange: "decrease",
+				sound: soundTest,
 			},
 			{
 				desc: "Enter the cabin",
@@ -33,6 +35,7 @@ const eventOpts = [
 				nextEventId: "insideCabin",
 				disableMode: "hidden",
 				tempChange: "decrease",
+				sound: soundTest,
 			},
 			{
 				desc: "Search for firewood",
@@ -185,6 +188,14 @@ const eventOpts = [
 			{
 				desc: "Take a closer look at the hatch in the floor",
 				nextEventId: "approachHatch",
+			},
+		],
+	},
+	{
+		id: "testingBarricadingFurniture",
+		choices: [
+			{
+				desc: "",
 			},
 		],
 	},
@@ -527,7 +538,9 @@ const events = [
 	},
 	{
 		id: "testBarricadingFurniture",
-		text: `As you begin to see what furniture you can push around to help your makeshift `,
+		text: `As you begin to see what furniture you can push around to help your makeshift barricade, you hear the floorboards creak as a zombie stubles through 
+        the open door behind you, probably attracted by the noise.<br />Luckily you spotted it as it came in, and it's shambling quite slowly, but it's got you cornered.`,
+		optsId: "testingBarricadingFurniture",
 	},
 
 	// BEGIN: Hatch
