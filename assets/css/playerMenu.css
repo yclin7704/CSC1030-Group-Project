@@ -14,6 +14,15 @@ body {
 	background-color: var(--brownDark);
 }
 
+h1 {
+	font-size: 20px;
+}
+
+#menuOptions {
+	display: none;
+}
+
+
 .box {
 	width: 50%;
 	display: block;
@@ -34,6 +43,11 @@ body {
 	border-style: none;
 	color: #eeeeee;
 	background-color: var(--background);
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 #options {
@@ -44,8 +58,7 @@ body {
 }
 
 #dialogue {
-	font-size: 0.5em;
-	line-height: 0.5px;
+	font-size: 15px;
 }
 
 #profession:focus {
@@ -60,7 +73,9 @@ body {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+	padding: 10px;
 	max-width: 50%;
+	max-height: 15px;
 }
 
 .textInput:focus {
@@ -70,4 +85,8 @@ body {
 p,
 span {
 	color: #111111;
+}
+
+summary {
+	font-size: 20px;
 }

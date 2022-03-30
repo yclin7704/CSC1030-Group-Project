@@ -15,6 +15,11 @@
 			<h1 id="menuTitle" class="handwritten">The Last Stand</h1>
 			<br>
 			<div class="box centered">
+				<div id="startButtons">
+				<button class="button" value="New game" onclick="newGame();">New Game</button>
+				<button class="button" value="View leaderboard" onclick="window.location.href='Leaderboard.html'">View Leaderboard</button>
+				</div>
+				<div id="menuOptions">
 				<div class="menuText">
 					<h1>Player name:</h1>
 				</div>
@@ -24,7 +29,7 @@
 				<div class="menuText">
 					<h1>Select game volume:</h1>
 				</div>
-				<input type="range" id="volumeSlider" value="50" min="1" max="100">
+				<input type="range" class="volumeSlider" id="volumeSlider" value="50" min="1" max="100">
 				<div class="menuText">
 					<h1>Choose your profession:</h1>
 				</div>
@@ -39,11 +44,15 @@
 						</select>
 						<br />
 						<div class="menuText">
-							<span id="dialogue" class="dialogue"></span>
+							<details>
+								<summary>Profession backstory</summary>
+								<span id="dialogue" class="dialogue"></span>
+							</details>
 						</div>
 						<input type="submit" class="button" value="Play"/>
 						<input type="button" onclick='window.location.href="CheatCodes.html"' class="button" value="Enter Cheat Code"/>
 					</form>
+					</div>
 				</div>
 			</div>
 		</div>
