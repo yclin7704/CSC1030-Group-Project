@@ -6,6 +6,8 @@ let showTextNodeFunctionTimer;
 let onDayEndId;
 let onNightEndId;
 
+let hasNightStarted = false;
+
 // Length time of day/night takes in secconds
 const dayLength = 250;
 const nightLength = 50;
@@ -33,8 +35,10 @@ function incrementTime() {
 
 	displayTime();
 
-	if (time === dayLength) showTextNodeFunctionTimer(onDayEndId);
-	else if (time === dayLength + nightLength) {
+	if (time >= dayLength && !hasNightStarted) {
+		hasNightStarted = true;
+		showTextNodeFunctionTimer(onDayEndId);
+	} else if (time > dayLength + nightLength) {
 		stopTimer();
 		showTextNodeFunctionTimer(onNightEndId);
 	}
