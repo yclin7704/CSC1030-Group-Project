@@ -12,14 +12,14 @@ async function main() {
 }
 
 function listingCollectable() {
-	//the collectables 
-	var collectable = ['C','S','C','1','0','3','0'];
+	//the collectables
+	var collectable = ["C", "S", "C", "1", "0", "3", "0"];
 	//Getting the amount of collectable you've collected
 	var numberOfCollectable = sessionStorage.getItem("collectable");
 	//Used to display the collectables
 	var stringOfCollectable = "";
 	//a loop to gather the collectable into one string
-	for(var i = 0; i < numberOfCollectable; i++){
+	for (var i = 0; i < numberOfCollectable; i++) {
 		stringOfCollectable += collectable[i];
 	}
 	console.log(numberOfCollectable);
@@ -29,7 +29,7 @@ function listingCollectable() {
 
 async function resetValues() {
 	// Reset temperature etc.
-	setTemp(40, false);
+	setTemp(20, false);
 	saveTime(0);
 	//clears the sesstion storage ?
 	sessionStorage.clear();
