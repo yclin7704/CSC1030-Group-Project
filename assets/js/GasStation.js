@@ -2,7 +2,7 @@ const textElement = document.getElementById('dialogue'); // Dialogue box
 const optionButtonsElement = document.getElementById('options'); // Buttons
 const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage');
-
+const soundElement = document.createElement("audio");  
 const profession = sessionStorage.getItem("profession");
 const playerName = sessionStorage.getItem("playerName");
 
@@ -32,7 +32,11 @@ function startGame() {
 
     showTextNode(1);
 
-    displayPlayerName()
+    displayPlayerName();
+
+    setTimerData(showTextNode, 29, 35);
+
+    setTemperatureData(showTextNode, 37, 37);
 }
 
 function displayPlayerName() {
@@ -63,7 +67,7 @@ function showTextNode(textNodeIndex) {
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "dialogue", 15); // Changes the dialogue box to text stored in the text node.
     updateInventory(textNode.inventory);
-    inventoryElement.innerHTML = textNode.inventory;
+    playSound(textNode.sound);
     imageElement.src = textNode.image;
     while (optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
@@ -97,6 +101,7 @@ function selectOption(option) {
     inventory = Object.assign(inventory, option.setInventory);
     showTextNode(nextEventIdNodeId);
     updateInventory(option.setInventory);
+    changeTemp(option.tempChange);
 }
 
 function selectEnding() {
@@ -126,15 +131,17 @@ const textNodes = [
             },
             {
                 text: 'Look around outside',
+                tempChange: 'decrease',
                 nextEventId: 3
             }
         ]
     },
     {
         id: 2,
-        text: 'You slowly open the door and a bell above you rings. This startles you, but there does not seem to be any zombies inside or nearby... not yet at least.'
+        text: 'You slowly open the door and it creaks loudly. This startles you, but there does not seem to be any zombies inside or nearby... not yet at least.'
             + ' It\'s dark inside and the light switches don\'t seem to be working. You have a flashlight, but maybe there is a backup generator to bring the power back. ',
         image: '/assets/images/gas-station_inside.jpg',
+        sound: '/assets/sounds/door.wav',
         inventory: '',
         options: [
             {
@@ -143,6 +150,7 @@ const textNodes = [
             },
             {
                 text: 'Look for a backup generator',
+                setState:{Breaker:true},
                 nextEventId: 28,
             }
         ]
@@ -157,6 +165,7 @@ const textNodes = [
         options: [
             {
                 text: 'Reset the breaker',
+                requiredInventory: {Fuse:false},
                 nextEventId: 27
             },
             {
@@ -178,6 +187,7 @@ const textNodes = [
             + ' There might be some spare fuses on one of the shelves.',
         image: '/assets/images/gas-station_inside.jpg',
         inventory: '',
+        sound:"/assets/sounds/breaker.wav",
         options: [
             {
                 text: 'Replace the fuse',
@@ -198,14 +208,16 @@ const textNodes = [
             + ' You start to look for supplies when you notice an old <strong>newspaper</strong> lying on the ground.',
         image: '/assets/images/gas-station_inside.jpg',
         inventory: '',
+        sound: '/assets/sounds/lightswitch.wav',
         options: [
             {
                 text: 'Pick up and read the newspaper',
                 nextEventId: 5
             },
             {
-                text: 'Search for supplies',
-                nextEventId: 4
+                text: 'Search the stock room',
+                tempChange: 'decrease',
+                nextEventId: 8
             }
         ]
     },
@@ -216,22 +228,26 @@ const textNodes = [
             + ' for lighting a fire to keep warm.',
         image: '/assets/images/car.jpg',
         inventory: '',
+        sound: '/assets/sounds/carboot.wav',
         options: [
             {
                 text: 'Take the lighter',
                 nextEventId: 39,
+                tempChange: 'decrease',
                 requiredInventory: { 'Lighter': false },
                 setInventory: { Lighter: true }
             },
             {
                 text: 'Take the gasoline',
                 nextEventId: 40,
+                tempChange: 'decrease',
                 requiredInventory: { 'Gasoline': false },
                 setInventory: { Gasoline: true }
             },
             {
                 text: 'Go inside',
-                nextEventId: 2
+                nextEventId: 2,
+                setState: {LightsOff:true}
             }
         ]
     },
@@ -244,12 +260,14 @@ const textNodes = [
             {
                 text: 'Take the gasoline',
                 nextEventId: 40,
+                tempChange: 'decrease',
                 requiredInventory: { 'Gasoline': false },
                 setInventory: { Gasoline: true }
             },
             {
                 text: 'Go inside',
-                nextEventId: 2
+                nextEventId: 2,
+                setState: {LightsOff:true}
             }
         ]
     },
@@ -262,12 +280,14 @@ const textNodes = [
             {
                 text: 'Take the lighter',
                 nextEventId: 39,
+                tempChange: 'decrease',
                 requiredInventory: { 'Lighter': false },
                 setInventory: { Lighter: true }
             },
             {
                 text: 'Go inside',
-                nextEventId: 2
+                nextEventId: 2,
+                setState: {LightsOff:true}
             }
         ]
     },
@@ -282,6 +302,7 @@ const textNodes = [
             {
                 text: 'Take the parts',
                 nextEventId: 45,
+                setState: {SearchSupplies:true},
                 requiredInventory: { 'Parts': false },
                 setInventory: { Parts: true },
 
@@ -289,17 +310,20 @@ const textNodes = [
             {
                 text: 'Take the fuse',
                 nextEventId: 41,
+                setState: {SearchSupplies:true},
                 setInventory: { Fuse: true },
-                requiredInventory: { 'Fuse': false }
+                requiredInventory: {Fuse: false }
             },
             {
                 text: 'Search the stock room',
+                setState: {SearchSupplies:false},
+                tempChange: 'decrease',
                 nextEventId: 8,
             },
             {
                 text: 'Go back to fix the generator',
                 nextEventId: 28,
-                requiredState: (currentState) => currentState.LightsOff
+                requiredState: (currentState) => currentState.LightsOff,
             }
         ]
 
@@ -313,22 +337,26 @@ const textNodes = [
             {
                 text: 'Take the fuse',
                 nextEventId: 41,
-                requiredInventory: { 'Fuse': false },
-                requiredState: (currentState) => currentState.SearchParts === false
+                requiredInventory: { Fuse: false },
+                setInventory:{Fuse:true},
+                requiredState: (currentState) => currentState.SearchSupplies
             },
             {
                 text: 'Search the stock room',
                 nextEventId: 8,
-                requiredState: (currentState) => currentState.SearchParts === false
+                setState: {SearchSupplies:false},
+                tempChange: 'decrease',
+                requiredState: (currentState) => currentState.SearchSupplies
             },
             {
                 text: 'Go back and fix the generator',
                 nextEventId: 28,
-                requiredState: (currentState) => currentState.LightsOff
+                requiredState: (currentState) => currentState.LightsOff,
             },
             {
                 text: 'Give the man the parts you found',
                 nextEventId: 11,
+                tempChange: 'decrease',
                 requiredState: (currentState) => currentState.SearchParts
             }
         ]
@@ -346,6 +374,8 @@ const textNodes = [
             },
             {
                 text: 'Search the stock room',
+                tempChange: 'decrease',
+                setState: {SearchSupplies:false},
                 nextEventId: 8
             },
             {
@@ -378,10 +408,17 @@ const textNodes = [
             ' on the virus can be provided and to remain calm. Some people have started to panic buy essential products and fuel, which has caused a spike in fuel prices. </span>',
         image: '/assets/images/gas-station_inside.jpg',
         inventory: '',
+        sound: '/assets/sounds/newspaper.wav',
         options: [
             {
                 text: 'Continue searching for food and supplies',
-                nextEventId: 4
+                nextEventId: 4,
+                requiredInventory:{'Parts':false, 'Fuse':false},
+            },
+            {
+                text: 'Search the stock room',
+                tempChange: 'decrease',
+                nextEventId: 8
             }
         ]
     },
@@ -392,13 +429,16 @@ const textNodes = [
             + ' You hear a noise coming from outside...',
         image: '/assets/images/gas-station_stock-room.jpg',
         inventory: '',
+        sound: '/assets/sounds/pennydrop.wav',
         options: [
             {
                 text: 'Investigate the noise',
+                tempChange: 'decrease',
                 nextEventId: 10
             },
             {
                 text: 'Prepare for the night',
+                tempChange: 'decrease',
                 nextEventId: 29
             }
         ]
@@ -420,11 +460,13 @@ const textNodes = [
                 text: 'Give him the parts you found',
                 requiredInventory: { 'Parts': true },
                 setInventory: { Parts: false },
+                tempChange: 'decrease',
                 nextEventId: 11
             },
             {
                 text: 'Help him search for the parts',
                 setState: { SearchParts: true },
+                tempChange: 'decrease',
                 nextEventId: 42
             },
             {
@@ -438,6 +480,7 @@ const textNodes = [
         text: '<i>"Thank you! I\'ve been searching everywhere for these. Take this <strong>knife</strong> to protect yourself from the zombies."</i>',
         image: '/assets/images/gas-station_stock-room.jpg',
         inventory: '',
+        sound: '/assets/sounds/knifeholster.wav',
         options: [
             {
                 text: 'Prepare for the night',
@@ -463,6 +506,7 @@ const textNodes = [
         id: 15,
         text: 'You push the clutch in and turn the key...\nThe car doesn\'t start.',
         image: '/assets/images/car.jpg',
+        sound: '/assets/sounds/carstall.wav',
         inventory: '',
         options: [
             {
@@ -480,6 +524,7 @@ const textNodes = [
         text: 'You open the bonnet of a car and at a first glance, everything appears to be fine. Upon further inspection, it looks like it could be faulty'
             + ' fuel injectors or spark plugs.',
         image: '/assets/images/car_engine-bay.jpg',
+        sound: '/assets/sounds/carbonnet.wav',
         inventory: '',
         options: [
             {
@@ -497,6 +542,7 @@ const textNodes = [
         text: 'You check the fuel level and there is some petrol left. This doesn\'t look to be the problem.',
         image: '/assets/images/car.jpg',
         inventory: '',
+        sound: '/assets/sounds/fuelcap.wav',
         options: [
             {
                 text: 'Open the bonnet',
@@ -532,6 +578,7 @@ const textNodes = [
         text: 'You inspect the fuel injectors and they do not appear to be corroded or damaged. You clean them and try to start '
             + 'the car again...\nThe car fails to start, therefore the fuel injectors are not the problem.',
         image: '/assets/images/car_engine-bay.jpg',
+        sound: '/assets/sounds/carstall.wav',
         inventory: '',
         options: [
             {
@@ -546,6 +593,7 @@ const textNodes = [
             + 'struggle, the car starts.'
             + '\n<i>"Wow! You fixed it! Thanks so much! Where would you like to go?"</i>',
         image: '/assets/images/car.jpg',
+        sound: '/assets/sounds/carignition.wav',
         inventory: '',
         options: [
             {
@@ -554,6 +602,7 @@ const textNodes = [
             },
             {
                 text: 'Stay at the gas station and prepare for the night',
+                tempChange: 'decrease',
                 nextEventId: 29
             },
             {
@@ -571,6 +620,7 @@ const textNodes = [
             + 'you are attacked by zombies as you watch him driving away... \n Remember: don\'t trust anybody.'
             + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
         image: '/assets/images/You-Died_TEST-GIF.gif',
+        sound: '/assets/sounds/brakescreech.flac',
         inventory: '',
         options: []
     },
@@ -583,6 +633,7 @@ const textNodes = [
             + ' by zombies. You survive the night and escape.'
             + '<b><em>You Escaped!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
         image: '/assets/Victory2_TEST-GIF.gif',
+        sound: '/assets/sounds/driveoff.wav',
         inventory: '',
         options: []
     },
@@ -598,16 +649,14 @@ const textNodes = [
                 text: 'Break up the shelves for wood',
                 nextEventId: 30,
                 setInventory: { Wood: true },
-                setState: { Wood: true },
                 requiredInventory: { 'Wood': false },
-                requiredState: (currentState) => currentState.Wood === false
             },
             {
                 text: 'Barricade the windows using the wood from the shelves',
                 nextEventId: 31,
-                setState: { Windows: true },
-                requiredState: (currentState) => currentState.Windows === false,
-                requiredInventory: { 'Wood': true },
+                setState: { Windows: false },
+                requiredState: (currentState) => currentState.Windows,
+                requiredInventory: { Wood: true },
                 setInventory: { Wood: false }
             },
             {
@@ -618,10 +667,10 @@ const textNodes = [
                 setInventory: { Wood: false }
             },
             {
-                text: 'Prepare a fire using wood from the shelves and the gasoline',
+                text: 'Prepare a fire using wood from the shelves and the gasoline from the car',
                 nextEventId: 33,
-                requiredInventory: (currentInventory) => currentInventory.Gasoline,
-                requiredInventory: (currentInventory) => currentInventory.Wood,
+                requiredInventory: {Gasoline:true},
+                requiredInventory: {Wood:true},
                 setInventory: { Wood: false },
                 setInventory: { Gasoline: false }
             },
@@ -643,6 +692,7 @@ const textNodes = [
         text: 'You break the shelves into planks of wood. These can be used to barricade the windows or doors.',
         image: '/assets/images/gas-station_stock-room.jpg',
         inventory: '',
+        sound: '/assets/sounds/breakshelves.wav',
         options: [
             {
                 text: 'Continue preparation',
@@ -660,6 +710,7 @@ const textNodes = [
         text: 'You use the wood planks to barricade the windows.',
         image: '/assets/images/gas-station_stock-room.jpg',
         inventory: '',
+        sound: '/assets/sounds/hammer.wav',
         options: [
             {
                 text: 'Continue preparation',
@@ -676,6 +727,7 @@ const textNodes = [
         id: 32,
         text: 'You use the wood planks to barricade the doors.',
         image: '/assets/images/gas-station_stock-room.jpg',
+        sound: '/assets/sounds/hammer.wav',
         inventory: '',
         options: [
             {
@@ -692,8 +744,9 @@ const textNodes = [
     {
         id: 33,
         text: 'You set up a fire using the wood planks and pour gasoline over them. You need something to start the fire with.',
-        image: '/assets/images/gas-station_stock-room',
+        image: '/assets/images/gas-station_stock-room.jpg',
         inventory: '',
+        sound: '/assets/sounds/gasoline.wav',
         options: [
             {
                 text: 'Use the lighter',
@@ -711,7 +764,8 @@ const textNodes = [
     {
         id: 34,
         text: 'You light the fire and the temperature starts to rise again.',
-        image: '/assets/images/gas-station_stock-room',
+        image: '/assets/images/fire_gas-station.jpg',
+        sound: '/assets/sounds/Fire.mp3',
         inventory: '',
         options: [
             {
@@ -734,6 +788,7 @@ const textNodes = [
             + ' as you bleed to death.'
             + '<b><em> You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
         image: '/assets/images/You-Died_TEST-GIF.gif',
+        sound: '/assets/sounds/knifeholster.wav',
         inventory: '',
         options: []
     },
@@ -750,6 +805,7 @@ const textNodes = [
             + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
         image: '/assets/images/You-Died_TEST-GIF.gif',
         inventory: '',
+        sound: '/assets/sounds/zombieseating.wav',
         options: []
     },
     {
@@ -765,6 +821,7 @@ const textNodes = [
             + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
         image: '/assets/images/You-Died_TEST-GIF.gif',
         inventory: '',
+        sound: '/assets/sounds/zombieseating.wav',
         options: []
     },
     {
@@ -785,7 +842,7 @@ const textNodes = [
     {
         id: 38,
         text: '<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
-        image: '/assets/images/Victory_TEST-GIF',
+        image: '/assets/images/Victory_TEST-GIF.gif',
         inventory: '',
         options: []
     }

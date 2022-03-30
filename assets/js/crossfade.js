@@ -6,6 +6,7 @@ const audio1 = document.createElement("audio");
 audio1.loop = true;
 // Keep track of which one is currently being played
 let audioTrack = 0;
+const volume = sessionStorage.getItem("gameVolume");
 
 let volumeMult = getSavedVolumeMult();
 
