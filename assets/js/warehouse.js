@@ -106,6 +106,8 @@ const textNodes = [
                 text: 'Take the large planks',
                 requiredInventory: { 'largePlanks': false },
                 setInventory: { largePlanks: true },
+                setState: { plankTaken : true },
+                requiredState: (currentState) => !currentState.plankTaken,
                 nextText: 2
             },
             {
