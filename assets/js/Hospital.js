@@ -73,12 +73,16 @@ function startGame() {
         case "Priest": state = {Priest: true}; break;
         default: state = {}; break;
     }
-
     state = {Doctor: true};
+
     // Displays the inventory
     showInventory();
+
     // clears the inventory before the game starts
     clearInventory();
+
+    //
+    setTimerData(showTextNode, 29, 101);
 
 	// This will take the player to the appropriate Text Node if they die of frostbite or heat stroke
     setTemperatureData(showTextNode, 103, 111);
@@ -352,6 +356,7 @@ const textNodes = [
             ' you acquire all the mushrooms for the Stranger in front of the Hospital',
         inventory: '',
         image: 'assets/images/Hospital/Mushrooms.jpg',
+        sound2: 'assets/sounds/PickMushrooms.wav',
         options: [
             {
                 text: 'Return to the front of the Hospital',
@@ -547,6 +552,7 @@ const textNodes = [
             ' cut yourself a little putting it into your bag, surprised at its sharpness after all these years',
         inventory: '',
         image: 'assets/images/Hospital/BoneSaw.jpg',
+        sound2: 'assets/sounds/PickBoneSaw.wav',
         options: [
             {
                 text: 'Head back to the main lobby of the Hospital',
@@ -596,6 +602,7 @@ const textNodes = [
             ' you return to the Hospital Lobby',
         inventory: '',
         image: 'assets/images/Hospital/Fuel.jpg',
+        sound2: 'assets/sounds/FuelCan.wav',
         options: [
             {
                 text: 'Head back to the main lobby of the Hospital',
@@ -674,6 +681,7 @@ const textNodes = [
             " coming days, by locking door and windows as they continue to search for a conclusion into what's going on. However rumours have begun to spread that it might be.......</span>",
         inventory: '',
         image: 'assets/images/Hospital/Newspaper2.jpg',
+        sound2: 'assets/sounds/Newspaper.wav',
         options: [
             {
                 text: "Go back to looking at the crates",
@@ -692,6 +700,7 @@ const textNodes = [
             " both the strong winds won't prevent them from being useful and that at least one of them works and that they aren't all duds making the venture pointless",
         inventory: '',
         image: 'assets/images/Hospital/Matches.jpg',
+        sound2: 'assets/sounds/MatchBox.wav',
         options: [
             {
                 text: "Return to looking at the crates",
@@ -755,6 +764,7 @@ const textNodes = [
             " you keep reading?",
         inventory: '',
         image: 'assets/images/Hospital/OldDocuments.jpg',
+        sound2: 'assets/sounds/Newspaper.wav',
         options: [
             {
                 text: "Go back to searching the back of the Hospital",
@@ -782,6 +792,7 @@ const textNodes = [
             " we'll have to see how it all plays out in the long run...<br><br> Dr. Nallig</span>",
         inventory: '',
         image: 'assets/images/Hospital/OldDocuments.jpg',
+        sound2: 'assets/sounds/Newspaper.wav',
         options: [
             {
                 text: "Go back to searching the back of the Hospital",
@@ -879,6 +890,7 @@ const textNodes = [
             " made full use of the wood, you were only able to cover half of the windows",
         inventory: '',
         image: 'assets/images/Hospital/Abandoned_Room.jpg',
+        sound2: 'assets/sounds/Barricading.wav',
         options: [
             {
                 text: "Go back to preparing for the Night",
@@ -898,6 +910,7 @@ const textNodes = [
             " to start a fire in order to keep the zombies at bay",
         inventory: '',
         image: 'assets/images/Hospital/Abandoned_Room.jpg',
+        sound2: 'assets/sounds/PouringLiquid.mp3',
         options: [
             {
                 text: "Go back to preparing for the night",
@@ -1078,7 +1091,7 @@ const textNodes = [
 
 
 
-    // You died to due to heat stroke - ENDING 12 - BAD
+    // You died to due to heat stroke - ENDING 12 - BAD - Only Present for Practicality 
     {
         id: 111,
         text: "In your attempt to warm yourself up, you became too warm and without any adequate treatmnent to help you, you unfortunately succumbed to heat stroke..." +
