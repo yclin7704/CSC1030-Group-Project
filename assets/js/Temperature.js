@@ -1,9 +1,9 @@
 const minTemp = -21;
-const maxTemp = 60;
+const maxTemp = 40;
 
-const lowTemp = -10;
-const normalTemp = 5;
-const highTemp = 50;
+const lowTemp = -12;
+const normalTemp = 1;
+const highTemp = 30;
 
 const temperatureMeter = document.getElementById("temperatureMeter");
 const temperatureSpan = document.getElementById("temperatureSpan");
@@ -35,7 +35,7 @@ function setTemperatureData(funcName, lowId, highId) {
 function getSavedTemp() {
 	let saved = parseInt(sessionStorage.getItem("Temperature"));
 	if (!isNaN(saved)) return saved;
-	else return 40;
+	else return 20;
 }
 
 /**
