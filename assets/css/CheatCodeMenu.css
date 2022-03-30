@@ -46,6 +46,12 @@ input, button {
     font-size: 20pt;
 }
 
+input[type='button']:enabled:hover {
+	cursor: pointer;
+	color: var(--beige);
+	background-color: var(--background);
+}
+
 .entry {
     background-color: var(--brownDark);
 }

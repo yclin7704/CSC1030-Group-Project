@@ -3,26 +3,13 @@ function validateCheat() {
 
     // Stores the Cheat Code entered
     var cheat = document.getElementById("Cheat").value;
-    
+
     // switches the effects based on the Cheat Code's value
     switch(cheat){
-        case "RedScheme":
-            document.getElementById("Styling").setAttribute("href", "CSS_2.css")
-            sessionStorage.setItem("ID", "Styling");
-            sessionStorage.setItem("Attribute", "href");
-            sessionStorage.setItem("Value", "CSS_2.css");
-            break;
-        case "GreenScheme":
-            document.getElementById("Styling").setAttribute("href", "CSS_3.css")
-            sessionStorage.setItem("ID", "Styling");
-            sessionStorage.setItem("Attribute", "href");
-            sessionStorage.setItem("Value", "CSS_3.css");
-            break;
         case "BlueScheme":
-            document.getElementById("Styling").setAttribute("href", "CSS_4.css")
             sessionStorage.setItem("ID", "Styling");
             sessionStorage.setItem("Attribute", "href");
-            sessionStorage.setItem("Value", "CSS_4.css");
+            sessionStorage.setItem("Value", "./assets/css/Cheat1.css");
             break;
     }
 }

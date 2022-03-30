@@ -17,7 +17,13 @@ function setGameVolume() {
 }
 
 function playMusic(source) {
-	crossfadeAudio(source)
+	let volume = document.getElementById('volumeSlider');
+	crossfadeAudio(source);
+
+	volume.addEventListener('change', function() {
+		console.log('Volume updated!');
+		volumeUpdated(volume.value);
+	});
 }
 
 function newGame() {

@@ -18,6 +18,7 @@
 				<div id="startButtons">
 				<button class="button" value="New game" onclick="newGame();">New Game</button>
 				<button class="button" value="View leaderboard" onclick="window.location.href='Leaderboard.html'">View Leaderboard</button>
+				<button class="button" value="Cheat Code" onclick='window.location.href="CheatCodes.html"'>Cheat Codes</button>
 				</div>
 				<div id="menuOptions">
 				<div class="menuText">
@@ -34,7 +35,7 @@
 					<h1>Choose your profession:</h1>
 				</div>
 				<div id="options">
-					<form action="/GasStation.html" onsubmit="setPlayerName(), setGameVolume();">
+					<form action="/Warehouse.html" onsubmit="setPlayerName(), setGameVolume();">
 						<select name="profession" id="profession" onchange="displayProfession();">
 							<option value="Hunter">Hunter</option>
 							<option value="War Veteran">War Veteran</option>
@@ -50,7 +51,6 @@
 							</details>
 						</div>
 						<input type="submit" class="button" value="Play"/>
-						<input type="button" onclick='window.location.href="CheatCodes.html"' class="button" value="Enter Cheat Code"/>
 					</form>
 					</div>
 				</div>
