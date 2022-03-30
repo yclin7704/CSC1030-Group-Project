@@ -197,6 +197,10 @@ const textNodes = [
                 currentState: fireLit = true,
                 nextText: 2
             },
+            {
+                text: 'Go back',
+                nextText: 2
+            },
         ]
     },
     {
