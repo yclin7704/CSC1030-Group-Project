@@ -672,13 +672,14 @@ const textNodes = [
                 requiredInventory: {Gasoline:true},
                 requiredInventory: {Wood:true},
                 setInventory: { Wood: false },
-                setInventory: { Gasoline: false }
+                setInventory: { Gasoline: false },
             },
             {
                 text: 'Light the fire using the lighter',
                 nextEventId: 34,
                 setState: { FireLit: true },
-                requiredInventory: { 'Lighter': true }
+                requiredInventory: { 'Lighter': true },
+                tempChange: 'increase'
             },
             {
                 text: 'Finish preparation',
