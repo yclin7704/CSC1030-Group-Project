@@ -15,7 +15,7 @@ let volumeMult = getSavedVolumeMult();
  */
 function getSavedVolumeMult() {
 	let saved = parseInt(sessionStorage.getItem("gameVolume"));
-	if (!isNaN(saved)) return saved / 100;
+	if (!isNaN(saved)) return (saved * saved) / 10000;
 	else return 1;
 }
 
