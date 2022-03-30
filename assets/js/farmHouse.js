@@ -57,6 +57,7 @@ function showTextNode(textNodeIndex){
     imageElement.src = textNode.image;
     noteItem.innerHTML = textNode.note;
     crossfadeAudio(textNode.sound); //The audio System.
+    playSound(textNode.sound2);
     changeTemp(textNode.tempChange); //The temperature system
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
@@ -287,7 +288,7 @@ const textNodes = [
             {
                 text: 'Back',
                 setInventory: {note1:true},
-                //setState: {note1:true},
+                setState: {note1:true},
                 nextText: 2
             }
         ]
