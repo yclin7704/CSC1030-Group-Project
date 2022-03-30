@@ -11,9 +11,19 @@ function setPlayerName() {
 	sessionStorage.setItem("playerName", name);
 }
 
+function setGameVolume() {
+	let volume = document.getElementById('volumeSlider').value;
+	sessionStorage.setItem("gameVolume", volume);
+}
+
+function playMusic() {
+	crossfadeAudio('https://soundimage.org/wp-content/uploads/2018/07/Horror-Game-Intro.mp3')
+}
+
 /**
  * Display a description of the currently selected profession
  */
+
 function displayProfession() {
 	const select = document.getElementById("profession").value; // Value of select box
 	const dialogue = document.getElementById("dialogue"); // Span element to display dialogue

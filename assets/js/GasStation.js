@@ -35,6 +35,8 @@ function startGame() {
     displayPlayerName();
 
     setTimerData(showTextNode, 29, 35);
+
+    setTemperatureData(showTextNode, 37, 37);
 }
 
 function displayPlayerName() {
@@ -99,6 +101,7 @@ function selectOption(option) {
     inventory = Object.assign(inventory, option.setInventory);
     showTextNode(nextEventIdNodeId);
     updateInventory(option.setInventory);
+    changeTemp(option.tempChange);
 }
 
 function selectEnding() {
@@ -128,6 +131,7 @@ const textNodes = [
             },
             {
                 text: 'Look around outside',
+                tempChange: 'decrease',
                 nextEventId: 3
             }
         ]
@@ -212,6 +216,7 @@ const textNodes = [
             },
             {
                 text: 'Search the stock room',
+                tempChange: 'decrease',
                 nextEventId: 8
             }
         ]
@@ -228,12 +233,14 @@ const textNodes = [
             {
                 text: 'Take the lighter',
                 nextEventId: 39,
+                tempChange: 'decrease',
                 requiredInventory: { 'Lighter': false },
                 setInventory: { Lighter: true }
             },
             {
                 text: 'Take the gasoline',
                 nextEventId: 40,
+                tempChange: 'decrease',
                 requiredInventory: { 'Gasoline': false },
                 setInventory: { Gasoline: true }
             },
@@ -253,6 +260,7 @@ const textNodes = [
             {
                 text: 'Take the gasoline',
                 nextEventId: 40,
+                tempChange: 'decrease',
                 requiredInventory: { 'Gasoline': false },
                 setInventory: { Gasoline: true }
             },
@@ -272,6 +280,7 @@ const textNodes = [
             {
                 text: 'Take the lighter',
                 nextEventId: 39,
+                tempChange: 'decrease',
                 requiredInventory: { 'Lighter': false },
                 setInventory: { Lighter: true }
             },
@@ -308,6 +317,7 @@ const textNodes = [
             {
                 text: 'Search the stock room',
                 setState: {SearchSupplies:false},
+                tempChange: 'decrease',
                 nextEventId: 8,
             },
             {
@@ -335,6 +345,7 @@ const textNodes = [
                 text: 'Search the stock room',
                 nextEventId: 8,
                 setState: {SearchSupplies:false},
+                tempChange: 'decrease',
                 requiredState: (currentState) => currentState.SearchSupplies
             },
             {
@@ -345,6 +356,7 @@ const textNodes = [
             {
                 text: 'Give the man the parts you found',
                 nextEventId: 11,
+                tempChange: 'decrease',
                 requiredState: (currentState) => currentState.SearchParts
             }
         ]
@@ -362,6 +374,7 @@ const textNodes = [
             },
             {
                 text: 'Search the stock room',
+                tempChange: 'decrease',
                 setState: {SearchSupplies:false},
                 nextEventId: 8
             },
@@ -404,6 +417,7 @@ const textNodes = [
             },
             {
                 text: 'Search the stock room',
+                tempChange: 'decrease',
                 nextEventId: 8
             }
         ]
@@ -419,10 +433,12 @@ const textNodes = [
         options: [
             {
                 text: 'Investigate the noise',
+                tempChange: 'decrease',
                 nextEventId: 10
             },
             {
                 text: 'Prepare for the night',
+                tempChange: 'decrease',
                 nextEventId: 29
             }
         ]
@@ -444,11 +460,13 @@ const textNodes = [
                 text: 'Give him the parts you found',
                 requiredInventory: { 'Parts': true },
                 setInventory: { Parts: false },
+                tempChange: 'decrease',
                 nextEventId: 11
             },
             {
                 text: 'Help him search for the parts',
                 setState: { SearchParts: true },
+                tempChange: 'decrease',
                 nextEventId: 42
             },
             {
@@ -584,6 +602,7 @@ const textNodes = [
             },
             {
                 text: 'Stay at the gas station and prepare for the night',
+                tempChange: 'decrease',
                 nextEventId: 29
             },
             {

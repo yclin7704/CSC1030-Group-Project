@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="./assets/css/main.css" />
 		<link rel="stylesheet" type="text/css" href="./assets/css/playerMenu.css" />
 		<script type="text/javascript" src="./assets/js/playerMenu.js"></script>
+		<script type="text/javascript" src="./assets/js/crossfade.js"></script>
 		<title>Last Stand</title>
 	</head>
 
@@ -24,7 +25,7 @@
 					<h1>Choose your profession:</h1>
 				</div>
 				<div id="options">
-					<form action="/GasStation.html" onsubmit="setPlayerName();">
+					<form action="/GasStation.html" onsubmit="setPlayerName(), setGameVolume();">
 						<select name="profession" id="profession" onchange="displayProfession();">
 							<option value="Hunter">Hunter</option>
 							<option value="War Veteran">War Veteran</option>
@@ -36,6 +37,10 @@
 						<div class="menuText">
 							<span id="dialogue" class="dialogue"></span>
 						</div>
+						<div class="menuText">
+							<h1>Select game volume:</h1>
+						</div>
+						<input type="range" id="volumeSlider" value="20">
 						<input type="submit" class="button" value="Play" />
 					</form>
 				</div>
