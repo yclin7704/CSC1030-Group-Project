@@ -32,7 +32,7 @@ function startGame()
     showInventory();
 
     // clears the inventory before the game starts
-    clearInventory();
+    //clearInventory();
 
 	// This will take the player to the appropriate Text Node if they die of frostbite or heat stroke
     //setTemperatureData(showTextNode, coldid, hotid);
@@ -78,7 +78,7 @@ function selectOption(option) {
     state = Object.assign(state, option.setState);
     inventory = Object.assign(inventory, option.setInventory);
     showTextNode(nextTextNodeId);
-
+    updateInventory(option.setInventory);
 }
 
 // The text nodes for the game are below
