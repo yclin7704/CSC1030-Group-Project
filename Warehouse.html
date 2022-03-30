@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Last Stand</title>
+		<meta name="description" content="Last Stand Text Adventure" />
+
+		<link rel="stylesheet" href="./assets/css/main.css" />
+	</head>
+    <body onload="StartTimer()">
+        <div class="wrapper">
+            <div class="row">
+
+                <!-- Column 1: Map and inventory -->
+                <div class="col col1">
+                    <div class="map">
+						<div class="temperature">
+							<label for="temperatureMeter">Temperature:</label><br>
+							<div id="temperatureMeter" class="temperatureMeter"></div>
+							<span id="temperatureSpan" class="temperatureSpan">40</span>°C
+						</div>
+						<br>
+						<div class="time">
+							Time:<br>
+							<span id="timeSpan" class="timeSpan">5:15pm</span>
+						</div>
+					</div>
+                    <div class="inventory">
+                        <p class="inventoryHeading">Inventory</p>
+						<span class="inventory" id="inventory"></span>
+                    </div>
+                </div>
+
+                <!-- Column 2: Image -->
+                <div class="col col2">
+                    <img src="assets/images/warehouse-in.jpg" style="opacity: 0.8;" id="locationImage" alt='warehouse inside'/>
+                </div>
+
+                <!-- Column 3: Buttons -->
+                <div class="col col3">
+                    <div id="options">
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- Bottom: Dialogue box -->
+            <div class="dialogueOuter">
+                <div class="dialogue textBox centeredText" id="warehouseText"></div>
+            </div>
+            <script src="./test/ProfessionDialogue.js"></script>
+            <script defer src="./assets/js/warehouse.js"></script>
+            <script src="./assets/js/inventory.js"></script>
+            <script src="./assets/js/Typewriter.js"></script>
+            <script src="./assets/js/crossfade.js"></script>
+            <script src="./assets/js/Timer.js"></script>
+            <script src="./assets/js/Temperature.js"></script>
+        </div>
+    </body>
+</html>
