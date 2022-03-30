@@ -73,12 +73,16 @@ function startGame() {
         case "Priest": state = {Priest: true}; break;
         default: state = {}; break;
     }
-
     state = {Doctor: true};
+
     // Displays the inventory
     showInventory();
+
     // clears the inventory before the game starts
     clearInventory();
+
+    //
+    setTimerData(showTextNode, 29, 101);
 
 	// This will take the player to the appropriate Text Node if they die of frostbite or heat stroke
     setTemperatureData(showTextNode, 103, 111);
@@ -1087,7 +1091,7 @@ const textNodes = [
 
 
 
-    // You died to due to heat stroke - ENDING 12 - BAD
+    // You died to due to heat stroke - ENDING 12 - BAD - Only Present for Practicality 
     {
         id: 111,
         text: "In your attempt to warm yourself up, you became too warm and without any adequate treatmnent to help you, you unfortunately succumbed to heat stroke..." +
