@@ -78,6 +78,13 @@ async function crossfadeAudio(newSource) {
 	}
 }
 
+async function volumeUpdated(newVolume) {
+	volumeMult = newVolume / 100;
+
+	if (audio0.volume) audio0.volume = newVolume;
+	if (audio1.volume) audio1.volume = newVolume;
+}
+
 /**
  * Play the given sound
  * Meant to be used for short, non-looping individual sounds
