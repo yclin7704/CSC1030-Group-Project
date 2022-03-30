@@ -34,7 +34,10 @@ function incrementTime() {
 	displayTime();
 
 	if (time === dayLength) showTextNodeFunctionTimer(onDayEndId);
-	else if (time === dayLength + nightLength) showTextNodeFunctionTimer(onNightEndId);
+	else if (time === dayLength + nightLength) {
+		stopTimer();
+		showTextNodeFunctionTimer(onNightEndId);
+	}
 }
 
 function isTimeOut() {
