@@ -78,7 +78,7 @@ async function crossfadeAudio(newSource) {
 	}
 }
 
-function volumeUpdated(newVolume) {
+async function volumeUpdated(newVolume) {
 	volumeMult = (newVolume * newVolume) / 10000;
 	if (audio0.volume) audio0.volume = volumeMult;
 	if (audio1.volume) audio1.volume = volumeMult;
