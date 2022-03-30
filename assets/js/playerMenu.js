@@ -16,8 +16,16 @@ function setGameVolume() {
 	sessionStorage.setItem("gameVolume", volume);
 }
 
-function playMusic() {
-	crossfadeAudio('https://soundimage.org/wp-content/uploads/2018/07/Horror-Game-Intro.mp3')
+function playMusic(source) {
+	crossfadeAudio(source)
+}
+
+function newGame() {
+	let options = document.getElementById('menuOptions');
+	let buttons = document.getElementById('startButtons');
+	buttons.style.display = 'none';
+	options.style.display = 'block';
+	playMusic('https://soundimage.org/wp-content/uploads/2018/07/Horror-Game-Intro.mp3');
 }
 
 /**
