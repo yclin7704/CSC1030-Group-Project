@@ -38,6 +38,12 @@ const eventOpts = [
 				sound: soundTest,
 			},
 			{
+				desc: "Enter the cabin",
+				requiredState: { zombieInCabin: true },
+				nextEventId: "zombieInCabin",
+				disableMode: "hidden",
+			},
+			{
 				desc: "Search for firewood",
 				requiredState: { hasVisitedFirewood: false },
 				stateChanges: { hasVisitedFirewood: true },
@@ -184,6 +190,13 @@ const eventOpts = [
 			{
 				desc: "See if any of the furniture can be moved to create a barricade",
 				nextEventId: "testBarricadingFurniture",
+				requiredState: { startedBarricade: false },
+				stateChanges: { startedBarricade: true },
+			},
+			{
+				desc: "Continue barricading",
+				nextEventId: "continueBarricade",
+				requiredState: { startedBarricade: true },
 			},
 			{
 				desc: "Take a closer look at the hatch in the floor",
@@ -239,6 +252,71 @@ const eventOpts = [
 				desc: "Phew, that was close!",
 				nextEventId: "leaveCabin",
 				stateChanges: { zombieInCabin: true },
+			},
+		],
+	},
+	{
+		id: "escapedZombie",
+		choices: [
+			{
+				desc: "What next?",
+				nextEventId: "leaveCabin",
+				stateChanges: { zombieInCabin: true },
+			},
+		],
+	},
+	{
+		id: "zombieInCabin",
+		choices: [
+			{
+				desc: "Yes, you've got a plan",
+				nextEventId: "fightZombie",
+			},
+			{
+				desc: "Best to avoid the zombie for now",
+				nextEventId: "leaveCabin",
+			},
+		],
+	},
+	{
+		id: "fightingZombie",
+		choices: [
+			{
+				desc: "Shoot the zombie",
+				nextEventId: "attackZombieGun",
+				requiredInventory: {},
+				stateChanges: { zombieInCabin: false },
+			},
+			{
+				desc: "Attack the zombie with your saw",
+				nextEventId: "attackZombieSaw",
+				requiredInventory: {},
+				stateChanges: { zombieInCabin: false },
+			},
+			{
+				desc: "Attack the zombie with your crowbar",
+				nextEventId: "attackZombieCrowbar",
+				requiredInventory: { Crowbar: true },
+				stateChanges: { zombieInCabin: false },
+			},
+			{
+				desc: "Throw one of the logs you found earlier at the zombie",
+				nextEventId: "attackZombieFirewood",
+				requiredInventory: { Firewood: true },
+				stateChanges: { zombieInCabin: false },
+			},
+			{
+				desc: "Uhh... try punching it?",
+				nextEventId: "attackZombiePunch",
+			},
+		],
+	},
+	{
+		id: "killedZombie",
+		choices: [
+			{
+				desc: "Shove the dead zombie out of the way and get back to barricading the cabin.",
+				nextEventId: "insideCabin",
 			},
 		],
 	},
@@ -596,6 +674,8 @@ const events = [
         the open door behind you, probably attracted by the noise.<br />Luckily you spotted it as it came in, and it's shambling quite slowly, but it's got you cornered.`,
 		optsId: "testingBarricadingFurniture",
 	},
+
+	// BEGIN: Fighting zombie
 	{
 		id: "duckPastZombie",
 		text: `The zombie already knows you're here, so there's no hope in sneaking past it. Taking a few steps for a run up, you try to sprint past the zombie right in front of you.`,
@@ -621,8 +701,53 @@ const events = [
 	},
 	{
 		id: "escapeZombie",
-		text: `Scramble out window TODO`,
+		text: `You scrable out the window, trying not to get caught on any of the shards of glass still hanging in the frame.
+        The zombie won't be able to follow you through the window, but that still leaves it stuck in the cabin.`,
+		optsId: "escapedZombie",
+		img: imgOutside,
 	},
+	{
+		id: "zombieInCabin",
+		text: `You're sure you want to do that? The zombie you escaped earlier is still in there.`,
+		optsId: "zombieInCabin",
+	},
+	{
+		id: "fightZombie",
+		text: `You sneak quietly into the room, avoiding the creaky floorboards that alterted you to the zombie in the first place. What next?`,
+		optsId: "fightingZombie",
+	},
+	{
+		id: "attackZombieGun",
+		text: `Taking aim at the zombie, you shoot it in the head. It keels over, dead. Hopefully the sound of the gunshot didn't attract any more zombies.`,
+		optsId: "killedZombie",
+	},
+	{
+		id: "attackZombieSaw",
+		text: `Sneaking up behind the zombie, you swing your saw around and strike the zombie in the back of the neck.
+        You were lucky enough to have hit something important, as it only struggles briefly before keeling over, dead.`,
+		optsId: "killedZombie",
+	},
+	{
+		id: "attackZombieCrowbar",
+		text: `Sneaking up behind the zombie, you swing and whack it across the head with the heavy crowbar. You hear a <em>crack</em> as the hit connects,
+        and the zombie slumps to the ground, dead.`,
+		optsId: "killedZombie",
+	},
+	{
+		id: "attackZombieFirewood",
+		text: `Taking as big a peice of the firewood as you can reasonably throw, you aim for the head. Luckily, your aim is better than you thought,
+        and the log scores a hit directly on the back of the zombie's head. It collapses to the floor, dead.`,
+		optsId: "killedZombie",
+	},
+	{
+		id: "attackZombiePunch",
+		text: `You're not really sure what you're doing, but you're going to see what you can do.<br />
+        Sneaking up behind the zombie, you try to kick it. It stumles slightly, but doesn't fall over. It turns around and lunges at you.
+        You try to dodge past it, but it lands directly on top of you, clawing at your leg. You try to push it off...`,
+		optsId: "dyingToZombie",
+	},
+	// END: Fighting zombie
+
 	// END: Barricading setup
 
 	// BEGIN: Hatch
