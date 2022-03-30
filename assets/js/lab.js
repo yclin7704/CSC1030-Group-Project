@@ -45,8 +45,8 @@ function startGame()
 
 function showTextNode(textNodeIndex){
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
-    textElement.innerHTML = textNode.text; // Changes the dialogue box to text stored in the text node.
-    inventoryElement.innerHTML = textNode.inventory;
+    typeSentence(textNode.text, "labText"); // Changes the dialogue box to text stored in the text node.
+    updateInventory(textNode.inventory);
     imageElement.src = textNode.image;
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
