@@ -57,6 +57,7 @@ function showTextNode(textNodeIndex){
     imageElement.src = textNode.image;
     noteItem.innerHTML = textNode.note;
     crossfadeAudio(textNode.sound); //The audio System.
+    playSound(textNode.sound2);
     changeTemp(textNode.tempChange); //The temperature system
     while(optionButtonsElement.firstChild) {
         optionButtonsElement.removeChild(optionButtonsElement.firstChild);
@@ -78,7 +79,7 @@ function showTextNode(textNodeIndex){
 // This function shows the current option selected
 
 function showOption(option) {
-    return option.requiredState == null || option.requiredState(state) && meetsInventoryRequirements(option.requiredInventory);
+    return (option.requiredState == null || option.requiredState(state)) && meetsInventoryRequirements(option.requiredInventory);
 }
 
 
@@ -179,19 +180,22 @@ const textNodes = [
         options: [
             {
                 text: 'Take lamp',
-                requiredState: (currentState) => !currentState.lamp,
+                //requiredState: (currentState) => !currentState.lamp,
                 setInventory: {lamp: true},
-                setState: {lamp:true},
+                requiredInventory: {lamp: false},
+                //setState: {lamp:true},
                 nextText: 2
             },
             {
                 text: 'Leave the torch',
-                requiredState: (currentState) => !currentState.lamp,
+                //requiredState: (currentState) => !currentState.lamp,
+                requiredInventory: {lamp: false},
                 nextText: 2
             },
             {
                 text: 'You have already picked up the lamp',
-                requiredState: (currentState) => currentState.lamp,
+                //requiredState: (currentState) => currentState.lamp,
+                requiredInventory: {lamp: true},
                 nextText: 2
             }
         ]
@@ -226,14 +230,16 @@ const textNodes = [
         options: [
             {
                 text: 'Take key',
-                requiredState: (currentState) => !currentState.key && !currentState.doorUnlocked,
+                requiredState: (currentState) =>!currentState.doorUnlocked,
+                requiredInventory: {key: false},
                 setState: {key:true},
                 setInventory: {key:true},
                 nextText: 2
             },
             {
                 text: 'Ignore the key',
-                requiredState: (currentState) => !currentState.key && !currentState.doorUnlocked,
+                requiredState: (currentState) => !currentState.doorUnlocked,
+                requiredInventory: {key: false},
                 nextText: 2
             },
             {
@@ -252,9 +258,10 @@ const textNodes = [
         options: [
             {
                 text: 'Turn on lamp',
-                requiredState: (currentState) => currentState.lamp && !currentState.lampOn,
+                requiredState: (currentState) => !currentState.lampOn,
+                requiredInventory: {lamp:true},
                 setInventory: {lamp:false},
-                setState: {lampOn:true, lamp:false},
+                setState: {lampOn:true},
                 nextText: 17
             },
             {
@@ -477,14 +484,16 @@ const textNodes = [
             },
             {
                 text: 'Pick up firewood',
-                requiredState: (currentState) => !currentState.firewood,
+                //requiredState: (currentState) => !currentState.firewood,
+                requiredInventory: {firewood:false},
                 setInventory: {firewood:true},
-                setState: {firewood: true},
+                //setState: {firewood: true},
                 nextText: 14
             },
             {
                 text: 'You have already picked up the firewood',
-                requiredState: (currentState) => currentState.firewood,
+                //requiredState: (currentState) => currentState.firewood,
+                requiredInventory: {firewood: true},
                 nextText: 14
             },
             {
@@ -536,14 +545,16 @@ const textNodes = [
         options: [
             {
                 text: 'Pick out the wood planks from the broken barrels',
-                requiredState: (currentState) => !currentState.planks,
+                //requiredState: (currentState) => !currentState.planks,
+                requiredInventory: {planks:false},
                 setInventory: {planks:true},
-                setState: {planks: true},
+                //setState: {planks: true},
                 nextText: 17
             },
             {
                 text: 'You have already pick up the planks',
-                requiredState: (currentState) => currentState.planks,
+                //requiredState: (currentState) => currentState.planks,
+                requiredInventory: {planks:true},
                 nextText: 17
             },
             {
@@ -576,14 +587,16 @@ const textNodes = [
         options: [
             {
                 text: 'Take the matches',
-                requiredState: (currentState) => !currentState.matches,
+                //requiredState: (currentState) => !currentState.matches,
+                requiredInventory: {matches:false},
                 setInventory: {matches: true},
-                setState: {matches: true},
+                //setState: {matches: true},
                 nextText: 18
             },
             {
                 text: 'You have already picked up the matches from the drawer',
-                requiredState: (currentState) => currentState.matches,
+                //requiredState: (currentState) => currentState.matches,
+                requiredInventory: {matches:true},
                 nextText: 18
             },
             {
@@ -602,14 +615,16 @@ const textNodes = [
         options: [
             {
                 text: 'Take the blanket',
-                requiredState: (currentState) => !currentState.blanket,
+                //requiredState: (currentState) => !currentState.blanket,
+                requiredInventory: {blanket:false},
                 setInventory: {blanket: true},
-                setState: {blanket: true},
+                //setState: {blanket: true},
                 nextText: 19
             },
             {
                 text: 'You have already picked up everything from the bed...',
-                requiredState: (currentState) => currentState.blanket,
+                //requiredState: (currentState) => currentState.blanket,
+                requiredInventory: {blanket:true},
                 nextText: 19
             },
             {
@@ -674,26 +689,30 @@ const textNodes = [
         options: [
             {
                 text: 'Take shotgun ammo',
-                requiredState: (currentState) => !currentState.shotgunAmmo,
+                //requiredState: (currentState) => !currentState.shotgunAmmo,
+                requiredInventory: {shotgunAmmo:false},
                 setInventory: {shotgunAmmo:true},
-                setState: {shotgunAmmo: true},
+                //setState: {shotgunAmmo: true},
                 nextText: 23
             },
             {
                 text: 'You have already picked up the shotgun ammo',
-                requiredState: (currentState) => currentState.shotgunAmmo,
+                //requiredState: (currentState) => currentState.shotgunAmmo,
+                requiredInventory: {shotgunAmmo:true},
                 nextText: 23
             },
             {
                 text: 'Take kitchen knife',
-                requiredState: (currentState) => !currentState.kitchenKnife,
+                //requiredState: (currentState) => !currentState.kitchenKnife,
+                requiredInventory: {kitchenKnife:false},
                 setInventory: {kitchenKnife:true},
-                setState: {kitchenKnife: true},
+                //setState: {kitchenKnife: true},
                 nextText: 23
             },
             {
                 text: 'You have already picked up the kitchen knife',
-                requiredState: (currentState) => currentState.kitchenKnife,
+                //requiredState: (currentState) => currentState.kitchenKnife,
+                requiredInventory: {kitchenKnife:true},
                 nextText: 23
             },
             {
@@ -734,13 +753,13 @@ const textNodes = [
             {
                 text: 'Shoot your gun',
                 requiredInventory: {shotgunLoaded:true},
-                requiredState: (currentState) => currentState.shotgunLoaded,
+                //requiredState: (currentState) => currentState.shotgunLoaded,
                 nextText: 30
             },
             {
                 text: 'Slash the zombies',
                 requiredInventory: {kitchenKnife:true},
-                requiredState: (currentState) => currentState.kitchenKnife,
+               //requiredState: (currentState) => currentState.kitchenKnife,
                 nextText: 30
             },
             {
@@ -761,13 +780,13 @@ const textNodes = [
             {
                 text: 'Shoot your gun',
                 requiredInventory: {shotgunLoaded:true},
-                requiredState: (currentState) => currentState.shotgunLoaded,
+                //requiredState: (currentState) => currentState.shotgunLoaded,
                 nextText: 31
             },
             {
                 text: 'Slash the zombies',
                 requiredInventory: {kitchenKnife:true},
-                requiredState: (currentState) => currentState.kitchenKnife,
+                //requiredState: (currentState) => currentState.kitchenKnife,
                 nextText: 31
             },
             {
@@ -787,13 +806,13 @@ const textNodes = [
             {
                 text: 'Shoot your gun',
                 requiredInventory: {shotgunLoaded:true},
-                requiredState: (currentState) => currentState.shotgunLoaded,
+                //requiredState: (currentState) => currentState.shotgunLoaded,
                 nextText: 32
             },
             {
                 text: 'Slash the zombies',
                 requiredInventory: {kitchenKnife:true},
-                requiredState: (currentState) => currentState.kitchenKnife,
+                //requiredState: (currentState) => currentState.kitchenKnife,
                 nextText: 32
             },
             {
@@ -820,14 +839,16 @@ const textNodes = [
         options: [
             {
                 text: 'Take the shotgun',
-                requiredState: (currentState) => !currentState.shotgun,
+                //requiredState: (currentState) => !currentState.shotgun,
+                requiredInventory: {shotgun:false},
                 setInventory: {shotgun:true},
-                setState: {shotgun:true},
+                //setState: {shotgun:true},
                 nextText: 29
             },
             {
                 text: 'You have already taken the shotgun',
-                requiredState: (currentState) => currentState.shotgun,
+                //requiredState: (currentState) => currentState.shotgun,
+                requiredInventory: {shotgun:true},
                 nextText: 29
             },
             {
