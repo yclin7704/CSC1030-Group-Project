@@ -92,6 +92,10 @@ function translateTimeToHours() {
 	return `${padTime(hour)}:${padTime(minutes * 5)}`;
 }
 
+function addTimeToTimer(seconds) {
+	time += seconds;
+}
+
 function padTime(num) {
 	if (num < 10) return "0" + num;
 	else return num;
