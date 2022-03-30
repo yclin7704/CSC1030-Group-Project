@@ -120,17 +120,17 @@ const textNodes = [
             },
             {
                 text: 'Barricade the door',
-                requiredState: (currentState) => currentState.barricated === false,
+                requiredState: (currentState) => !currentState.barricated,
                 nextText: 2.2
             },
             {
                 text: 'Setup Camp',
-                currentState: warehouseInside = true,
+                setState: { warehouseInside : true },
                 nextText: "camp"
             },
             {
                 text: 'Leave the building',
-                requiredState: (currentState) => currentState.barricated === false,
+                requiredState: (currentState) => !currentState.barricated,
                 nextText: 3
             },
         ]
@@ -145,56 +145,53 @@ const textNodes = [
                 text: 'Put in wood',
                 requiredInventory: { 'firewood': true },
                 setInventory: { firewood: false },
-                currentState: haveWood = true,
-                requiredState: (currentState) => currentState.haveWood === false,
+                setState: { haveWood : true },
+                requiredState: (currentState) => !currentState.haveWood,
                 nextText: 2
             },
             {
                 text: 'Put in wood',
                 requiredInventory: { 'wood': true },
                 setInventory: { wood: false },
-                currentState: haveWood = true,
-                requiredState: (currentState) => currentState.haveWood === false,
+                setState: { haveWood : true },
+                requiredState: (currentState) => !currentState.haveWood,
                 nextText: 2
             },
             {
                 text: 'Put in wood',
                 requiredInventory: { 'Fire Wood': true },
                 setInventory: { 'Fire Wood': false },
-                currentState: haveWood = true,
-                requiredState: (currentState) => currentState.haveWood === false,
+                setState: { haveWood : true },
+                requiredState: (currentState) => !currentState.haveWood,
                 nextText: 2
             },
             {
                 text: 'Put in wood',
                 requiredInventory: { 'Firewood': true },
                 setInventory: { 'Firewood': false },
-                currentState: haveWood = true,
-                requiredState: (currentState) => currentState.haveWood === false,
+                setState: { haveWood : true },
+                requiredState: (currentState) => !currentState.haveWood,
                 nextText: 2
             },
             {
                 text: 'Light Campfire with matches',
                 requiredInventory: { 'matches': true },
-                currentState: haveWood = true,
-                requiredState: (currentState) => currentState.haveWood === true,
-                currentState: fireLit = true,
+                requiredState: (currentState) => !currentState.haveWood,
+                setState: { fireLit : true },
                 nextText: 2
             },
             {
                 text: 'Light Campfire with matches',
                 requiredInventory: { 'Matches': true },
-                currentState: haveWood = true,
-                requiredState: (currentState) => currentState.haveWood === true,
-                currentState: fireLit = true,
+                requiredState: (currentState) => !currentState.haveWood,
+                setState: { fireLit : true },
                 nextText: 2
             },
             {
                 text: 'Light Campfire with the lighter',
                 requiredInventory: { 'Lighter': true },
-                currentState: haveWood = true,
-                requiredState: (currentState) => currentState.haveWood === true,
-                currentState: fireLit = true,
+                requiredState: (currentState) => !currentState.haveWood,
+                setState: { fireLit : true },
                 nextText: 2
             },
             {
@@ -212,7 +209,7 @@ const textNodes = [
             {
                 text: 'Barricade the door with planks',
                 setInventory: { largePlanks: false },
-                currentState: barricated = true,
+                setState: { barricated : true },
                 nextText: 2
             },
             {
@@ -233,12 +230,12 @@ const textNodes = [
             },
             {
                 text: 'Inspect the fence',
-                requiredState: (currentState) => currentState.fenceFixed === false,
+                requiredState: (currentState) => !currentState.fenceFixed,
                 nextText: 3.1
             },
             {
                 text: 'Inspect the fence',
-                requiredState: (currentState) => currentState.fenceFixed === true,
+                requiredState: (currentState) => !currentState.fenceFixed,
                 nextText: 3.2
             },
             {
@@ -257,7 +254,7 @@ const textNodes = [
                 text: 'Fix the fence',
                 requiredInventory: { 'barbedWire': true },
                 requiredInventory: { 'cutter': true },
-                currentState: fenceFixed = true,
+                setState: { fenceFixed : true },
                 nextText: 3.2
             },
             {

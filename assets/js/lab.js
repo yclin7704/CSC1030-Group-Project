@@ -126,31 +126,31 @@ const textNodes = [
             },
             {
                 text: 'Interact with the blue fungus',
-                requiredState: (currentState) => currentState.blueFungus === false,
+                requiredState: (currentState) => !currentState.blueFungus,
                 requiredState: (currentState) => currentState.Doctor,
                 nextText: 5
             },
             {
                 text: 'Interact with the blue fungus',
-                requiredState: (currentState) => currentState.blueFungus === false,
+                requiredState: (currentState) => !currentState.blueFungus,
                 requiredState: (currentState) => !currentState.Doctor,
                 nextText: 5.1
             },
             {
                 text: 'Interact with the red fungus',
-                requiredState: (currentState) => currentState.redFungus === false,
+                requiredState: (currentState) => !currentState.blueFungus,
                 requiredState: (currentState) => currentState.Doctor,
                 nextText: 6
             },
             {
                 text: 'Interact with the red fungus',
-                requiredState: (currentState) => currentState.redFungus === false,
+                requiredState: (currentState) => !currentState.blueFungus,
                 requiredState: (currentState) => !currentState.Doctor,
                 nextText: 6.1
             },
             {
                 text: 'Barricade the gate',
-                requiredState: (currentState) => currentState.plank === true,
+                requiredState: (currentState) => currentState.plank,
                 nextText: 7
             }
         ]
@@ -238,7 +238,7 @@ const textNodes = [
             {
                 text: 'Inspect the room',
                 requiredState: (currentState) => !currentState.WarVeteran,
-                currentState: scienceKilled = true,
+                setState: { scienceKilled : true },
                 nextText: 3.111           
             },
         ]
@@ -258,7 +258,7 @@ const textNodes = [
         options: [
             {
                 text: 'Explain the situation',
-                currentState: scienceSaved = true,
+                setState: { scienceSaved : true },
                 nextText: 3.141         
             },
         ]
@@ -288,12 +288,12 @@ const textNodes = [
         options: [
             {
                 text: "Thank's that's all I have to ask",
-                currentState: heatAsk = true,
+                setState: { heatAsk : true },
                 nextText: 3.144      
             },
             {
                 text: "What's the passcord to the safe?",
-                currentState: heatAsk = true,
+                setState: { heatAsk : true },
                 requiredState: (currentState) => currentState.seenSafe,
                 requiredState: (currentState) => !currentState.safeAsk,
                 nextText: 3.143      
@@ -308,12 +308,12 @@ const textNodes = [
         options: [
             {
                 text: "Thank's that's all I have to ask",
-                currentState: safeAsk = true,
+                setState: { safeAsk : true },
                 nextText: 3.144      
             },
             {
                 text: 'Is there anything that can help with the heating?',
-                currentState: safeAsk = true,
+                setState: { safeAsk : true },
                 requiredState: (currentState) => !currentState.heatAsk,
                 nextText: 3.142      
             },
@@ -339,7 +339,7 @@ const textNodes = [
         options: [
             {
                 text: "Setup Camp",
-                currentState: bloodRoom = true,
+                setState: { bloodRoom : true },
                 nextText: "camp"   
             },
             {
@@ -367,7 +367,7 @@ const textNodes = [
             },
             {
                 text: "Look at the body parts",
-                requiredState: (currentState) => currentState.bodyPartSeen === true,
+                requiredState: (currentState) => currentState.bodyPartSeen,
                 nextText: 3.111     
             },
             {
@@ -386,7 +386,7 @@ const textNodes = [
                 text: "Pick up the body parts",
                 requiredInventory: { 'bodyPart': false },
                 setInventory: { bodyPart: true },
-                currentState: bodyPartSeen = true,
+                setState: { bodyPartSeen : true },
                 nextText: 3.144     
             },
             {
@@ -403,7 +403,7 @@ const textNodes = [
         options: [
             {
                 text: "Setup camp",
-                currentState: basement = true,
+                setState: { basement : true },
                 nextText: "camp"
             },
             {
@@ -426,7 +426,7 @@ const textNodes = [
                 text: "Stomp on the ground really hard",
                 requiredState: (currentState) => currentState.heatAsk,
                 requiredState: (currentState) => !currentState.basementHeat,
-                currentState: basementHeat = true,
+                setState: { basementHeat : true },
                 nextText: 3.24  
             },
         ]
@@ -441,14 +441,14 @@ const textNodes = [
                 text: "Pick up the hammer",
                 requiredInventory: { 'hammer': false },
                 setInventory: { hammer: true },
-                currentState: bodyPartSeen = true,
+                setState: { bodyPartSeen : true },
                 nextText: 3.22  
             },
             {
                 text: "Pick up the dropper",
                 requiredInventory: { 'dropper': false },
                 setInventory: { dropper: true },
-                currentState: bodyPartSeen = true,
+                setState: { bodyPartSeen : true },
                 nextText: 3.22  
             },
             {
@@ -523,7 +523,7 @@ const textNodes = [
             },
             {
                 text: 'burn the blue fungus',
-                requiredState: (currentState) => currentState.torch === true,
+                requiredState: (currentState) => currentState.torch,
                 nextText: 5.3
             },
         ]
@@ -544,7 +544,7 @@ const textNodes = [
             },
             {
                 text: 'burn the blue fungus',
-                requiredState: (currentState) => currentState.torch === true,
+                requiredState: (currentState) => currentState.torch,
                 nextText: 5.3
             },
         ]
@@ -557,8 +557,8 @@ const textNodes = [
         options: [
             {
                 text: 'Go back to the front',
-                currentState: blueFungus = true,
-                currentState: decay = true,
+                setState: { blueFungus : true },
+                setState: { decay : true },
                 nextText: 2
             },
         ]
@@ -572,7 +572,7 @@ const textNodes = [
         options: [
             {
                 text: 'Force yourself up (-20 seconds)',
-                currentState: blueFungus = true,
+                setState: { blueFungus : true },
                 nextText: 2
             },
         ]
@@ -586,7 +586,7 @@ const textNodes = [
             {
                 text: 'Go back to the front',
                 setInventory: { blueFungus: true },
-                currentState: blueFungus = true,
+                setState: { blueFungus : true },
                 nextText: 2
             },
         ]
@@ -609,7 +609,7 @@ const textNodes = [
             },
             {
                 text: 'burn the red fungus',
-                requiredState: (currentState) => currentState.torch === true,
+                requiredState: (currentState) => currentState.torch,
                 nextText: 6.3
             },
         ]
@@ -631,7 +631,7 @@ const textNodes = [
             },
             {
                 text: 'burn the red fungus',
-                requiredState: (currentState) => currentState.torch === true,
+                requiredState: (currentState) => currentState.torch,
                 nextText: 6.3
             },
         ]
@@ -644,15 +644,15 @@ const textNodes = [
         options: [
             {
                 text: 'Go back to the front (the ash will be blown away by the wind)',
-                currentState: redFungus = true,
+                setState: { redFungus : true },
                 nextText: 2,
 
                 text: 'Pick it up with plastic container',
-                requiredState: (currentState) => currentState.plasticContainer === true,
+                requiredState: (currentState) => currentState.plasticContainer,
                 setInventory: {plasticContainerAsh: true},
                 setInventory: {plasticContainer: false},
-                currentState: ash = true,
-                currentState: redFungus = true,
+                setState: { ash : true },
+                setState: { redFungus : true },
                 nextText: 2
             },
         ]
@@ -672,7 +672,7 @@ const textNodes = [
             {
                 text: 'Go back to the front',
                 setInventory: {redFungus: true},
-                currentState: redFungus = true,
+                setState: { redFungus : true },
                 nextText: 2
             },
         ]
