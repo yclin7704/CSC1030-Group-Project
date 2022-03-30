@@ -78,7 +78,7 @@ function selectOption(option) {
     state = Object.assign(state, option.setState);
     inventory = Object.assign(inventory, option.setInventory);
     showTextNode(nextTextNodeId);
-
+    updateInventory(option.setInventory);
 }
 
 // The text nodes for the game are below
