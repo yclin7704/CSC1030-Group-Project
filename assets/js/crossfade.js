@@ -7,6 +7,17 @@ audio1.loop = true;
 // Keep track of which one is currently being played
 let audioTrack = 0;
 
+let volumeMult = getSavedVolumeMult();
+
+/**
+ * Get the volume multiplier value saved to sessionStorage, or the default (full volume) if it has not been set.
+ */
+function getSavedVolumeMult() {
+	let saved = parseInt(sessionStorage.getItem("gameVolume"));
+	if (!isNaN(saved)) return saved / 100;
+	else return 1;
+}
+
 /**
  * Linear crossfade between the current audio track and the next one
  * Meant to be used with ambient sound
@@ -16,7 +27,7 @@ async function crossfadeAudio(newSource) {
 	// The length of the fade, in ms
 	const fadeInTime = 2000;
 	// The size each step to take should be (0.1 = 10%)
-	const fadeInStep = 0.05;
+	const fadeInStep = 0.05 * volumeMult;
 
 	// Figure which track we're fading in and which we're fading out
 	let audioIn;
@@ -32,8 +43,8 @@ async function crossfadeAudio(newSource) {
 		audioTrack = 0;
 	}
 
-	// Set output volume to 1 to avoid issues if user clicks too quickly
-	audioOut.volume = 1;
+	// Set output volume to full to avoid issues if user clicks too quickly
+	audioOut.volume = volumeMult;
 
 	// Fade out the old track on an interval
 	let fadeOut = setInterval(function () {
@@ -55,12 +66,12 @@ async function crossfadeAudio(newSource) {
 		// If a new source is provided, fade into it on an interval
 		let fadeIn = setInterval(function () {
 			// Only fade if not at one already
-			if (audioIn.volume < 0.999 - fadeInStep) {
+			if (audioIn.volume < 0.999 * volumeMult - fadeInStep) {
 				audioIn.volume += fadeInStep;
 			} else {
 				// Stop when volume is near-one
 				clearInterval(fadeIn);
-				audioIn.volume = 1;
+				audioIn.volume = volumeMult;
 			}
 		}, fadeInTime * fadeInStep);
 	}
@@ -74,6 +85,7 @@ async function crossfadeAudio(newSource) {
 async function playSound(source) {
 	if (source) {
 		let player = document.createElement("audio");
+		player.volume = volumeMult;
 		player.src = source;
 		player.play();
 	}
