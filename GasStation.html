@@ -6,11 +6,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Last Stand</title>
 	<meta name="description" content="Last Stand Text Adventure" />
-
 	<link rel="stylesheet" href="./assets/css/main.css" />
+	<link id="Styling" rel="stylesheet"/>
 </head>
 
-<body onload="enableTorch(), StartTimer();">
+<body onload="enableTorch(), StartTimer(); updatePages()">
 	<div class="wrapper">
 		<div class="row">
 			<!-- Column 1: Map and inventory -->
@@ -72,6 +72,7 @@
 		<script src="./assets/js/Temperature.js"></script> <!-- Temperature function -->
 		<script src="./assets/js/torch.js"></script>
 		<script src="./assets/js/crossfade.js"></script>
+		<script src="./assets/js/CheatCodeSystem.js"></script>
 	</div>
 </body>
 
