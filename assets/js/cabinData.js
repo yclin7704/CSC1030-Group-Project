@@ -192,15 +192,28 @@ const eventOpts = [
 				nextEventId: "testBarricadingFurniture",
 				requiredState: { startedBarricade: false },
 				stateChanges: { startedBarricade: true },
+				disableMode: "hidden",
 			},
 			{
 				desc: "Continue barricading",
 				nextEventId: "continueBarricade",
-				requiredState: { startedBarricade: true },
+				requiredState: { startedBarricade: true, returnedToBarricade: false },
+				stateChanges: { returnedToBarricade: true },
+				disableMode: "hidden",
+			},
+			{
+				desc: "Return to your barricade",
+				nextEventId: "addToBarricade",
+				requiredState: { returnedToBarricade: true },
+				disableMode: "hidden",
 			},
 			{
 				desc: "Take a closer look at the hatch in the floor",
 				nextEventId: "approachHatch",
+			},
+			{
+				desc: "Wait until night",
+				nextEventId: waitUntilNightId,
 			},
 		],
 	},
@@ -326,6 +339,20 @@ const eventOpts = [
 			{
 				desc: "But maybe you can...",
 				nextEventId: "diedToZombie",
+			},
+		],
+	},
+	{
+		id: "addToBarricade",
+		choices: [
+			{
+				desc: "Leave the barricade alone for now",
+				nextEventId: "insideCabin",
+			},
+			{
+				desc: "Use some planks to board up the windows",
+				nextEventId: "addToBarricade",
+				requiredState: { windowsBoarded: false },
 			},
 		],
 	},
@@ -528,6 +555,17 @@ const eventOpts = [
 		],
 	},
 	// END: Forest
+
+	// BEGIN: Night
+	{
+		id: "onNightEnd",
+		choices: [
+			{
+				desc: "TODO",
+			},
+		],
+	},
+	// END: Night
 
 	{
 		id: "tempTooLowCall",
@@ -748,6 +786,19 @@ const events = [
 	},
 	// END: Fighting zombie
 
+	{
+		id: "continueBarricade",
+		text: `Getting back to the barricade, you shuffle around all the furniture that's not nailed down to make a makeshift barricade.
+        This probably won't be enough to survive the whole night, but it'll definitely help a lot.<br />
+        There's still a few more preparations you can make.`,
+		optsId: "addToBarricade",
+	},
+	{
+		id: "addToBarricade",
+		text: `Returning to your barricade, you look at what you can still add to it.`,
+		optsId: "addToBarricade",
+	},
+
 	// END: Barricading setup
 
 	// BEGIN: Hatch
@@ -808,7 +859,13 @@ const events = [
 	// END: Forest
 
 	// BEGIN: Night
-	//{},
+	{
+		id: "onDayEnd",
+		text: `As night approaches, you prepare yourself in the cabin.<br />
+        `,
+		img: imgInside,
+		optsId: "onDayEnd",
+	},
 	// END: Night
 
 	// BEGIN: Deaths
@@ -946,5 +1003,9 @@ function padCombination(num) {
 function dodgeZombie() {
 	if (getRandom(0, 50) < 2) runEvent("dodgedPastZombie");
 	else runEvent("failedDodgeZombie");
+}
+
+function waitUntilNightId() {
+	waitUntilNight();
 }
 // END: Logic for determining some data
