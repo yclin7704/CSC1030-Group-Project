@@ -54,4 +54,5 @@ input[type='button']:enabled:hover {
 
 .entry {
     background-color: var(--brownDark);
+    color: var(--background);
 }

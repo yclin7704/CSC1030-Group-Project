@@ -1,0 +1,48 @@
+/* Variables */
+/* Will apply a blue colour scheme to the Main Pages */
+:root {
+	--brownDark: rgb(34, 32, 32);
+	--beige: rgb(146, 92, 146);
+	--text: white;
+}
+
+.dialogueOuter {
+	background-color: purple;
+    color: white;
+}
+
+.col1{
+    background-color: red;
+}
+
+.col2{
+    background-color: green;
+}
+
+.col3 {
+	background-color: blue;
+}
+
+.buttonChoice {
+	background-color: rgb(51, 51, 124);
+	color: rgb(24, 24, 44);
+    box-shadow: 0 0 5px 2px rgb(24, 24, 44);
+}
+
+button:enabled:hover {
+	color: rgb(51, 51, 124);
+	background-color: rgb(24, 24, 44);
+}
+
+.map {
+	background-color: var(--brownDark);
+}
+
+.inventory {
+	background-color: orange;
+}
+
+.textBox {
+    color: white;
+	box-shadow: 0 0 10px 2px rgb(53, 3, 53);
+}

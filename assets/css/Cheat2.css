@@ -1,10 +1,10 @@
 /* Variables */
 /* Will apply a blue colour scheme to the Main Pages */
 :root {
-	--background: #171c24;
-	--brownDark: #3e455d;
-	--beige: #687390;
-	--text: #89a7de;
+	--background: #1c2417;
+	--brownDark: #485d3e;
+	--beige: #739068;
+	--text: #a1de89;
 }
 
 .temperatureSpan {
