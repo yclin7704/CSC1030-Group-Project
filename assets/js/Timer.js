@@ -100,6 +100,10 @@ function addTimeToTimer(seconds) {
 	time += seconds;
 }
 
+function waitUntilNight() {
+	if (time < dayLength) time = dayLength;
+}
+
 function padTime(num) {
 	if (num < 10) return "0" + num;
 	else return num;
