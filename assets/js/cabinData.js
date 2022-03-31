@@ -29,7 +29,7 @@ const eventOpts = [
 			},
 			{
 				desc: "Enter the cabin",
-				requiredState: { hasBeenInsideCabin: true },
+				requiredState: { hasBeenInsideCabin: true, zombieInCabin: false },
 				nextEventId: "insideCabin",
 				disableMode: "hidden",
 				tempChange: "decrease",
