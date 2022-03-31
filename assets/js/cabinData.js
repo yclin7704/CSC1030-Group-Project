@@ -14,8 +14,6 @@ const profDoctor = "Doctor";
 const profVeteran = "Veteran";
 const profPriest = "Priest";
 
-// TODO: Add ways to survive/die
-// TODO: Only event OR choice should be able to update game state (Or should most of the time, anyway). Which?
 const eventOpts = [
 	{
 		id: "outside",
