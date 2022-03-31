@@ -283,7 +283,8 @@ const textNodes = [
         note: "I've been in this dark place for what it feels like days. It seems like the group that has captured me is planning some cultist acts. One day, the group brought me out of the room that I was being held captive and forced me to create some sort of.... They called themselves the 'bad boys' which is really childish considering these people are like in their 40s. I hope this note reach to the authorities to save me from this cult.",
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
-        sound: "",
+        sound: '',
+        sound2: "assets/sounds/newspaper.wav",
         options: [
             {
                 text: 'Back',
@@ -345,6 +346,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-inside.jpg',
+        sound2: "assets/sounds/door.wav",
         tempChange: 'increase',
         options: [
             {
@@ -445,6 +447,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-inside.jpg',
+        sound2: "assets/sounds/newspaper.wav",
         options: [
             {
                 text: 'Read the note',
@@ -531,6 +534,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
+        sound2: "assets/sounds/zombieseating.wav",
         options:[
             
         ]
@@ -584,6 +588,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-bedroom.jpg',
+        sound2: "assets/sounds/drawerOpen.wav",
         options: [
             {
                 text: 'Take the matches',
@@ -654,6 +659,7 @@ const textNodes = [
         note: 'Recipe For Z....<br>1 part Zomium<br>2 part Monster E.<br>0.5 part Uranium Liquid<br>4 part Bloo..<br>2 part Zom. Goo',
         inventory: '',
         image: 'assets/images/farm-house-inside.jpg',
+        sound2: "assets/sounds/newspaper.wav",
         options: [
             {
                 text: 'Back',
@@ -670,6 +676,7 @@ const textNodes = [
         note: 'Whoever reads this, I am sorry that I have created a deadly virus, it turns people in brain eating zombies.... These cultists kidnapped my daughter and I had no choice but to listen to them...They used my daughter as a test subject. Sh..she turned into one of them... a monster<br>We had no choice but to lock her up in the wardrobe in the bedroom...',
         inventory: '',
         image: 'assets/images/farm-house-inside.jpg',
+        sound2: "assets/sounds/newspaper.wav",
         options: [
             {
                 text: 'Back',
@@ -728,6 +735,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-kitchen.jpg',
+        sound2: "assets/sounds/openFridge.wav",
         options: [
             {
                 text: 'Drink the liquid',
@@ -827,6 +835,7 @@ const textNodes = [
         text: 'Drinking the weird liquid, you felt funny... It almost tasted like an energy drink from the stores... Later, your body is slowly not responding to you... you look at your hands and they were turning grey. You suddenly thought about human flesh and BRAINS. You then realise, you are slowing turning into a zombie... that drink was... how this outbreak happened<br><br><a href=\"EndStatistics.html\">See Statistics</a>',
         note: '',
         inventory: '',
+        sound2: "assets/sounds/drinking.wav",
         image: 'assets/images/You-Died_TEST-GIF.gif',
     },
     //Get double barrel shotgun
@@ -863,6 +872,7 @@ const textNodes = [
         text: 'Being overwhelmed by zombies, you try your best to kill as many zombies as you can. But there was no hope, the zombies surrounds you. They tore your limbs apart and started eating you, You have died.<br><br><a href=\"EndStatistics.html\">See Statistics</a>',
         note: '',
         inventory: '',
+        sound2: "assets/sounds/zombieseating.wav",
         image: 'assets/images/You-Died_TEST-GIF.gif',
     },
     //Ending night 2 - barricade, no camp - Bad
@@ -871,6 +881,7 @@ const textNodes = [
         text: "You kill the zombies as they are trying to break the barricade open. You keep killing and killing and killing... until there was no more. You decided to sleep after a long battle. There was a huge snow storm... You didn't have any warmth to protect you from the cold and you died of hypothermia.<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
         note: '',
         inventory: '',
+        sound2: "assets/sounds/winterStorm.wav",
         image: 'assets/images/You-Died_TEST-GIF.gif',
     },
     //Ending night 3 - you survive the night. - Good
@@ -887,6 +898,7 @@ const textNodes = [
         text: "As day dawns over your failed defence from the zombie horde, you lie bleeding out on the ground, too exhausted to move. You won't make it to the next night. <br><br><a href=\"EndStatistics.html\">See Statistics</a>",
         note: '',
         inventory: '',
+        sound2: "assets/sounds/zombieseating.wav",
         image: 'assets/images/You-Died_TEST-GIF.gif',
     },
     //Ending dying because of the cold
