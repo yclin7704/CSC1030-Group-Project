@@ -38,7 +38,7 @@ function incrementTime() {
 	if (time >= dayLength && !hasNightStarted) {
 		hasNightStarted = true;
 		showTextNodeFunctionTimer(onDayEndId);
-	} else if (time > dayLength + nightLength) {
+	} else if (time >= dayLength + nightLength) {
 		stopTimer();
 		showTextNodeFunctionTimer(onNightEndId);
 	}
@@ -98,6 +98,10 @@ function translateTimeToHours() {
 
 function addTimeToTimer(seconds) {
 	time += seconds;
+}
+
+function waitUntilNight() {
+	if (time < dayLength) time = dayLength;
 }
 
 function padTime(num) {
