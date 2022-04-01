@@ -45,19 +45,19 @@ function startGame()
 
 function showTextNode(textNodeIndex){
     if (textNodeIndex === "Hospital"){
-        window.location.href = "Hospital.html"
+        window.location.href = "Hospital.html";
     }
     else if (textNodeIndex === "GasStation"){
-        window.location.href = "GasStation.html"
+        window.location.href = "GasStation.html";
     }
     else if (textNodeIndex === "Cabin"){
-        window.location.href = "Cabin.html"
+        window.location.href = "Cabin.html";
     }
     else if (textNodeIndex === "Lab"){
-        window.location.href = "Lab.html"
+        window.location.href = "Lab.html";
     }
     else if (textNodeIndex === "FarmHouse"){
-        window.location.href = "FarmHouse.html"
+        window.location.href = "FarmHouse.html";
     }
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "warehouseText"); // Changes the dialogue box to text stored in the text node.
