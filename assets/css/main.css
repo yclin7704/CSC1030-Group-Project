@@ -121,6 +121,7 @@ a:link {
 .inventoryHeading {
 	text-decoration: underline;
 	color: var(--lightText);
+	white-space: pre;
 }
 
 .inventory {
