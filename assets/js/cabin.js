@@ -19,8 +19,6 @@ async function main() {
 	checkIfDead();
 
 	showInventory();
-	// DEBUG: For now, I want items to easily be cleared when I refresh the page. Makes debugging easier for now
-	clearInventory();
 
 	if (gameState.isDead) runEvent("alreadyDead");
 	else runEvent("firstVisitOutside");
