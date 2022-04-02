@@ -56,7 +56,8 @@ function getGameState() {
 		return {
 			// TODO: Get profession properly with sessionStorage.getItem("profession");
 			profession: profDoctor,
-		};
+		}
+    }
 
 // This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.
 
@@ -84,7 +85,7 @@ function showTextNode(textNodeIndex){
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
             optionButtonsElement.appendChild(button);
             sessionStorage.setItem('collectable', secretCollectable);
-            sessionStorage.setItem("cabinGameState", JSON.stringify(gameState));
+            sessionStorage.setItem("farmhouseGameState", JSON.stringify(state));
         }
     }
     )
