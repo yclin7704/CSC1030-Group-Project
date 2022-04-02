@@ -117,7 +117,12 @@ a:link {
 	border-radius: 5px;
 }
 
+.inventoryHeading {
+	text-decoration: underline;
+}
+
 .inventory {
+	text-align: center;
 	flex: 30;
 	background-color: var(--brownDark);
 	width: 92%;
