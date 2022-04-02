@@ -24,7 +24,7 @@ function meetsInventoryRequirements(reqs) {
 		// (the current requirement is explicitly met OR )
 		allMet =
 			allMet && // All previous conditions met
-			(reqs[key] === inventory[key] || // Exact match
+			(reqs[key] == inventory[key] || // Exact match
 				(!reqs[key] && !inventory[key]) || // Or the value is supposed to be false and has not yet been defined in inventory
 				(reqs[key] && inventory[key] > reqs[key])); // Or 1+ items are required and the player has all the required items
 	}
