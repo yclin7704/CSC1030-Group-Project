@@ -466,18 +466,18 @@ const textNodes = [
         options: [
             {
                 text: 'You already collected all the wood from the campfire, there\'s no need for you to be here. Return to the front of the Hospital',
-                requiredInventory: {'Fire Wood': true},
+                requiredInventory: {'Wood Planks': true},
                 nextText: 2
             },
             {
                 text: 'Leave the campfire alone for now, as you feel like you might be able to make use of it later',
-                requiredInventory: {'Fire Wood': false},
+                requiredInventory: {'Wood Planks': false},
                 tempChange: 'decrease',
                 nextText: 2
             },
             {
                 text: 'Take the Fire Wood from the campfire to use later',
-                requiredInventory: {'Fire Wood': false},
+                requiredInventory: {'Wood Planks': false},
                 tempChange: 'decrease',
                 nextText: 11
             },
@@ -516,7 +516,7 @@ const textNodes = [
         options: [
             {
                 text: 'Return to the front of the Hospital',
-                setInventory: {'Fire Wood': true},
+                setInventory: {'Wood Planks': true},
                 nextText: 2
             }
         ]
@@ -825,7 +825,7 @@ const textNodes = [
             {
                 text: 'Barricade the windows with the wood from the Campfire',
                 requiredState: {defence1: false},
-                requiredInventory: {'Fire Wood': true},
+                requiredInventory: {'Wood Planks': true},
                 tempChange: -1,
                 nextText: 30
             },
@@ -906,7 +906,7 @@ const textNodes = [
             {
                 text: "Go back to preparing for the Night",
                 setState: {defence1: true},
-                setInventory: {'Fire Wood': false},
+                setInventory: {'Wood Planks': false},
                 nextText: 29
             }
         ]
