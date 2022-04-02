@@ -558,8 +558,8 @@ const textNodes = [
             {
                 text: 'Pick out the wood planks from the broken barrels',
                 //requiredState: (currentState) => !currentState.planks,
-                requiredInventory: {planks:false},
-                setInventory: {planks:true},
+                requiredInventory: {"Wood Planks":false},
+                setInventory: {"Wood Planks":true},
                 //setState: {planks: true},
                 nextText: 17
             },
@@ -948,8 +948,8 @@ const textNodes = [
             {
                 text: 'Set up barricade',
                 requiredState: (currentState) => !currentState.barricade,
-                requiredInventory: {planks:true},
-                setInventory: {planks: false},
+                requiredInventory: {"Wood Planks":true},
+                setInventory: {"Wood Planks": false},
                 setState: {barricade:true},
                 nextText: 36
             },
@@ -976,7 +976,23 @@ const textNodes = [
             },
             {
                 text: 'Set up your camp',
-                requiredState: (currentState) => currentState.Hunter && !currentState.camp, //gotta check on this for the inventory system...
+                requiredState: (currentState) => !currentState.camp,
+                requiredInventory: {blanket:true, "Wood Planks":true, matches:true},
+                setInventory: {"Wood Planks":false, matches:false, blanket:false},
+                setState: {camp: true},
+                nextText: 36
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => !currentState.camp,
+                requiredInventory: {"Wood Planks":true, matches:true},
+                setInventory: {"Wood Planks":false, matches:false},
+                setState: {camp: true},
+                nextText: 36
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => currentState.Hunter && !currentState.camp,
                 requiredInventory: {firewood:true, sticks:true},
                 setState: {camp: true},
                 nextText: 36
