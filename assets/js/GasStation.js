@@ -98,7 +98,6 @@ function selectOption(option) {
         return startGame();
     }
     state = Object.assign(state, option.setState);
-    inventory = Object.assign(inventory, option.setInventory);
     showTextNode(nextEventIdNodeId);
     updateInventory(option.setInventory);
     changeTemp(option.tempChange);
