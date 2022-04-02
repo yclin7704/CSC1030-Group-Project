@@ -1,7 +1,4 @@
-let gameState = {
-	// TODO: Get profession properly with sessionStorage.getItem("profession");
-	profession: profDoctor,
-};
+let gameState = getGameState();
 sessionStorage.setItem("profession", "Hunter");
 
 /**
@@ -19,11 +16,12 @@ async function main() {
 	checkIfDead();
 
 	showInventory();
-	// DEBUG: For now, I want items to easily be cleared when I refresh the page. Makes debugging easier for now
-	clearInventory();
+
+	// On first visit
+	if (!gameState.eventId) gameState.eventId = "firstVisitOutside";
 
 	if (gameState.isDead) runEvent("alreadyDead");
-	else runEvent("firstVisitOutside");
+	else runEvent(gameState.eventId);
 }
 
 function checkIfDead() {
@@ -31,11 +29,28 @@ function checkIfDead() {
 	if (gameState.tempTooHigh || gameState.tempTooLow || isTimeOut()) gameState.isDead = true;
 }
 
+function getGameState() {
+	let savedData = sessionStorage.getItem("cabinGameState");
+	console.log(savedData);
+	if (savedData) return JSON.parse(savedData);
+	else
+		return {
+			// TODO: Get profession properly with sessionStorage.getItem("profession");
+			profession: profDoctor,
+		};
+}
+
 /**
  * Run the event with the given ID
  * @param {string} eventId The event ID
  */
 async function runEvent(eventId) {
+	// Keep track of the current event ID
+	gameState.eventId = eventId;
+
+	// Save the current game state to session storage
+	sessionStorage.setItem("cabinGameState", JSON.stringify(gameState));
+
 	if (typeof eventId === "function") eventId();
 	else if (eventId) {
 		let eventData = getEventData(eventId);

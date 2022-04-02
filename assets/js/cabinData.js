@@ -351,6 +351,7 @@ const eventOpts = [
 				desc: "Use some planks to board up the windows",
 				nextEventId: "addToBarricade",
 				requiredState: { windowsBoarded: false },
+				stateChanges: { windowsBoarded: true },
 			},
 		],
 	},
@@ -556,10 +557,11 @@ const eventOpts = [
 
 	// BEGIN: Night
 	{
-		id: "onNightEnd",
+		id: "onDayEnd",
 		choices: [
 			{
-				desc: "TODO",
+				desc: "Hunker down and wait for the zombies to arrive",
+				nextEventId: "nightZombiesAtDoor",
 			},
 		],
 	},
@@ -859,8 +861,8 @@ const events = [
 	// BEGIN: Night
 	{
 		id: "onDayEnd",
-		text: `As night approaches, you prepare yourself in the cabin.<br />
-        `,
+		text: `As the sun slowly sinks below the horizon, you feel your dread beginning to grow as you prepare yourself in the cabin.<br />
+        Hopefully you've made enough preparations to allow you to survive through the night.`,
 		img: imgInside,
 		optsId: "onDayEnd",
 	},
