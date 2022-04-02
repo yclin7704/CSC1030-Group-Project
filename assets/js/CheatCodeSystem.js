@@ -30,6 +30,7 @@ function validateCheat() {
 // Updates the HTML pages with the new Changes each time the page is opened
 // Will be used in the body tag as an onload method
 function updatePages() {
+    // try-catch implemented to prevent unnecessary errors from showing up
     try {
         // Gets the ID of the Element being updated
         let ID = sessionStorage.getItem("ID");
