@@ -51,19 +51,7 @@ function startGame(){
 // This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.
 
 function showTextNode(textNodeIndex){
-    if (textNodeIndex === "Hospital"){
-        window.location.href = "Hospital.html";
-    }
-    else if (textNodeIndex === "GasStation"){
-        window.location.href = "GasStation.html";
-    }
-    else if (textNodeIndex === "Cabin"){
-        window.location.href = "Cabin.html";
-    }
-    else if (textNodeIndex === "Lab"){
-        window.location.href = "Lab.html";
-    }
-    else if (textNodeIndex ==='Warehouse'){
+    if (textNodeIndex ==='Warehouse'){
         window.location.href = "Warehouse.html";
     }
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
@@ -150,22 +138,6 @@ const textNodes = [
             {
                 text: 'Go to the Warehouse',
                 nextText: 'Warehouse'
-            },
-            {
-                text: 'Go to the Gas Station',
-                nextText: 'GasStation'
-            },
-            {
-                text: 'Go to the Hospital',
-                nextText: 'Hospital'
-            },
-            {
-                text: 'Go to the Cabin',
-                nextText: 'Cabin'
-            },
-            {
-                text: 'Go to the Lab',
-                nextText: 'Lab'
             }
         ]
     },
