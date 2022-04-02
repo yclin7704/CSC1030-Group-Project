@@ -2,8 +2,20 @@ const textElement = document.getElementById('DialogueHospital');          // The
 const optionButtonsElement = document.getElementById('ButtonsHospital');  // The buttons/options available to the player
 const inventoryElement = document.getElementById('inventory');            // The player's inventory
 const imageElement = document.getElementById('ImageDisplay');             // The image to be displayed on-screen
-const profession = sessionStorage.getItem("profession");                  // This will store the profession
-let state = {};                                                           // This will store the game's current/active state
+const profession = sessionStorage.getItem("profession");                  // This will store the profession                                                       
+let state = getGameState();                                               // This will store the game's current/active state
+
+function getGameState() {
+	let savedData = sessionStorage.getItem("HospitalGameState");
+	console.log(savedData);
+	if (savedData) return JSON.parse(savedData);
+	else
+		return {
+			// TODO: Get profession properly with sessionStorage.getItem("profession");
+			profession: "Hunter",
+		};
+}
+
 
 
 
@@ -115,7 +127,8 @@ function showTextNode(textNodeIndex){
             button.innerText = option.text;                               // Button text is changed to suit the option text
             button.classList.add('buttonChoice');                         // Sets the button class for styling.
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
-            optionButtonsElement.appendChild(button); 
+            optionButtonsElement.appendChild(button);
+            sessionStorage.setItem("HospitalGameState", JSON.stringify(state));
         }
     })
 }
