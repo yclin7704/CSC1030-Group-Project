@@ -55,7 +55,6 @@ function getGameState() {
 	else
 		return {
 			// TODO: Get profession properly with sessionStorage.getItem("profession");
-			profession: profDoctor,
 		}
     }
 
@@ -86,6 +85,7 @@ function showTextNode(textNodeIndex){
             optionButtonsElement.appendChild(button);
             sessionStorage.setItem('collectable', secretCollectable);
             sessionStorage.setItem("farmhouseGameState", JSON.stringify(state));
+
         }
     }
     )
@@ -140,7 +140,7 @@ const textNodes = [
         inventory: "",
         image: 'assets/images/farm-house-outside.jpg',
         sound: 'assets/sounds/wind.wav',
-        tempChange: 'decrease',
+        tempChange: -1,
         options: [
             {
                 text: 'Go in',
@@ -160,7 +160,7 @@ const textNodes = [
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
         sound: 'assets/sounds/wind.wav',
-        tempChange: 'decrease',
+        tempChange: -1,
         options: [
             {
                 text: 'Walk up to the door',
@@ -195,7 +195,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
-        tempChange: 'decrease',
+        tempChange: -1,
         options: [
             {
                 text: 'Take lamp',
@@ -206,7 +206,7 @@ const textNodes = [
                 nextText: 2
             },
             {
-                text: 'Leave the torch',
+                text: 'Leave the lamp',
                 //requiredState: (currentState) => !currentState.lamp,
                 requiredInventory: {lamp: false},
                 nextText: 2
@@ -215,6 +215,10 @@ const textNodes = [
                 text: 'You have already picked up the lamp',
                 //requiredState: (currentState) => currentState.lamp,
                 requiredInventory: {lamp: true},
+                nextText: 2
+            },
+            {
+                text: 'Back',
                 nextText: 2
             }
         ]
@@ -226,7 +230,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
-        tempChange: 'decrease',
+        tempChange: -1,
         options: [
             {
                 text: 'Read Note',
@@ -245,7 +249,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
-        tempChange: 'decrease',
+        tempChange: -1,
         options: [
             {
                 text: 'Take key',
@@ -264,6 +268,10 @@ const textNodes = [
             {
                 text: 'U have already picked up the key',
                 requiredState: (currentState) => currentState.key || currentState.doorUnlocked,
+                nextText: 2
+            },
+            {
+                text: 'Back',
                 nextText: 2
             }
         ]
@@ -320,7 +328,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
-        tempChange: 'decrease',
+        tempChange: -1,
         options: [
             {
                 text: 'Open the door',
@@ -569,15 +577,15 @@ const textNodes = [
             {
                 text: 'Pick out the wood planks from the broken barrels',
                 //requiredState: (currentState) => !currentState.planks,
-                requiredInventory: {"Wood Planks":false},
-                setInventory: {"Wood Planks":true},
+                requiredInventory: {'Wood Planks':false},
+                setInventory: {'Wood Planks':true},
                 //setState: {planks: true},
                 nextText: 17
             },
             {
                 text: 'You have already pick up the planks',
                 //requiredState: (currentState) => currentState.planks,
-                requiredInventory: {planks:true},
+                requiredInventory: {"Wood Planks" : true},
                 nextText: 17
             },
             {
