@@ -104,8 +104,8 @@ function selectOption(option) {
         return startGame();
     }
     state = Object.assign(state, option.setState);
-    showTextNode(nextTextNodeId);
     updateInventory(option.setInventory);
+    showTextNode(nextTextNodeId);
 }
 
 // Change the handwritten text

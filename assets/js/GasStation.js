@@ -99,9 +99,9 @@ function selectOption(option) {
     }
     state = Object.assign(state, option.setState);
     inventory = Object.assign(inventory, option.setInventory);
-    showTextNode(nextEventIdNodeId);
     updateInventory(option.setInventory);
     changeTemp(option.tempChange);
+    showTextNode(nextEventIdNodeId);
 }
 
 function selectEnding() {
