@@ -62,7 +62,8 @@ const eventOpts = [
 				tempChange: -40,
 			},
 			{
-				desc: "Open your map",
+				desc: "Return to the warehouse",
+				nextEventId: "warehouse",
 			},
 			{
 				desc: "DEBUG: Increase temp",

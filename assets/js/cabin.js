@@ -45,6 +45,12 @@ function getGameState() {
  * @param {string} eventId The event ID
  */
 async function runEvent(eventId) {
+	// Allow the player to return to the warehouse
+	if (eventId === "warehouse") {
+		window.location.href = "Warehouse.html";
+		return;
+	}
+
 	// Keep track of the current event ID
 	gameState.eventId = eventId;
 

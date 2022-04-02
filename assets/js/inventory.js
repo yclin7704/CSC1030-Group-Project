@@ -40,6 +40,7 @@ function updateInventory(data) {
 	if (data) {
 		// Iterate through the keys and make the required changes
 		for (let key in data) {
+			if (!inventory[key]) inventory[key] = 0;
 			if (!data[key]) inventory[key]--;
 			else inventory[key] += data[key];
 		}
@@ -66,7 +67,9 @@ function showInventory() {
 	let str = "";
 	for (let key in inventory) {
 		// Only show the item if they actually have it
-		if (inventory[key]) {
+		if (inventory[key] > 1) {
+			str += `${key} (${inventory[key]})<br />`;
+		} else if (inventory[key] == 1) {
 			str += `${key}<br />`;
 		}
 	}
