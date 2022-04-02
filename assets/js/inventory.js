@@ -69,7 +69,7 @@ function showInventory() {
 		// Only show the item if they actually have it
 		if (inventory[key] > 1) {
 			console.log("HERE");
-			str += `${key} (${inventory[key]})`;
+			str += `${key} (${inventory[key]})<br />`;
 		} else if (inventory[key] == 1) {
 			str += `${key}<br />`;
 		}
