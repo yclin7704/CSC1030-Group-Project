@@ -262,7 +262,7 @@ const textNodes = [
         id: 3,
         text: "You enter the main Lobby of the abandoned Hospital which, upon entering, looks completely decrepit and old. There are broken walls, leaking pipes, water" +
             " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking among the rooms of the Hospital...</br>As you look into" +
-            " each of the rooms you see a <strong>Bone Saw</strong> and <strong>some fuel</strong>. There's also an <strong>abandoned room</strong>" +
+            " each of the rooms you see a <strong>Bone Saw</strong> and <strong>some liquid Benzene</strong>. There's also an <strong>abandoned room</strong>" +
             " at the end of the Lobby.",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Inside.jpg',
@@ -284,7 +284,7 @@ const textNodes = [
                 nextText: 12
             },
             {
-                text: 'Check out the Fuel',
+                text: 'Check out the Liquid Benzene',
                 tempChange: -1,
                 nextText: 16
             }
@@ -489,8 +489,8 @@ const textNodes = [
             },
             {
                 text: "Light the smoldering campfire for warmth",
-                requiredInventory: {Matches: true, Fuel: true},
-                setInventory: {Matches: false, Fuel: false},
+                requiredInventory: {Matches: true, 'Liquid Benzene': true},
+                setInventory: {Matches: false, 'Liquid Benzene': false},
                 tempChange: 'decrease',
                 nextText: 22    
             },
@@ -574,30 +574,30 @@ const textNodes = [
 
 
 
-    // You check out the Fuel
+    // You check out the Liquid Benzene
     {
         id: 16,
-        text: 'In the Storage Closet on the right hand side of the Lobby, you can see some fuel. However, it\'s stashed way at the back of the closet, but you feel like it' +
-            ' might be useful to have. Do you try to take the Fuel?',
+        text: 'In the Storage Closet on the right hand side of the Lobby, you can see some Liquid Benzene. However, it\'s stashed way at the back of the closet, but you feel like it' +
+            ' might be useful to have. Do you try to take the Liquid Benzene?',
         inventory: '',
-        image: 'assets/images/Hospital/Fuel.jpg',
+        image: 'assets/images/Hospital/LiquidBenzene.jpg',
         sound: 'assets/sounds/WaterDripping.wav',
         options: [
             {
-                text: 'Take the Fuel',
-                requiredInventory: {Fuel: false},
+                text: 'Take the Liquid Benzene',
+                requiredInventory: {'Liquid Benzene': false},
                 tempChange: -1,
                 nextText: 17
             },
             {
-                text: 'Don\'t take the Fuel and return to the Hospital Lobby',
-                requiredInventory: {Fuel: false},
+                text: 'Don\'t take the Liquid Benzene and return to the Hospital Lobby',
+                requiredInventory: {'Liquid Benzene': false},
                 tempChange: -1,
                 nextText: 3
             },
             {
-                text: "You've already taken the fuel, you have no business here. Return to the Hospital Lobby",
-                requiredInventory: {Fuel: true},
+                text: "You've already taken the Liquid Benzene, you have no business here. Return to the Hospital Lobby",
+                requiredInventory: {'Liquid Benzene': true},
                 nextText: 3
             }
         ]
@@ -605,18 +605,18 @@ const textNodes = [
 
 
 
-    // You decided to take the Fuel
+    // You decided to take the Liquid Benzene
     {
         id: 17,
-        text: 'After spending a lot of time rummaging through the Storage Closet you eventually manage to get the fuel from the back, brushing all the dust off your shoulders' +
+        text: 'After spending a lot of time rummaging through the Storage Closet you eventually manage to get the Liquid Benzene from the back, brushing all the dust off your shoulders' +
             ' you return to the Hospital Lobby',
         inventory: '',
-        image: 'assets/images/Hospital/Fuel.jpg',
+        image: 'assets/images/Hospital/LiquidBenzene.jpg',
         sound2: 'assets/sounds/FuelCan.wav',
         options: [
             {
                 text: 'Head back to the main lobby of the Hospital',
-                setInventory: {Fuel: true},
+                setInventory: {'Liquid Benzene': true},
                 nextText: 3
             }
         ]
@@ -725,8 +725,8 @@ const textNodes = [
     // You decide to light the Campfire
     {
         id: 22,
-        text: "You pour the fuel you found inside the Hospital over the smoldering campfire, and then light one of the matches you found in the crates behind the Hospital" +
-            " and thankfully it doesn't immediately get blown out, so you through it on the fuel, and instantly a fire roars to life, and you can feel the strong warmth" + 
+        text: "You pour the Liquid Benzene you found inside the Hospital over the smoldering campfire, and then light one of the matches you found in the crates behind the Hospital" +
+            " and thankfully it doesn't immediately get blown out, so you throw it on the Liquid Benzene, and instantly a fire roars to life, and you can feel the strong warmth" + 
             " cover your body which feels nice as opposed to the freezing cold of the Tundra",
         inventory: '',
         image: 'assets/images/Hospital/AbandonedCampfire.jpg',
@@ -831,7 +831,7 @@ const textNodes = [
             },
             {
                 text: 'Set a fire trap at the entrance to the abandoned room',
-                requiredInventory: {Fuel: true, Matches: true},
+                requiredInventory: {'Liquid Benzene': true, Matches: true},
                 tempChange: -1,
                 nextText: 32
             },
@@ -917,7 +917,7 @@ const textNodes = [
     // You decided to create a fire trap at the abandoned room entrance
     {
         id: 32,
-        text: "Using the fuel, you pour it all over the entrance to the room, in the hopes that when night starts you can light a match and throw it onto the fuel" +
+        text: "Using the Liquid Benzene, you pour it all over the entrance to the room, in the hopes that when night starts you can light a match and throw it onto the Liquid Benzene" +
             " to start a fire in order to keep the zombies at bay",
         inventory: '',
         image: 'assets/images/Hospital/Abandoned_Room.jpg',
@@ -926,7 +926,7 @@ const textNodes = [
             {
                 text: "Go back to preparing for the night",
                 setState: {defence2: true},
-                setInventory: {Fuel: false},
+                setInventory: {'Liquid Benzene': false},
                 nextText: 29
             }
         ]
@@ -1037,9 +1037,9 @@ const textNodes = [
     {
         id: 107,
         text: " Before the night started you made the smart decision to not only barricade most of the windows in the room, but you also decided to create a fire trap for the zombies" +
-            " using the fuel you acquired earlier, confident in your preparations you patiently wait for the fall of night. After some hours pass, you finally start to hear the zombies" +
+            " using the Liquid Benzene you acquired earlier, confident in your preparations you patiently wait for the fall of night. After some hours pass, you finally start to hear the zombies" +
             " outside the Hospital. They start to scream as they climnb up to the windows but can't get through becuase you barricaded them up, but zombies start arriving en masse at" +
-            " the entrance to the room. This was what you were waiting for, with no hesitation you light a match and, with good aim, throw it at the fuel you poured over the entrance," +
+            " the entrance to the room. This was what you were waiting for, with no hesitation you light a match and, with good aim, throw it at the Liquid Benzene you poured over the entrance," +
             " and almost instantly a fire roared to life, burning the zombies as they gave off piercing shrieks in pain. Thankfully, the wood beneath them burned and shattered, dropping" +
             " the zombies to the floor below, and leaving the rest on the other side of a large gap. Many more hours passed, and some zombies did climb through the un-barricaded windows" +
             " but you were able to knock them off with the crowbar, defending your position until the night was finally over..." +
@@ -1058,7 +1058,7 @@ const textNodes = [
             " able to keep the zombies at bay for the whole night in order to survive. After many hours pass, and the night continues to cover the Hospital in darkness, in the" +
             " distance you begin to hear the shrieks of the zombies as they approach the Hospital, and so you prepare to stand your ground. Numerous zombies started to pile" +
             " through the door to the abandoned room, their screams piercing your ears, but this is what you wanted to happen. Without any hesitation you lit a match and threw" +
-            " it at the fuel you poured on the floor, and instantly a fire roared to life, quickly burning the zombies and also the wood below them, which gave way and collapsed" +
+            " it at the Liquid Benzene you poured on the floor, and instantly a fire roared to life, quickly burning the zombies and also the wood below them, which gave way and collapsed" +
             " causing the zombies to fall to the floor below them. Thankfully this also prevented any more zombies from getting to you via the door because of, the now massive, gap between" +
             " it and you. Some of the zombies were able to climb up to the windows, but with you being able to give them your undivided attention" +
             " you were able to kick and punch them down for the rest of the night..." +
