@@ -90,7 +90,7 @@ function startGame() {
     // Displays the inventory
     showInventory();
 
-    //
+    // This will take the player to the appropriate Text Node when day ends, and when night ends
     setTimerData(showTextNode, 29, 101);
 
 	// This will take the player to the appropriate Text Node if they die of frostbite or heat stroke
@@ -157,6 +157,7 @@ function selectOption(option) {
         return startGame();
     }
     state = Object.assign(state, option.setState);
+    inventory = Object.assign(inventory, option.setInventory);
     showTextNode(nextTextNodeId);
     updateInventory(option.setInventory);
     changeTemp(option.tempChange);
