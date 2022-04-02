@@ -17,7 +17,7 @@ let secret6 = true;
 let secret7 = true;
 
 // This variable stores the current game state
-let state = {};
+let state = getGameState();
 
 
 // This function is called to start the game. The state is emptied and the first text node is shown.
@@ -48,6 +48,16 @@ function startGame(){
     showTextNode(1);
 }
 
+function getGameState() {
+	let savedData = sessionStorage.getItem("farmhouseGameState");
+	console.log(savedData);
+	if (savedData) return JSON.parse(savedData);
+	else
+		return {
+			// TODO: Get profession properly with sessionStorage.getItem("profession");
+			profession: profDoctor,
+		};
+
 // This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.
 
 function showTextNode(textNodeIndex){
@@ -74,6 +84,7 @@ function showTextNode(textNodeIndex){
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
             optionButtonsElement.appendChild(button);
             sessionStorage.setItem('collectable', secretCollectable);
+            sessionStorage.setItem("cabinGameState", JSON.stringify(gameState));
         }
     }
     )
