@@ -84,7 +84,7 @@ function showTextNode(textNodeIndex){
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
             optionButtonsElement.appendChild(button);
             sessionStorage.setItem('collectable', secretCollectable);
-            sessionStorage.setItem("cabinGameState", JSON.stringify(state));
+            sessionStorage.setItem("farmhouseGameState", JSON.stringify(state));
         }
     }
     )
