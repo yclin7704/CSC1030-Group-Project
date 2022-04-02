@@ -15,7 +15,7 @@ let tempTooHighId;
 let isDead = false;
 
 let temperature = getSavedTemp();
-meterSetup(temperature);
+tempUpdated();
 
 /**
  * Should be called at the start to set these values correctly
