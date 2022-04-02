@@ -78,9 +78,6 @@ function startGame() {
     // Displays the inventory
     showInventory();
 
-    // clears the inventory before the game starts
-    clearInventory();
-
     //
     setTimerData(showTextNode, 29, 101);
 
@@ -99,6 +96,9 @@ function startGame() {
  * @param textNodeIndex - This is the id number of the text node to be displayed
  */
 function showTextNode(textNodeIndex){
+    if (textNodeIndex === "Warehouse"){
+        window.location.href = "Warehouse.html";
+    }
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.                                    
     typeSentence(textNode.text, "DialogueHospital"); // Changes the dialogue box to the text stored in the TextNode.
     updateInventory(textNode.inventory);
@@ -193,6 +193,11 @@ const textNodes = [
                 setState: {collectMushrooms: true},
                 tempChange: 'decrease',
                 nextText: 4
+            },
+            {
+                text: "Go back to the Warehouse",
+                tempChange: "decrease",
+                nextText: "Warehouse"
             }
         ]
     },
@@ -241,6 +246,11 @@ const textNodes = [
                 text: "Follow the pathway",
                 tempChange: 'decrease',
                 nextText: 4
+            },
+            {
+                text: "Go back to the Warehouse",
+                tempChange: "decrease",
+                nextText: "Warehouse"
             }
         ]
     },
@@ -814,6 +824,7 @@ const textNodes = [
         options: [
             {
                 text: 'Barricade the windows with the wood from the Campfire',
+                requiredState: {defence1: false},
                 requiredInventory: {'Fire Wood': true},
                 tempChange: -1,
                 nextText: 30
