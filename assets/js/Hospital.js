@@ -175,34 +175,36 @@ const textNodes = [
         text: "You arrive at a Hospital, and judging by its ancient and run-down appearance it's likely that it's been abandoned for at least 17 years." + 
             " Although you feel the need to turn away, curiosity and the concern for what might be waiting for you in the forest beckons you closer to the" +
             " collosal building, and as you approach it, the air gets colder around you...</br>Around you, you see some <strong>worn-down First Aid kits</strong>" +
-            " , <strong>an abandoned campfire</strong> and a <strong>pathway.</strong> Furthermore, the door to the Hospital seems <strong>locked</strong> but" +
+            " , <strong>an abandoned campfire</strong>, <strong>some Mushrooms</strong> and a <strong>pathway.</strong> Furthermore, the door to the Hospital seems <strong>locked</strong> but" +
             " something like a crowbar could pry it open.",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         sound: 'assets/sounds/wind.wav',
         options: [
             {
+                text: 'Collect mushrooms',
+                requiredInventory: {Mushrooms: false, Crowbar: false},
+                tempChange: 'decrease',
+                nextText: 6
+            },
+            {
                 text: 'Talk to stranger camping in front of the Hospital',
-                setState: {collectMushrooms: true},
                 tempChange: 'decrease',
                 nextText: 5,
             },
             {
                 text: 'Check out the First Aid kits scattered across the ground',
                 requiredState: (currentState) => currentState.Doctor === true || currentState.WarVeteran === true,
-                setState: {collectMushrooms: true},
                 tempChange: 'decrease',
                 nextText: 8
             },
             {
                 text: 'Check out the abandoned campfire',
-                setState: {collectMushrooms: true},
                 tempChange: 'decrease',
                 nextText: 10
             },
             {
                 text: "Follow the pathway",
-                setState: {collectMushrooms: true},
                 tempChange: 'decrease',
                 nextText: 4
             },
@@ -220,7 +222,7 @@ const textNodes = [
     {
         id: 2,
         text: "You return to the outside of the Hospital, the air colder than it was than when you first arrived, yet you still feel as if you have unfinished business..." +
-            "</br>Around you, you still see some <strong>worn-down First Aid kits</strong>, <strong>an abandoned campfire</strong> and a <strong>pathway</strong>",
+            "</br>Around you, you still see some <strong>worn-down First Aid kits</strong>, <strong>an abandoned campfire</strong>, <strong>some Mushrooms</strong> and a <strong>pathway</strong>",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         sound: 'assets/sounds/wind.wav',
@@ -233,7 +235,7 @@ const textNodes = [
             },
             {
                 text: 'Collect mushrooms',
-                requiredState: (currentState) => currentState.collectMushrooms === true,
+                requiredInventory: {Mushrooms: false, Crowbar: false},
                 tempChange: 'decrease',
                 nextText: 6
             },
@@ -308,7 +310,7 @@ const textNodes = [
     // You followed the pathway that leads to the back of the Hospital
     {
         id: 4,
-        text: "You followed the pathway through brambles and <strong>Mushrooms</strong> and it led to the back of the Hospital, which is just as overgrown as the front of the Hospital. However, now that you're behind" +
+        text: "You followed the pathway through brambles and it led to the back of the Hospital, which is just as overgrown as the front of the Hospital. However, now that you're behind" +
             " the Hospital, the cold winds aren't as strong which you're thankful for. As you scan the area you see some <strong>crates</strong> on the ground and, surrounded" +
             " by shattered pieces of glass, you see what looks to be like <strong>documents</strong>",
         inventory: '',
@@ -382,7 +384,6 @@ const textNodes = [
         options: [
             {
                 text: 'Return to the front of the Hospital',
-                setState: {collectMushrooms: false},
                 setInventory: {Mushrooms: true},
                 nextText: 2
             }
@@ -438,7 +439,7 @@ const textNodes = [
             },
             {
                 text: 'Collect the nearby Mushrooms',
-                requiredState: (currentState) => currentState.collectMushrooms === true,
+                requiredInventory: {Mushrooms: false, Crowbar: false},
                 tempChange: 'decrease',
                 nextText: 6
             }
@@ -495,7 +496,7 @@ const textNodes = [
             },
             {
                 text: 'Collect the nearby Mushrooms',
-                requiredState: (currentState) => currentState.collectMushrooms === true,
+                requiredInventory: {Mushrooms: false, Crowbar: false},
                 tempChange: 'decrease',
                 nextText: 6
             },
