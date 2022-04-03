@@ -255,7 +255,6 @@ function getDOM(id) {
 
 async function tempTooLow() {
 	gameState.tempTooLow = true;
-	// TODO: Add extra text to end of current text
 }
 
 async function tempTooHigh() {
