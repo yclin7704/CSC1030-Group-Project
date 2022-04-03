@@ -3,10 +3,10 @@ let printCount = 0;
 /**
  * Display the given text in a typewriter-like fashion
  * @param {string} text The text to display
- * @param {number} delay The delay between printing each character (Default 30)
+ * @param {number} delay The delay between printing each character (Default 20)
  * @returns Nothing
  */
-async function typeSentence(text, dialogueId = "dialogue", delay = 30, isSlow = false) {
+async function typeSentence(text, dialogueId = "dialogue", delay = 20, isSlow = false) {
 	printCount++;
 	if (printCount > 100) printCount = 0;
 	let thisPrintCount = printCount;
