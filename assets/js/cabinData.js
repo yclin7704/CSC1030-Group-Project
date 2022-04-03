@@ -850,8 +850,7 @@ const events = [
 	},
 	{
 		id: "diedToZombie",
-		text: `As the zombie lands on top of you, you try your best to push it off. It's no use, and you cry out in pain as you feel the zombie's teeth sink into your arm.
-        TODO: Could probably expand even further on this`,
+		text: `As the zombie lands on top of you, you try your best to push it off. It's no use, and you cry out in pain as you feel the zombie's teeth sink into your arm.`,
 		img: gifDied,
 		optsId: "gameOver",
 	},
