@@ -5,9 +5,6 @@ sessionStorage.setItem("profession", "Hunter");
  * Main function
  */
 async function main() {
-	// TODO: Returning to cabin
-	// TODO: Save game state to sesion storage on leaving cabin
-
 	StartTimer();
 
 	setTemperatureData(runEvent, tempTooLow, tempTooHigh);
@@ -19,6 +16,10 @@ async function main() {
 
 	// On first visit
 	if (!gameState.eventId) gameState.eventId = "firstVisitOutside";
+	else if (gameState.leftLocation) {
+		gameState.leftLocation = false;
+		gameState.eventId = "returnToCabin";
+	}
 
 	if (gameState.isDead) runEvent("alreadyDead");
 	else runEvent(gameState.eventId);
@@ -47,6 +48,10 @@ function getGameState() {
 async function runEvent(eventId) {
 	// Allow the player to return to the warehouse
 	if (eventId === "warehouse") {
+		gameState.leftLocation = true;
+		// Save the current game state to session storage
+		sessionStorage.setItem("cabinGameState", JSON.stringify(gameState));
+
 		window.location.href = "Warehouse.html";
 		return;
 	}
