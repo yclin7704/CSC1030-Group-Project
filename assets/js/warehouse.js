@@ -158,7 +158,7 @@ const textNodes = [
     },
     {
         id: 2.1,
-        text: `You look at the campfire left by the previous occupant, you're going to need some way to light the campfire and have something to burn it with.`,
+        text: `You look at the campfire left by the previous occupant, which seems to have a lot of weeds and grass growing around it through cracks in the now barely visible floor. To use it you're going to need some way to light the campfire and have something to burn.`,
         inventory: '',
         image: 'assets/images/Warehouse.jpg',
         options: [
