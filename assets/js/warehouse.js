@@ -86,8 +86,8 @@ function selectOption(option) {
     }
     state = Object.assign(state, option.setState);
     updateInventory(option.setInventory);
-    changeTemp(option.tempChange);
     showTextNode(nextTextNodeId);
+    changeTemp(option.tempChange);
 }
 
 // The text nodes for the game are below
