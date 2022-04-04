@@ -22,7 +22,6 @@ h1 {
 	display: none;
 }
 
-
 .box {
 	width: 50%;
 	display: block;
@@ -89,4 +88,46 @@ span {
 
 summary {
 	font-size: 20px;
+}
+
+input, button {
+    background-color: var(--background);
+    color: white;
+    padding: 10px;
+    border-radius: 25px;
+    border-style: none;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 20pt;
+}
+
+input[type='button']:enabled:hover {
+	cursor: pointer;
+	color: var(--beige);
+	background-color: var(--background);
+}
+
+.entry {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+	max-width: 50%;
+    background-color: var(--brownDark);
+    color: var(--text);
+}
+
+.entry:focus {
+	outline: var(--text);
+	border: 2px solid var(--text);
+}
+
+#volumeLevel {
+	color: var(--text);
+	font-size: 15px;
+	font-weight: bold;
+}
+
+:placeholder-shown {
+	color: var(--text);
 }

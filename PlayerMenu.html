@@ -25,18 +25,19 @@
 					<h1>Player name:</h1>
 				</div>
 				<div class="formInput">
-					<input id="playerNameInput" class="textInput" type="text" name="playerName" size="50" placeholder="Player name" />
+					<input id="playerNameInput" class="entry" type="text" name="playerName" size="50" />
 				</div>
 				<div class="menuText">
 					<h1>Select game volume:</h1>
 				</div>
 				<input type="range" class="volumeSlider" id="volumeSlider" value="50" min="1" max="100">
+				<span id="volumeLevel">50%</span>
 				<div class="menuText">
 					<h1>Choose your profession:</h1>
 				</div>
 				<div id="options">
-					<form action="./Warehouse.html" onsubmit="setPlayerName(), setGameVolume();">
-						<select name="profession" id="profession" onchange="displayProfession();">
+					<form action="./GasStation.html" onsubmit="setPlayerName(), setGameVolume();">
+						<select name="profession" id="profession" class="entry" onchange="displayProfession();">
 							<option value="Hunter">Hunter</option>
 							<option value="War Veteran">War Veteran</option>
 							<option value="Mechanic">Mechanic</option>

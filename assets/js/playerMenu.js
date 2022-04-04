@@ -8,7 +8,7 @@ function setPlayerName() {
 	// TODO: Should this be an actual name instead?
 	if (name.trim() === "") name = "Player";
 	// Save the player's choice to session storage
-	sessionStorage.setItem("playerName", name);
+	localStorage.setItem("playerName", name);
 }
 
 function setGameVolume() {
@@ -23,6 +23,7 @@ function playMusic(source) {
 	volume.addEventListener('change', function() {
 		console.log('Volume updated!');
 		volumeUpdated(volume.value);
+		document.getElementById('volumeLevel').innerHTML = volume.value + '%';
 	});
 }
 
