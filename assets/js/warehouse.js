@@ -91,7 +91,6 @@ function selectOption(option) {
         return startGame();
     }
     state = Object.assign(state, option.setState);
-    inventory = Object.assign(inventory, option.setInventory);
     updateInventory(option.setInventory);
     showTextNode(nextTextNodeId);
 }
@@ -119,16 +118,16 @@ const textNodes = [
         options: [
             {
                 text: 'Take the large planks',
-                requiredInventory: { 'largePlanks': false },
-                setInventory: { largePlanks: true },
+                requiredInventory: { 'Wood Planks': false },
+                setInventory: { 'Wood Planks': true },
                 setState: { plankTaken : true },
                 requiredState: (currentState) => !currentState.plankTaken,
                 nextText: 2
             },
             {
                 text: 'Take the torch',
-                requiredInventory: { 'torch': false },
-                setInventory: { torch: true },
+                requiredInventory: { 'Torch': false },
+                setInventory: { 'Torch': true },
                 nextText: 2
             },
             {
@@ -136,8 +135,13 @@ const textNodes = [
                 nextText: 2.1
             },
             {
+                text: 'Sit by campfire',
+                requiredState: (currentState) => currentState.firelit,
+                nextText: 2.3
+            },
+            {
                 text: 'Barricade the door',
-                requiredState: (currentState) => !currentState.barricated,
+                requiredState: (currentState) => !currentState.barricaded,
                 nextText: 2.2
             },
             {
@@ -147,7 +151,7 @@ const textNodes = [
             },
             {
                 text: 'Leave the building',
-                requiredState: (currentState) => !currentState.barricated,
+                requiredState: (currentState) => !currentState.barricaded,
                 nextText: 3
             },
         ]
@@ -160,54 +164,16 @@ const textNodes = [
         options: [
             {
                 text: 'Put in wood',
-                requiredInventory: { 'firewood': true },
-                setInventory: { firewood: false },
+                requiredInventory: { 'Wood Planks': true },
+                setInventory: { 'Wood Planks': false },
                 setState: { haveWood : true },
                 requiredState: (currentState) => !currentState.haveWood,
-                nextText: 2
-            },
-            {
-                text: 'Put in wood',
-                requiredInventory: { 'wood': true },
-                setInventory: { wood: false },
-                setState: { haveWood : true },
-                requiredState: (currentState) => !currentState.haveWood,
-                nextText: 2
-            },
-            {
-                text: 'Put in wood',
-                requiredInventory: { 'Fire Wood': true },
-                setInventory: { 'Fire Wood': false },
-                setState: { haveWood : true },
-                requiredState: (currentState) => !currentState.haveWood,
-                nextText: 2
-            },
-            {
-                text: 'Put in wood',
-                requiredInventory: { 'Firewood': true },
-                setInventory: { 'Firewood': false },
-                setState: { haveWood : true },
-                requiredState: (currentState) => !currentState.haveWood,
-                nextText: 2
-            },
-            {
-                text: 'Light Campfire with matches',
-                requiredInventory: { 'matches': true },
-                requiredState: (currentState) => !currentState.haveWood,
-                setState: { fireLit : true },
                 nextText: 2
             },
             {
                 text: 'Light Campfire with matches',
                 requiredInventory: { 'Matches': true },
-                requiredState: (currentState) => !currentState.haveWood,
-                setState: { fireLit : true },
-                nextText: 2
-            },
-            {
-                text: 'Light Campfire with the lighter',
-                requiredInventory: { 'Lighter': true },
-                requiredState: (currentState) => !currentState.haveWood,
+                requiredState: (currentState) => !currentState.firelit,
                 setState: { fireLit : true },
                 nextText: 2
             },
@@ -225,14 +191,27 @@ const textNodes = [
         options: [
             {
                 text: 'Barricade the door with planks',
-                setInventory: { largePlanks: false },
-                setState: { barricated : true },
+                setInventory: { 'Wood Planks': false },
+                setState: { barricaded : true },
                 nextText: 2
             },
             {
                 text: 'Decide not to barricade the door',
                 nextText: 2
             },
+        ]
+    },
+    {
+        id: 2.3,
+        text: 'You decide to sit down and rest by the warm campfire and gather your strength. As you do so the cold winds can be heard from outside and you start a shiver' +
+            'you stand up again',
+        inventory: '',
+        image: 'assets/images/Warehouse.jpg',
+        options: [
+            {
+                text: 'Go back',
+                nextText: 2
+            }
         ]
     },
     {
@@ -252,7 +231,7 @@ const textNodes = [
             },
             {
                 text: 'Inspect the fence',
-                requiredState: (currentState) => !currentState.fenceFixed,
+                requiredState: (currentState) => currentState.fenceFixed,
                 nextText: 3.2
             },
             {
@@ -263,7 +242,7 @@ const textNodes = [
     },
     {
         id: 3.1,
-        text: `The fence while have many holes, can easily be repaired if there are some barbed wires and something like a bolt cutter for you to use.`,
+        text: `The fence, which does have a lot of holes, can be easily repaired if there was some barbed wires and then something like bolt cutters for you to use.`,
         inventory: '',
         image: 'assets/images/Warehouse.jpg',
         options: [
@@ -281,7 +260,7 @@ const textNodes = [
         ]
     },
     {
-        id: 3.1,
+        id: 3.2,
         text: `The fence is fixed and should hold back the zombie for a period of time but you should still be wary.`,
         inventory: '',
         image: 'assets/images/Warehouse.jpg',
@@ -324,6 +303,17 @@ const textNodes = [
             },
         ]
     },
+    {
+        id: "camp",
+        text: "This is camp",
+        inventory: '',
+        image: 'assets/images/Warehouse.jpg',
+        options: [
+            {
+                text: "Hello"
+            }
+        ]
+    }
     
 ]
 
