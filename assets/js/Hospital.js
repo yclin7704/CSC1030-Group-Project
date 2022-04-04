@@ -2,8 +2,20 @@ const textElement = document.getElementById('DialogueHospital');          // The
 const optionButtonsElement = document.getElementById('ButtonsHospital');  // The buttons/options available to the player
 const inventoryElement = document.getElementById('inventory');            // The player's inventory
 const imageElement = document.getElementById('ImageDisplay');             // The image to be displayed on-screen
-const profession = sessionStorage.getItem("profession");                  // This will store the profession
-let state = {};                                                           // This will store the game's current/active state
+const profession = sessionStorage.getItem("profession");                  // This will store the profession                                                       
+let state = getGameState();                                               // This will store the game's current/active state
+
+function getGameState() {
+	let savedData = sessionStorage.getItem("HospitalGameState");
+	console.log(savedData);
+	if (savedData) return JSON.parse(savedData);
+	else
+		return {
+			// TODO: Get profession properly with sessionStorage.getItem("profession");
+			profession: "Hunter",
+		};
+}
+
 
 
 
@@ -78,10 +90,7 @@ function startGame() {
     // Displays the inventory
     showInventory();
 
-    // clears the inventory before the game starts
-    clearInventory();
-
-    //
+    // This will take the player to the appropriate Text Node when day ends, and when night ends
     setTimerData(showTextNode, 29, 101);
 
 	// This will take the player to the appropriate Text Node if they die of frostbite or heat stroke
@@ -99,6 +108,9 @@ function startGame() {
  * @param textNodeIndex - This is the id number of the text node to be displayed
  */
 function showTextNode(textNodeIndex){
+    if (textNodeIndex === "Warehouse"){
+        window.location.href = "Warehouse.html";
+    }
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.                                    
     typeSentence(textNode.text, "DialogueHospital"); // Changes the dialogue box to the text stored in the TextNode.
     updateInventory(textNode.inventory);
@@ -115,7 +127,8 @@ function showTextNode(textNodeIndex){
             button.innerText = option.text;                               // Button text is changed to suit the option text
             button.classList.add('buttonChoice');                         // Sets the button class for styling.
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
-            optionButtonsElement.appendChild(button); 
+            optionButtonsElement.appendChild(button);
+            sessionStorage.setItem("HospitalGameState", JSON.stringify(state));
         }
     })
 }
@@ -144,10 +157,9 @@ function selectOption(option) {
         return startGame();
     }
     state = Object.assign(state, option.setState);
-    inventory = Object.assign(inventory, option.setInventory);
-    showTextNode(nextTextNodeId);
     updateInventory(option.setInventory);
     changeTemp(option.tempChange);
+    showTextNode(nextTextNodeId);
 }
 
 
@@ -163,36 +175,43 @@ const textNodes = [
         text: "You arrive at a Hospital, and judging by its ancient and run-down appearance it's likely that it's been abandoned for at least 17 years." + 
             " Although you feel the need to turn away, curiosity and the concern for what might be waiting for you in the forest beckons you closer to the" +
             " collosal building, and as you approach it, the air gets colder around you...</br>Around you, you see some <strong>worn-down First Aid kits</strong>" +
-            " , <strong>an abandoned campfire</strong> and a <strong>pathway.</strong> Furthermore, the door to the Hospital seems <strong>locked</strong> but" +
+            " , <strong>an abandoned campfire</strong>, <strong>some Mushrooms</strong> and a <strong>pathway.</strong> Furthermore, the door to the Hospital seems <strong>locked</strong> but" +
             " something like a crowbar could pry it open.",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         sound: 'assets/sounds/wind.wav',
         options: [
             {
+                text: 'Collect mushrooms',
+                requiredInventory: {Mushrooms: false, Crowbar: false},
+                tempChange: 'decrease',
+                nextText: 6
+            },
+            {
                 text: 'Talk to stranger camping in front of the Hospital',
-                setState: {collectMushrooms: true},
                 tempChange: 'decrease',
                 nextText: 5,
             },
             {
                 text: 'Check out the First Aid kits scattered across the ground',
                 requiredState: (currentState) => currentState.Doctor === true || currentState.WarVeteran === true,
-                setState: {collectMushrooms: true},
                 tempChange: 'decrease',
                 nextText: 8
             },
             {
                 text: 'Check out the abandoned campfire',
-                setState: {collectMushrooms: true},
                 tempChange: 'decrease',
                 nextText: 10
             },
             {
                 text: "Follow the pathway",
-                setState: {collectMushrooms: true},
                 tempChange: 'decrease',
                 nextText: 4
+            },
+            {
+                text: "Go back to the Warehouse",
+                tempChange: "decrease",
+                nextText: "Warehouse"
             }
         ]
     },
@@ -203,7 +222,7 @@ const textNodes = [
     {
         id: 2,
         text: "You return to the outside of the Hospital, the air colder than it was than when you first arrived, yet you still feel as if you have unfinished business..." +
-            "</br>Around you, you still see some <strong>worn-down First Aid kits</strong>, <strong>an abandoned campfire</strong> and a <strong>pathway</strong>",
+            "</br>Around you, you still see some <strong>worn-down First Aid kits</strong>, <strong>an abandoned campfire</strong>, <strong>some Mushrooms</strong> and a <strong>pathway</strong>",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
         sound: 'assets/sounds/wind.wav',
@@ -216,7 +235,7 @@ const textNodes = [
             },
             {
                 text: 'Collect mushrooms',
-                requiredState: (currentState) => currentState.collectMushrooms === true,
+                requiredInventory: {Mushrooms: false, Crowbar: false},
                 tempChange: 'decrease',
                 nextText: 6
             },
@@ -241,6 +260,11 @@ const textNodes = [
                 text: "Follow the pathway",
                 tempChange: 'decrease',
                 nextText: 4
+            },
+            {
+                text: "Go back to the Warehouse",
+                tempChange: "decrease",
+                nextText: "Warehouse"
             }
         ]
     },
@@ -252,7 +276,7 @@ const textNodes = [
         id: 3,
         text: "You enter the main Lobby of the abandoned Hospital which, upon entering, looks completely decrepit and old. There are broken walls, leaking pipes, water" +
             " dripping from almost every ceiling and blood on the walls, only fuelling your fear of what could be lurking among the rooms of the Hospital...</br>As you look into" +
-            " each of the rooms you see a <strong>Bone Saw</strong> and <strong>some fuel</strong>. There's also an <strong>abandoned room</strong>" +
+            " each of the rooms you see a <strong>Bone Saw</strong> and <strong>some liquid Benzene</strong>. There's also an <strong>abandoned room</strong>" +
             " at the end of the Lobby.",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Inside.jpg',
@@ -274,7 +298,7 @@ const textNodes = [
                 nextText: 12
             },
             {
-                text: 'Check out the Fuel',
+                text: 'Check out the Liquid Benzene',
                 tempChange: -1,
                 nextText: 16
             }
@@ -286,7 +310,7 @@ const textNodes = [
     // You followed the pathway that leads to the back of the Hospital
     {
         id: 4,
-        text: "You followed the pathway through brambles and <strong>Mushrooms</strong> and it led to the back of the Hospital, which is just as overgrown as the front of the Hospital. However, now that you're behind" +
+        text: "You followed the pathway through brambles and it led to the back of the Hospital, which is just as overgrown as the front of the Hospital. However, now that you're behind" +
             " the Hospital, the cold winds aren't as strong which you're thankful for. As you scan the area you see some <strong>crates</strong> on the ground and, surrounded" +
             " by shattered pieces of glass, you see what looks to be like <strong>documents</strong>",
         inventory: '',
@@ -360,7 +384,6 @@ const textNodes = [
         options: [
             {
                 text: 'Return to the front of the Hospital',
-                setState: {collectMushrooms: false},
                 setInventory: {Mushrooms: true},
                 nextText: 2
             }
@@ -416,7 +439,7 @@ const textNodes = [
             },
             {
                 text: 'Collect the nearby Mushrooms',
-                requiredState: (currentState) => currentState.collectMushrooms === true,
+                requiredInventory: {Mushrooms: false, Crowbar: false},
                 tempChange: 'decrease',
                 nextText: 6
             }
@@ -456,31 +479,31 @@ const textNodes = [
         options: [
             {
                 text: 'You already collected all the wood from the campfire, there\'s no need for you to be here. Return to the front of the Hospital',
-                requiredInventory: {'Fire Wood': true},
+                requiredInventory: {'Wood Planks': true},
                 nextText: 2
             },
             {
                 text: 'Leave the campfire alone for now, as you feel like you might be able to make use of it later',
-                requiredInventory: {'Fire Wood': false},
+                requiredInventory: {'Wood Planks': false},
                 tempChange: 'decrease',
                 nextText: 2
             },
             {
                 text: 'Take the Fire Wood from the campfire to use later',
-                requiredInventory: {'Fire Wood': false},
+                requiredInventory: {'Wood Planks': false},
                 tempChange: 'decrease',
                 nextText: 11
             },
             {
                 text: 'Collect the nearby Mushrooms',
-                requiredState: (currentState) => currentState.collectMushrooms === true,
+                requiredInventory: {Mushrooms: false, Crowbar: false},
                 tempChange: 'decrease',
                 nextText: 6
             },
             {
                 text: "Light the smoldering campfire for warmth",
-                requiredInventory: {Matches: true, Fuel: true},
-                setInventory: {Matches: false, Fuel: false},
+                requiredInventory: {Matches: true, 'Liquid Benzene': true},
+                setInventory: {Matches: false, 'Liquid Benzene': false},
                 tempChange: 'decrease',
                 nextText: 22    
             },
@@ -506,7 +529,7 @@ const textNodes = [
         options: [
             {
                 text: 'Return to the front of the Hospital',
-                setInventory: {'Fire Wood': true},
+                setInventory: {'Wood Planks': true},
                 nextText: 2
             }
         ]
@@ -564,30 +587,30 @@ const textNodes = [
 
 
 
-    // You check out the Fuel
+    // You check out the Liquid Benzene
     {
         id: 16,
-        text: 'In the Storage Closet on the right hand side of the Lobby, you can see some fuel. However, it\'s stashed way at the back of the closet, but you feel like it' +
-            ' might be useful to have. Do you try to take the Fuel?',
+        text: 'In the Storage Closet on the right hand side of the Lobby, you can see some Liquid Benzene. However, it\'s stashed way at the back of the closet, but you feel like it' +
+            ' might be useful to have. Do you try to take the Liquid Benzene?',
         inventory: '',
-        image: 'assets/images/Hospital/Fuel.jpg',
+        image: 'assets/images/Hospital/LiquidBenzene.jpg',
         sound: 'assets/sounds/WaterDripping.wav',
         options: [
             {
-                text: 'Take the Fuel',
-                requiredInventory: {Fuel: false},
+                text: 'Take the Liquid Benzene',
+                requiredInventory: {'Liquid Benzene': false},
                 tempChange: -1,
                 nextText: 17
             },
             {
-                text: 'Don\'t take the Fuel and return to the Hospital Lobby',
-                requiredInventory: {Fuel: false},
+                text: 'Don\'t take the Liquid Benzene and return to the Hospital Lobby',
+                requiredInventory: {'Liquid Benzene': false},
                 tempChange: -1,
                 nextText: 3
             },
             {
-                text: "You've already taken the fuel, you have no business here. Return to the Hospital Lobby",
-                requiredInventory: {Fuel: true},
+                text: "You've already taken the Liquid Benzene, you have no business here. Return to the Hospital Lobby",
+                requiredInventory: {'Liquid Benzene': true},
                 nextText: 3
             }
         ]
@@ -595,18 +618,18 @@ const textNodes = [
 
 
 
-    // You decided to take the Fuel
+    // You decided to take the Liquid Benzene
     {
         id: 17,
-        text: 'After spending a lot of time rummaging through the Storage Closet you eventually manage to get the fuel from the back, brushing all the dust off your shoulders' +
+        text: 'After spending a lot of time rummaging through the Storage Closet you eventually manage to get the Liquid Benzene from the back, brushing all the dust off your shoulders' +
             ' you return to the Hospital Lobby',
         inventory: '',
-        image: 'assets/images/Hospital/Fuel.jpg',
+        image: 'assets/images/Hospital/LiquidBenzene.jpg',
         sound2: 'assets/sounds/FuelCan.wav',
         options: [
             {
                 text: 'Head back to the main lobby of the Hospital',
-                setInventory: {Fuel: true},
+                setInventory: {'Liquid Benzene': true},
                 nextText: 3
             }
         ]
@@ -715,8 +738,8 @@ const textNodes = [
     // You decide to light the Campfire
     {
         id: 22,
-        text: "You pour the fuel you found inside the Hospital over the smoldering campfire, and then light one of the matches you found in the crates behind the Hospital" +
-            " and thankfully it doesn't immediately get blown out, so you through it on the fuel, and instantly a fire roars to life, and you can feel the strong warmth" + 
+        text: "You pour the Liquid Benzene you found inside the Hospital over the smoldering campfire, and then light one of the matches you found in the crates behind the Hospital" +
+            " and thankfully it doesn't immediately get blown out, so you throw it on the Liquid Benzene, and instantly a fire roars to life, and you can feel the strong warmth" + 
             " cover your body which feels nice as opposed to the freezing cold of the Tundra",
         inventory: '',
         image: 'assets/images/Hospital/AbandonedCampfire.jpg',
@@ -814,13 +837,13 @@ const textNodes = [
         options: [
             {
                 text: 'Barricade the windows with the wood from the Campfire',
-                requiredInventory: {'Fire Wood': true},
+                requiredInventory: {'Wood Planks': true},
                 tempChange: -1,
                 nextText: 30
             },
             {
                 text: 'Set a fire trap at the entrance to the abandoned room',
-                requiredInventory: {Fuel: true, Matches: true},
+                requiredInventory: {'Liquid Benzene': true, Matches: true},
                 tempChange: -1,
                 nextText: 32
             },
@@ -895,7 +918,7 @@ const textNodes = [
             {
                 text: "Go back to preparing for the Night",
                 setState: {defence1: true},
-                setInventory: {'Fire Wood': false},
+                setInventory: {'Wood Planks': false},
                 nextText: 29
             }
         ]
@@ -906,7 +929,7 @@ const textNodes = [
     // You decided to create a fire trap at the abandoned room entrance
     {
         id: 32,
-        text: "Using the fuel, you pour it all over the entrance to the room, in the hopes that when night starts you can light a match and throw it onto the fuel" +
+        text: "Using the Liquid Benzene, you pour it all over the entrance to the room, in the hopes that when night starts you can light a match and throw it onto the Liquid Benzene" +
             " to start a fire in order to keep the zombies at bay",
         inventory: '',
         image: 'assets/images/Hospital/Abandoned_Room.jpg',
@@ -915,7 +938,7 @@ const textNodes = [
             {
                 text: "Go back to preparing for the night",
                 setState: {defence2: true},
-                setInventory: {Fuel: false},
+                setInventory: {'Liquid Benzene': false},
                 nextText: 29
             }
         ]
@@ -1026,9 +1049,9 @@ const textNodes = [
     {
         id: 107,
         text: " Before the night started you made the smart decision to not only barricade most of the windows in the room, but you also decided to create a fire trap for the zombies" +
-            " using the fuel you acquired earlier, confident in your preparations you patiently wait for the fall of night. After some hours pass, you finally start to hear the zombies" +
+            " using the Liquid Benzene you acquired earlier, confident in your preparations you patiently wait for the fall of night. After some hours pass, you finally start to hear the zombies" +
             " outside the Hospital. They start to scream as they climnb up to the windows but can't get through becuase you barricaded them up, but zombies start arriving en masse at" +
-            " the entrance to the room. This was what you were waiting for, with no hesitation you light a match and, with good aim, throw it at the fuel you poured over the entrance," +
+            " the entrance to the room. This was what you were waiting for, with no hesitation you light a match and, with good aim, throw it at the Liquid Benzene you poured over the entrance," +
             " and almost instantly a fire roared to life, burning the zombies as they gave off piercing shrieks in pain. Thankfully, the wood beneath them burned and shattered, dropping" +
             " the zombies to the floor below, and leaving the rest on the other side of a large gap. Many more hours passed, and some zombies did climb through the un-barricaded windows" +
             " but you were able to knock them off with the crowbar, defending your position until the night was finally over..." +
@@ -1047,7 +1070,7 @@ const textNodes = [
             " able to keep the zombies at bay for the whole night in order to survive. After many hours pass, and the night continues to cover the Hospital in darkness, in the" +
             " distance you begin to hear the shrieks of the zombies as they approach the Hospital, and so you prepare to stand your ground. Numerous zombies started to pile" +
             " through the door to the abandoned room, their screams piercing your ears, but this is what you wanted to happen. Without any hesitation you lit a match and threw" +
-            " it at the fuel you poured on the floor, and instantly a fire roared to life, quickly burning the zombies and also the wood below them, which gave way and collapsed" +
+            " it at the Liquid Benzene you poured on the floor, and instantly a fire roared to life, quickly burning the zombies and also the wood below them, which gave way and collapsed" +
             " causing the zombies to fall to the floor below them. Thankfully this also prevented any more zombies from getting to you via the door because of, the now massive, gap between" +
             " it and you. Some of the zombies were able to climb up to the windows, but with you being able to give them your undivided attention" +
             " you were able to kick and punch them down for the rest of the night..." +

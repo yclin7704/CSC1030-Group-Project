@@ -30,16 +30,19 @@ function validateCheat() {
 // Updates the HTML pages with the new Changes each time the page is opened
 // Will be used in the body tag as an onload method
 function updatePages() {
+    // try-catch implemented to prevent unnecessary errors from showing up
+    try {
+        // Gets the ID of the Element being updated
+        let ID = sessionStorage.getItem("ID");
 
-    // Gets the ID of the Element being updated
-    let ID = sessionStorage.getItem("ID");
+        // Gets the attribute which will be changed
+        let attribute = sessionStorage.getItem("Attribute");
 
-    // Gets the attribute which will be changed
-    let attribute = sessionStorage.getItem("Attribute");
+        // Gets the value that will be replaced for the changed Attribute
+        let value = sessionStorage.getItem("Value");
 
-    // Gets the value that will be replaced for the changed Attribute
-    let value = sessionStorage.getItem("Value");
-
-    // Carries out the change
-    document.getElementById(ID).setAttribute(attribute, value);
+        // Carries out the change
+        document.getElementById(ID).setAttribute(attribute, value);
+    }
+    catch {}
 }

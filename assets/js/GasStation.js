@@ -99,9 +99,9 @@ function selectOption(option) {
     }
     state = Object.assign(state, option.setState);
     inventory = Object.assign(inventory, option.setInventory);
-    showTextNode(nextEventIdNodeId);
     updateInventory(option.setInventory);
     changeTemp(option.tempChange);
+    showTextNode(nextEventIdNodeId);
 }
 
 function selectEnding() {
@@ -648,30 +648,30 @@ const textNodes = [
             {
                 text: 'Break up the shelves for wood',
                 nextEventId: 30,
-                setInventory: { Wood: true },
-                requiredInventory: { 'Wood': false },
+                setInventory: { 'Wood Planks': true },
+                requiredInventory: { 'Wood Planks': false },
             },
             {
                 text: 'Barricade the windows using the wood from the shelves',
                 nextEventId: 31,
                 setState: { Windows: false },
                 requiredState: (currentState) => currentState.Windows,
-                requiredInventory: { 'Wood': true },
-                setInventory: { Wood: false }
+                requiredInventory: { 'Wood Planks': true },
+                setInventory: { 'Wood Planks': false }
             },
             {
                 text: 'Barricade the doors using the wood from the shelves',
                 nextEventId: 32,
                 setState: { Doors: true },
-                requiredInventory: { 'Wood': true },
-                setInventory: { Wood: false }
+                requiredInventory: { 'Wood Planks': true },
+                setInventory: { 'Wood Planks': false }
             },
             {
                 text: 'Prepare a fire using wood from the shelves and the gasoline from the car',
                 nextEventId: 33,
                 requiredInventory: {'Gasoline':true},
-                requiredInventory: {'Wood':true},
-                setInventory: { Wood: false },
+                requiredInventory: {'Wood Planks':true},
+                setInventory: { 'Wood Planks': false },
                 setInventory: { Gasoline: false },
             },
             {

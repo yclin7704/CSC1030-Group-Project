@@ -21,8 +21,12 @@ function meetsInventoryRequirements(reqs) {
 	// Iterate through the requirements
 	for (let key in reqs) {
 		// If all previous requirements were met, and
-		// (the current requirement is explicitly met OR the value is supposed to be false and has not yet been defined in inventory)
-		allMet = allMet && (reqs[key] === inventory[key] || (!reqs[key] && !inventory[key]));
+		// (the current requirement is explicitly met OR )
+		allMet =
+			allMet && // All previous conditions met
+			(reqs[key] == inventory[key] || // Exact match
+				(!reqs[key] && !inventory[key]) || // Or the value is supposed to be false and has not yet been defined in inventory
+				(reqs[key] && inventory[key] > reqs[key])); // Or 1+ items are required and the player has all the required items
 	}
 	return allMet;
 }
@@ -36,7 +40,9 @@ function updateInventory(data) {
 	if (data) {
 		// Iterate through the keys and make the required changes
 		for (let key in data) {
-			inventory[key] = data[key];
+			if (!inventory[key]) inventory[key] = 0;
+			if (!data[key]) inventory[key]--;
+			else inventory[key] += data[key];
 		}
 
 		// Save the changes to sessionStorage
@@ -61,7 +67,9 @@ function showInventory() {
 	let str = "";
 	for (let key in inventory) {
 		// Only show the item if they actually have it
-		if (inventory[key]) {
+		if (inventory[key] > 1) {
+			str += `${key} (${inventory[key]})<br />`;
+		} else if (inventory[key] == 1) {
 			str += `${key}<br />`;
 		}
 	}

@@ -32,7 +32,7 @@ function startGame()
     showInventory();
 
     // clears the inventory before the game starts
-    clearInventory();
+    //clearInventory();
 
 	// This will take the player to the appropriate Text Node if they die of frostbite or heat stroke
     //setTemperatureData(showTextNode, coldid, hotid);
@@ -44,6 +44,21 @@ function startGame()
 // This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.
 
 function showTextNode(textNodeIndex){
+    if (textNodeIndex === "Hospital"){
+        window.location.href = "Hospital.html";
+    }
+    else if (textNodeIndex === "GasStation"){
+        window.location.href = "GasStation.html";
+    }
+    else if (textNodeIndex === "Cabin"){
+        window.location.href = "Cabin.html";
+    }
+    else if (textNodeIndex === "Lab"){
+        window.location.href = "Lab.html";
+    }
+    else if (textNodeIndex === "FarmHouse"){
+        window.location.href = "FarmHouse.html";
+    }
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "warehouseText"); // Changes the dialogue box to text stored in the text node.
     updateInventory(textNode.inventory);
@@ -77,8 +92,8 @@ function selectOption(option) {
     }
     state = Object.assign(state, option.setState);
     inventory = Object.assign(inventory, option.setInventory);
-    showTextNode(nextTextNodeId);
     updateInventory(option.setInventory);
+    showTextNode(nextTextNodeId);
 }
 
 // The text nodes for the game are below
@@ -285,23 +300,23 @@ const textNodes = [
         options: [
             {
                 text: 'Go to the gas station',
-                nextText: 4
+                nextText: "GasStation"
             },
             {
                 text: 'Go to the farm house',
-                nextText: 4
+                nextText: "FarmHouse"
             },
             {
                 text: 'Go to the testing centre',
-                nextText: 4
+                nextText: "Lab"
             },
             {
                 text: 'Go to the cabin',
-                nextText: 4
+                nextText: "Cabin"
             },
             {
                 text: 'Go to the hospital',
-                nextText: 4
+                nextText: "Hospital"
             },
             {
                 text: 'Decide not to go anywhere',

@@ -1,16 +1,10 @@
-let gameState = {
-	// TODO: Get profession properly with sessionStorage.getItem("profession");
-	profession: profDoctor,
-};
+let gameState = getGameState();
 sessionStorage.setItem("profession", "Hunter");
 
 /**
  * Main function
  */
 async function main() {
-	// TODO: Returning to cabin
-	// TODO: Save game state to sesion storage on leaving cabin
-
 	StartTimer();
 
 	setTemperatureData(runEvent, tempTooLow, tempTooHigh);
@@ -19,11 +13,16 @@ async function main() {
 	checkIfDead();
 
 	showInventory();
-	// DEBUG: For now, I want items to easily be cleared when I refresh the page. Makes debugging easier for now
-	clearInventory();
+
+	// On first visit
+	if (!gameState.eventId) gameState.eventId = "firstVisitOutside";
+	else if (gameState.leftLocation) {
+		gameState.leftLocation = false;
+		gameState.eventId = "returnToCabin";
+	}
 
 	if (gameState.isDead) runEvent("alreadyDead");
-	else runEvent("firstVisitOutside");
+	else runEvent(gameState.eventId);
 }
 
 function checkIfDead() {
@@ -31,11 +30,38 @@ function checkIfDead() {
 	if (gameState.tempTooHigh || gameState.tempTooLow || isTimeOut()) gameState.isDead = true;
 }
 
+function getGameState() {
+	let savedData = sessionStorage.getItem("cabinGameState");
+	console.log(savedData);
+	if (savedData) return JSON.parse(savedData);
+	else
+		return {
+			// TODO: Get profession properly with sessionStorage.getItem("profession");
+			profession: profDoctor,
+		};
+}
+
 /**
  * Run the event with the given ID
  * @param {string} eventId The event ID
  */
 async function runEvent(eventId) {
+	// Allow the player to return to the warehouse
+	if (eventId === "warehouse") {
+		gameState.leftLocation = true;
+		// Save the current game state to session storage
+		sessionStorage.setItem("cabinGameState", JSON.stringify(gameState));
+
+		window.location.href = "Warehouse.html";
+		return;
+	}
+
+	// Keep track of the current event ID
+	gameState.eventId = eventId;
+
+	// Save the current game state to session storage
+	sessionStorage.setItem("cabinGameState", JSON.stringify(gameState));
+
 	if (typeof eventId === "function") eventId();
 	else if (eventId) {
 		let eventData = getEventData(eventId);
@@ -206,8 +232,7 @@ async function print(text) {
 	let dialogue;
 	if (typeof text === "string") dialogue = text;
 	else if (typeof text === "function") dialogue = text();
-	// TODO: Decrease speed slightly?
-	typeSentence(dialogue, "dialogue", 15);
+	typeSentence(dialogue, "dialogue");
 }
 
 /**
@@ -230,7 +255,6 @@ function getDOM(id) {
 
 async function tempTooLow() {
 	gameState.tempTooLow = true;
-	// TODO: Add extra text to end of current text
 }
 
 async function tempTooHigh() {

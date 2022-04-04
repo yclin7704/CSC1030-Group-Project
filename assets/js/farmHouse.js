@@ -17,7 +17,7 @@ let secret6 = true;
 let secret7 = true;
 
 // This variable stores the current game state
-let state = {};
+let state = getGameState();
 
 
 // This function is called to start the game. The state is emptied and the first text node is shown.
@@ -48,9 +48,22 @@ function startGame(){
     showTextNode(1);
 }
 
+function getGameState() {
+	let savedData = sessionStorage.getItem("farmhouseGameState");
+	console.log(savedData);
+	if (savedData) return JSON.parse(savedData);
+	else
+		return {
+			// TODO: Get profession properly with sessionStorage.getItem("profession");
+		}
+    }
+
 // This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.
 
 function showTextNode(textNodeIndex){
+    if (textNodeIndex ==='Warehouse'){
+        window.location.href = "Warehouse.html";
+    }
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "dialogue"); // Changes the dialogue box to text stored in the text node.
     updateInventory(textNode.inventory);
@@ -71,6 +84,8 @@ function showTextNode(textNodeIndex){
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
             optionButtonsElement.appendChild(button);
             sessionStorage.setItem('collectable', secretCollectable);
+            sessionStorage.setItem("farmhouseGameState", JSON.stringify(state));
+
         }
     }
     )
@@ -89,9 +104,8 @@ function selectOption(option) {
         return startGame();
     }
     state = Object.assign(state, option.setState);
-    inventory = Object.assign(inventory, option.setInventory);
-    showTextNode(nextTextNodeId);
     updateInventory(option.setInventory);
+    showTextNode(nextTextNodeId);
 }
 
 // Change the handwritten text
@@ -126,10 +140,15 @@ const textNodes = [
         inventory: "",
         image: 'assets/images/farm-house-outside.jpg',
         sound: 'assets/sounds/wind.wav',
+        tempChange: -1,
         options: [
             {
                 text: 'Go in',
                 nextText: 2
+            },
+            {
+                text: 'Go to the Warehouse',
+                nextText: 'Warehouse'
             }
         ]
     },
@@ -141,7 +160,7 @@ const textNodes = [
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
         sound: 'assets/sounds/wind.wav',
-        tempChange: 'decrease',
+        tempChange: -1,
         options: [
             {
                 text: 'Walk up to the door',
@@ -176,7 +195,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
-        tempChange: 'decrease',
+        tempChange: -1,
         options: [
             {
                 text: 'Take lamp',
@@ -187,7 +206,7 @@ const textNodes = [
                 nextText: 2
             },
             {
-                text: 'Leave the torch',
+                text: 'Leave the lamp',
                 //requiredState: (currentState) => !currentState.lamp,
                 requiredInventory: {lamp: false},
                 nextText: 2
@@ -196,6 +215,10 @@ const textNodes = [
                 text: 'You have already picked up the lamp',
                 //requiredState: (currentState) => currentState.lamp,
                 requiredInventory: {lamp: true},
+                nextText: 2
+            },
+            {
+                text: 'Back',
                 nextText: 2
             }
         ]
@@ -207,7 +230,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
-        tempChange: 'decrease',
+        tempChange: -1,
         options: [
             {
                 text: 'Read Note',
@@ -226,7 +249,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
-        tempChange: 'decrease',
+        tempChange: -1,
         options: [
             {
                 text: 'Take key',
@@ -245,6 +268,10 @@ const textNodes = [
             {
                 text: 'U have already picked up the key',
                 requiredState: (currentState) => currentState.key || currentState.doorUnlocked,
+                nextText: 2
+            },
+            {
+                text: 'Back',
                 nextText: 2
             }
         ]
@@ -301,7 +328,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/farm-house-outside.jpg',
-        tempChange: 'decrease',
+        tempChange: -1,
         options: [
             {
                 text: 'Open the door',
@@ -321,12 +348,12 @@ const textNodes = [
                 setState: {doorUnlocked:true},
                 nextText: 9
             },
-            {
-                text: 'Shoot the lock off',
-                requiredState: (currentState) => currentState.Hunter && !currentState.doorUnlocked, //need to get gun from inventory
-                setState: {doorUnlocked:true},
-                nextText: 9
-            },
+            // {
+            //     text: 'Shoot the lock off',
+            //     requiredState: (currentState) => currentState.Hunter && !currentState.doorUnlocked, //need to get gun from inventory
+            //     setState: {doorUnlocked:true},
+            //     nextText: 9
+            // },
             {
                 text: 'Kick the door off',
                 requiredState: (currentState) => currentState.WarVeteran  && !currentState.doorUnlocked,
@@ -550,15 +577,15 @@ const textNodes = [
             {
                 text: 'Pick out the wood planks from the broken barrels',
                 //requiredState: (currentState) => !currentState.planks,
-                requiredInventory: {planks:false},
-                setInventory: {planks:true},
+                requiredInventory: {'Wood Planks':false},
+                setInventory: {'Wood Planks':true},
                 //setState: {planks: true},
                 nextText: 17
             },
             {
                 text: 'You have already pick up the planks',
                 //requiredState: (currentState) => currentState.planks,
-                requiredInventory: {planks:true},
+                requiredInventory: {"Wood Planks" : true},
                 nextText: 17
             },
             {
@@ -940,8 +967,8 @@ const textNodes = [
             {
                 text: 'Set up barricade',
                 requiredState: (currentState) => !currentState.barricade,
-                requiredInventory: {planks:true},
-                setInventory: {planks: false},
+                requiredInventory: {"Wood Planks":true},
+                setInventory: {"Wood Planks": false},
                 setState: {barricade:true},
                 nextText: 36
             },
@@ -968,7 +995,23 @@ const textNodes = [
             },
             {
                 text: 'Set up your camp',
-                requiredState: (currentState) => currentState.Hunter && !currentState.camp, //gotta check on this for the inventory system...
+                requiredState: (currentState) => !currentState.camp,
+                requiredInventory: {blanket:true, "Wood Planks":true, matches:true},
+                setInventory: {"Wood Planks":false, matches:false, blanket:false},
+                setState: {camp: true},
+                nextText: 36
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => !currentState.camp,
+                requiredInventory: {"Wood Planks":true, matches:true},
+                setInventory: {"Wood Planks":false, matches:false},
+                setState: {camp: true},
+                nextText: 36
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => currentState.Hunter && !currentState.camp,
                 requiredInventory: {firewood:true, sticks:true},
                 setState: {camp: true},
                 nextText: 36

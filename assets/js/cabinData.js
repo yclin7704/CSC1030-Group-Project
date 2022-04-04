@@ -29,7 +29,7 @@ const eventOpts = [
 			},
 			{
 				desc: "Enter the cabin",
-				requiredState: { hasBeenInsideCabin: true },
+				requiredState: { hasBeenInsideCabin: true, zombieInCabin: false },
 				nextEventId: "insideCabin",
 				disableMode: "hidden",
 				tempChange: "decrease",
@@ -62,7 +62,8 @@ const eventOpts = [
 				tempChange: -40,
 			},
 			{
-				desc: "Open your map",
+				desc: "Return to the warehouse",
+				nextEventId: "warehouse",
 			},
 			{
 				desc: "DEBUG: Increase temp",
@@ -175,14 +176,6 @@ const eventOpts = [
 				desc: getRandomSearchCabinChoice,
 				nextEventId: "randomSearchCabin",
 				requiredState: { thoroughlySearchedCabin: true },
-				disableMode: "hidden",
-			},
-			{
-				desc: "Take the stack of planks you found earlier",
-				nextEventId: "",
-				requiredState: { foundPlanks: true },
-				requiredInventory: { "Wood Planks": false },
-				setInventory: { "Wood Planks": true },
 				disableMode: "hidden",
 			},
 			{
@@ -351,6 +344,7 @@ const eventOpts = [
 				desc: "Use some planks to board up the windows",
 				nextEventId: "addToBarricade",
 				requiredState: { windowsBoarded: false },
+				stateChanges: { windowsBoarded: true },
 			},
 		],
 	},
@@ -395,46 +389,13 @@ const eventOpts = [
 		id: "continuedSearchingCabin",
 		choices: [
 			{
-				desc: "Take the planks and search the cabin for a hammer and nails",
+				desc: "Continue searching the cabin for anything else useful - there's probably still something left in here.",
 				nextEventId: "thoroughlySearchCabin",
-				requiredInventory: { Hammer: false, Nails: false },
 				stateChanges: { thoroughlySearchedCabin: true },
-				setInventory: { "Wood Planks": true },
-				disableMode: "hidden",
 			},
 			{
-				desc: "Take the planks and search the cabin for some nails",
-				nextEventId: "thoroughlySearchCabin",
-				requiredInventory: { Hammer: true, Nails: false },
-				stateChanges: { thoroughlySearchedCabin: true },
-				setInventory: { "Wood Planks": true },
-				disableMode: "hidden",
-			},
-			{
-				desc: "Take the planks and search the cabin for a hammer",
-				nextEventId: "thoroughlySearchCabin",
-				requiredInventory: { Hammer: false, Nails: true },
-				stateChanges: { thoroughlySearchedCabin: true },
-				setInventory: { "Wood Planks": true },
-				disableMode: "hidden",
-			},
-			{
-				desc: "Lucky you've already got both! Take the planks and keep searching for anything else that looks useful",
-				nextEventId: "thoroughlySearchCabin",
-				requiredInventory: { Hammer: true, Nails: true },
-				stateChanges: { thoroughlySearchedCabin: true },
-				setInventory: { "Wood Planks": true },
-				disableMode: "hidden",
-			},
-			{
-				desc: "Ignore the planks for now and continue searching the cabin for anything else useful",
-				nextEventId: "thoroughlySearchCabin",
-				stateChanges: { foundPlanks: true, thoroughlySearchedCabin: true },
-			},
-			{
-				desc: "Ignore the planks for now and stop searching - you doubt you'll find anything else useful in this place",
+				desc: "Stop searching - you doubt you'll find anything else useful in this place",
 				nextEventId: "insideCabin",
-				stateChanges: { foundPlanks: true },
 			},
 		],
 	},
@@ -556,10 +517,11 @@ const eventOpts = [
 
 	// BEGIN: Night
 	{
-		id: "onNightEnd",
+		id: "onDayEnd",
 		choices: [
 			{
-				desc: "TODO",
+				desc: "Hunker down and wait for the zombies to arrive",
+				nextEventId: "nightZombiesAtDoor",
 			},
 		],
 	},
@@ -605,6 +567,14 @@ const events = [
 		optsId: "outside",
 	},
 	{
+		id: "returnToCabin",
+		text: `Following the winding path through the woods once again, you reach the lone cabin.
+		The sky is already beginning to darken - night is on its way.`,
+		img: imgOutside,
+		audio: audioWind,
+		optsId: "outside",
+	},
+	{
 		id: "leaveCabin",
 		text: `Leaving the shelter of the cabin, you feel the strength of the harsh wind once again. The sky is already beginning to darken - not much longer until night falls.`,
 		img: imgOutside,
@@ -622,11 +592,9 @@ const events = [
 	// BEGIN: Firewood
 	{
 		id: "searchForFirewood",
-		text: `Walking around the house, you find a large stack of logs. Unfortunately, they're too big to help you start the fire,
-        but they'll be useful for keeping it going throughout the night.<br />
-        If you had a <strong>saw</strong> of some sort, you could cut some of them up into kindling.<br />
-        You might also be able to find some smaller branches out in the forest, but who knows what's out in those dark woods?<br />
-        Or you could hope that you find some other kindling before night.`,
+		text: `Walking around the house, you find a large stack of logs. Some of them are quite large, but there's a few smaller
+        ones that'll be useful for keeping a fire going throughout the night.<br />
+        If you had a <strong>saw</strong> of some sort, you could cut some of them up into planks.`,
 		optsId: "atFirewood",
 	},
 	{
@@ -687,8 +655,7 @@ const events = [
 	},
 	{
 		id: "continueSearchingCabin",
-		text: `Continuing your search, you spot a stack of wooden planks shoved under the bed.
-        Not what you'd want to build a cabin out of, but good enough to help barricade, if you can find some nails and a hammer.`,
+		text: `You continue your search, but still find nothing of intrest more than a few spiderwebs.`,
 		optsId: "continuedSearchingCabin",
 	},
 	{
@@ -859,8 +826,8 @@ const events = [
 	// BEGIN: Night
 	{
 		id: "onDayEnd",
-		text: `As night approaches, you prepare yourself in the cabin.<br />
-        `,
+		text: `As the sun slowly sinks below the horizon, you feel your dread beginning to grow as you prepare yourself in the cabin.<br />
+        Hopefully you've made enough preparations to allow you to survive through the night.`,
 		img: imgInside,
 		optsId: "onDayEnd",
 	},
@@ -883,8 +850,7 @@ const events = [
 	},
 	{
 		id: "diedToZombie",
-		text: `As the zombie lands on top of you, you try your best to push it off. It's no use, and you cry out in pain as you feel the zombie's teeth sink into your arm.
-        TODO: Could probably expand even further on this`,
+		text: `As the zombie lands on top of you, you try your best to push it off. It's no use, and you cry out in pain as you feel the zombie's teeth sink into your arm.`,
 		img: gifDied,
 		optsId: "gameOver",
 	},
