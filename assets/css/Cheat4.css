@@ -4,6 +4,7 @@
 	--brownDark: rgb(34, 32, 32);
 	--beige: rgb(146, 92, 146);
 	--text: white;
+	--lightText: black;
 }
 
 .dialogueOuter {
@@ -36,6 +37,10 @@ button:enabled:hover {
 
 .map {
 	background-color: var(--brownDark);
+}
+
+.inventoryHeading {
+	font-weight: bolder;
 }
 
 .inventory {
