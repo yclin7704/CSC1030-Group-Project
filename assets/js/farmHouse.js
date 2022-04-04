@@ -348,12 +348,12 @@ const textNodes = [
                 setState: {doorUnlocked:true},
                 nextText: 9
             },
-            {
-                text: 'Shoot the lock off',
-                requiredState: (currentState) => currentState.Hunter && !currentState.doorUnlocked, //need to get gun from inventory
-                setState: {doorUnlocked:true},
-                nextText: 9
-            },
+            // {
+            //     text: 'Shoot the lock off',
+            //     requiredState: (currentState) => currentState.Hunter && !currentState.doorUnlocked, //need to get gun from inventory
+            //     setState: {doorUnlocked:true},
+            //     nextText: 9
+            // },
             {
                 text: 'Kick the door off',
                 requiredState: (currentState) => currentState.WarVeteran  && !currentState.doorUnlocked,
