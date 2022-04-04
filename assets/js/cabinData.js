@@ -567,6 +567,14 @@ const events = [
 		optsId: "outside",
 	},
 	{
+		id: "returnToCabin",
+		text: `Following the winding path through the woods once again, you reach the lone cabin.
+		The sky is already beginning to darken - night is on its way.`,
+		img: imgOutside,
+		audio: audioWind,
+		optsId: "outside",
+	},
+	{
 		id: "leaveCabin",
 		text: `Leaving the shelter of the cabin, you feel the strength of the harsh wind once again. The sky is already beginning to darken - not much longer until night falls.`,
 		img: imgOutside,
@@ -842,8 +850,7 @@ const events = [
 	},
 	{
 		id: "diedToZombie",
-		text: `As the zombie lands on top of you, you try your best to push it off. It's no use, and you cry out in pain as you feel the zombie's teeth sink into your arm.
-        TODO: Could probably expand even further on this`,
+		text: `As the zombie lands on top of you, you try your best to push it off. It's no use, and you cry out in pain as you feel the zombie's teeth sink into your arm.`,
 		img: gifDied,
 		optsId: "gameOver",
 	},
