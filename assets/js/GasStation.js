@@ -656,7 +656,7 @@ const textNodes = [
                 nextEventId: 31,
                 setState: { Windows: false },
                 requiredState: (currentState) => currentState.Windows,
-                requiredInventory: { Wood: true },
+                requiredInventory: { 'Wood': true },
                 setInventory: { Wood: false }
             },
             {
@@ -669,8 +669,8 @@ const textNodes = [
             {
                 text: 'Prepare a fire using wood from the shelves and the gasoline from the car',
                 nextEventId: 33,
-                requiredInventory: {Gasoline:true},
-                requiredInventory: {Wood:true},
+                requiredInventory: {'Gasoline':true},
+                requiredInventory: {'Wood':true},
                 setInventory: { Wood: false },
                 setInventory: { Gasoline: false },
             },
@@ -697,6 +697,7 @@ const textNodes = [
         options: [
             {
                 text: 'Continue preparation',
+                setState: {Shelves:true},
                 nextEventId: 29
             },
             {
@@ -715,6 +716,7 @@ const textNodes = [
         options: [
             {
                 text: 'Continue preparation',
+                setState:{Shelves:true},
                 nextEventId: 29
             },
             {
@@ -733,6 +735,7 @@ const textNodes = [
         options: [
             {
                 text: 'Continue preparation',
+                setState:{Shelves:true},
                 nextEventId: 29
             },
             {
@@ -771,6 +774,7 @@ const textNodes = [
         options: [
             {
                 text: 'Continue preparation',
+                setState:{Shelves:true},
                 nextEventId: 29
             },
             {
@@ -843,7 +847,7 @@ const textNodes = [
     {
         id: 38,
         text: '<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
-        image: '/assets/images/Victory_TEST-GIF.gif',
+        image: '/assets/images/Victory2_TEST-GIF.gif',
         inventory: '',
         options: []
     }
