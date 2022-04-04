@@ -100,8 +100,8 @@ function selectOption(option) {
     state = Object.assign(state, option.setState);
     inventory = Object.assign(inventory, option.setInventory);
     updateInventory(option.setInventory);
-    changeTemp(option.tempChange);
     showTextNode(nextEventIdNodeId);
+    changeTemp(option.tempChange);
 }
 
 function selectEnding() {

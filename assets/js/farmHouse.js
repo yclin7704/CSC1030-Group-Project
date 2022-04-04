@@ -618,17 +618,17 @@ const textNodes = [
         sound2: "assets/sounds/drawerOpen.wav",
         options: [
             {
-                text: 'Take the matches',
-                //requiredState: (currentState) => !currentState.matches,
-                requiredInventory: {matches:false},
-                setInventory: {matches: true},
-                //setState: {matches: true},
+                text: 'Take the Matches',
+                //requiredState: (currentState) => !currentState.Matches,
+                requiredInventory: {Matches:false},
+                setInventory: {Matches: true},
+                //setState: {Matches: true},
                 nextText: 18
             },
             {
-                text: 'You have already picked up the matches from the drawer',
-                //requiredState: (currentState) => currentState.matches,
-                requiredInventory: {matches:true},
+                text: 'You have already picked up the Matches from the drawer',
+                //requiredState: (currentState) => currentState.Matches,
+                requiredInventory: {Matches:true},
                 nextText: 18
             },
             {
@@ -980,32 +980,32 @@ const textNodes = [
             {
                 text: 'Set up your camp',
                 requiredState: (currentState) => !currentState.camp,
-                requiredInventory: {blanket:true, firewood:true, matches:true},
-                setInventory: {firewood:false, matches:false, blanket:false},
+                requiredInventory: {blanket:true, firewood:true, Matches:true},
+                setInventory: {firewood:false, Matches:false, blanket:false},
                 setState: {camp: true},
                 nextText: 36
             },
             {
                 text: 'Set up your camp',
                 requiredState: (currentState) => !currentState.camp,
-                requiredInventory: {firewood:true, matches:true, blanket:false},
-                setInventory: {firewood:false, matches:false},
+                requiredInventory: {firewood:true, Matches:true, blanket:false},
+                setInventory: {firewood:false, Matches:false},
                 setState: {camp: true},
                 nextText: 36
             },
             {
                 text: 'Set up your camp',
                 requiredState: (currentState) => !currentState.camp,
-                requiredInventory: {blanket:true, "Wood Planks":true, matches:true},
-                setInventory: {"Wood Planks":false, matches:false, blanket:false},
+                requiredInventory: {blanket:true, "Wood Planks":true, Matches:true},
+                setInventory: {"Wood Planks":false, Matches:false, blanket:false},
                 setState: {camp: true},
                 nextText: 36
             },
             {
                 text: 'Set up your camp',
                 requiredState: (currentState) => !currentState.camp,
-                requiredInventory: {"Wood Planks":true, matches:true},
-                setInventory: {"Wood Planks":false, matches:false},
+                requiredInventory: {"Wood Planks":true, Matches:true},
+                setInventory: {"Wood Planks":false, Matches:false},
                 setState: {camp: true},
                 nextText: 36
             },

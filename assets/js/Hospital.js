@@ -158,8 +158,8 @@ function selectOption(option) {
     }
     state = Object.assign(state, option.setState);
     updateInventory(option.setInventory);
-    changeTemp(option.tempChange);
     showTextNode(nextTextNodeId);
+    changeTemp(option.tempChange);
 }
 
 
