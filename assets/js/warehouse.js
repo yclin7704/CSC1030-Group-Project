@@ -103,7 +103,7 @@ const textNodes = [
         id: 1,
         text: `After pondering your thoughts for a while, you hear static near you. A old rustic radio spoke out "Survivors, if any of you are still out there please ensure that you're ready tonight as the zombies will be more agitated than normal and a snow storm will arrive tonight. This will wipe out the zombie bu-" before it could finish it cuts out. Seems like it ran out of batteries.`,
         inventory: '',
-        image: '',
+        image: 'assets/images/Warehouse.jpg',
         options: [
             {
                 text: 'Look around the warehouse',
@@ -115,7 +115,7 @@ const textNodes = [
         id: 2,
         text: `You take your time to analyse the abandoned warehouse you're in, The room itself is quite spacious which seems like a bad thing when the zombies are out to get you and the impending snow, it would difficult to survive here but possible. There are some large planks of wood on the floor along with a burnt out campfire from the previous occupant and a recharagable torch.`,
         inventory: '',
-        image: '',
+        image: 'assets/images/Warehouse.jpg',
         options: [
             {
                 text: 'Take the large planks',
@@ -156,7 +156,7 @@ const textNodes = [
         id: 2.1,
         text: `You look at the campfire left by the previous occupant, you're going to need some way to light the campfire and have something to burn it with.`,
         inventory: '',
-        image: '',
+        image: 'assets/images/Warehouse.jpg',
         options: [
             {
                 text: 'Put in wood',
@@ -221,7 +221,7 @@ const textNodes = [
         id: 2.2,
         text: `You can choose to barricade off the front door while this will provide you will some defences for the night, it might not be completely enough and you can no longer leave the room.`,
         inventory: '',
-        image: '',
+        image: 'assets/images/Warehouse.jpg',
         options: [
             {
                 text: 'Barricade the door with planks',
@@ -239,7 +239,7 @@ const textNodes = [
         id: 3,
         text: `After leaving the warehouse, you notice that the warehouse is surrounded by a fence however there are holes almost everywhere, maybe if you patch it up it can be of some use. You can also decide to leave and visit the other areas you have heard of.`,
         inventory: '',
-        image: '',
+        image: 'assets/images/Warehouse.jpg',
         options: [
             {
                 text: 'Go back inside',
@@ -265,7 +265,7 @@ const textNodes = [
         id: 3.1,
         text: `The fence while have many holes, can easily be repaired if there are some barbed wires and something like a bolt cutter for you to use.`,
         inventory: '',
-        image: '',
+        image: 'assets/images/Warehouse.jpg',
         options: [
             {
                 text: 'Fix the fence',
@@ -284,7 +284,7 @@ const textNodes = [
         id: 3.1,
         text: `The fence is fixed and should hold back the zombie for a period of time but you should still be wary.`,
         inventory: '',
-        image: '',
+        image: 'assets/images/Warehouse.jpg',
         options: [
             {
                 text: 'Go back',
@@ -296,7 +296,7 @@ const textNodes = [
         id: 4,
         text: `You decided it may be best to try your luck at scavaging or holding out at a different location.`,
         inventory: '',
-        image: '',
+        image: 'assets/images/Warehouse.jpg',
         options: [
             {
                 text: 'Go to the gas station',
