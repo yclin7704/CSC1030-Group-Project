@@ -14,18 +14,12 @@ function startGame()
 {
     switch(profession) //Setting to the profession chosen
     { 
-        case "Mechanic": state = {Mechanic: true}; 
-        break;
-        case "Doctor": state = {Doctor: true}; 
-        break;
-        case "Hunter": state = {Hunter: true}; 
-        break;
-        case "War Veteran": state = {WarVeteran: true}; 
-        break;
-        case "Priest": state = {Priest: true}; 
-        break;
-        default: state = {}; 
-        break;
+        case "Mechanic": state = {Mechanic: true}; break;
+        case "Doctor": state = {Doctor: true}; break;
+        case "Hunter": state = {Hunter: true}; break;
+        case "War Veteran": state = {WarVeteran: true}; break;
+        case "Priest": state = {Priest: true}; break;
+        default: state = {}; break;
     }
 
     // Displays the inventory
@@ -305,16 +299,79 @@ const textNodes = [
     },
     {
         id: "camp",
-        text: "This is camp",
+        text: "You decide to start preparing yourself for the night, you make refuge in an old bunker that was hidden away underneath the Warehouse, and wait" +
+            "patiently for the night to fall...",
         inventory: '',
-        image: 'assets/images/Warehouse.jpg',
+        image: 'assets/images/Bunker.jpg',
         options: [
             {
-                text: "Hello"
+                text: "Start the Night",
+                requiredState: (currentState) => !currentState.fenceFixed && !currentState.barricaded,
+                nextText: 5.1
+            },
+            {
+                text: "Start the Night",
+                requiredState: (currentState) => currentState.fenceFixed && !currentState.barricaded,
+                nextText: 5.2
+            },
+            {
+                text: "Start the Night",
+                requiredState: (currentState) => !currentState.fenceFixed && currentState.barricaded,
+                nextText: 5.3
+            },
+            {
+                text: "Start the Night",
+                requiredState: (currentState) => currentState.fenceFixed && currentState.barricaded,
+                nextText: 5.4
             }
         ]
+    },
+    {
+        id: 5.1,
+        text: "You decided to wait patiently for the night to fall over the abandoned Warehouse. However, as the hours went by you could start to hear the shrieks of the" +
+            " Zombies from outside get louder and louder as the slowly approached the Warehouse. Unfortunately, because you weren't able to fix the fence and because you didn't" +
+            " barricade the front door to the Warehouse, there was little opposition for the zombies that were able got through the gap in the fence and so as they broke down" +
+            " the door to your Bunker, you were completely overwhelmed and with no escape route, you accepted your fate..." +
+            "<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+        options: []
+    },
+    {
+        id: 5.2,
+        text: "You decided to wait patiently for the night to fall over the abandoned Warehouse, and as you did, the faint piercing screeches of the Zombies in the distance" +
+            " got louder and louder as they approached the Warehouse. Thankfully because you fixed the fence the Zombies had a hard time getting over. However, the Zombies" +
+            "started to pile on top of each other to enable a small amount of Zombies to get over the fence, and because you didn't barricade the front door the small amount" +
+            " of Zombies eventually found their way down to your Bunker and broke down the door. You were able to defend yourself for a short time, but your efforts were in vain" +
+            ". The zombies had you..." +
+            "<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+        options: []
+    },
+    {
+        id: 5.3,
+        text: "You decided to wait patiently for the night to cover the Warehouse in darkness, and as you did you could hear the blood curdling screams of not only the Zombies" +
+            "but of some other people as they were attacked. However, as the Zombies grew closer and closer you felt confident in the fact that you were able to successfully" +
+            " barricade the front door to the Warehouse because the wood was sturdy and strong, and thankfully there were no other entrances into the Warehouse. As the Zombies" +
+            "apparoached, although it wasn't fixed, the fence managed to still pose as an obstacle to the Zombies as only some of them were able to get through the gap completely" +
+            "unharmed, but your defences on the door were able to hold off the few that did make it through..." +
+            "<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+        inventory: '',
+        image: 'assets/images/Victory2_TEST-GIF.gif',
+        options: []
+    },
+    {
+        id: 5.4,
+        text: "After having fixed the fence outside the Warehouse and barricaded the front door to the Warehouse, you were confident in the fact that these defences should hold off" +
+        "the oncoming Zombies. As the hours passed by, you could hear the shrill shrieks of the Zombies as they arrived at the Warehouse, but because you fixed the fence the Zombies" +
+        "weren't able to get passed it as easily. However, they did start to pile on top of each other to allow a few Zombies to get over the fence, but their efforts were in vain as" +
+        " the strength of the few Zombies that did get over wasn't enough to break down the barricaded door to the Warehouse..." +
+        "<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
+        inventory: '',
+        image: 'assets/images/Victory2_TEST-GIF.gif',
+        options: []
     }
-    
 ]
 
 startGame(); // Function call to start the game
