@@ -34,7 +34,7 @@ function showTimes() {
 }*/
 
 const ARRAY_SIZE = 3;
-const timeString = localStorage.getItem('Time');
+const timeString = sessionStorage.getItem('Time');
 
 function compareTime() {
     console.log(timeString);
