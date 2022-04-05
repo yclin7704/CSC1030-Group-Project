@@ -67,6 +67,10 @@ async function runEvent(eventId) {
 		let eventData = getEventData(eventId);
 
 		if (eventData.optsId === "gameOver") stopTimer();
+		if (eventId === "tempTooLow" && getTemp() > -22) {
+			setTemp(-22);
+			gameState.isDead = true;
+		}
 
 		// Update the game's state, if needed
 		updateGameState(eventData.stateChanges);
