@@ -3,10 +3,21 @@ const imgInside = "assets/images/cabin-inside.webp";
 const imgHatch = "assets/images/cabin-trapdoor.jpg";
 
 const gifDied = "assets/images/You-Died_TEST-GIF.gif";
+const gifWon = "assets/images/Victory2_TEST-GIF.gif";
 
 const audioWind = "assets/sounds/wind.wav";
 const audioRain = "assets/sounds/rain_2.wav";
-const soundTest = "assets/sounds/ZippingBag.mp3";
+const audioWinter = "assets/sounds/winterStorm.wav";
+
+const soundZombie = "./assets/sounds/zombieseating.wav";
+const soundTakeWood = "./assets/sounds/SpareFireWood.wav";
+const soundGlassBreak = "./assets/sounds/glassbreak.wav";
+const soundEarth = "./assets/sounds/earth.wav";
+const soundWind = "./assets/sounds/wind.wav";
+const soundFire = "./assets/sounds/Fire.wav";
+const soundDrawer = "./assets/sounds/drawerOpen.wav";
+const soundCreak = "./assets/sounds/door.wav";
+const soundBarricade = "./assets/sounds/Barricading.wav";
 
 const profHunter = "Hunter";
 const profMechanic = "Mechanic";
@@ -25,7 +36,6 @@ const eventOpts = [
 				nextEventId: "initialInsideCabin",
 				disableMode: "hidden",
 				tempChange: "decrease",
-				sound: soundTest,
 			},
 			{
 				desc: "Enter the cabin",
@@ -33,7 +43,6 @@ const eventOpts = [
 				nextEventId: "insideCabin",
 				disableMode: "hidden",
 				tempChange: "decrease",
-				sound: soundTest,
 			},
 			{
 				desc: "Enter the cabin",
@@ -59,7 +68,7 @@ const eventOpts = [
 			{
 				desc: "Venture deeper into the forest",
 				nextEventId: "visitForestInitial",
-				tempChange: -40,
+				tempChange: -30,
 			},
 			{
 				desc: "Return to the warehouse",
@@ -92,10 +101,11 @@ const eventOpts = [
 				nextEventId: "takeLargeFirewood",
 				disableMode: "hidden",
 				tempChange: "decrease",
+				sound: soundTakeWood,
 			},
 			{
 				desc: "Make some smaller kindling out of the logs using your saw",
-				requiredInventory: { Saw: true /* That variable may need renamed */, Kindling: false },
+				requiredInventory: { "Bone Saw": true, Kindling: false },
 				setInventory: { Kindling: true },
 				nextEventId: "makeKindling",
 				tempChange: "decrease",
@@ -151,6 +161,7 @@ const eventOpts = [
 				requiredState: { rifledCabin: false },
 				stateChanges: { rifledCabin: true },
 				disableMode: "hidden",
+				sound: soundDrawer,
 			},
 			{
 				desc: "Take a closer look at the safe",
@@ -221,10 +232,9 @@ const eventOpts = [
 				nextEventId: "attackZombieCrowbar",
 			},
 			{
-				desc: "Shoot the zombie with []",
-				// TODO
-				requiredInventory: {},
-				nextEventId: "attackZombieGun",
+				desc: "Use your knife",
+				requiredInventory: { Knife: true },
+				nextEventId: "attackZombieKnife",
 			},
 			{
 				desc: "Escape through the window",
@@ -287,14 +297,14 @@ const eventOpts = [
 		choices: [
 			{
 				desc: "Shoot the zombie",
-				nextEventId: "attackZombieGun",
-				requiredInventory: {},
+				nextEventId: "attackZombieKnife",
+				requiredInventory: { Knife: true },
 				stateChanges: { zombieInCabin: false },
 			},
 			{
 				desc: "Attack the zombie with your saw",
 				nextEventId: "attackZombieSaw",
-				requiredInventory: {},
+				requiredInventory: { "Bone Saw": true },
 				stateChanges: { zombieInCabin: false },
 			},
 			{
@@ -507,9 +517,20 @@ const eventOpts = [
 		choices: [
 			{
 				desc: "Continue",
+				nextEventId: "continueIntoWoods",
 			},
 			{
 				desc: "Return to the cabin",
+				nextEventId: "returnToCabin",
+			},
+		],
+	},
+	{
+		id: "stuckInWoods",
+		choices: [
+			{
+				desc: "Was it this way?",
+				nextEventId: "tempTooLow",
 			},
 		],
 	},
@@ -522,6 +543,123 @@ const eventOpts = [
 			{
 				desc: "Hunker down and wait for the zombies to arrive",
 				nextEventId: "nightZombiesAtDoor",
+			},
+		],
+	},
+	{
+		id: "zombiesAtDoor",
+		choices: [
+			{
+				desc: "Luckily, you'd already built your barricade against the door - nothing's getting through there",
+				nextEventId: "nightZombiesAtWindow",
+				requiredState: { returnedToBarricade: true },
+				disableMode: "hidden",
+			},
+			{
+				desc: "You'd forgotten to complete your barricade - They're coming in!",
+				nextEventId: "forgotBarricade",
+				requiredState: { returnedToBarricade: false },
+				disableMode: "hidden",
+			},
+		],
+	},
+	{
+		id: "zombiesAtWindow",
+		choices: [
+			{
+				desc: "You've already boarded up the windows - you're safe in here tonight",
+				nextEventId: "coldNoZombies",
+				requiredState: { boardedWindows: true },
+				disableMode: "hidden",
+			},
+			{
+				desc: "Prepare for a fight!",
+				nextEventId: "fightAtNight",
+				requiredState: { boardedWindows: false },
+				disableMode: "hidden",
+			},
+		],
+	},
+	{
+		id: "fightAtNight",
+		choices: [
+			{
+				desc: "Your knife will help you survive",
+				nextEventId: "nightSurviveZombies",
+				requiredInventory: { Knife: true },
+			},
+			{
+				desc: "Use your saw to defend yourself",
+				nextEventId: "nightSurviveZombies",
+				requiredInventory: { "Bone Saw": true },
+			},
+			{
+				desc: "Your crowbar will make a good weapon",
+				nextEventId: "nightSurviveZombies",
+				requiredInventory: { Crowbar: true },
+			},
+			{
+				desc: "Try your best to survive without any weapons",
+				nextEventId: "nightDieZombies",
+			},
+		],
+	},
+	{
+		id: "coldInCabin",
+		choices: [
+			{
+				desc: "Light a fire using with the logs and matches you found earlier",
+				requiredInventory: { Matches: true }, // TODO: LOGS
+				disableMode: "hidden",
+				nextEventId: "lightFire",
+				tempChange: 10,
+			},
+			{
+				desc: "Light a fire using some of the planks and matches you found earlier",
+				requiredInventory: { Matches: true, "Wood Planks": true },
+				disableMode: "hidden",
+				nextEventId: "lightFire",
+				tempChange: 10,
+			},
+			{
+				desc: "Try to make a makeshift fire using some of the furniture around here",
+				requiredInventory: { Matches: true },
+				disableMode: "hidden",
+				nextEventId: "lightCabinFire",
+				tempChange: 10,
+			},
+			{
+				desc: "Try to keep yourself as warm as you can without a fire",
+				nextEventId: "nightWithoutFire",
+				tempChange: -20,
+			},
+		],
+	},
+	{
+		id: "withoutFire",
+		choices: [
+			{
+				desc: "Try your best to stay warm",
+				nextEventId: "tempTooLow",
+			},
+		],
+	},
+	{
+		id: "onFire",
+		choices: [
+			{
+				desc: "Attempt to put out the quickly spreading fire",
+				nextEventId: "tempTooHigh",
+				tempChange: 600,
+			},
+		],
+	},
+	{
+		id: "litFire",
+		choices: [
+			{
+				desc: "Sleep",
+				nextEventId: "survived",
 			},
 		],
 	},
@@ -720,8 +858,8 @@ const events = [
 		optsId: "fightingZombie",
 	},
 	{
-		id: "attackZombieGun",
-		text: `Taking aim at the zombie, you shoot it in the head. It keels over, dead. Hopefully the sound of the gunshot didn't attract any more zombies.`,
+		id: "attackZombieKnife",
+		text: `Sneaking up behind the zombie, you stab it in the back of the head. It keels over, dead. Hopefully you didn't attract any more zombies.`,
 		optsId: "killedZombie",
 	},
 	{
@@ -821,6 +959,13 @@ const events = [
         Should you turn back now, or push on and see what you can find?`,
 		optsId: "outOfIcyWater",
 	},
+	{
+		id: "continueIntoWoods",
+		text: `As you trek further into the forest, you begin to notice it becoming darker and darker. You also feel the air around you becoming colder and colder.
+        As you begin to think about turning back, you realise you can no longer spot the path you took.<br />
+        As you try to retrace your steps, you feel yourself becoming colder and colder...`,
+		optsId: "stuckInWoods",
+	},
 	// END: Forest
 
 	// BEGIN: Night
@@ -830,6 +975,51 @@ const events = [
         Hopefully you've made enough preparations to allow you to survive through the night.`,
 		img: imgInside,
 		optsId: "onDayEnd",
+	},
+	{
+		id: "nightZombiesAtDoor",
+		text: `With the fun now fully set, you begin to hear the sounds of zombies waking up all around the cabin.
+        They get closer and closer, until you can hear them right outside the door...`,
+		optsId: "zombiesAtDoor",
+	},
+	{
+		id: "nightZombiesAtWindow",
+		text: `With the door safely secured, the zombies begin seeking another way in. Everything quietens down, until suddenly - <strong>SMASH</strong> - 
+        you hear a zombie smash through the window!`,
+		optsId: "zombiesAtWindow",
+	},
+	{
+		id: "fightAtNight",
+		text: `As a zombie collapses through the window, you prepare yourself for a fight. Luckily there's only a few of them, and they are slowed by having to crawl
+        through the windows. This should be survivable.`,
+		optsId: "fightAtNight",
+	},
+	{
+		id: "nightSurviveZombies",
+		text: `Using your weapon, you are able to kill all the zombies - although it is a long, tough fight. You begin to relax, knowing no more zombies will be
+        bothering you tonight.<br />As you begin to relax in the safety of the cabin, you begin to realise how cold the room has become.`,
+		optsId: "coldInCabin",
+	},
+	{
+		id: "coldNoZombies",
+		text: `As you begin to relax in the safety of the cabin, you begin to realise how cold the room has become.`,
+		optsId: "coldInCabin",
+	},
+	{
+		id: "nightWithoutFire",
+		text: `You curl yourself up in an attempt to remain as warm as possible, but you can still feel the icy cold surrounding you.`,
+		optsId: "withoutFire",
+	},
+	{
+		id: "lightFire",
+		text: `You successfully light your fire, and warm yourself with its orange glow. You prepare to get some sleep, knowing you've survived the night.`,
+		optsId: "litFire",
+	},
+	{
+		id: "lightCabinFire",
+		text: `As you attempt to start a fire using some wood from the furniture strewn across the cabin, you accidentally drop a match which, before you can stop it,
+        falls on to the carpet below you, which quickly catches alight.`,
+		optsId: "onFire",
 	},
 	// END: Night
 
@@ -844,13 +1034,27 @@ const events = [
 	},
 	{
 		id: "tempTooHigh",
-		text: `As the flames [TODO]`,
+		text: `You're too late, as the flames are already spreading rapidly throughout the cabin. You try to escape, but your own barricade blocks your path.`,
 		img: gifDied,
 		optsId: "gameOver",
 	},
 	{
 		id: "diedToZombie",
 		text: `As the zombie lands on top of you, you try your best to push it off. It's no use, and you cry out in pain as you feel the zombie's teeth sink into your arm.`,
+		img: gifDied,
+		optsId: "gameOver",
+	},
+	{
+		id: "forgotBarricade",
+		text: `Zombies begin pouring through the door. As you try to fight them off, yet more of them smash through the windows and begin climbing through.<br />
+        You're completely overwhelmed, despite your best efforts to fight them off.`,
+		img: gifDied,
+		optsId: "gameOver",
+	},
+	{
+		id: "nightDieZombies",
+		text: `As the zombies begin pouring in, you do your best to fight them off using what little you have available to you.<br />
+        Unfortunately, it isn't enough, and the zombies quickly overwhelm you.`,
 		img: gifDied,
 		optsId: "gameOver",
 	},
@@ -867,6 +1071,15 @@ const events = [
 		optsId: "gameOver",
 	},
 	// END: Deaths
+
+	// BEGIN: Survived
+	{
+		id: "survived",
+		text: `You survived the night! Congratulations!`,
+		img: gifWon,
+		optsId: "gameOver",
+	},
+	// END: Survived
 ];
 
 const eventsHunter = [
