@@ -84,14 +84,22 @@ function saveTime(time, timeArray) {
 function showTimes() {
 	// Parse the saved times array
 	const timeArray = JSON.parse(localStorage.getItem("timeArray"));
-
+	console.log(timeArray);
 	// Get the element to display the leaderboard on
 	const leaderboard = document.getElementById("timesList");
 
 	// Construct the html containing the names and times
 	let html = "";
 	for (i = 0; i < timeArray.length; i++) {
-		html += `<li class="record">${timeArray[i].name}: ${timeArray[i].time}</li>`;
+		let item = timeArray[i];
+
+		// Use fallback values if not found
+		if (!item) item = {};
+		if (!item.name) item.name = "Unknown";
+		if (!item.time) item.time = 300;
+		console.log(item);
+
+		html += `<li class="record">${item.name}: ${item.time}</li>`;
 	}
 
 	// Display the result
