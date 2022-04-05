@@ -47,7 +47,7 @@ function compareTime() {
 
 	// Assuming the list is already sorted, check the new time against the lowest saved time to see if it is lower.
 	const lastPos = timeArray[ARRAY_SIZE - 1];
-	if (time < lastPos || !lastPos) {
+	if (!lastPos || !lastPos.time || time < lastPos.time) {
 		// If it is, update the list
 		saveTime(time, timeArray);
 	}
@@ -71,7 +71,7 @@ function saveTime(time, timeArray) {
 		// Prevent the sort from failing if any of the values are undefined
 		if (!a) return 300;
 		else if (!b) return -300;
-		else return b.time - a.time;
+		else return a.time - b.time;
 	});
 
 	// Remove the last item in the array
@@ -84,7 +84,6 @@ function saveTime(time, timeArray) {
 function showTimes() {
 	// Parse the saved times array
 	const timeArray = JSON.parse(localStorage.getItem("timeArray"));
-	console.log(timeArray);
 	// Get the element to display the leaderboard on
 	const leaderboard = document.getElementById("timesList");
 
@@ -96,8 +95,7 @@ function showTimes() {
 		// Use fallback values if not found
 		if (!item) item = {};
 		if (!item.name) item.name = "Unknown";
-		if (!item.time) item.time = 300;
-		console.log(item);
+		if (!item.time) item.time = "?";
 
 		html += `<li class="record">${item.name}: ${item.time} seconds</li>`;
 	}
