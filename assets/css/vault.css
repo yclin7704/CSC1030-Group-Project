@@ -1,4 +1,4 @@
-.vault
+#vaultMain
 {
     position: absolute;
     width: 50%;
@@ -7,5 +7,39 @@
     top: 0;
     bottom: 28%;
     right: 4%;
-    left: 0;
+    left: 4%;
+}
+.buttonClass
+{
+    position: absolute;
+    width: 25%;
+	height: 35%;
+    margin: auto;
+    top: 0;
+    bottom: 28%;
+    right: 4%;
+    left: 4%;
+}
+#button1
+{
+    position: absolute;
+    width: 25%;
+	height: 35%;
+    margin: auto;
+    top: 0;
+    bottom: 28%;
+    right: 150%;
+    left: 1%;
+}
+
+#button2
+{
+    position: absolute;
+    width: 25%;
+	height: 35%;
+    margin: auto;
+    top: 0;
+    bottom: 28%;
+    right: 4%;
+    left: 4%;
 }
