@@ -625,7 +625,7 @@ const eventOpts = [
 				desc: "Try to make a makeshift fire using some of the furniture around here",
 				requiredInventory: { Matches: true },
 				disableMode: "hidden",
-				nextEventId: "lightCabinOnFire",
+				nextEventId: "lightCabinFire",
 				tempChange: 10,
 			},
 			{
