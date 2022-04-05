@@ -32,7 +32,6 @@ function checkIfDead() {
 
 function getGameState() {
 	let savedData = sessionStorage.getItem("cabinGameState");
-	console.log(savedData);
 	if (savedData) return JSON.parse(savedData);
 	else
 		return {
