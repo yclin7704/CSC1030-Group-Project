@@ -1,4 +1,5 @@
 let time = getSavedTime();
+let timePlayed = getSavedTimePlayed();
 let myTimer;
 let timeSpan = document.getElementById("timeSpan");
 
@@ -18,6 +19,12 @@ function getSavedTime() {
 	else return 0;
 }
 
+function getSavedTimePlayed() {
+	let saved = parseInt(sessionStorage.getItem("TimePlayed"));
+	if (!isNaN(saved)) return saved;
+	else return 0;
+}
+
 function setTimerData(funcName, dayEndId, nightEndId) {
 	showTextNodeFunctionTimer = funcName;
 	onDayEndId = dayEndId;
@@ -31,6 +38,7 @@ function StartTimer() {
 
 function incrementTime() {
 	time++;
+	timePlayed++;
 	saveTime();
 
 	displayTime();
@@ -118,13 +126,11 @@ function getTime() {
 	return time;
 }
 
-function saveTime(value = time) {
-	sessionStorage.setItem("Time", value);
+function getTimePlayed() {
+	return timePlayed;
 }
 
-function playAgain() {
-	window.location.href = "Hospital.html";
-	//window.location.href = "Cabin.html";
-	//window.location.href = "GasStation.html";
-	//window.location.href = "FarmHouse.html";
+function saveTime(value = time) {
+	sessionStorage.setItem("Time", value);
+	sessionStorage.setItem("TimePlayed", timePlayed);
 }

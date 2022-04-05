@@ -3,10 +3,10 @@
  */
 async function main() {
 	stopTimer();
-	let playerTime = document.getElementById('timeStatSpan').innerHTML;
-	localStorage.setItem('playerTime', playerTime);
+	let playerTime = document.getElementById("timeStatSpan").innerHTML;
+	localStorage.setItem("playerTime", playerTime);
 	get("temperatureStatSpan").innerHTML = getTemp();
-	get("timeStatSpan").innerHTML = getTime();
+	get("timeStatSpan").innerHTML = getTimePlayed();
 	get("professionStatSpan").innerHTML = sessionStorage.getItem("profession");
 	get("secrets").innerHTML = listingCollectable();
 	resetValues();
