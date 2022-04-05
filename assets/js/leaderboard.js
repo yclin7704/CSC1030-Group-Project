@@ -35,17 +35,18 @@ function showTimes() {
 
 const ARRAY_SIZE = 3;
 const timeString = localStorage.getItem("prevGameTime")
+const timeArrayString = localStorage.getItem("timeArray")
 
 function compareTime() {
     console.log(timeString);
     const time = parseInt(timeString);
-    const timeArray = JSON.parse(localStorage.getItem('timeArray') ?? [ARRAY_SIZE]);
-    const lastPos = timeArray[ARRAY_SIZE-1 ?? 2]
+    console.log(time)
+    const timeArray = JSON.parse(timeArrayString) ?? [ARRAY_SIZE];
+    const lastPos = timeArray[ARRAY_SIZE - 1 ?? 2]
 
     if (time > lastPos) {
         saveTime(time, timeArray)
     }
-
     showTimes();
 }
 
