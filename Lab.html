@@ -6,6 +6,7 @@
 		<title>Last Stand</title>
 		<meta name="description" content="Last Stand Text Adventure" />
 		<link rel="stylesheet" href="./assets/css/main.css" />
+        <link rel="stylesheet" href="./assets/css/vault.css">
         <link id="Styling" rel="stylesheet"/>
 	</head>
     <body onload="StartTimer(); updatePages()">
@@ -35,6 +36,9 @@
                 <!-- Column 2: Image -->
                 <div class="col col2">
                     <img src="assets/images/lab-out.jpg" style="opacity: 0.8;" id="locationImage" alt='testing centre outside'/>
+                    <div class = "vault">
+                        <img src="assets/images/Safe/Safe.png" id="safeMain" alt='Safe Main'>
+                    </div>
                 </div>
 
                 <!-- Column 3: Buttons -->
@@ -57,6 +61,7 @@
             <script src="./assets/js/Timer.js"></script>
             <script src="./assets/js/Temperature.js"></script>
             <script src="./assets/js/CheatCodeSystem.js"></script>
+            <script src="./assets/js/vault.js"></script>
         </div>
     </body>
 </html>

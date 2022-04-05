@@ -81,6 +81,9 @@ function setTemp(value, displayUpdate = true) {
  * and the game ended if required.
  */
 function tempUpdated(displayUpdate = true) {
+	// Enforce absolute zero
+	if (temperature < -273) temperature = -273;
+
 	// Update the value shown to the user
 	if (displayUpdate) meterSetup(temperature);
 	try {

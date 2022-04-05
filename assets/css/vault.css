@@ -1,0 +1,11 @@
+.vault
+{
+    position: absolute;
+    width: 50%;
+	height: 58%;
+    margin: auto;
+    top: 0;
+    bottom: 28%;
+    right: 4%;
+    left: 0;
+}

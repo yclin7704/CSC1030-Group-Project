@@ -91,7 +91,7 @@ const textNodes = [
         " the horde tonight without some repairs. You see a smaller building in the distance almost like a makeshift next to the building, while it won't make a good place for the night it might contain" +
         " Some equipment and loot that can help you get through the night.",
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-out.jpg',
         options: [
             {
                 text: 'Enter through the fence',
@@ -121,7 +121,7 @@ const textNodes = [
                 nextText: 3
             },
             {
-                text: 'Break the window on the left',
+                text: 'Break the window on the left and jump in',
                 nextText: 4
             },
             {
@@ -502,6 +502,26 @@ const textNodes = [
             {
                 text: "Ponder what to do next",
                 nextText: 3.2    
+            },
+        ]
+    },
+    {
+        id: 3.3,
+        text: `You enter a room that seems to be a experimentation room with chemistry equipment on the table with a piece a paper on the side and a safe on the right on side of the wall.`,
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: "Inspect the chemistry set",
+                nextText: 3.31  
+            },
+            {
+                text: "Read the note",
+                nextText: 3.32 
+            },
+            {
+                text: "Attempt the safe",
+                nextText: 3.33
             },
         ]
     },
