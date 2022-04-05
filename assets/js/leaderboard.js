@@ -34,36 +34,74 @@ function showTimes() {
 }*/
 
 const ARRAY_SIZE = 3;
-const timeString = localStorage.getItem("prevGameTime")
+const timeString = localStorage.getItem("prevGameTime");
 
 function compareTime() {
-    console.log(timeString);
-    const time = parseInt(timeString);
-    const timeArray = JSON.parse(localStorage.getItem('timeArray') ?? [ARRAY_SIZE]);
-    const lastPos = timeArray[ARRAY_SIZE-1 ?? 2]
+	// Parse the saved time value
+	const time = parseInt(timeString);
 
-    if (time > lastPos) {
-        saveTime(time, timeArray)
-    }
+	// Parse the saved list of times
+	let timeArray = JSON.parse(localStorage.getItem("timeArray"));
+	// If it doesn't exist, create it
+	if (!timeArray) timeArray = Array.apply(null, { length: ARRAY_SIZE });
 
-    showTimes();
+	// Assuming the list is already sorted, check the new time against the lowest saved time to see if it is lower.
+	const lastPos = timeArray[ARRAY_SIZE - 1];
+	if (time < lastPos || !lastPos) {
+		// If it is, update the list
+		saveTime(time, timeArray);
+	}
+
+	// Display the times
+	showTimes();
 }
 
 function saveTime(time, timeArray) {
-    const name = localStorage.getItem('playerName');
-    const playerData = {name, time};
-    timeArray.push(playerData);
-    timeArray.sort((a,b) => b.time - a.time);
-    timeArray.splice(ARRAY_SIZE);
-    console.log(timeArray[0]);
-    localStorage.setItem('timeArray', JSON.stringify(timeArray));
+	// Get the player's name
+	let name = localStorage.getItem("playerName");
+	// Fall back to a default value if not set
+	if (!name) name = "Unknown";
+
+	let playerData = { name, time };
+	// Add the player data to the array
+	timeArray.push(playerData);
+
+	// Sort the values in the array
+	timeArray.sort(function (a, b) {
+		// Prevent the sort from failing if any of the values are undefined
+		if (!a) return 300;
+		else if (!b) return -300;
+		else return b.time - a.time;
+	});
+
+	// Remove the last item in the array
+	timeArray.splice(ARRAY_SIZE);
+
+	// Save the updated array to localStorage
+	localStorage.setItem("timeArray", JSON.stringify(timeArray));
 }
 
 function showTimes() {
-    const timeArray = JSON.parse(localStorage.getItem('timeArray') ?? [ARRAY_SIZE]);
-    const leaderboard = document.getElementsByClassName('record');
+	// Parse the saved times array
+	const timeArray = JSON.parse(localStorage.getItem("timeArray"));
+	console.log(timeArray);
+	// Get the element to display the leaderboard on
+	const leaderboard = document.getElementById("timesList");
 
-    for (i = 0; i < ARRAY_SIZE; i++) {
-        leaderboard[i].innerHTML = timeArray[i];
-    }
+	// Construct the html containing the names and times
+	let html = "";
+	for (i = 0; i < timeArray.length; i++) {
+		let item = timeArray[i];
+
+		// Use fallback values if not found
+		if (!item) item = {};
+		if (!item.name) item.name = "Unknown";
+		if (!item.time) item.time = 300;
+		console.log(item);
+
+		html += `<li class="record">${item.name}: ${item.time}</li>`;
+	}
+
+	// Display the result
+	leaderboard.innerHTML = html;
 }

@@ -24,13 +24,12 @@ function startGame() {
     console.log(profession);
     console.log(playerName);
 
-    switch (profession) {
-        case "Mechanic": state = { Mechanic: true }; break;
-        case "Doctor": state = { Doctor: true }; break;
-        case "Hunter": state = { Hunter: true }; break;
-        case "War Veteran": state = { WarVeteran: true }; break;
-        case "Priest": state = { Priest: true }; break;
-        default: state = {}; break;
+    switch(profession){
+        case "Mechanic": state["Mechanic"] = true; break;
+        case "Doctor": state["Doctor"] = true; break;
+        case "Hunter": state["Hunter"] = true; break;
+        case "War Veteran": state["WarVeteran"] = true; break;
+        case "Priest": state["Priest"] = true; break;
     }
 
     // Displays the inventory
