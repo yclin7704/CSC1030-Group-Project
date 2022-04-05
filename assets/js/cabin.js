@@ -32,7 +32,6 @@ function checkIfDead() {
 
 function getGameState() {
 	let savedData = sessionStorage.getItem("cabinGameState");
-	console.log(savedData);
 	if (savedData) return JSON.parse(savedData);
 	else
 		return {
@@ -67,6 +66,13 @@ async function runEvent(eventId) {
 		let eventData = getEventData(eventId);
 
 		if (eventData.optsId === "gameOver") stopTimer();
+		if (eventId === "tempTooLow" && getTemp() > -22) {
+			setTemp(-22);
+			gameState.isDead = true;
+		} else if (eventId === "tempTooHigh" && getTemp() < 41) {
+			setTemp(41);
+			gameState.isDead = true;
+		}
 
 		// Update the game's state, if needed
 		updateGameState(eventData.stateChanges);
