@@ -76,7 +76,7 @@ function saveTime(time, timeArray) {
 
 	// Remove the last item in the array
 	timeArray.splice(ARRAY_SIZE);
-
+	
 	// Save the updated array to localStorage
 	localStorage.setItem("timeArray", JSON.stringify(timeArray));
 }
@@ -99,7 +99,7 @@ function showTimes() {
 		if (!item.time) item.time = 300;
 		console.log(item);
 
-		html += `<li class="record">${item.name}: ${item.time}</li>`;
+		html += `<li class="record">${item.name}: ${item.time} seconds</li>`;
 	}
 
 	// Display the result
