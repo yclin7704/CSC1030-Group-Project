@@ -4,10 +4,10 @@ const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage');
 const soundElement = document.createElement("audio");
 const profession = sessionStorage.getItem("profession");
-const playerName = sessionStorage.getItem("playerName");
+const playerName = localStorage.getItem("playerName");
 
 
-let state = getGameState();                                               // This will store the game's current/active state
+let state = getGameState();                                    
 
 function getGameState() {
 	let savedData = sessionStorage.getItem("GasStationGameState");
@@ -15,8 +15,7 @@ function getGameState() {
 	if (savedData) return JSON.parse(savedData);
 	else
 		return {
-			// TODO: Get profession properly with sessionStorage.getItem("profession");
-			profession: "Hunter",
+			profession: profession
 		};
 }
 // This function is called to start the game. The state is emptied and the first text node is shown.
@@ -113,23 +112,6 @@ function selectOption(option) {
     changeTemp(option.tempChange);
 }
 
-function selectEnding() {
-    if (state.Doors && state.Windows) {
-        return 52;
-    }
-    else if (state.Doors && state.Knife) {
-        return 51;
-    } else if (state.Windows && state.Knife) {
-        return 50;
-    } else if (state.Doors) {
-        return 36
-    } else if (state.Windows) {
-        return 35;
-    } else {
-        return 37;
-    }
-}
-
 // The text nodes for the game are below
 
 const textNodes = [
@@ -137,7 +119,8 @@ const textNodes = [
         id: 1,
         text: 'You make it out of the woods and stumble across an old gas station at the side of the road. The area is fenced'
             + ' off and you notice a car parked outside, however, it looks too old and beaten up to be driven anywhere. There is a message'
-            + ' sprayed on the wall: <i><strong>"Don\'t trust anybody!"</strong></i>. You find a gap in the fence and stand outside the front entrance.',
+            + ' sprayed on the wall: <i><strong>"Don\'t trust anybody!"</strong></i>. You find a gap in the fence and stand outside the front entrance.'
+            + ' There are some wood planks lying around the windows.',
         image: '/assets/images/gas-station.jpg',
         inventory: '',
         options: [
@@ -151,7 +134,32 @@ const textNodes = [
                 text: 'Look around outside',
                 tempChange: 'decrease',
                 nextEventId: 3
+            },
+            {
+                text: 'Take the wood planks',
+                setInventory: {'Wood Planks':true},
+                tempChange: 'decrease',
+                nextEventId: 1.5
             }
+        ]
+    },
+    {
+        id: 1.5,
+        text: 'You take the wood planks.',
+        image: '/assets/images/gas-station.jpg',
+        inventory: '',
+        options: [
+            {
+                text: 'Go inside',
+                nextEventId: 2,
+                setInventory: { Gasoline: false },
+                setState: { LightsOff: true }
+            },
+            {
+                text: 'Look around outside',
+                tempChange: 'decrease',
+                nextEventId: 3
+            },
         ]
     },
     {
@@ -164,11 +172,12 @@ const textNodes = [
         options: [
             {
                 text: 'Search for supplies',
+                setState:{Generator:false},
                 nextEventId: 4,
             },
             {
                 text: 'Look for a backup generator',
-                setState: { Breaker: true },
+                setState: { Breaker: true, Generator:true },
                 nextEventId: 28,
             }
         ]
@@ -183,19 +192,20 @@ const textNodes = [
         options: [
             {
                 text: 'Reset the breaker',
-                requiredInventory: { Fuse: false },
                 nextEventId: 27
             },
             {
                 text: 'Replace the fuse',
                 nextEventId: 26,
                 requiredInventory: { 'Fuse': true },
+                setInventory: { Fuse: false},
                 setState: { LightsOn: true }
             },
             {
                 text: 'Search for a new fuse',
                 nextEventId: 4,
-                requiredInventory: { 'Fuse': false }
+                requiredInventory: { 'Fuse': false },
+                setState:{Generator:true}
             }
         ]
     },
@@ -210,6 +220,7 @@ const textNodes = [
             {
                 text: 'Replace the fuse',
                 requiredInventory: { 'Fuse': true },
+                setInventory: {Fuse : false},
                 setState: { LightsOff: false },
                 nextEventId: 26
             },
@@ -296,7 +307,7 @@ const textNodes = [
         inventory: '',
         options: [
             {
-                text: 'Take the Matches',
+                text: 'Take the matches',
                 nextEventId: 39,
                 tempChange: 'decrease',
                 requiredInventory: { 'Matches': false },
@@ -320,7 +331,6 @@ const textNodes = [
             {
                 text: 'Take the parts',
                 nextEventId: 45,
-                setState: { SearchSupplies: true },
                 requiredInventory: { 'Parts': false },
                 setInventory: { Parts: true },
 
@@ -328,20 +338,23 @@ const textNodes = [
             {
                 text: 'Take the fuse',
                 nextEventId: 41,
-                setState: { SearchSupplies: true },
                 setInventory: { Fuse: true },
                 requiredInventory: { Fuse: false }
             },
             {
                 text: 'Search the stock room',
-                setState: { SearchSupplies: false },
                 tempChange: 'decrease',
                 nextEventId: 8,
             },
             {
                 text: 'Go back to fix the generator',
                 nextEventId: 28,
-                requiredState: (currentState) => currentState.LightsOff,
+                requiredState: (currentState) => currentState.LightsOff && currentState.Generator,
+            },
+            {
+                text: 'Look for a backup generator',
+                nextEventId: 28,
+                requiredState: (currentState) => !currentState.Generator
             }
         ]
 
@@ -357,24 +370,25 @@ const textNodes = [
                 nextEventId: 41,
                 requiredInventory: { Fuse: false },
                 setInventory: { Fuse: true },
-                requiredState: (currentState) => currentState.SearchSupplies
+                requiredState: (currentState) => !currentState.SearchParts
             },
             {
                 text: 'Search the stock room',
                 nextEventId: 8,
                 setState: { SearchSupplies: false },
                 tempChange: 'decrease',
-                requiredState: (currentState) => currentState.SearchSupplies
+                requiredState: (currentState) => !currentState.SearchParts
             },
             {
                 text: 'Go back and fix the generator',
                 nextEventId: 28,
-                requiredState: (currentState) => currentState.LightsOff,
+                requiredState: (currentState) => currentState.LightsOff && !currentState.SearchParts,
             },
             {
                 text: 'Give the man the parts you found',
                 nextEventId: 11,
                 tempChange: 'decrease',
+                setInventory:{ Parts:false },
                 requiredState: (currentState) => currentState.SearchParts
             }
         ]
@@ -411,8 +425,16 @@ const textNodes = [
         inventory: '',
         options: [
             {
-                text: 'Take the parts',
-                nextEventId: 45
+                text: 'Take the parts and return to the stranger',
+                nextEventId: 45,
+                setInventory:{Parts:true},
+                requiredState: (currentState) => !currentState.SparkPlugs
+            },
+            {
+                text: 'Take the parts and return to fix the car',
+                nextEventId: 18,
+                setInventory:{Parts:true},
+                requiredState: (currentState) => currentState.SparkPlugs
             }
         ]
     },
@@ -455,15 +477,8 @@ const textNodes = [
                 nextEventId: 10
             },
             {
-                text: 'Start the night',
+                text: 'Prepare for the night',
                 tempChange: 'decrease',
-                setState: {
-                    Wood: true,
-                    Windows: true,
-                    Doors: true,
-                    Fire: true,
-                    Matches: true
-                },
                 nextEventId: 29
             }
         ]
@@ -490,6 +505,7 @@ const textNodes = [
             },
             {
                 text: 'Help him search for the parts',
+                requiredInventory: {'Parts':false},
                 setState: { SearchParts: true },
                 tempChange: 'decrease',
                 nextEventId: 42
@@ -508,24 +524,26 @@ const textNodes = [
         sound: '/assets/sounds/knifeholster.wav',
         options: [
             {
-                text: 'Start the night',
+                text: 'Prepare for the night',
                 setInventory: { Knife: true },
-                setState: {
-                    Knife: true,
-                    Wood: false,
-                    Windows: false,
-                    Doors: false,
-                    Fire: false,
-                    Matches: false
-                },
                 nextEventId: 29
+            },
+            {
+                text: 'Offer to help fix his car',
+                requiredState: (currentState) => currentState.Mechanic,
+                setState: {FixCar:true},
+                nextEventId: 14
+            },
+            {
+                text: 'Attack him and steal his supplies',
+                nextEventId: 12
             }
         ]
     },
     {
         id: 14,
         text: 'You tell the man you\'re a mechanic and offer to help him fix his car. He says:'
-            + '\n<i>"Really?! I\'d really appreaciate that. If you can get her driving again, I\'ll take you anywhere you need to go."</i>',
+            + '\n<i>"Really?! I\'d really appreciate that. If you can get her driving again, I\'ll take you anywhere you need to go."</i>',
         image: '/assets/images/car.jpg',
         inventory: '',
         options: [
@@ -596,9 +614,17 @@ const textNodes = [
                 nextEventId: 20
             },
             {
+                text: 'Replace the spark plugs',
+                requiredState: (currentState) => currentState.FixCar,
+                setInventory: {Parts:false},
+                nextEventId: 20
+            },
+            {
                 text: 'Look for spare parts inside',
                 requiredInventory: { 'Parts': false },
-                nextEventId: 4
+                setState: {SparkPlugs:true},
+                requiredState: (currentState) => !currentState.FixCar,
+                nextEventId: 42
             },
             {
                 text: 'Check the fuel injectors',
@@ -634,16 +660,16 @@ const textNodes = [
                 nextEventId: 21
             },
             {
-                text: 'Stay at the gas station and start the night',
+                text: 'Stay at the gas station and prepare for the night',
                 tempChange: 'decrease',
-                setState: {
-                    Wood: true,
-                    Windows: true,
-                    Doors: true,
-                    Fire: true,
-                    Matches: true
-                },
+                requiredState: (currentState) => currentState.FixCar,
                 nextEventId: 29
+            },
+            {
+                text: 'Stay at the gas station and prepare for the night',
+                tempChange: 'decrease',
+                requiredState: (currentState) => !currentState.FixCar,
+                nextEventId: 55
             },
             {
                 text: 'Attempt to steal the vehicle',
@@ -672,10 +698,24 @@ const textNodes = [
         text: 'You push the man to the ground and drive away in his car. You look in the rear view mirror and see him getting attacked'
             + ' by zombies. You survive the night and escape.'
             + '<b><em>You Escaped!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
-        image: '/assets/Victory2_TEST-GIF.gif',
+        image: '/assets/images/Victory2_TEST-GIF.gif',
         sound: '/assets/sounds/driveoff.wav',
         inventory: '',
         options: []
+    },
+    {
+        id: 55,
+        text: '<i>"Take this knife to protect yourself</i>',
+        image: '/assets/images/car.jpg',
+        sound: '/assets/sounds/knifeholster.wav',
+        inventory,
+        options:[
+            {
+                text: 'Prepare for the night',
+                setInventory: {Knife:true},
+                nextEventId: 29
+            }
+        ]
     },
     {
         id: 29,
@@ -689,42 +729,42 @@ const textNodes = [
                 text: 'Break up the shelves for wood',
                 nextEventId: 30,
                 setInventory: { 'Wood Planks': true },
-                requiredState: (currentState) => currentState.Wood === false
+                requiredState: (currentState) => !currentState.Wood
             },
             {
                 text: 'Barricade the windows using the wood from the shelves',
                 nextEventId: 31,
-                requiredState: (currentState) => currentState.Windows === false,
+                requiredState: (currentState) => !currentState.Windows,
+                setInventory: {'Wood Planks':false},
                 requiredInventory: { 'Wood Planks': true },
-                setInventory: { 'Wood Planks': false }
             },
             {
                 text: 'Barricade the doors using the wood from the shelves',
                 nextEventId: 32,
                 requiredInventory: { 'Wood Planks': true },
-                requiredState: (currentState) => currentState.Doors === false,
-                setInventory: { 'Wood Planks': false }
+                setInventory:{'Wood Planks':false},
+                requiredState: (currentState) => !currentState.Doors,
             },
             {
                 text: 'Prepare a fire using wood from the shelves and the gasoline from the car',
                 nextEventId: 33,
                 requiredInventory: { 'Gasoline': true },
                 requiredInventory: { 'Wood Planks': true },
-                setInventory: { 'Wood Planks': false },
-                setInventory: { 'Gasoline': false },
-                requiredState: (currentState) => currentState.Fire === false
+                setInventory: {'Wood Planks':false, Gasoline:false},
+                requiredState: (currentState) => !currentState.Fire
             },
             {
                 text: 'Light the fire using the matches',
                 nextEventId: 34,
-                requiredState: (currentState) => currentState.Matches === false,
-                requiredState: (currentState) => currentState.Fire === false,
+                requiredState: (currentState) => !currentState.Matches,
+                requiredState: (currentState) => currentState.Fire,
                 requiredInventory: { 'Matches': true },
+                setInventory:{Matches:false},
                 tempChange: 'increase'
             },
             {
                 text: 'Finish preparation',
-                nextEventId: 35,
+                nextEventId: 53,
                 setState: { Finished: true },
             }
         ]
@@ -743,7 +783,7 @@ const textNodes = [
             },
             {
                 text: 'Finish preparation',
-                nextEventId: 35,
+                nextEventId: 53,
                 setState: { Finished: true }
             }
         ]
@@ -762,7 +802,7 @@ const textNodes = [
             },
             {
                 text: 'Finish preparation',
-                nextEventId: 35,
+                nextEventId: 53,
                 setState: { Finished: true }
             }
         ]
@@ -781,7 +821,7 @@ const textNodes = [
             },
             {
                 text: 'Finish preparation',
-                nextEventId: 35,
+                nextEventId: 53,
                 setState: { Finished: true }
             }
         ]
@@ -797,14 +837,16 @@ const textNodes = [
                 text: 'Use the matches',
                 requiredInventory: { 'Matches': true },
                 setInventory: { Matches: false },
+                setInventory: {'Wood Planks':false, Gasoline:false},
                 setState: { Fire: true},
                 nextEventId: 34
             },
             {
                 text: 'Abandon the fire',
                 requiredInventory: { 'Matches': false },
-                setState: { Fire: true },
-                nextEventId: 36
+                setInventory: {'Wood Planks':false, Gasoline:false},
+                setState: { Fire: false },
+                nextEventId: 29
             }
         ]
     },
@@ -818,11 +860,12 @@ const textNodes = [
             {
                 text: 'Continue preparation',
                 setState: { Matches: true },
+                setInventory: {Matches:false},
                 nextEventId: 29,
             },
             {
                 text: 'Finish preparation',
-                nextEventId: 35
+                nextEventId: 53
             }
         ]
     },
@@ -838,6 +881,59 @@ const textNodes = [
         image: '/assets/images/You-Died_TEST-GIF.gif',
         sound: '/assets/sounds/knifeholster.wav',
         inventory: '',
+        options: []
+    },
+    {
+        id: 53,
+        text: 'You finish your preparations for the night. You hear zombies approaching outside and prepare yourself for an'
+        + ' attack.',
+        image: '/assets/images/gas-station_stock-room.jpg',
+        inventory: '',
+        options: [
+            {
+                text: 'Start the night',
+                requiredState: (currentState) => currentState.Windows && !currentState.Doors,
+                requiredInventory: {'Knife':false},
+                nextEventId: 35
+            },
+            {
+                text: 'Start the night',
+                requiredState: (currentState) => currentState.Doors && !currentState.Windows,
+                requiredInventory: {'Knife':false},
+                nextEventId: 36
+            },
+            {
+                text: 'Start the night',
+                requiredState: (currentState) => currentState.Windows && !currentState.Doors,
+                requiredInventory: {'Knife':true},
+                nextEventId: 50
+            },
+            {
+                text: 'Start the night',
+                requiredState: (currentState) => currentState.Doors && !currentState.Windows,
+                requiredInventory: {'Knife':true},
+                nextEventId: 51
+            },
+            {
+                text: 'Start the night',
+                requiredState: (currentState) => currentState.Windows && currentState.Doors,
+                nextEventId: 52
+            },
+            {
+                text: 'Start the night',
+                requiredState: (currentState) => !currentState.Windows && !currentState.Doors,
+                nextEventId: 54
+            }
+        ]
+    },
+    {
+        id: 54,
+        text: 'In your preparation for the night time, you didn\'t barricade the doors or windows of the gas station. In the middle of the night, zombies'
+        + ' attacked and broke down the doors and smashed through the windows. You were outnumbered. The zombies cornered you and there were too many of them'
+        + ' to fight off. You were eaten alive.',
+        image: '/assets/images/You-Died_TEST-GIF.gif',
+        inventory: '',
+        sound: '/assets/sounds/zombieseating.wav',
         options: []
     },
     {
