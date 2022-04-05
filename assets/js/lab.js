@@ -16,18 +16,11 @@ function startGame()
 {
     switch(profession) //Setting to the profession chosen
     { 
-        case "Mechanic": state["Mechanic"] = true; 
-        break;
-        case "Doctor": state["Doctor"] = true; 
-        break;
-        case "Hunter": state["Hunter"] = true; 
-        break;
-        case "War Veteran": state["War Veteran"] = true; 
-        break;
-        case "Priest": state["Priest"] = true; 
-        break;
-        default: state = {}; 
-        break;
+        case "Mechanic": state["Mechanic"] = true; break;
+        case "Doctor": state["Doctor"] = true; break;
+        case "Hunter": state["Hunter"] = true; break;
+        case "War Veteran": state["WarVeteran"] = true; break;
+        case "Priest": state["Priest"] = true; break;
     }
 
     //showVault();
@@ -169,15 +162,13 @@ const textNodes = [
             {
                 text: 'Interact with the blue fungus',
                 requiredInventory: { 'blueFungus': false },
-                requiredState: (currentState) => !currentState.blueFungus,
-                requiredState: (currentState) => currentState.Doctor,
+                requiredState: (currentState) => !currentState.blueFungus && currentState.Doctor,
                 nextText: 5
             },
             {
                 text: 'Interact with the blue fungus',
                 requiredInventory: { 'blueFungus': false },
-                requiredState: (currentState) => !currentState.blueFungus,
-                requiredState: (currentState) => !currentState.Doctor,
+                requiredState: (currentState) => !currentState.blueFungus && !currentState.Doctor,
                 nextText: 5.1
             },
             {
@@ -196,7 +187,11 @@ const textNodes = [
                 text: 'Barricade the gate',
                 requiredState: (currentState) => currentState.plank,
                 nextText: 7
-            }
+            },
+            {
+                text: 'Go back out',
+                nextText: 1
+            },
         ]
     },
     {
@@ -210,8 +205,7 @@ const textNodes = [
         options: [
             {
                 text: 'Go into the left room',
-                requiredState: (currentState) => !currentState.scienceSaved,
-                requiredState: (currentState) => !currentState.scienceKilled,
+                requiredState: (currentState) => !currentState.scienceSaved && !currentState.scienceKilled,
                 nextText: 3.1
             },
             {
@@ -231,6 +225,10 @@ const textNodes = [
             {
                 text: 'Go to the right room',
                 nextText: 3.3
+            },
+            {
+                text: 'Go back out',
+                nextText: 2
             },
         ]
     },
@@ -292,13 +290,14 @@ const textNodes = [
         ]
     },
     {
-        id: 3.13,
+        id: 3.14,
         text: "You approach stealthly as possible and when you got in range you stabbed the back of his neck with your syringe. The zombie stumble back for a bit due to the stab however gets back quickly and pounces on you before turning you into his next dinner",
         inventory: '',
+        note: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
     },
     {
-        id: 3.14,
+        id: 3.13,
         text: 'You approach stealthly as possible and when you got in range you stabbed the back of his neck with your syringe. The zombie stumble back for a bit due to the stab, then lays there for a moment before their skin colour returning to normal along with their sight.' +
         ` "Wait I'm alive...and who are you?"`,
         note: '',
@@ -345,8 +344,7 @@ const textNodes = [
             {
                 text: "What's the passcord to the safe?",
                 setState: { heatAsk : true },
-                requiredState: (currentState) => currentState.seenSafe,
-                requiredState: (currentState) => !currentState.safeAsk,
+                requiredState: (currentState) => currentState.seenSafe && !currentState.safeAsk,
                 nextText: 3.143      
             },
         ]
@@ -469,22 +467,19 @@ const textNodes = [
             },
             {
                 text: "Check the large amount of chemicals",
-                requiredState: (currentState) => !currentState.Doctor,
+                requiredState: (currentState) => !currentState.Doctor && currentState.seenRecipe,
                 requiredInventory: { 'chemicalDumb': false },
-                requiredState: (currentState) => currentState.seenRecipe,
                 nextText: 3.231   
             },
             {
                 text: "Check the large amount of chemicals",
-                requiredState: (currentState) => currentState.Doctor,
+                requiredState: (currentState) => currentState.Doctor && currentState.seenRecipe,
                 requiredInventory: { 'chemical': false },
-                requiredState: (currentState) => currentState.seenRecipe,
                 nextText: 3.232   
             },
             {
                 text: "Stomp on the ground really hard",
-                requiredState: (currentState) => currentState.heatAsk,
-                requiredState: (currentState) => !currentState.basementHeat,
+                requiredState: (currentState) => currentState.heatAsk && !currentState.basementHeat,
                 setState: { basementHeat : true },
                 nextText: 3.24  
             },
@@ -534,6 +529,7 @@ const textNodes = [
         options: [
             {
                 text: "Pick up all the chemical",
+                requiredInventory: { 'chemicalDumb': false },
                 setInventory: { chemicalDumb: true },
                 nextText: 3.231     
             },
@@ -552,6 +548,7 @@ const textNodes = [
         options: [
             {
                 text: "Pick up all the chemical",
+                requiredInventory: { 'chemical': false },
                 setInventory: { chemical: true },
                 nextText: 3.232 
             },
@@ -583,6 +580,7 @@ const textNodes = [
         options: [
             {
                 text: "Inspect the chemistry set",
+                requiredInventory: { 'vaccineReal' : false, 'vaccineFake' : false},
                 nextText: 3.31  
             },
             {
@@ -592,6 +590,7 @@ const textNodes = [
             },
             {
                 text: "Attempt the safe",
+                setState: { seenSafe : true },
                 nextText: 3.33
             },
             {
@@ -619,15 +618,13 @@ const textNodes = [
             },
             {
                 text: "Mix the chemicals (you can't back out of this)",
-                requiredInventory: { 'plasticContainerAsh': true },
-                requiredInventory: { 'chemicalDumb': true },
+                requiredInventory: { 'plasticContainerAsh': true, 'chemicalDumb': true },
                 nextText: 3.313
             },
             {
                 text: "Mix the chemicals (you can't back out of this)",
-                requiredInventory: { 'plasticContainerAsh': true },
-                requiredInventory: { 'chemical': true },
-                nextText: 3.314
+                requiredInventory: { 'plasticContainerAsh': true, 'chemical': true },
+                nextText: 3.313
             },
             {
                 text: "Go back",
@@ -1137,6 +1134,34 @@ const textNodes = [
         ]
     },
     {
+        id: 3.31361,
+        text: `Honestly you couldn't believe it, you made a cure to the zombie outbreak but what in the world are you going to do with only one vial of it?`,
+        note: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: "Go back",
+                setInventory: {vaccineReal: true},
+                nextText: 3.3         
+            },
+        ]
+    },
+    {
+        id: 3.31362,
+        text: `I guess you didn't read the instructions carefully enough, I have no idea what this "mixture" is but it certainly ain't no vaccine.`,
+        note: '',
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: "Go back",
+                setInventory: {vaccineFake: true},
+                nextText: 3.3         
+            },
+        ]
+    },
+    {
         id: 3.32,
         text: 'You read the note and it says: <br><button onClick="changeText();" class="changeText">Change Text</button> <button onClick="revertText();" class="changeText">Revert Text</button>',
         note: `The cure...yes I was so close but why did haven't anyone named the god damn chemicals in this place. The cure is so simple having the <b>most</b> reactive ingredients to the <b>least</b> reactive with some ash mixed in<br>last</b>.If Dave just gives us the cure we wouldn't even need to go through this hassle, with our cure only working once. Now if I remember correctly when burnt in the same order, it should go in the following.<br>Purple<br>Yellow<br>Red<br>Orange<br>Cyan`,
@@ -1301,8 +1326,7 @@ const textNodes = [
             {
                 text: 'Pick it up with plastic container',
                 requiredInventory: { 'plasticContainer': true },
-                setInventory: {plasticContainer: false},
-                setInventory: {plasticContainerAsh: true},
+                setInventory: {plasticContainer: false, plasticContainerAsh: true},
                 setState: { ash : true },
                 setState: { redFungus : true },
                 nextText: 2
