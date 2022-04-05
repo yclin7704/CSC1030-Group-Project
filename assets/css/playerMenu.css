@@ -127,7 +127,3 @@ input[type='button']:enabled:hover {
 	font-size: 15px;
 	font-weight: bold;
 }
-
-:placeholder-shown {
-	color: var(--text);
-}
