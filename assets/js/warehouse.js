@@ -6,20 +6,30 @@ const profession = sessionStorage.getItem("profession"); //Profession
 
 // This variable stores the current game state
 
-let state = {};
+let state = getGameState();
+
+function getGameState() {
+	let savedData = sessionStorage.getItem("WarehouseGameState");
+	console.log(savedData);
+	if (savedData) return JSON.parse(savedData);
+	else
+		return {
+			// TODO: Get profession properly with sessionStorage.getItem("profession");
+			profession: "Hunter",
+		};
+}
 
 // Starting the game
 
 function startGame()
 {
-    switch(profession) //Setting to the profession chosen
-    { 
-        case "Mechanic": state = {Mechanic: true}; break;
-        case "Doctor": state = {Doctor: true}; break;
-        case "Hunter": state = {Hunter: true}; break;
-        case "War Veteran": state = {WarVeteran: true}; break;
-        case "Priest": state = {Priest: true}; break;
-        default: state = {}; break;
+    //Setting to the profession chosen
+    switch(profession){
+        case "Mechanic": state["Mechanic"] = true; break;
+        case "Doctor": state["Doctor"] = true; break;
+        case "Hunter": state["Hunter"] = true; break;
+        case "War Veteran": state["WarVeteran"] = true; break;
+        case "Priest": state["Priest"] = true; break;
     }
 
     // Displays the inventory
@@ -68,6 +78,7 @@ function showTextNode(textNodeIndex){
             button.classList.add('buttonChoice'); // Sets the button class for styling.
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
             optionButtonsElement.appendChild(button); 
+            sessionStorage.setItem("WarehouseGameState", JSON.stringify(state));
         }
     })
 }
@@ -118,8 +129,8 @@ const textNodes = [
                 text: 'Take the large planks',
                 requiredInventory: { 'Wood Planks': false },
                 setInventory: { 'Wood Planks': true },
-                setState: { plankTaken : true },
-                requiredState: (currentState) => !currentState.plankTaken,
+                requiredState: (currentState) => !currentState.warehouseWood,
+                setState: { warehouseWood : true },
                 tempChange: "decrease",
                 nextText: 2
             },
@@ -170,10 +181,9 @@ const textNodes = [
         options: [
             {
                 text: 'Put in wood',
-                requiredInventory: { 'Wood Planks': true },
                 setInventory: { 'Wood Planks': false },
-                setState: { haveWood : true },
                 requiredState: (currentState) => !currentState.haveWood,
+                setState: { haveWood : true },
                 tempChange: "decrease",
                 nextText: 2
             },
