@@ -1175,6 +1175,19 @@ const textNodes = [
         ]
     },
     {
+        id: 3.33,
+        text: 'You look at the vault, was there some clue that could hint toward the passcode?',
+        note: ``,
+        inventory: '',
+        image: '',
+        options: [
+            {
+                text: "Go back",
+                nextText: 3.3 
+            },
+        ]
+    },
+    {
         id: 5,
         text: "Infront of you is a cluster of funguses with suspiciously blue colour, despite the really odd salty smell that reminds you very much of the ocean." +
         " This mushroom is so salty that it's a scientific miracle that this plant can even grow. Due to it's salty nature consuming it directly can be...distasteful but not life threatening." +
