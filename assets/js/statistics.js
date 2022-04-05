@@ -29,10 +29,10 @@ function listingCollectable() {
 }
 
 async function resetValues() {
-	// Reset temperature etc.
-	setTemp(20, false);
-	saveTime(0);
-	//clears the sesstion storage ?
+	// Save the game time to local storage so it isn't cleared
+	localStorage.setItem("prevGameTime", getTimePlayed());
+
+	// Reset temperature etc. by clearing all of sessionStorage
 	sessionStorage.clear();
 }
 
