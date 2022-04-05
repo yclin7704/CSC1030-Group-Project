@@ -69,6 +69,9 @@ async function runEvent(eventId) {
 		if (eventId === "tempTooLow" && getTemp() > -22) {
 			setTemp(-22);
 			gameState.isDead = true;
+		} else if (eventId === "tempTooHigh" && getTemp() < 41) {
+			setTemp(41);
+			gameState.isDead = true;
 		}
 
 		// Update the game's state, if needed

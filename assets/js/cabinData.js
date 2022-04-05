@@ -3,6 +3,7 @@ const imgInside = "assets/images/cabin-inside.webp";
 const imgHatch = "assets/images/cabin-trapdoor.jpg";
 
 const gifDied = "assets/images/You-Died_TEST-GIF.gif";
+const gifWon = "assets/images/Victory2_TEST-GIF.gif";
 
 const audioWind = "assets/sounds/wind.wav";
 const audioRain = "assets/sounds/rain_2.wav";
@@ -607,7 +608,58 @@ const eventOpts = [
 		id: "coldInCabin",
 		choices: [
 			{
-				desc: "",
+				desc: "Light a fire using with the logs and matches you found earlier",
+				requiredInventory: { Matches: true }, // TODO: LOGS
+				disableMode: "hidden",
+				nextEventId: "lightFire",
+				tempChange: 10,
+			},
+			{
+				desc: "Light a fire using some of the planks and matches you found earlier",
+				requiredInventory: { Matches: true, "Wood Planks": true },
+				disableMode: "hidden",
+				nextEventId: "lightFire",
+				tempChange: 10,
+			},
+			{
+				desc: "Try to make a makeshift fire using some of the furniture around here",
+				requiredInventory: { Matches: true },
+				disableMode: "hidden",
+				nextEventId: "lightCabinOnFire",
+				tempChange: 10,
+			},
+			{
+				desc: "Try to keep yourself as warm as you can without a fire",
+				nextEventId: "nightWithoutFire",
+				tempChange: -20,
+			},
+		],
+	},
+	{
+		id: "withoutFire",
+		choices: [
+			{
+				desc: "Try your best to stay warm",
+				nextEventId: "tempTooLow",
+			},
+		],
+	},
+	{
+		id: "onFire",
+		choices: [
+			{
+				desc: "Attempt to put out the quickly spreading fire",
+				nextEventId: "tempTooHigh",
+				tempChange: 600,
+			},
+		],
+	},
+	{
+		id: "litFire",
+		choices: [
+			{
+				desc: "Sleep",
+				nextEventId: "survived",
 			},
 		],
 	},
@@ -953,6 +1005,22 @@ const events = [
 		text: `As you begin to relax in the safety of the cabin, you begin to realise how cold the room has become.`,
 		optsId: "coldInCabin",
 	},
+	{
+		id: "nightWithoutFire",
+		text: `You curl yourself up in an attempt to remain as warm as possible, but you can still feel the icy cold surrounding you.`,
+		optsId: "withoutFire",
+	},
+	{
+		id: "lightFire",
+		text: `You successfully light your fire, and warm yourself with its orange glow. You prepare to get some sleep, knowing you've survived the night.`,
+		optsId: "litFire",
+	},
+	{
+		id: "lightCabinFire",
+		text: `As you attempt to start a fire using some wood from the furniture strewn across the cabin, you accidentally drop a match which, before you can stop it,
+        falls on to the carpet below you, which quickly catches alight.`,
+		optsId: "onFire",
+	},
 	// END: Night
 
 	// BEGIN: Deaths
@@ -966,7 +1034,7 @@ const events = [
 	},
 	{
 		id: "tempTooHigh",
-		text: `As the flames [TODO]`,
+		text: `You're too late, as the flames are already spreading rapidly throughout the cabin. You try to escape, but your own barricade blocks your path.`,
 		img: gifDied,
 		optsId: "gameOver",
 	},
@@ -987,6 +1055,8 @@ const events = [
 		id: "nightDieZombies",
 		text: `As the zombies begin pouring in, you do your best to fight them off using what little you have available to you.<br />
         Unfortunately, it isn't enough, and the zombies quickly overwhelm you.`,
+		img: gifDied,
+		optsId: "gameOver",
 	},
 	{
 		id: "alreadyDead",
@@ -1001,6 +1071,15 @@ const events = [
 		optsId: "gameOver",
 	},
 	// END: Deaths
+
+	// BEGIN: Survived
+	{
+		id: "survived",
+		text: `You survived the night! Congratulations!`,
+		img: gifWon,
+		optsId: "gameOver",
+	},
+	// END: Survived
 ];
 
 const eventsHunter = [
