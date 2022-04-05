@@ -36,9 +36,8 @@
                 <!-- Column 2: Image -->
                 <div class="col col2">
                     <img src="assets/images/lab-out.jpg" style="opacity: 0.8;" id="locationImage" alt='testing centre outside'/>
-                    <div class = "vault">
-                        <img src="assets/images/Safe/Safe.png" id="safeMain" alt='Safe Main'>
-                    </div>
+                    <div id = "vault"></div>
+                    <div id = "button" class = "buttonClass"></div>                 
                 </div>
 
                 <!-- Column 3: Buttons -->
@@ -51,9 +50,12 @@
 
             <!-- Bottom: Dialogue box -->
             <div class="dialogueOuter">
-                <div class="dialogue textBox centeredText" id="labText"></div>
+                <div class="dialogue textBox centeredText">
+                    <div id="labText"></div>
+                    <div id="handwritten" class="handwritten"></div>
+                </div>
             </div>
-            <script src="./test/ProfessionDialogue.js"></script>
+            <script src="./assets/js/profession.js"></script>
             <script defer src="./assets/js/lab.js"></script>
             <script src="./assets/js/inventory.js"></script>
             <script src="./assets/js/Typewriter.js"></script>
