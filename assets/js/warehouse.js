@@ -163,9 +163,9 @@ const textNodes = [
     },
     {
         id: 2.1,
-        text: `You look at the campfire left by the previous occupant, which seems to have a lot of weeds and grass growing around it through cracks in the now barely visible floor. To use it you're going to need some way to light the campfire and have something to burn.`,
+        text: `You look at the campfire outside left by the previous occupant, which seems to have a lot of weeds and grass growing around it through cracks in the now barely visible floor. To use it you're going to need some way to light the campfire and have something to burn.`,
         inventory: '',
-        image: 'assets/images/Warehouse.jpg',
+        image: 'assets/images/Hospital/AbandonedCampfire.jpg',
         sound: 'assets/sounds/winterStorm.wav',
         options: [
             {
@@ -260,7 +260,7 @@ const textNodes = [
         id: 3.1,
         text: `The fence, which does have a lot of holes, can be easily repaired if there was some barbed wires and then something like bolt cutters for you to use.`,
         inventory: '',
-        image: 'assets/images/Warehouse.jpg',
+        image: 'assets/images/BarbedFence.jpg',
         sound: 'assets/sounds/winterStorm.wav',
         options: [
             {
@@ -281,7 +281,7 @@ const textNodes = [
         id: 3.2,
         text: `The fence is fixed and should hold back the zombie for a period of time but you should still be wary.`,
         inventory: '',
-        image: 'assets/images/Warehouse.jpg',
+        image: 'assets/images/BarbedFence.jpg',
         sound: 'assets/sounds/winterStorm.wav',
         options: [
             {
