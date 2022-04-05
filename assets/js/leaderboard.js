@@ -34,12 +34,12 @@ function showTimes() {
 }*/
 
 const ARRAY_SIZE = 3;
-const timeString = sessionStorage.getItem('Time');
+const timeString = localStorage.getItem("prevGameTime")
 
 function compareTime() {
     console.log(timeString);
-    const time = JSON.parse(timeString);
-    const timeArray = JSON.parse(localStorage.getItem('timeArray')) ?? [ARRAY_SIZE];
+    const time = parseInt(timeString);
+    const timeArray = JSON.parse(localStorage.getItem('timeArray') ?? [ARRAY_SIZE]);
     const lastPos = timeArray[ARRAY_SIZE-1 ?? 2]
 
     if (time > lastPos) {
