@@ -78,14 +78,13 @@ function revertText(){
 function startGame() {
     // State is set to the profession chosen
     switch(profession){
-        case "Mechanic": state = {Mechanic: true}; break;
-        case "Doctor": state = {Doctor: true}; break;
-        case "Hunter": state = {Hunter: true}; break;
-        case "War Veteran": state = {WarVeteran: true}; break;
-        case "Priest": state = {Priest: true}; break;
-        default: state = {}; break;
+        case "Mechanic": state["Mechanic"] = true; break;
+        case "Doctor": state["Doctor"] = true; break;
+        case "Hunter": state["Hunter"] = true; break;
+        case "War Veteran": state["WarVeteran"] = true; break;
+        case "Priest": state["Priest"] = true; break;
     }
-    state = {Doctor: true};
+    state["Doctor"] = true;
 
     // Displays the inventory
     showInventory();
@@ -479,18 +478,18 @@ const textNodes = [
         options: [
             {
                 text: 'You already collected all the wood from the campfire, there\'s no need for you to be here. Return to the front of the Hospital',
-                requiredInventory: {'Wood Planks': true},
+                requiredState: (currentState) => currentState.hospitalWood,
                 nextText: 2
             },
             {
                 text: 'Leave the campfire alone for now, as you feel like you might be able to make use of it later',
-                requiredInventory: {'Wood Planks': false},
+                requiredState: (currentState) => !currentState.hospitalWood,
                 tempChange: 'decrease',
                 nextText: 2
             },
             {
                 text: 'Take the Fire Wood from the campfire to use later',
-                requiredInventory: {'Wood Planks': false},
+                requiredState: (currentState) => !currentState.hospitalWood,
                 tempChange: 'decrease',
                 nextText: 11
             },
@@ -529,6 +528,7 @@ const textNodes = [
         options: [
             {
                 text: 'Return to the front of the Hospital',
+                setState: {hospitalWood: true},
                 setInventory: {'Wood Planks': true},
                 nextText: 2
             }
@@ -684,7 +684,7 @@ const textNodes = [
             },
             {
                 text: "Take the matches",
-                requiredInventory: {Matches: false},
+                requiredState: (currentState) => !currentState.hospitalMatches,
                 tempChange: -1,
                 nextText: 21
             }
@@ -727,6 +727,7 @@ const textNodes = [
         options: [
             {
                 text: "Return to looking at the crates",
+                setState: {hospitalMatches: true},
                 setInventory: {Matches: true},
                 nextText: 19
             }
