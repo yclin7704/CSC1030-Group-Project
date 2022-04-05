@@ -470,12 +470,14 @@ const textNodes = [
             {
                 text: "Check the large amount of chemicals",
                 requiredState: (currentState) => !currentState.Doctor,
+                requiredInventory: { 'chemicalDumb': false },
                 requiredState: (currentState) => currentState.seenRecipe,
                 nextText: 3.231   
             },
             {
                 text: "Check the large amount of chemicals",
                 requiredState: (currentState) => currentState.Doctor,
+                requiredInventory: { 'chemical': false },
                 requiredState: (currentState) => currentState.seenRecipe,
                 nextText: 3.232   
             },
@@ -532,7 +534,6 @@ const textNodes = [
         options: [
             {
                 text: "Pick up all the chemical",
-                requiredInventory: { 'chemicalDumb': false },
                 setInventory: { chemicalDumb: true },
                 nextText: 3.231     
             },
@@ -551,7 +552,6 @@ const textNodes = [
         options: [
             {
                 text: "Pick up all the chemical",
-                requiredInventory: { 'chemical': false },
                 setInventory: { chemical: true },
                 nextText: 3.232 
             },
