@@ -1,0 +1,1 @@
+const safeImage = document.getElementById('safeMain'); // Vault Image 
