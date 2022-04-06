@@ -325,12 +325,17 @@ const textNodes = [
                 text: 'Go inside',
                 nextEventId: 2,
                 setState: { LightsOff: true }
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
     },
     {
         id: 39,
-        text: 'You take the <strong>Matches</strong>.',
+        text: 'You take the <strong>matches</strong>.',
         image: './assets/images/car.jpg',
         inventory: '',
         options: [
@@ -403,6 +408,11 @@ const textNodes = [
                 text: 'Look for a backup generator',
                 nextEventId: 28,
                 requiredState: (currentState) => !currentState.Generator
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
 
@@ -438,6 +448,11 @@ const textNodes = [
                 tempChange: 'decrease',
                 setInventory:{ Parts:false },
                 requiredState: (currentState) => currentState.SearchParts
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
     },
@@ -462,6 +477,11 @@ const textNodes = [
                 text: 'Go back and fix the generator',
                 nextEventId: 28,
                 requiredState: (currentState) => currentState.LightsOff
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
     },
@@ -585,6 +605,11 @@ const textNodes = [
             {
                 text: 'Attack him and steal his supplies',
                 nextEventId: 12
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
     },
@@ -722,6 +747,11 @@ const textNodes = [
             {
                 text: 'Attempt to steal the vehicle',
                 nextEventId: 23
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
     },
