@@ -19,6 +19,10 @@ function getGameState() {
 		};
 }
 
+function displayPlayerName() {
+	document.getElementById("playerSpan").innerHTML = localStorage.getItem("playerName") + "<br>";
+}
+
 // Starting the game
 
 function startGame()
@@ -34,6 +38,9 @@ function startGame()
 
     // Displays the inventory
     showInventory();
+
+    // Displays Player's Name
+    displayPlayerName()
 
     // This will take the player to the appropriate Text Node when day ends, and when night ends
     setTimerData(showTextNode, "camp", 5.1);
