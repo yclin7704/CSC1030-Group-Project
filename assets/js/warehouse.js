@@ -3,6 +3,7 @@ const optionButtonsElement = document.getElementById('options'); // Buttoms for 
 const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage'); //Location
 const profession = sessionStorage.getItem("profession"); //Profession
+const playerName = localStorage.getItem("playerName");
 
 // This variable stores the current game state
 
