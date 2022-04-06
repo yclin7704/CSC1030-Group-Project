@@ -26,23 +26,23 @@
 				<label for="Monocolour">Monocolour</label>
 				<input type="radio" name="Scheme" id="Monocolour" value="Monocolour"/>
 				</div>
+				<form id = "playerForm" action="./Warehouse.html" onsubmit="setPlayerName(), setGameVolume();">
 				<div id="menuOptions">
 				<div class="menuText">
 					<h1>Player name:</h1>
 				</div>
 				<div class="formInput">
-					<input id="playerNameInput" class="entry" type="text" name="playerName" size="50" />
+					<input id="playerNameInput" class="entry" type="text" name="playerName" size="50" maxlength="15" />
 				</div>
 				<div class="menuText">
 					<h1>Select game volume:</h1>
 				</div>
-				<input type="range" class="volumeSlider" id="volumeSlider" value="50" min="1" max="100">
+				<input type="range" class="volumeSlider" id="volumeSlider" value="40" min="1" max="100">
 				<span id="volumeLevel">50%</span>
 				<div class="menuText">
 					<h1>Choose your profession:</h1>
 				</div>
 				<div id="options">
-					<form action="./Warehouse.html" onsubmit="setPlayerName(), setGameVolume();">
 						<select name="profession" id="profession" class="entry" onchange="displayProfession();">
 							<option value="Hunter">Hunter</option>
 							<option value="War Veteran">War Veteran</option>

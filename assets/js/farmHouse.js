@@ -5,7 +5,6 @@ const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage'); // Image
 const soundElement = document.createElement('audio'); //Sound
 const profession = sessionStorage.getItem("profession");
-const playerName = localStorage.getItem("playerName");
 
 //Variables for collectables
 let secretCollectable = 0;
@@ -40,7 +39,7 @@ function startGame(){
 }
 
 function displayPlayerName() {
-    document.getElementById('playerSpan').innerHTML = playerName + '<br>';
+    document.getElementById('playerSpan').innerHTML = localStorage.getItem("playerName")  + '<br>';
 }
 
 function getGameState() {

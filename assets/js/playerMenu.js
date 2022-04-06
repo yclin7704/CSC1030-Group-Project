@@ -12,27 +12,35 @@ function setPlayerName() {
 }
 
 function setGameVolume() {
-	let volume = document.getElementById('volumeSlider').value;
+	let volume = document.getElementById("volumeSlider").value;
 	sessionStorage.setItem("gameVolume", volume);
 }
 
 function playMusic(source) {
-	let volume = document.getElementById('volumeSlider');
+	let slider = document.getElementById("volumeSlider");
 	crossfadeAudio(source);
 
-	volume.addEventListener('change', function() {
-		console.log('Volume updated!');
-		volumeUpdated(volume.value);
-		document.getElementById('volumeLevel').innerHTML = volume.value + '%';
+	let volumeValue = getVolume();
+	if (!volumeValue) volumeValue = 40;
+
+	slider.addEventListener("change", function () {
+		console.log("Volume updated!");
+		volumeUpdated(slider.value);
+		document.getElementById("volumeLevel").innerHTML = slider.value + "%";
+		setGameVolume();
 	});
+
+	slider.value = volumeValue;
+	volumeUpdated(volumeValue);
+	document.getElementById("volumeLevel").innerHTML = slider.value + "%";
 }
 
 function newGame() {
-	let options = document.getElementById('menuOptions');
-	let buttons = document.getElementById('startButtons');
-	buttons.style.display = 'none';
-	options.style.display = 'block';
-	playMusic('https://soundimage.org/wp-content/uploads/2018/07/Horror-Game-Intro.mp3');
+	let options = document.getElementById("menuOptions");
+	let buttons = document.getElementById("startButtons");
+	buttons.style.display = "none";
+	options.style.display = "block";
+	playMusic("https://soundimage.org/wp-content/uploads/2018/07/Horror-Game-Intro.mp3");
 }
 
 /**
