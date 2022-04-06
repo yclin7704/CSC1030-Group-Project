@@ -20,12 +20,13 @@
 				<button class="button" value="View leaderboard" onclick="window.location.href='Leaderboard.html'">View Leaderboard</button>
 				<button class="button" value="Cheat Code" onclick='window.location.href="CheatCodes.html"'>Cheat Codes</button>
 				</div>
+				<form id = "playerForm" action="./Warehouse.html" onsubmit="setPlayerName(), setGameVolume();">
 				<div id="menuOptions">
 				<div class="menuText">
 					<h1>Player name:</h1>
 				</div>
 				<div class="formInput">
-					<input id="playerNameInput" class="entry" type="text" name="playerName" size="50" />
+					<input id="playerNameInput" class="entry" type="text" name="playerName" size="50" maxlength="15" />
 				</div>
 				<div class="menuText">
 					<h1>Select game volume:</h1>
@@ -36,7 +37,6 @@
 					<h1>Choose your profession:</h1>
 				</div>
 				<div id="options">
-					<form action="./Warehouse.html" onsubmit="setPlayerName(), setGameVolume();">
 						<select name="profession" id="profession" class="entry" onchange="displayProfession();">
 							<option value="Hunter">Hunter</option>
 							<option value="War Veteran">War Veteran</option>
