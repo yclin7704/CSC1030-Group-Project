@@ -76,9 +76,12 @@ function showTextNode(textNodeIndex) {
 
     for (i = 0; i < torchOn.length; i++) {
         if (textNodeIndex === torchOn[i]) {
-            toggleTorch();
+            setTorch(!getIsTorchOn());
+            break;
         }
     }
+    if (!state.LightsOff) setTorch(false);
+
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "dialogue", 15); // Changes the dialogue box to text stored in the text node.
     updateInventory(textNode.inventory);
