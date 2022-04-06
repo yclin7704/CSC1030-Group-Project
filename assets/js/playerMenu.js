@@ -36,7 +36,7 @@ function playMusic(source) {
 }
 
 function newGame() {
-	//validateOption();
+	validateOption();
 	let options = document.getElementById("menuOptions");
 	let buttons = document.getElementById("startButtons");
 	buttons.style.display = "none";
@@ -60,11 +60,11 @@ function validateOption() {
 
     // switches the effects based on the Cheat Code's value
     switch(option){
-        case Normal:
+        case "Normal":
             sessionStorage.setItem("Value", "./assets/css/main.css"); break;
-        case Blue:
+        case "Blue":
             sessionStorage.setItem("Value", "./assets/css/ColourblindColourPalette.css"); break;
-        case Monocolour:
+        case "Monocolour":
             sessionStorage.setItem("Value", "./assets/css/Cheat3.css"); break;
     }
 }
