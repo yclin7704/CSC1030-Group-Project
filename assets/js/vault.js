@@ -14,4 +14,9 @@ function showVault()
     const button2Location = document.getElementById('button').appendChild(button2); // Vault
     button2.src = 'assets/images/Safe/Button2-trimmy.png';
     button2.setAttribute("id", "button2");
+
+    var button3 = document.createElement('img');
+    const button3Location = document.getElementById('button').appendChild(button3); // Vault
+    button3.src = 'assets/images/Safe/Button3-trimmy.png';
+    button3.setAttribute("id", "button3");
 }

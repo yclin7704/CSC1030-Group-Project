@@ -9,6 +9,7 @@
     right: 4%;
     left: 4%;
 }
+
 .buttonClass
 {
     position: absolute;
@@ -20,6 +21,7 @@
     right: 4%;
     left: 4%;
 }
+
 #button1
 {
     position: absolute;
@@ -42,4 +44,16 @@
     bottom: 28%;
     right: 4%;
     left: 4%;
+}
+
+#button3
+{
+    position: absolute;
+    width: 25%;
+	height: 35%;
+    margin: auto;
+    top: 0;
+    bottom: 28%;
+    right: 1%;
+    left: 74%;
 }
