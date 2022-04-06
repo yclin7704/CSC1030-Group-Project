@@ -65,9 +65,9 @@ function revertText() {
 
 function showTextNode(textNodeIndex) {
     if (textNodeIndex === "warehouse") {
-        currentState.leftLocation = true;
+        state.leftLocation = true;
         // Save the current game state to session storage
-        sessionStorage.setItem("GasStationGameState", JSON.stringify(gameState));
+        sessionStorage.setItem("GasStationGameState", JSON.stringify(state));
     
         window.location.href = "Warehouse.html";
         return;
