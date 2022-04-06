@@ -23,7 +23,7 @@ function compareTime() {
 
 function saveTime(time, timeArray) {
 	// Get the player's name
-	let name = localStorage.getItem("playerName");
+	let name = sessionStorage.getItem("playerName");
 	// Fall back to a default value if not set
 	if (!name) name = "Unknown";
 

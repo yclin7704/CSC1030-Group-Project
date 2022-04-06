@@ -4,7 +4,7 @@ const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage');
 const soundElement = document.createElement("audio");
 const profession = sessionStorage.getItem("profession");
-const playerName = localStorage.getItem("playerName");
+const playerName = sessionStorage.getItem("playerName");
 
 
 let state = getGameState();                                    

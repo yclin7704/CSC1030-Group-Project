@@ -17,7 +17,7 @@ function getGameState() {
 }
 
 function displayPlayerName() {
-	document.getElementById("playerSpan").innerHTML = localStorage.getItem("playerName") + "<br>";
+	document.getElementById("playerSpan").innerHTML = sessionStorage.getItem("playerName") + "<br>";
 }
 
 // Contains all of the text entries for the Hospital Documents
