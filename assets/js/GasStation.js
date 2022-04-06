@@ -7,7 +7,7 @@ const profession = sessionStorage.getItem("profession");
 const playerName = sessionStorage.getItem("playerName");
 
 
-let state = getGameState();                                    
+let state = getGameState(); // set state                                   
 
 function getGameState() {
 	let savedData = sessionStorage.getItem("GasStationGameState");
