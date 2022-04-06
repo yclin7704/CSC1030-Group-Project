@@ -5,6 +5,7 @@ const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage'); // Image
 const soundElement = document.createElement('audio'); //Sound
 const profession = sessionStorage.getItem("profession");
+const playerName = localStorage.getItem("playerName");
 
 //Variables for collectables
 let secretCollectable = 0;
@@ -33,8 +34,13 @@ function startGame(){
     setTimerData(showTextNode, 17, 33);
     setTemperatureData(showTextNode, 34, 34);
     showInventory();
+    displayPlayerName();
     //clearInventory(); //This clears the inventory
     showTextNode(1);
+}
+
+function displayPlayerName() {
+    document.getElementById('playerSpan').innerHTML = playerName + '<br>';
 }
 
 function getGameState() {
