@@ -1,0 +1,30 @@
+/* Variables */
+/* Will apply a blue colour scheme to the Main Pages */
+:root {
+	--background: #171c24;
+	--brownDark: #3e455d;
+	--beige: #a38767;
+	--text: #debc89;
+	--lightText: #f5dfc3;
+}
+
+.temperatureSpan {
+	color: var(--text);
+}
+
+.translatedTime {
+	color: var(--text);
+}
+
+.dialogueOuter {
+    color: #553212;
+}
+
+.textBox {
+    color: #553212;
+}
+
+button:enabled:hover {
+	color: var(--beige);
+	background-color: #553212;
+}

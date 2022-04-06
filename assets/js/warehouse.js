@@ -35,6 +35,8 @@ function startGame()
     // Displays the inventory
     showInventory();
 
+    // This will take the player to the appropriate Text Node when day ends, and when night ends
+    setTimerData(showTextNode, "camp", 5.1);
 
 	// This will take the player to the appropriate Text Node if they die of frostbite or heat stroke
     setTemperatureData(showTextNode, 6.1, 6.2);
