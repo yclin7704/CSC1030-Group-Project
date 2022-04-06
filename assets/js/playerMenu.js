@@ -13,7 +13,7 @@ function setPlayerName() {
 
 function setGameVolume() {
 	let volume = document.getElementById("volumeSlider").value;
-	localStorage.setItem("gameVolume", volume);
+	sessionStorage.setItem("gameVolume", volume);
 }
 
 function playMusic(source) {
@@ -36,11 +36,37 @@ function playMusic(source) {
 }
 
 function newGame() {
+	//validateOption();
 	let options = document.getElementById("menuOptions");
 	let buttons = document.getElementById("startButtons");
 	buttons.style.display = "none";
 	options.style.display = "block";
 	playMusic("https://soundimage.org/wp-content/uploads/2018/07/Horror-Game-Intro.mp3");
+}
+
+// validates the entered Cheat Code
+function validateOption() {
+
+    // Stores the Cheat Code entered
+    var optionList = document.getElementsByName('Scheme');
+	for (var i = 0; i < optionList.length; i++) {
+		if (optionList[i].checked) {
+			var option = optionList[i].value;
+		}
+	}
+
+    sessionStorage.setItem("ID", "Styling");
+    sessionStorage.setItem("Attribute", "href");
+
+    // switches the effects based on the Cheat Code's value
+    switch(option){
+        case Normal:
+            sessionStorage.setItem("Value", "./assets/css/main.css"); break;
+        case Blue:
+            sessionStorage.setItem("Value", "./assets/css/ColourblindColourPalette.css"); break;
+        case Monocolour:
+            sessionStorage.setItem("Value", "./assets/css/Cheat3.css"); break;
+    }
 }
 
 /**
