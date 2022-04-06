@@ -31,8 +31,11 @@ function startGame()
     // clears the inventory before the game starts
     //clearInventory();
 
+    //Time up
+    setTimerData(showTextNode, "camp", "timeOut");
+
 	// This will take the player to the appropriate Text Node if they die of frostbite or heat stroke
-    //setTemperatureData(showTextNode, coldid, hotid);
+    setTemperatureData(showTextNode, "freeze", "hot");
     
     // Will display the first text node (id=1)
     showTextNode(1);
@@ -120,6 +123,7 @@ const textNodes = [
         inventory: '',
         sound: 'assets/sounds/wind.wav',
         image: 'assets/images/lab-out.jpg',
+        tempChange: -1,
         options: [
             {
                 text: 'Enter through the fence',
@@ -130,9 +134,13 @@ const textNodes = [
                 nextText: 20
             },
             {
-                text: 'Setup traps outside the gate',
+                text: 'Setup traps outside the gate using gasoline',
                 requiredState: (currentState) => currentState.Mechanic,
-                nextText: 30
+                requiredInventory: { 'Gasoline': true },
+                setInventory: { Gasoline : false },
+                setState: { trap : true },
+
+                nextText: 1
             },
             {
                 text: 'Go back to the warehouse',
@@ -150,6 +158,7 @@ const textNodes = [
         inventory: '',
         sound: 'assets/sounds/wind.wav',
         image: 'assets/images/lab-out.jpg',
+        tempChange: -1,
         options: [
             {
                 text: 'Go inside the building through the front door',
@@ -185,8 +194,10 @@ const textNodes = [
             },
             {
                 text: 'Barricade the gate',
-                requiredState: (currentState) => currentState.plank,
-                nextText: 7
+                requiredInventory: { 'Wood Planks': true },
+                setInventory: { 'Wood Planks' : false },
+                setState: { barricaded : true },
+                nextText: 2
             },
             {
                 text: 'Go back out',
@@ -199,9 +210,11 @@ const textNodes = [
         text: "You decide to enter through the broken double door at the front the testing centre, it feels really gloomy and dark in here despite still being bright outside, you can just about makeout everything in here." +
         " You see that there is a room to your left, stairs leading to a basement in front of you and a room that looks like a lab? on the right. You can hear some banging coming from the left room. You can tell if they are " +
         "a zombie or a human going crazy probably the latter.",
+        tempChange: -1,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-in.jpg',
+        sound: 'assets/sounds/corridorHorror.wav',
         options: [
             {
                 text: 'Go into the left room',
@@ -238,7 +251,8 @@ const textNodes = [
         "go the safer route and just leave the zombie and his cabinet alone.",
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-left.jpg',
+        sound2: 'assets/sounds/zombieBashing.wav',
         options: [
             {
                 text: 'Sneak up and attack',
@@ -254,11 +268,13 @@ const textNodes = [
             {
                 text: 'Sneak up and stab him with the syringe',
                 requiredInventory: { 'vaccineReal': true },
+                setInventory: { 'vaccineReal' : false },
                 nextText: 3.13
             },
             {
                 text: 'Sneak up and stab him with the syringe',
                 requiredInventory: { 'vaccineFake': true },
+                setInventory: { 'vaccineFake' : false },
                 nextText: 3.14
             },
             {
@@ -269,9 +285,10 @@ const textNodes = [
     },
     {
         id: 3.11,
-        text: "As you try to sneak up to the zombie, you trip and alerted the zombie. It wasn't long until it realises you were there and devoured you for his next dinner.",
+        text: "As you try to sneak up to the zombie, you trip and alerted the zombie. It wasn't long until it realises you were there and devoured you for his next dinner.<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
         note: '',
         inventory: '',
+        sound: 'assets/sounds/zombieseating.wav',
         image: 'assets/images/You-Died_TEST-GIF.gif',
     },
     {
@@ -279,7 +296,8 @@ const textNodes = [
         text: "With the amount of training you have had as a war veteran, this type of ambush is natural to you. As you knock the zombie over with your feet, you deliver heavy blows until he is no longer moving. Brutal but effective.",
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-left.jpg',
+        sound2: 'assets/sounds/wooshwoosh.wav',
         options: [
             {
                 text: 'Inspect the room',
@@ -291,9 +309,10 @@ const textNodes = [
     },
     {
         id: 3.14,
-        text: "You approach stealthly as possible and when you got in range you stabbed the back of his neck with your syringe. The zombie stumble back for a bit due to the stab however gets back quickly and pounces on you before turning you into his next dinner",
+        text: "You approach stealthly as possible and when you got in range you stabbed the back of his neck with your syringe. The zombie stumble back for a bit due to the stab however gets back quickly and pounces on you before turning you into his next dinner.<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
         inventory: '',
         note: '',
+        sound: 'assets/sounds/zombieseating.wav',
         image: 'assets/images/You-Died_TEST-GIF.gif',
     },
     {
@@ -302,7 +321,7 @@ const textNodes = [
         ` "Wait I'm alive...and who are you?"`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-left.jpg',
         options: [
             {
                 text: 'Explain the situation',
@@ -316,7 +335,7 @@ const textNodes = [
         text: `"I see...thank you for saving me. I'm afraid I can't help you much though with my memory being blurry and everything."`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-left.jpg',
         options: [
             {
                 text: 'Is there anything that can help with the heating?',
@@ -334,7 +353,7 @@ const textNodes = [
         text: `"There is a backup generator that will automatically start the emergency heating if you just stomp the basement really hard. I- have no idea why we designed it like that but it works?"`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-left.jpg',
         options: [
             {
                 text: "Thank's that's all I have to ask",
@@ -342,7 +361,7 @@ const textNodes = [
                 nextText: 3.144      
             },
             {
-                text: "What's the passcord to the safe?",
+                text: "What's the passcode to the safe?",
                 setState: { heatAsk : true },
                 requiredState: (currentState) => currentState.seenSafe && !currentState.safeAsk,
                 nextText: 3.143      
@@ -351,10 +370,10 @@ const textNodes = [
     },
     {
         id: 3.143,
-        text: `"The password? uh that safe belongs to dave, his experimentations are out of our scopes, last time I checked this guy was trying to break the "fourth wall" whatever that means, if I have to guess his password it would probably be something to do with that"`,
+        text: `"The passcode? uh that safe belongs to dave, his experimentations are out of our scopes, last time I checked this guy was trying to break the "fourth wall" whatever that means, if I have to guess his password it would probably be something to do with that"`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-left.jpg',
         options: [
             {
                 text: "Thank's that's all I have to ask",
@@ -374,7 +393,7 @@ const textNodes = [
         text: `"If that is everything you want to ask of me then I'm going to leave and try to find my daughter if she is still out there somewhere. Take care."`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-left.jpg',
         options: [
             {
                 text: "Look around the room",
@@ -387,7 +406,8 @@ const textNodes = [
         text: `The room is relatively tiny with a window leading to the outside, there is a wooden cabinet here with many scratches over but can't seem to be opened without bashing it with something. The rooms is covered in various "fluids" ranging from blood to questionable matters, ideally you want to leave the room soon as possible however judging from the zombie in the room, it seems that they attracted to this room, you might be able to use that to your advantage.`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-left.jpg',
+        sound: 'assets/sounds/moreHorror.wav',
         options: [
             {
                 text: "Setup Camp",
@@ -410,7 +430,7 @@ const textNodes = [
         text: `The cabinet infront of you seems to be badly damaged with multiple scratches all over it with a lock that looks like that won't work anymore. The only option seems to brute force the cabinet open however as you approach the cabinet it has a really foul smell coming out of it. You have a bad feeling about this.`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-left.jpg',
         options: [
             {
                 text: "Break the cabinet open with a hammer",
@@ -429,19 +449,20 @@ const textNodes = [
             },
         ]
     },
+    
     {
-        id: 3.144,
+        id: 3.11121,
         text: `Nothing could've prepared you for what was in that cabinet...multiple pieces of dismembered human body parts from different humans were in there ranging from the head to legs to hands, oh god I think I'm going to puke.`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-left.jpg',
         options: [
             {
                 text: "Pick up the body parts",
                 requiredInventory: { 'bodyPart': false },
                 setInventory: { bodyPart: true },
                 setState: { bodyPartSeen : true },
-                nextText: 3.144     
+                nextText: 3.11121     
             },
             {
                 text: "Leave before you puke",
@@ -452,7 +473,8 @@ const textNodes = [
     {
         id: 3.2,
         text: `You walk down stairs to be faced with a metallic iron door, upon opening said door, it reveals to be a storage of medicine and chemicals for the lab however upon further inspection, it seems to have been converted to in a bunker by the previous occupant, not that you are complaining with plenty of food and water. There is also a toolbox here if you want to repair things?`,
-        note: '',
+        note: 'assets/images/lab-room-basement.jpg',
+        sound: 'assets/sounds/taptap.wav',
         inventory: '',
         image: '',
         options: [
@@ -494,7 +516,8 @@ const textNodes = [
         text: `You inspect the toolbox before you, most of the tools inside are very rusted due humidity of the storage room however there is a miniature platinum hammer that seems to be in pristine condition. You want to question how much this costed the owner but right now you're just glad to find one functioning tool. Well...there is also dropper in here? and a vintage bolt cutter.`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-basement.jpg',
+        sound2: 'assets/sounds/toolbox.wav',
         options: [
             {
                 text: "Pick up the hammer",
@@ -525,7 +548,8 @@ const textNodes = [
         text: `After searching through all the chemical in the storage you found a box labelled "top secret" in a child like scribble. Upon opening you see five power like substance contained each in their little containers but of course none of them have labels attached to them. In no particular order the colour of the power were blue, gray, white, white and well white`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-basement.jpg',
+        sound2: 'assets/sounds/scavage.wav',
         options: [
             {
                 text: "Pick up all the chemical",
@@ -544,7 +568,8 @@ const textNodes = [
         text: `After searching through all the chemical in the storage you found a box labelled "top secret" in a child like scribble. Upon opening you see five power like substance contained each in their little containers but of course none of them have labels attached to them. With your background knowledge in basic chemistry they seem to be Copper (II) sulfate, Lithium chloride, Calcium carbonate, Potassium chloride and Sodium borate`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-basement.jpg',
+        sound2: 'assets/sounds/scavage.wav',
         options: [
             {
                 text: "Pick up all the chemical",
@@ -563,7 +588,8 @@ const textNodes = [
         text: `After stomping on the ground like a lunatic, it seems like you triggered some hidden mechanic of the building with the lights flashing to red and the following messaged being heard "emergency generator activated" as you pondered if that did anything, the basement suddenly gotten warmer.`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-basement.jpg',
+        sound2: 'assets/sounds/stomp.wav',
         options: [
             {
                 text: "Ponder what to do next",
@@ -576,7 +602,7 @@ const textNodes = [
         text: `You enter a room that seems to be a experimentation room with chemistry equipment on the table with a piece a paper on the side and a safe on the right on side of the wall.`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
         options: [
             {
                 text: "Inspect the chemistry set",
@@ -594,6 +620,11 @@ const textNodes = [
                 nextText: 3.33
             },
             {
+                text: "Setup camp",
+                setState: { experiment : true },
+                nextText: "camp"
+            },
+            {
                 text: "Go back",
                 nextText: 3   
             },
@@ -604,7 +635,7 @@ const textNodes = [
         text: 'You look at the chemistry set, there is a bunsen burner, a couple of flasks and a magnetic mixer',
         note: ``,
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
         options: [
             {
                 text: "Burn some chemicals with bunsen burner",
@@ -637,7 +668,8 @@ const textNodes = [
         text: `You decided to burn some of the chemicals but which ones?`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
+        sound2: 'assets/sounds/flameTest.wav',
         options: [
             {
                 text: "Burn substance A",
@@ -670,7 +702,8 @@ const textNodes = [
         text: `You decided to burn some of the chemicals but which ones?`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
+        sound2: 'assets/sounds/flameTest.wav',
         options: [
             {
                 text: "Burn Sodium Borate",
@@ -703,7 +736,7 @@ const textNodes = [
         text: `You burn the substance, the flame was Yellow and well deadly.`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
         options: [
             {
                 text: "Burn something else",
@@ -726,7 +759,7 @@ const textNodes = [
         text: `You burn the substance, the flame was Purple and burned very brutally.`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
         options: [
             {
                 text: "Burn something else",
@@ -749,7 +782,7 @@ const textNodes = [
         text: `You burn the substance, the flame was Cyan and was very tamed.`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
         options: [
             {
                 text: "Burn something else",
@@ -772,7 +805,7 @@ const textNodes = [
         text: `You burn the substance, the flame was Red.`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
         options: [
             {
                 text: "Burn something else",
@@ -795,7 +828,7 @@ const textNodes = [
         text: `You burn the substance, the flame was Orange and didn't react as deadly.`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
         options: [
             {
                 text: "Burn something else",
@@ -818,7 +851,7 @@ const textNodes = [
         text: `You decided that it's time to perform the synthesis of the drug but what substance to add first?`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
         options: [
             {
                 text: "Add chemical A",
@@ -861,10 +894,11 @@ const textNodes = [
     },
     {
         id: 3.3131,
-        text: `You added in the chemical, now what else?1`,
+        text: `You added in the chemical, now what else?`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
+        sound2: 'assets/sounds/objectDrop.wav',
         options: [
             {
                 text: "Add chemical A",
@@ -912,10 +946,11 @@ const textNodes = [
     },
     {
         id: 3.3132,
-        text: `You added in the chemical, now what else?2`,
+        text: `You added in the chemical, now what else?`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
+        sound2: 'assets/sounds/objectDrop.wav',
         options: [
             {
                 text: "Add chemical A",
@@ -963,10 +998,11 @@ const textNodes = [
     },
     {
         id: 3.3133,
-        text: `You added in the chemical, now what else?3`,
+        text: `You added in the chemical, now what else?`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
+        sound2: 'assets/sounds/objectDrop.wav',
         options: [
             {
                 text: "Add chemical A",
@@ -1014,10 +1050,11 @@ const textNodes = [
     },
     {
         id: 3.3134,
-        text: `You added in the chemical, now what else?4`,
+        text: `You added in the chemical, now what else?`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
+        sound2: 'assets/sounds/objectDrop.wav',
         options: [
             {
                 text: "Add chemical A",
@@ -1065,10 +1102,11 @@ const textNodes = [
     },
     {
         id: 3.3135,
-        text: `You added in the chemical, now what else?5`,
+        text: `You added in the chemical, now what else?`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
+        sound2: 'assets/sounds/objectDrop.wav',
         options: [
             {
                 text: "Add chemical A",
@@ -1119,7 +1157,7 @@ const textNodes = [
         text: `You have added everything, now the moment of truth did you do everything correct?`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
         options: [
             {
                 text: "Proceed",
@@ -1138,7 +1176,7 @@ const textNodes = [
         text: `Honestly you couldn't believe it, you made a cure to the zombie outbreak but what in the world are you going to do with only one vial of it?`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
         options: [
             {
                 text: "Go back",
@@ -1152,7 +1190,7 @@ const textNodes = [
         text: `I guess you didn't read the instructions carefully enough, I have no idea what this "mixture" is but it certainly ain't no vaccine.`,
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
         options: [
             {
                 text: "Go back",
@@ -1166,7 +1204,8 @@ const textNodes = [
         text: 'You read the note and it says: <br><button onClick="changeText();" class="changeText">Change Text</button> <button onClick="revertText();" class="changeText">Revert Text</button>',
         note: `The cure...yes I was so close but why did haven't anyone named the god damn chemicals in this place. The cure is so simple having the <b>most</b> reactive ingredients to the <b>least</b> reactive with some ash mixed in<br>last</b>.If Dave just gives us the cure we wouldn't even need to go through this hassle, with our cure only working once. Now if I remember correctly when burnt in the same order, it should go in the following.<br>Purple<br>Yellow<br>Red<br>Orange<br>Cyan`,
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
+        sound2: 'assets/sounds/flipping.wav',
         options: [
             {
                 text: "Go back",
@@ -1179,7 +1218,7 @@ const textNodes = [
         text: 'You look at the vault, was there some clue that could hint toward the passcode?',
         note: ``,
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-right.jpg',
         options: [
             {
                 text: "Go back",
@@ -1188,13 +1227,21 @@ const textNodes = [
         ]
     },
     {
+        id: 4,
+        text: `You decided that the best way to accomplish anything is to brute force through the dumbest way possible so you smash the glass and jumped in. Unfortunately for you there was a zombie there ready for you to land and became his next meal.<br><br><a href=\"EndStatistics.html\">See Statistics</a>`,
+        note: '',
+        inventory: '',
+        sound2: 'assets/sounds/glassbreak.wav',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+    },
+    {
         id: 5,
         text: "Infront of you is a cluster of funguses with suspiciously blue colour, despite the really odd salty smell that reminds you very much of the ocean." +
         " This mushroom is so salty that it's a scientific miracle that this plant can even grow. Due to it's salty nature consuming it directly can be...distasteful but not life threatening." +
         " This is a good source of sodium if you need it.",
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/mushroom.jpg',
         options: [
             {
                 text: 'Eat the blue fungus',
@@ -1216,7 +1263,7 @@ const textNodes = [
         text: "Infront of you is a cluster of funguses with suspiciously blue colour, despite the really odd salty smell that reminds you very much of the ocean.",
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/mushroom.jpg',
         options: [
             {
                 text: 'Eat the blue fungus',
@@ -1238,7 +1285,8 @@ const textNodes = [
         text: "After burning the blue fungus, you can only describe the smell as putrid and horrorific smelling like rotten flesh although the smell is really bad you hope the zombie thinks the same",
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/mushroom.jpg',
+        sound: 'assets/sounds/Fire.wav',
         options: [
             {
                 text: 'Go back to the front',
@@ -1254,7 +1302,7 @@ const textNodes = [
         " The fungus was so salty that you feel like you just swallowed an entire desert into your mouth. It wasn't long until you passed out. Maybe don't just eat random mushrooms you see.",
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/mushroom.jpg',
         options: [
             {
                 text: 'Go back',
@@ -1268,7 +1316,8 @@ const textNodes = [
         text: "You picked up some blue fungus to bring with you but you have no idea what to do with them or do you?",
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/mushroom.jpg',
+        sound2: 'assets/sounds/PickMushrooms.wav',
         options: [
             {
                 text: 'Go back to the front',
@@ -1284,7 +1333,7 @@ const textNodes = [
         " that this is a special type of mushroom that can boost ones vitality if the mushroom is first boiled and if you don't boil it, it is very posionous to any living mammal (reptiles seems to be fine)",
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/mushroom.jpg',
         options: [
             {
                 text: 'Eat the red fungus',
@@ -1307,7 +1356,7 @@ const textNodes = [
         " as soon as possible. ",
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/mushroom.jpg',
         options: [
             {
                 text: 'Eat the red fungus',
@@ -1329,7 +1378,8 @@ const textNodes = [
         text: "Turns out the red fungus was really flammable, you barely out of the way before all of it burns up before you. There is now ash on the floor, if you have a container you could pick it up",
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/mushroom.jpg',
+        sound: 'assets/sounds/Fire.wav',
         options: [
             {
                 text: 'Go back to the front (the ash will be blown away by the wind)',
@@ -1348,7 +1398,7 @@ const textNodes = [
     },
     {
         id: 6.2,
-        text: "You decided that eating the bright red cap was a good idea for your health and being so why not. Oh no, your internal systems are dying and screaming for help...",
+        text: "You decided that eating the bright red cap was a good idea for your health and being so why not. Oh no, your internal systems are dying and screaming for help...<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
         note: '',
         inventory: '',
         image: 'assets/images/You-Died_TEST-GIF.gif',
@@ -1358,7 +1408,8 @@ const textNodes = [
         text: "You picked up some red fungus to bring with you but you have no idea what to do with them or do you?",
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/mushroom.jpg',
+        sound2: 'assets/sounds/PickMushrooms.wav',
         options: [
             {
                 text: 'Go back to the front',
@@ -1373,7 +1424,8 @@ const textNodes = [
         text: "This really was a tiny little building made of wood, infact all you see is a little plastic container and well nothing.",
         note: '',
         inventory: '',
-        image: '',
+        image: 'assets/images/shed.jpg',
+        tempChange: -1,
         options: [
             {
                 text: 'Pick up the container',
@@ -1386,6 +1438,278 @@ const textNodes = [
                 nextText: 2
             },
         ]
+    },
+    {
+        id: "camp", //Ending zombie part depending on the barricade and trap.
+        text: `You decided to setup camp for the night, are you sure you want to setup camp? This action will end the game.`,
+        note: '',
+        inventory: '',
+        image: 'assets/images/lab-camp.jpg',
+        options: [
+            //room on the right
+            {
+                text: "Yes",
+                requiredState: (currentState) => currentState.bloodRoom && !currentState.barricaded && !currentState.trap,
+                nextText: "defenceNone"   
+            },
+            {
+                text: "Yes",
+                requiredState: (currentState) => currentState.bloodRoom && currentState.barricaded && !currentState.trap,
+                nextText: "defenceBarricaded"   
+            },
+            {
+                text: "Yes",
+                requiredState: (currentState) => currentState.bloodRoom && !currentState.barricaded && currentState.trap,
+                nextText: "defenceFire"   
+            },
+            {
+                text: "Yes",
+                requiredState: (currentState) => currentState.bloodRoom && currentState.barricaded && currentState.trap,
+                nextText: "defencePure"   
+            },
+            //lab on the left
+            {
+                text: "Yes",
+                requiredState: (currentState) => currentState.experiment && !currentState.barricaded && !currentState.trap,
+                nextText: "defenceNone"   
+            },
+            {
+                text: "Yes",
+                requiredState: (currentState) => currentState.experiment && currentState.barricaded && !currentState.trap,
+                nextText: "defenceBarricaded"   
+            },
+            {
+                text: "Yes",
+                requiredState: (currentState) => currentState.experiment && !currentState.barricaded && currentState.trap,
+                nextText: "defenceFire"   
+            },
+            {
+                text: "Yes",
+                requiredState: (currentState) => currentState.experiment && currentState.barricaded && currentState.trap,
+                nextText: "defencePure"   
+            },
+            
+            //basement
+            {
+                text: "Yes",
+                requiredState: (currentState) => currentState.basement && !currentState.barricaded && !currentState.trap,
+                nextText: "defenceNone"    
+            },
+            {
+                text: "Yes",
+                requiredState: (currentState) => currentState.basement && currentState.barricaded && !currentState.trap,
+                nextText: "defenceBarricaded"    
+            },
+            {
+                text: "Yes",
+                requiredState: (currentState) => currentState.basement && !currentState.barricaded && currentState.trap,
+                nextText: "defenceFire"    
+            },
+            {
+                text: "Yes",
+                requiredState: (currentState) => currentState.basement && currentState.barricaded && currentState.trap,
+                nextText: "defencePure"    
+            },
+            //Nothing
+            {
+                text: "Yes",
+                requiredState: (currentState) => !currentState.bloodRoom && !currentState.basement && !currentState.experiment && !currentState.barricaded && !currentState.trap,
+                nextText: "defenceNone"   
+            },
+            //nope
+            {
+                text: "no",
+                requiredState: (currentState) => currentState.bloodRoom,
+                setState: { bloodRoom : false },
+                nextText: 3.111   
+            },
+            {
+                text: "no",
+                requiredState: (currentState) => currentState.experiment,
+                setState: { experiment : false },
+                nextText: 3.3  
+            },
+            {
+                text: "no",
+                requiredState: (currentState) => currentState.basement,
+                setState: { bloodRoom : false },
+                nextText: 3.2  
+            },
+            {
+                text: "no",
+                requiredState: (currentState) => !currentState.basement && !currentState.experiment && !currentState.bloodRoom,
+                nextText: 3  
+            },
+        ]
+    },
+    {
+        id: "defenceNone",
+        text: "Unfortunately with no defences at night, it was almost impossible to defend yourself despite the lower amount of zombies at the testing center. It didn't take very long for the zombies to quickly overwhelm the facility and collapsing onto you.<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+        note: '',
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+    },
+    {
+        id: "defenceBarricaded",
+        text: "With how little zombies there are around this place, the simple barricade you put up should be more than enough to keep out those zombies which fortunately for you is true. After some time has passed the zombies eventually gave up and left however the worst of it is yet to come...the storm.",
+        note: '',
+        inventory: '',
+        image: 'assets/images/lab-barricade',
+        options: [
+            {
+                text: 'Wait until the storm',
+                requiredState: (currentState) => !currentState.experiment && currentState.bloodRoom && !currentState.basementHeat && !currentState.basement,
+                nextText: "bloodFreeze"         
+            },
+            {
+                text: 'Wait until the storm',
+                requiredState: (currentState) => currentState.experiment && !currentState.bloodRoom && !currentState.basementHeat && !currentState.basement,
+                nextText: "experimentFreeze"
+            },
+            {
+                text: 'Wait until the storm',
+                requiredState: (currentState) => !currentState.experiment && !currentState.bloodRoom && !currentState.basementHeat && currentState.basement,
+                nextText: "basementFreeze"
+            },
+            {
+                text: 'Wait until the storm',
+                requiredState: (currentState) => !currentState.experiment && !currentState.bloodRoom && currentState.basementHeat && currentState.basement,
+                nextText: "survive"
+            },
+        ]
+    },
+    {
+        id: "defenceFire",
+        text: "The trap you set outside with the gasoline turned out to work wonders as the zombies weren't dumb or intelligent as they walked away from the facility while some did try but quickly became ablazed. Unfortunately the gasoline won't be able to heat you up for the snow storm.",
+        note: '',
+        inventory: '',
+        image: 'assets/images/lab-barricade',
+        options: [
+            {
+                text: 'Wait until the storm',
+                requiredState: (currentState) => !currentState.experiment && currentState.bloodRoom && !currentState.basementHeat && !currentState.basement,
+                nextText: "bloodFreeze"         
+            },
+            {
+                text: 'Wait until the storm',
+                requiredState: (currentState) => currentState.experiment && !currentState.bloodRoom && !currentState.basementHeat && !currentState.basement,
+                nextText: "experimentFreeze"
+            },
+            {
+                text: 'Wait until the storm',
+                requiredState: (currentState) => !currentState.experiment && !currentState.bloodRoom && !currentState.basementHeat && currentState.basement,
+                nextText: "basementFreeze"
+            },
+            {
+                text: 'Wait until the storm',
+                requiredState: (currentState) => !currentState.experiment && !currentState.bloodRoom && currentState.basementHeat && currentState.basement,
+                nextText: "survive"
+            },
+        ]
+    },
+    {
+        id: "defencePure",
+        text: "The trap you set outside with the gasoline turned out to work wonders as the zombies weren't dumb or intelligent as they walked away from the facility while some did try but quickly became ablazed. The extra defence from the barricade probably wasn't needed but you feel a lot safer I guess? Anyway you have bigger problems surviving this snow storm.",
+        note: '',
+        inventory: '',
+        image: 'assets/images/lab-barricade',
+        options: [
+            {
+                text: 'Wait until the storm',
+                requiredState: (currentState) => !currentState.experiment && currentState.bloodRoom && !currentState.basementHeat && !currentState.basement,
+                nextText: "bloodFreeze"         
+            },
+            {
+                text: 'Wait until the storm',
+                requiredState: (currentState) => currentState.experiment && !currentState.bloodRoom && !currentState.basementHeat && !currentState.basement,
+                nextText: "experimentFreeze"
+            },
+            {
+                text: 'Wait until the storm',
+                requiredState: (currentState) => !currentState.experiment && !currentState.bloodRoom && !currentState.basementHeat && currentState.basement,
+                nextText: "basementFreeze"
+            },
+            {
+                text: 'Wait until the storm',
+                requiredState: (currentState) => !currentState.experiment && !currentState.bloodRoom && currentState.basementHeat && currentState.basement,
+                nextText: "survive"
+            },
+        ]
+    },
+    {
+        id: "bloodFreeze",
+        text: "Unfortunately in this bloody room, the blood isn't exactly warm as it use to be and without any other source of heat, you very quickly started to lose conciousness.<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+        note: '',
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+    },
+    {
+        id: "experimentFreeze",
+        text: "While intially you did try to use the bunsen burner to give yourself a bit of heat but eventually the gas ran out and the temperature kept dropping. It wasn't long until you started to lose conciousness.<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+        note: '',
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+    },
+    {
+        id: "baseFreeze",
+        text: "The basement while being much further from the surface, didn't really have a impact on the coldness which eventually got much colder as the night gone on and you start to lose conciousness.<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+        note: '',
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+    },
+    {
+        id: "timeOut",
+        text: "While you busy gathering resources, you fail to realise that you have ran out of time, a zombie sneaked up on you and quickly ended your life.<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+        note: '',
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+    },
+    {
+        id: "freeze",
+        text: "It's so cold...I can't be bothered to think or move anymore, I think I'm just going to lay here for 5 minute....<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+        note: '',
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+    },
+    {
+        id: "hot",
+        text: "You somehow managed to burn yourself to death in a forzen tundra, honestly you should consider this a achievement.<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+        note: '',
+        inventory: '',
+        image: 'assets/images/You-Died_TEST-GIF.gif',
+    },
+    {
+        id: "survive",
+        text: "With the emergency generator up and running, it was actually quite comfortable down here, in fact it was so cosy that before you realised, it was approaching day with the birds chirping outside...",
+        note: '',
+        inventory: '',
+        image: 'assets/images/lab-room-basement.jpg',
+        options: [
+            {
+                text: 'Conclude',
+                requiredInventory: { 'cure': false },
+                nextText: "victory"         
+            },
+            {
+                text: 'Conclude',
+                requiredInventory: { 'cure': true },
+                nextText: "trueVictory"
+            },
+        ]
+    },
+    {
+        id: "victory",
+        text: "You have successfully survived the night through the zombie horde and through the most intense snow storm but what now? Sure there is no more zombies but who can say there wouldn't be any in future? But that isn't your concern right now as you are free to do anything now.<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+        note: '',
+        inventory: '',
+        image: 'assets/images/Victory2_TEST-GIF.gif',
+    },
+    {
+        id: "trueVictory",
+        text: "Not only did you managed to survive the night you have been able to get the cure to stop all future outbreaks, finally the world can return back to how it was before but that is a tale for another time.<br><br><a href=\"EndStatistics.html\">See Statistics</a>",
+        note: '',
+        inventory: '',
+        image: 'assets/images/Victory2_TEST-GIF.gif',
     },
 ]
 
