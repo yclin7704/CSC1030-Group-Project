@@ -99,7 +99,12 @@ function startGame() {
     setTemperatureData(showTextNode, 103, 111);
     
     // Will display the first text node (id=1)
-    showTextNode(1);
+    if (state.leftLocation) {
+        showTextNode(2);
+    } else {
+        showTextNode(1);
+    }
+    
 }
 
 
@@ -112,6 +117,9 @@ function startGame() {
 function showTextNode(textNodeIndex){
     if (textNodeIndex === "Warehouse"){
         window.location.href = "Warehouse.html";
+        state.leftLocation = true;
+        // Save the current game state to session storage
+        sessionStorage.setItem("HospitalGameState", JSON.stringify(state));
     }
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.                                    
     typeSentence(textNode.text, "DialogueHospital"); // Changes the dialogue box to the text stored in the TextNode.

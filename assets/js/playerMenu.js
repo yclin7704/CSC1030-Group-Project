@@ -36,7 +36,7 @@ function playMusic(source) {
 }
 
 function newGame() {
-	//validateOption();
+	validateOption();
 	let options = document.getElementById("menuOptions");
 	let buttons = document.getElementById("startButtons");
 	buttons.style.display = "none";
@@ -60,11 +60,11 @@ function validateOption() {
 
     // switches the effects based on the Cheat Code's value
     switch(option){
-        case Normal:
+        case "Normal":
             sessionStorage.setItem("Value", "./assets/css/main.css"); break;
-        case Blue:
+        case "Blue":
             sessionStorage.setItem("Value", "./assets/css/ColourblindColourPalette.css"); break;
-        case Monocolour:
+        case "Monocolour":
             sessionStorage.setItem("Value", "./assets/css/Cheat3.css"); break;
     }
 }
@@ -98,11 +98,11 @@ function displayProfession() {
 			almost everything I had just to escape those damn things! This is just like back in those tre-... I-I don't know how much
 			more I can take.`;
 		sessionStorage.setItem("profession", "War Veteran");
-	} else if (select === "Medic") {
+	} else if (select === "Doctor") {
 		dialogue.innerHTML += `I've just managed to escape from the hospital... there were so many of them. I couldn't save any of them.
 			I could still hear their screams and cries as I ran away. I tried to save them all, I thought I-I had the cure but one of the
 			patient was infected and due to my selfishness I couldn't... end his life. Now everyone is dead because of me. Now I'm all alone in this abandoned warehouse.`;
-		sessionStorage.setItem("profession", "Medic");
+		sessionStorage.setItem("profession", "Doctor");
 	} else if (select === "Priest") {
 		dialogue.innerHTML += `I've just managed to escape from the hospital... there were so many of them. I couldn't save any of them.
 			I could still hear their screams and cries as I ran away. I tried to save them all, I thought I-I had the cure but one of the patient

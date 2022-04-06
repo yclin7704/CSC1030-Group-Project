@@ -37,7 +37,11 @@ function startGame() {
     // clears the inventory before the game starts
     clearInventory();
     
-    showTextNode(1);
+    if (state.leftLocation) {
+    showTextNode(1.5);
+    } else {
+        showTextNode(1);
+    }
 
     displayPlayerName();
 
@@ -65,21 +69,23 @@ function revertText() {
 
 function showTextNode(textNodeIndex) {
     if (textNodeIndex === "warehouse") {
-        currentState.leftLocation = true;
+        state.leftLocation = true;
         // Save the current game state to session storage
-        sessionStorage.setItem("GasStationGameState", JSON.stringify(gameState));
+        sessionStorage.setItem("GasStationGameState", JSON.stringify(state));
     
-        window.location.href = "Warehouse.html";
-        return;
+        window.location.href = "./Warehouse.html";
     }
 
-    const torchOn = [2, 26, 14, 29, 55];
+    const torchOn = [2, 26, 14, 18, 42, 55];
 
     for (i = 0; i < torchOn.length; i++) {
-        if (textNodeIndex === torchOn[i]) {
-            toggleTorch();
+        if (textNodeIndex === torchOn[i] && !state.GeneratorFixed) {
+            setTorch(!getIsTorchOn());
+            break;
         }
     }
+    if (!state.LightsOff) setTorch(false);
+
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "dialogue", 15); // Changes the dialogue box to text stored in the text node.
     updateInventory(textNode.inventory);
@@ -269,7 +275,7 @@ const textNodes = [
                 text: 'Replace the fuse',
                 requiredInventory: { 'Fuse': true },
                 setInventory: {Fuse : false},
-                setState: { LightsOff: false },
+                setState: { LightsOff: false, GeneratorFixed:true },
                 nextEventId: 26
             },
             {
@@ -495,13 +501,13 @@ const textNodes = [
             {
                 text: 'Take the parts and return to the stranger',
                 nextEventId: 45,
-                setInventory:{Parts:true},
+                setInventory:{Parts:true, LightsOff:false},
                 requiredState: (currentState) => !currentState.SparkPlugs
             },
             {
                 text: 'Take the parts and return to fix the car',
                 nextEventId: 18,
-                setInventory:{Parts:true},
+                setInventory:{Parts:true, LightsOff:false},
                 requiredState: (currentState) => currentState.SparkPlugs
             }
         ]
@@ -547,7 +553,8 @@ const textNodes = [
             {
                 text: 'Prepare for the night',
                 tempChange: 'decrease',
-                nextEventId: 29
+                nextEventId: 29,
+                setState: {LightsOff:true}
             }
         ]
     },
@@ -562,6 +569,7 @@ const textNodes = [
             {
                 text: 'Offer to help fix his car',
                 requiredState: (currentState) => currentState.Mechanic,
+                setState: {LightsOff:false},
                 nextEventId: 14
             },
             {
@@ -594,7 +602,8 @@ const textNodes = [
         options: [
             {
                 text: 'Prepare for the night',
-                nextEventId: 29
+                nextEventId: 29,
+                setState: {LightsOff:true}
             },
             {
                 text: 'Offer to help fix his car',
@@ -695,7 +704,7 @@ const textNodes = [
             {
                 text: 'Look for spare parts inside',
                 requiredInventory: { 'Parts': false },
-                setState: {SparkPlugs:true},
+                setState: {SparkPlugs:true, LightsOff:true},
                 requiredState: (currentState) => !currentState.FixCar,
                 nextEventId: 42
             },
@@ -736,12 +745,14 @@ const textNodes = [
                 text: 'Stay at the gas station and prepare for the night',
                 tempChange: 'decrease',
                 requiredState: (currentState) => currentState.FixCar,
-                nextEventId: 29
+                setState:{LightsOff:true},
+                nextEventId: 29,
             },
             {
                 text: 'Stay at the gas station and prepare for the night',
                 tempChange: 'decrease',
                 requiredState: (currentState) => !currentState.FixCar,
+                setState:{LightsOff:true},
                 nextEventId: 55
             },
             {
@@ -791,7 +802,8 @@ const textNodes = [
             {
                 text: 'Prepare for the night',
                 setInventory: {Knife:true},
-                nextEventId: 29
+                nextEventId: 29,
+                setState: {LightsOff:true}
             }
         ]
     },
@@ -858,6 +870,7 @@ const textNodes = [
                 text: 'Continue preparation',
                 setState: { Wood: true },
                 nextEventId: 29,
+                setState: {LightsOff:true},
             },
             {
                 text: 'Finish preparation',
@@ -877,6 +890,7 @@ const textNodes = [
                 text: 'Continue preparation',
                 setState: { Windows: true },
                 nextEventId: 29,
+                setState: {LightsOff:true},
             },
             {
                 text: 'Finish preparation',
@@ -896,6 +910,7 @@ const textNodes = [
                 text: 'Continue preparation',
                 setState: { Doors: true },
                 nextEventId: 29,
+                setState: {LightsOff:true},
             },
             {
                 text: 'Finish preparation',
@@ -924,7 +939,8 @@ const textNodes = [
                 requiredInventory: { 'Matches': false },
                 setInventory: {'Wood Planks':false, Gasoline:false},
                 setState: { Fire: false },
-                nextEventId: 29
+                nextEventId: 29,
+                setState: {LightsOff:true}
             }
         ]
     },
@@ -940,6 +956,7 @@ const textNodes = [
                 setState: { Matches: true },
                 setInventory: {Matches:false},
                 nextEventId: 29,
+                setState: {LightsOff:true},
             },
             {
                 text: 'Finish preparation',

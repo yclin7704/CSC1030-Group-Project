@@ -268,8 +268,7 @@ const textNodes = [
         options: [
             {
                 text: 'Sneak up and attack',
-                requiredState: (currentState) => !currentState.WarVeteran,
-                requiredState: (currentState) => !currentState.Priest,
+                requiredState: (currentState) => !currentState.WarVeteran || !currentState.Priest,
                 nextText: 3.11           
             },
             {
@@ -488,7 +487,7 @@ const textNodes = [
         note: 'assets/images/lab-room-basement.jpg',
         sound: 'assets/sounds/taptap.wav',
         inventory: '',
-        image: '',
+        image: 'assets/images/lab-room-basement.jpg',
         options: [
             {
                 text: "Setup camp",

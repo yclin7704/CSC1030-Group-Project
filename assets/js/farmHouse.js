@@ -759,7 +759,7 @@ const textNodes = [
         options: [
             {
                 text: 'Drink the liquid',
-                requiredState: (currentState) => !currentState.Medic, //If you are a medic, you know that the lidquid is dangerous
+                requiredState: (currentState) => !currentState.Doctor, //If you are a doctor, you know that the lidquid is dangerous
                 nextText: 28
             },
             {
