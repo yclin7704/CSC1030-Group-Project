@@ -69,14 +69,13 @@ function showTextNode(textNodeIndex) {
         // Save the current game state to session storage
         sessionStorage.setItem("GasStationGameState", JSON.stringify(gameState));
     
-        window.location.href = "Warehouse.html";
-        return;
+        window.location.href = "./Warehouse.html";
     }
 
-    const torchOn = [2, 26, 14, 29, 55];
+    const torchOn = [2, 26];
 
     for (i = 0; i < torchOn.length; i++) {
-        if ((textNodeIndex === torchOn[i]) && currentState.LightsOff) {
+        if (textNodeIndex === torchOn[i]) {
             toggleTorch();
         }
     }
