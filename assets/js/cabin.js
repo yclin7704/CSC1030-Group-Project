@@ -14,6 +14,8 @@ async function main() {
 
 	showInventory();
 
+	displayPlayerName();
+
 	// On first visit
 	if (!gameState.eventId) gameState.eventId = "firstVisitOutside";
 	else if (gameState.leftLocation) {
@@ -36,8 +38,12 @@ function getGameState() {
 	else
 		return {
 			// TODO: Get profession properly with sessionStorage.getItem("profession");
-			profession: profDoctor,
+			profession: profHunter,
 		};
+}
+
+function displayPlayerName() {
+	document.getElementById("playerSpan").innerHTML = localStorage.getItem("playerName") + "<br>";
 }
 
 /**
