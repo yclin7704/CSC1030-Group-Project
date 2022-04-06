@@ -56,6 +56,7 @@ function getGameState() {
 
 function showTextNode(textNodeIndex){
     if (textNodeIndex ==='Warehouse'){
+        sessionStorage.setItem("farmhouseGameState", JSON.stringify(state));
         window.location.href = "Warehouse.html";
     }
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
@@ -78,8 +79,6 @@ function showTextNode(textNodeIndex){
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
             optionButtonsElement.appendChild(button);
             sessionStorage.setItem('collectable', secretCollectable);
-            sessionStorage.setItem("farmhouseGameState", JSON.stringify(state));
-
         }
     }
     )
