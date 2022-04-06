@@ -39,7 +39,7 @@ function startGame(){
 }
 
 function displayPlayerName() {
-    document.getElementById('playerSpan').innerHTML = localStorage.getItem("playerName")  + '<br>';
+    document.getElementById('playerSpan').innerHTML = sessionStorage.getItem("playerName")  + '<br>';
 }
 
 function getGameState() {

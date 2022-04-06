@@ -8,7 +8,7 @@ function setPlayerName() {
 	// TODO: Should this be an actual name instead?
 	if (name.trim() === "") name = "Player";
 	// Save the player's choice to session storage
-	localStorage.setItem("playerName", name);
+	sessionStorage.setItem("playerName", name);
 }
 
 function setGameVolume() {

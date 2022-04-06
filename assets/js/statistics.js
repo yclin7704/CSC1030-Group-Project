@@ -4,7 +4,7 @@
 async function main() {
 	stopTimer();
 	let playerTime = document.getElementById("timeStatSpan").innerHTML;
-	localStorage.setItem("playerTime", playerTime);
+	sessionStorage.setItem("playerTime", playerTime);
 	get("temperatureStatSpan").innerHTML = getTemp();
 	get("timeStatSpan").innerHTML = getTimePlayed();
 	get("professionStatSpan").innerHTML = sessionStorage.getItem("profession");
@@ -29,11 +29,16 @@ function listingCollectable() {
 }
 
 async function resetValues() {
-	// Save the game time to local storage so it isn't cleared
-	localStorage.setItem("prevGameTime", getTimePlayed());
+	let name = sessionStorage.getItem("playerName");
+	let volume = sessionStorage.getItem("gameVolume");
+	let prevGameTime = getTimePlayed();
 
 	// Reset temperature etc. by clearing all of sessionStorage
 	sessionStorage.clear();
+
+	sessionStorage.setItem("playerName", name);
+	sessionStorage.setItem("gameVolume", volume);
+	sessionStorage.setItem("prevGameTime", prevGameTime);
 }
 
 async function playAgain() {
