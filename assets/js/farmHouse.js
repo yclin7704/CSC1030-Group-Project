@@ -33,7 +33,6 @@ function startGame(){
     setTimerData(showTextNode, 17, 33);
     setTemperatureData(showTextNode, 34, 34);
     showInventory();
-    console.log(displayPlayerName());
     displayPlayerName();
     //clearInventory(); //This clears the inventory
     showTextNode(1);
