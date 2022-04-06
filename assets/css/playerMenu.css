@@ -107,6 +107,11 @@ input[type='button']:enabled:hover {
 	background-color: var(--background);
 }
 
+.label {
+	font-size: 18pt;
+	color: black;
+}
+
 .entry {
 	display: block;
 	margin-left: auto;
