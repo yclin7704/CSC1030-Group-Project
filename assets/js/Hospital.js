@@ -85,7 +85,6 @@ function startGame() {
         case "War Veteran": state["WarVeteran"] = true; break;
         case "Priest": state["Priest"] = true; break;
     }
-    state["Doctor"] = true;
 
     // Displays the inventory
     showInventory();
