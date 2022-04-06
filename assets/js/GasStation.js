@@ -97,6 +97,12 @@ function showTextNode(textNodeIndex) {
 
     textNode.options.forEach(option => {
 
+        if (state.Finished && state.GameWin) {
+            localStorage.setItem('gameStatus', 'true');
+        } else {
+            localStorage.setItem('gameState', 'false');
+        }
+
         if (showOption(option)) {
             const button = document.createElement('button'); // Creates a button.
             button.innerText = option.text; // Button text is changed to the option text.
@@ -988,6 +994,7 @@ const textNodes = [
             {
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.Windows && !currentState.Doors,
+                setState: { GameWin: false},
                 requiredInventory: {'Knife':false},
                 nextEventId: 35
             },
@@ -995,28 +1002,33 @@ const textNodes = [
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.Doors && !currentState.Windows,
                 requiredInventory: {'Knife':false},
+                setState: { GameWin: false},
                 nextEventId: 36
             },
             {
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.Windows && !currentState.Doors,
                 requiredInventory: {'Knife':true},
+                setState: { GameWin: true},
                 nextEventId: 50
             },
             {
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.Doors && !currentState.Windows,
                 requiredInventory: {'Knife':true},
+                setState: { GameWin: true},
                 nextEventId: 51
             },
             {
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.Windows && currentState.Doors,
+                setState: { GameWin: true},
                 nextEventId: 52
             },
             {
                 text: 'Start the night',
                 requiredState: (currentState) => !currentState.Windows && !currentState.Doors,
+                setState: { GameWin: false},
                 nextEventId: 54
             }
         ]
