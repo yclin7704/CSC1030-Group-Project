@@ -111,7 +111,7 @@ function revertText(){
 function addCollectable(clicked){
     if(clicked === true){
     secretCollectable++;
-    console.log(secretCollectable);
+    //console.log(secretCollectable);
     textElement.innerHTML += '<br><br> You found a collectable';
     }
 }
