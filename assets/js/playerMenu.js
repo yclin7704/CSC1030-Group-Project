@@ -13,7 +13,7 @@ function setPlayerName() {
 
 function setGameVolume() {
 	let volume = document.getElementById("volumeSlider").value;
-	localStorage.setItem("gameVolume", volume);
+	sessionStorage.setItem("gameVolume", volume);
 }
 
 function playMusic(source) {

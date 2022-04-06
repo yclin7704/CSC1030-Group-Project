@@ -548,6 +548,7 @@ const textNodes = [
                 text: 'Give him the parts you found',
                 requiredInventory: { 'Parts': true },
                 setInventory: { Parts: false },
+                setInventory:{Knife:true},
                 tempChange: 'decrease',
                 nextEventId: 11
             },
@@ -573,7 +574,6 @@ const textNodes = [
         options: [
             {
                 text: 'Prepare for the night',
-                setInventory: { Knife: true },
                 nextEventId: 29
             },
             {
