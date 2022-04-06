@@ -23,23 +23,12 @@ let state = getGameState();
 // This function is called to start the game. The state is emptied and the first text node is shown.
 
 function startGame(){
-    if (profession === 'Mechanic') {
-        state = {Mechanic:true}
-    }
-    else if (profession === 'Medic') {
-        state = {Medic:true};
-    }
-    else if (profession === 'Hunter') {
-        state = {Hunter:true};
-    }
-    else if (profession === 'War Veteran') {
-        state = {WarVeteran:true}
-    }
-    else if (profession === 'Priest') {
-        state = {Priest:true}
-    }
-    else {
-        state = {};
+    switch(profession){
+        case "Mechanic": state["Mechanic"] = true; break;
+        case "Doctor": state["Doctor"] = true; break;
+        case "Hunter": state["Hunter"] = true; break;
+        case "War Veteran": state["WarVeteran"] = true; break;
+        case "Priest": state["Priest"] = true; break;
     }
     setTimerData(showTextNode, 17, 33);
     setTemperatureData(showTextNode, 34, 34);
@@ -576,16 +565,16 @@ const textNodes = [
         options: [
             {
                 text: 'Pick out the wood planks from the broken barrels',
-                //requiredState: (currentState) => !currentState.planks,
-                requiredInventory: {'Wood Planks':false},
+                requiredState: (currentState) => !currentState.planks,
+                //requiredInventory: {'Wood Planks':false},
                 setInventory: {'Wood Planks':true},
-                //setState: {planks: true},
+                setState: {planks: true},
                 nextText: 17
             },
             {
                 text: 'You have already pick up the planks',
-                //requiredState: (currentState) => currentState.planks,
-                requiredInventory: {"Wood Planks" : true},
+                requiredState: (currentState) => currentState.planks,
+                //requiredInventory: {"Wood Planks" : true},
                 nextText: 17
             },
             {
@@ -619,16 +608,16 @@ const textNodes = [
         options: [
             {
                 text: 'Take the Matches',
-                //requiredState: (currentState) => !currentState.Matches,
-                requiredInventory: {Matches:false},
+                requiredState: (currentState) => !currentState.Matches,
+                //requiredInventory: {Matches:false},
                 setInventory: {Matches: true},
                 //setState: {Matches: true},
                 nextText: 18
             },
             {
                 text: 'You have already picked up the Matches from the drawer',
-                //requiredState: (currentState) => currentState.Matches,
-                requiredInventory: {Matches:true},
+                requiredState: (currentState) => currentState.Matches,
+                //requiredInventory: {Matches:true},
                 nextText: 18
             },
             {
