@@ -65,21 +65,23 @@ function revertText() {
 
 function showTextNode(textNodeIndex) {
     if (textNodeIndex === "warehouse") {
-        currentState.leftLocation = true;
+        state.leftLocation = true;
         // Save the current game state to session storage
-        sessionStorage.setItem("GasStationGameState", JSON.stringify(gameState));
+        sessionStorage.setItem("GasStationGameState", JSON.stringify(state));
     
-        window.location.href = "Warehouse.html";
-        return;
+        window.location.href = "./Warehouse.html";
     }
 
-    const torchOn = [2, 26, 14, 29, 55];
+    const torchOn = [2, 26];
 
     for (i = 0; i < torchOn.length; i++) {
-        if ((textNodeIndex === torchOn[i]) && currentState.LightsOff) {
-            toggleTorch();
+        if (textNodeIndex === torchOn[i]) {
+            setTorch(!getIsTorchOn());
+            break;
         }
     }
+    if (!state.LightsOff) setTorch(false);
+
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "dialogue", 15); // Changes the dialogue box to text stored in the text node.
     updateInventory(textNode.inventory);
