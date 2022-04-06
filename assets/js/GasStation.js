@@ -37,7 +37,11 @@ function startGame() {
     // clears the inventory before the game starts
     clearInventory();
 
-    showTextNode(1);
+    if (currentState.leftLocation) {
+        showTextNode(1.5);
+    } else {
+        showTextNode(1);
+    }
 
     displayPlayerName();
 
@@ -64,6 +68,15 @@ function revertText() {
 // This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.
 
 function showTextNode(textNodeIndex) {
+    if (textNodeIndex === "warehouse") {
+        currentState.leftLocation = true;
+        // Save the current game state to session storage
+        sessionStorage.setItem("GasStationGameState", JSON.stringify(gameState));
+    
+        window.location.href = "Warehouse.html";
+        return;
+    }
+
     const torchOn = [2, 26];
 
     for (i = 0; i < torchOn.length; i++) {
@@ -120,7 +133,7 @@ const textNodes = [
             + ' off and you notice a car parked outside, however, it looks too old and beaten up to be driven anywhere. There is a message'
             + ' sprayed on the wall: <i><strong>"Don\'t trust anybody!"</strong></i>. You find a gap in the fence and stand outside the front entrance.'
             + ' There are some wood planks lying around the windows.',
-        image: '/assets/images/gas-station.jpg',
+        image: './assets/images/gas-station.jpg',
         inventory: '',
         options: [
             {
@@ -137,15 +150,22 @@ const textNodes = [
             {
                 text: 'Take the wood planks',
                 setInventory: {'Wood Planks':true},
+                requiredState: (currentState) => !currentState.WoodPlanks,
+                setState: {WoodPlanks:true},
                 tempChange: 'decrease',
-                nextEventId: 1.5
+                nextEventId: 1.2
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
     },
     {
-        id: 1.5,
+        id: 1.2,
         text: 'You take the wood planks.',
-        image: '/assets/images/gas-station.jpg',
+        image: './assets/images/gas-station.jpg',
         inventory: '',
         options: [
             {
@@ -162,11 +182,44 @@ const textNodes = [
         ]
     },
     {
+        id: 1.5,
+        text: 'You make it back to the old gas station at the side of the road. You go back through the gap in the fence and  '
+        + 'stand outside the front entrance.',
+        image: './assets/images/gas-station.jpg',
+        inventory: '',
+        options: [
+            {
+                text: 'Go inside',
+                nextEventId: 2,
+                setInventory: { Gasoline: false },
+                setState: { LightsOff: true }
+            },
+            {
+                text: 'Look around outside',
+                tempChange: 'decrease',
+                nextEventId: 3
+            },
+            {
+                text: 'Take the wood planks',
+                setInventory: {'Wood Planks':true},
+                requiredState: (currentState) => !currentState.WoodPlanks,
+                setState: {WoodPlanks:true},
+                tempChange: 'decrease',
+                nextEventId: 1.2
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
+            }
+        ]
+    },
+    {
         id: 2,
         text: 'You slowly open the door and it creaks loudly. This startles you, but there does not seem to be any zombies inside or nearby... not yet at least.'
             + ' It\'s dark inside and the light switches don\'t seem to be working. You have a flashlight, but maybe there is a backup generator to bring the power back. ',
-        image: '/assets/images/gas-station_inside.jpg',
-        sound: '/assets/sounds/door.wav',
+        image: './assets/images/gas-station_inside.jpg',
+        sound: './assets/sounds/door.wav',
         inventory: '',
         options: [
             {
@@ -186,7 +239,7 @@ const textNodes = [
         text: 'You look behind the counter and find a backup generator. You try switching it on but nothing'
             + ' happens. Upon further inspection, it looks like either a fuse has blown or the circuit breaker has tripped. There'
             + ' might be some spare fuses on one of the shelves.',
-        image: '/assets/images/gas-station_inside.jpg',
+        image: './assets/images/gas-station_inside.jpg',
         inventory: '',
         options: [
             {
@@ -212,7 +265,7 @@ const textNodes = [
         id: 27,
         text: 'You reset the circuit breaker in the generator and try switching it on...\nNothing happens. It looks like the fuse needs replaced'
             + ' There might be some spare fuses on one of the shelves.',
-        image: '/assets/images/gas-station_inside.jpg',
+        image: './assets/images/gas-station_inside.jpg',
         inventory: '',
         sound: "/assets/sounds/breaker.wav",
         options: [
@@ -234,9 +287,9 @@ const textNodes = [
         id: 26,
         text: 'You replace the fuse in the generator and try switching it on...\nThe lights come back on and the electricity is restored.'
             + ' You start to look for supplies when you notice an old <strong>newspaper</strong> lying on the ground.',
-        image: '/assets/images/gas-station_inside.jpg',
+        image: './assets/images/gas-station_inside.jpg',
         inventory: '',
-        sound: '/assets/sounds/lightswitch.wav',
+        sound: './assets/sounds/lightswitch.wav',
         options: [
             {
                 text: 'Pick up and read the newspaper',
@@ -254,9 +307,9 @@ const textNodes = [
         text: 'You approach the car you found earlier in the hope that you can find some useful supplies inside. You open the glovebox and'
             + ' find a <strong>matches</strong> inside. You open the boot and find a can of <strong>gasoline</strong>. These items could be useful'
             + ' for lighting a fire to keep warm.',
-        image: '/assets/images/car.jpg',
+        image: './assets/images/car.jpg',
         inventory: '',
-        sound: '/assets/sounds/carboot.wav',
+        sound: './assets/sounds/carboot.wav',
         options: [
             {
                 text: 'Take the matches',
@@ -282,7 +335,7 @@ const textNodes = [
     {
         id: 39,
         text: 'You take the <strong>Matches</strong>.',
-        image: '/assets/images/car.jpg',
+        image: './assets/images/car.jpg',
         inventory: '',
         options: [
             {
@@ -302,7 +355,7 @@ const textNodes = [
     {
         id: 40,
         text: 'You take the <strong>gasoline</strong>.',
-        image: '/assets/images/car.jpg',
+        image: './assets/images/car.jpg',
         inventory: '',
         options: [
             {
@@ -324,7 +377,7 @@ const textNodes = [
         text: 'You wander through each aisle of the gas station and you find some spare <strong>parts</strong> and a <strong>fuse</strong>.'
             + ' You tear the place apart and fail to find anything else. The stock room may have some useful'
             + ' supplies.',
-        image: '/assets/images/gas-station_inside.jpg',
+        image: './assets/images/gas-station_inside.jpg',
         inventory: '',
         options: [
             {
@@ -361,7 +414,7 @@ const textNodes = [
     {
         id: 45,
         text: 'You take the parts.',
-        image: '/assets/images/gas-station_inside.jpg',
+        image: './assets/images/gas-station_inside.jpg',
         inventory: '',
         options: [
             {
@@ -395,7 +448,7 @@ const textNodes = [
     {
         id: 41,
         text: 'You take the fuse.',
-        image: '/assets/images/gas-station_inside.jpg',
+        image: './assets/images/gas-station_inside.jpg',
         inventory: '',
         options: [
             {
@@ -420,7 +473,7 @@ const textNodes = [
         id: 42,
         text: 'You return back to the shop floor to search for the parts. You find some spare <strong>parts</strong> lying'
             + ' amongst the rubble.',
-        image: '/assets/images/gas-station_inside.jpg',
+        image: './assets/images/gas-station_inside.jpg',
         inventory: '',
         options: [
             {
@@ -445,9 +498,9 @@ const textNodes = [
             ' in a young man - aged 32, here in Alaska. The origin of the virus is currently unknown, however, symptoms appear to include increased aggression, cognitive decline ' +
             ' ,foaming at the mouth and a desire to bite. Those infected are deemed to be dangerous. Currently, advice from our government is to continue as normal until more information ' +
             ' on the virus can be provided and to remain calm. Some people have started to panic buy essential products and fuel, which has caused a spike in fuel prices. </span>',
-        image: '/assets/images/gas-station_inside.jpg',
+        image: './assets/images/gas-station_inside.jpg',
         inventory: '',
-        sound: '/assets/sounds/newspaper.wav',
+        sound: './assets/sounds/newspaper.wav',
         options: [
             {
                 text: 'Continue searching for food and supplies',
@@ -466,9 +519,9 @@ const textNodes = [
         text: 'You barge through the jammed door of the stock room and feel the temperature suddenly drop. You look for supplies, but'
             + ' everything seems to have been taken. This could be a safe location to spend the night with a bit of preparation.'
             + ' You hear a noise coming from outside...',
-        image: '/assets/images/gas-station_stock-room.jpg',
+        image: './assets/images/gas-station_stock-room.jpg',
         inventory: '',
-        sound: '/assets/sounds/pennydrop.wav',
+        sound: './assets/sounds/pennydrop.wav',
         options: [
             {
                 text: 'Investigate the noise',
@@ -487,7 +540,7 @@ const textNodes = [
         text: 'You find another survivor searching for supplies. You approach him slowly and he says: '
             + '\n<i>"I don\'t mean you any harm. I\'m trying to fix my car so I came here in the hope I could find some parts, but '
             + 'I haven\'t been able to find anything. Can you help me find the parts I need?"</i>',
-        image: '/assets/images/gas-station_stock-room.jpg',
+        image: './assets/images/gas-station_stock-room.jpg',
         inventory: '',
         options: [
             {
@@ -518,9 +571,9 @@ const textNodes = [
     {
         id: 11,
         text: '<i>"Thank you! I\'ve been searching everywhere for these. Take this <strong>knife</strong> to protect yourself from the zombies."</i>',
-        image: '/assets/images/gas-station_stock-room.jpg',
+        image: './assets/images/gas-station_stock-room.jpg',
         inventory: '',
-        sound: '/assets/sounds/knifeholster.wav',
+        sound: './assets/sounds/knifeholster.wav',
         options: [
             {
                 text: 'Prepare for the night',
@@ -543,7 +596,7 @@ const textNodes = [
         id: 14,
         text: 'You tell the man you\'re a mechanic and offer to help him fix his car. He says:'
             + '\n<i>"Really?! I\'d really appreciate that. If you can get her driving again, I\'ll take you anywhere you need to go."</i>',
-        image: '/assets/images/car.jpg',
+        image: './assets/images/car.jpg',
         inventory: '',
         options: [
             {
@@ -555,8 +608,8 @@ const textNodes = [
     {
         id: 15,
         text: 'You push the clutch in and turn the key...\nThe car doesn\'t start.',
-        image: '/assets/images/car.jpg',
-        sound: '/assets/sounds/carstall.wav',
+        image: './assets/images/car.jpg',
+        sound: './assets/sounds/carstall.wav',
         inventory: '',
         options: [
             {
@@ -573,8 +626,8 @@ const textNodes = [
         id: 16,
         text: 'You open the bonnet of a car and at a first glance, everything appears to be fine. Upon further inspection, it looks like it could be faulty'
             + ' fuel injectors or spark plugs.',
-        image: '/assets/images/car_engine-bay.jpg',
-        sound: '/assets/sounds/carbonnet.wav',
+        image: './assets/images/car_engine-bay.jpg',
+        sound: './assets/sounds/carbonnet.wav',
         inventory: '',
         options: [
             {
@@ -590,9 +643,9 @@ const textNodes = [
     {
         id: 17,
         text: 'You check the fuel level and there is some petrol left. This doesn\'t look to be the problem.',
-        image: '/assets/images/car.jpg',
+        image: './assets/images/car.jpg',
         inventory: '',
-        sound: '/assets/sounds/fuelcap.wav',
+        sound: './assets/sounds/fuelcap.wav',
         options: [
             {
                 text: 'Open the bonnet',
@@ -603,7 +656,7 @@ const textNodes = [
     {
         id: 18,
         text: 'You inspect one of the spark plugs and it appears to be corroded.',
-        image: '/assets/images/car_engine-bay.jpg',
+        image: './assets/images/car_engine-bay.jpg',
         inventory: '',
         options: [
             {
@@ -635,8 +688,8 @@ const textNodes = [
         id: 19,
         text: 'You inspect the fuel injectors and they do not appear to be corroded or damaged. You clean them and try to start '
             + 'the car again...\nThe car fails to start, therefore the fuel injectors are not the problem.',
-        image: '/assets/images/car_engine-bay.jpg',
-        sound: '/assets/sounds/carstall.wav',
+        image: './assets/images/car_engine-bay.jpg',
+        sound: './assets/sounds/carstall.wav',
         inventory: '',
         options: [
             {
@@ -650,8 +703,8 @@ const textNodes = [
         text: 'You install the new spark plugs you found inside the gas station and turn the key to start the vehicle...\nAlthough a '
             + 'struggle, the car starts.'
             + '\n<i>"Wow! You fixed it! Thanks so much! Where would you like to go?"</i>',
-        image: '/assets/images/car.jpg',
-        sound: '/assets/sounds/carignition.wav',
+        image: './assets/images/car.jpg',
+        sound: './assets/sounds/carignition.wav',
         inventory: '',
         options: [
             {
@@ -684,8 +737,8 @@ const textNodes = [
         text: 'You are driving along the highway when the man suddenly brakes the car and attacks you. He pushes you out of the car and '
             + 'you are attacked by zombies as you watch him driving away... \n Remember: don\'t trust anybody.'
             + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
-        image: '/assets/images/You-Died_TEST-GIF.gif',
-        sound: '/assets/sounds/brakescreech.flac',
+        image: './assets/images/You-Died_TEST-GIF.gif',
+        sound: './assets/sounds/brakescreech.flac',
         inventory: '',
         options: []
     },
@@ -697,16 +750,16 @@ const textNodes = [
         text: 'You push the man to the ground and drive away in his car. You look in the rear view mirror and see him getting attacked'
             + ' by zombies. You survive the night and escape.'
             + '<b><em>You Escaped!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
-        image: '/assets/images/Victory2_TEST-GIF.gif',
-        sound: '/assets/sounds/driveoff.wav',
+        image: './assets/images/Victory2_TEST-GIF.gif',
+        sound: './assets/sounds/driveoff.wav',
         inventory: '',
         options: []
     },
     {
         id: 55,
         text: '<i>"Take this knife to protect yourself</i>',
-        image: '/assets/images/car.jpg',
-        sound: '/assets/sounds/knifeholster.wav',
+        image: './assets/images/car.jpg',
+        sound: './assets/sounds/knifeholster.wav',
         inventory,
         options:[
             {
@@ -721,7 +774,7 @@ const textNodes = [
         text: 'You need to prepare to survive through the night.' +
             ' You can barricade the doors or windows to prevent zombies from attacking you. You can also light a fire to prevent'
             + ' developing hypothermia from the freezing temperatures.',
-        image: '/assets/images/gas-station_stock-room.jpg',
+        image: './assets/images/gas-station_stock-room.jpg',
         inventory: '',
         options: [
             {
@@ -771,9 +824,9 @@ const textNodes = [
     {
         id: 30,
         text: 'You break the shelves into planks of wood. These can be used to barricade the windows or doors.',
-        image: '/assets/images/gas-station_stock-room.jpg',
+        image: './assets/images/gas-station_stock-room.jpg',
         inventory: '',
-        sound: '/assets/sounds/breakshelves.wav',
+        sound: './assets/sounds/breakshelves.wav',
         options: [
             {
                 text: 'Continue preparation',
@@ -790,9 +843,9 @@ const textNodes = [
     {
         id: 31,
         text: 'You use the wood planks to barricade the windows.',
-        image: '/assets/images/gas-station_stock-room.jpg',
+        image: './assets/images/gas-station_stock-room.jpg',
         inventory: '',
-        sound: '/assets/sounds/hammer.wav',
+        sound: './assets/sounds/hammer.wav',
         options: [
             {
                 text: 'Continue preparation',
@@ -809,8 +862,8 @@ const textNodes = [
     {
         id: 32,
         text: 'You use the wood planks to barricade the doors.',
-        image: '/assets/images/gas-station_stock-room.jpg',
-        sound: '/assets/sounds/hammer.wav',
+        image: './assets/images/gas-station_stock-room.jpg',
+        sound: './assets/sounds/hammer.wav',
         inventory: '',
         options: [
             {
@@ -828,9 +881,9 @@ const textNodes = [
     {
         id: 33,
         text: 'You set up a fire using the wood planks and pour gasoline over them. You need something to start the fire with.',
-        image: '/assets/images/gas-station_stock-room.jpg',
+        image: './assets/images/gas-station_stock-room.jpg',
         inventory: '',
-        sound: '/assets/sounds/gasoline.wav',
+        sound: './assets/sounds/gasoline.wav',
         options: [
             {
                 text: 'Use the matches',
@@ -852,8 +905,8 @@ const textNodes = [
     {
         id: 34,
         text: 'You light the fire and the temperature starts to rise again.',
-        image: '/assets/images/fire_gas-station.jpg',
-        sound: '/assets/sounds/Fire.mp3',
+        image: './assets/images/fire_gas-station.jpg',
+        sound: './assets/sounds/Fire.mp3',
         inventory: '',
         options: [
             {
@@ -877,8 +930,8 @@ const textNodes = [
         text: 'You try pushing the man to the ground and he quickly grabs a knife from his pocket and pushes it into your stomach. Your eyes slowly close'
             + ' as you bleed to death.'
             + '<b><em> You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
-        image: '/assets/images/You-Died_TEST-GIF.gif',
-        sound: '/assets/sounds/knifeholster.wav',
+        image: './assets/images/You-Died_TEST-GIF.gif',
+        sound: './assets/sounds/knifeholster.wav',
         inventory: '',
         options: []
     },
@@ -886,7 +939,7 @@ const textNodes = [
         id: 53,
         text: 'You finish your preparations for the night. You hear zombies approaching outside and prepare yourself for an'
         + ' attack.',
-        image: '/assets/images/gas-station_stock-room.jpg',
+        image: './assets/images/gas-station_stock-room.jpg',
         inventory: '',
         options: [
             {
@@ -929,10 +982,11 @@ const textNodes = [
         id: 54,
         text: 'In your preparation for the night time, you didn\'t barricade the doors or windows of the gas station. In the middle of the night, zombies'
         + ' attacked and broke down the doors and smashed through the windows. You were outnumbered. The zombies cornered you and there were too many of them'
-        + ' to fight off. You were eaten alive.',
-        image: '/assets/images/You-Died_TEST-GIF.gif',
+        + ' to fight off. You were eaten alive.'
+        + '\n<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
+        image: './assets/images/You-Died_TEST-GIF.gif',
         inventory: '',
-        sound: '/assets/sounds/zombieseating.wav',
+        sound: './assets/sounds/zombieseating.wav',
         options: []
     },
     {
@@ -946,9 +1000,9 @@ const textNodes = [
             + ' attacked and broke down the doors. You were outnumbered. The zombies cornered you and you didn\'t have any weapons to defend'
             + ' yourself. You were eaten alive.'
             + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
-        image: '/assets/images/You-Died_TEST-GIF.gif',
+        image: './assets/images/You-Died_TEST-GIF.gif',
         inventory: '',
-        sound: '/assets/sounds/zombieseating.wav',
+        sound: './assets/sounds/zombieseating.wav',
         options: []
     },
     {
@@ -962,9 +1016,9 @@ const textNodes = [
             + ' attacked and broke through the windows. You were outnumbered. The zombies cornered you and you didn\'t have any weapons to defend'
             + ' yourself. You were eaten alive.'
             + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
-        image: '/assets/images/You-Died_TEST-GIF.gif',
+        image: './assets/images/You-Died_TEST-GIF.gif',
         inventory: '',
-        sound: '/assets/sounds/zombieseating.wav',
+        sound: './assets/sounds/zombieseating.wav',
         options: []
     },
     {
@@ -978,7 +1032,7 @@ const textNodes = [
             + 'a feeling of shortness of breath and a lack of co-ordination. Eventually, your eyes slowly close and you lose consciousness. '
             + 'You later die from the hypothermia. '
             + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
-        image: '/assets/images/You-Died_TEST-GIF.gif',
+        image: './assets/images/You-Died_TEST-GIF.gif',
         inventory: '',
         options: []
     },
@@ -988,7 +1042,7 @@ const textNodes = [
             + ' attacked and broke down the doors. However, you used the knife the stranger gave you to protect yourself. '
             + ' You survived the night.'
             + ' \n<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
-        image: '/assets/images/Victory2_TEST-GIF.gif',
+        image: './assets/images/Victory2_TEST-GIF.gif',
         inventory: '',
         options: []
     },
@@ -998,7 +1052,7 @@ const textNodes = [
             + ' attacked and broke through the windows. However, you used the knife the stranger gave you to protect yourself. '
             + ' You survived the night...'
             + ' \n<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
-        image: '/assets/images/Victory2_TEST-GIF.gif',
+        image: './assets/images/Victory2_TEST-GIF.gif',
         inventory: '',
         options: []
     },
@@ -1007,7 +1061,7 @@ const textNodes = [
         text: 'In your preparation for the night time, you barricaded both the doors and windows of the gas station. In the middle of the night, zombies'
             + ' attacked and tried to break through the doors and windows, however, your preparations kept you safe inside. You survived the night...'
             + ' \n<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
-        image: '/assets/images/Victory2_TEST-GIF.gif',
+        image: './assets/images/Victory2_TEST-GIF.gif',
         inventory: '',
         options: []
     }
