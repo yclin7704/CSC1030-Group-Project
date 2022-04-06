@@ -148,7 +148,7 @@ const textNodes = [
             },
             {
                 text: 'Sit by campfire',
-                requiredState: (currentState) => currentState.firelit,
+                requiredState: (currentState) => currentState.fireLit,
                 tempChange: "increase",
                 nextText: 2.3
             },
@@ -192,6 +192,7 @@ const textNodes = [
                 requiredInventory: { 'Matches': true },
                 requiredState: (currentState) => !currentState.firelit,
                 setState: { fireLit : true },
+                setInventory: {'Matches': false},
                 tempChange: "decrease",
                 nextText: 2
             },
