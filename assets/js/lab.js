@@ -5,7 +5,7 @@ const imageElement = document.getElementById('locationImage'); //Location
 const profession = sessionStorage.getItem("profession"); //Profession
 const soundElement = document.createElement('audio'); //Sound
 const noteItem = document.getElementById('handwritten'); //Note
-const playerName = localStorage.getItem("playerName"); // Playername
+const playerName = sessionStorage.getItem("playerName"); // Playername
 
 // This variable stores the current game state
 

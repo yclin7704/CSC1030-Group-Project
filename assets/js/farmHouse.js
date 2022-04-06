@@ -5,7 +5,6 @@ const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage'); // Image
 const soundElement = document.createElement('audio'); //Sound
 const profession = sessionStorage.getItem("profession");
-const playerName = localStorage.getItem("playerName");
 
 //Variables for collectables
 let secretCollectable = 0;
@@ -34,13 +33,14 @@ function startGame(){
     setTimerData(showTextNode, 17, 33);
     setTemperatureData(showTextNode, 34, 34);
     showInventory();
+    console.log(displayPlayerName());
     displayPlayerName();
     //clearInventory(); //This clears the inventory
     showTextNode(1);
 }
 
 function displayPlayerName() {
-    document.getElementById('playerSpan').innerHTML = playerName + '<br>';
+    document.getElementById('playerSpan').innerHTML = sessionStorage.getItem("playerName")  + '<br>';
 }
 
 function getGameState() {
@@ -57,6 +57,7 @@ function getGameState() {
 
 function showTextNode(textNodeIndex){
     if (textNodeIndex ==='Warehouse'){
+        sessionStorage.setItem("farmhouseGameState", JSON.stringify(state));
         window.location.href = "Warehouse.html";
     }
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
@@ -79,8 +80,6 @@ function showTextNode(textNodeIndex){
             button.addEventListener('click', () => selectOption(option)); // Adds event listener
             optionButtonsElement.appendChild(button);
             sessionStorage.setItem('collectable', secretCollectable);
-            sessionStorage.setItem("farmhouseGameState", JSON.stringify(state));
-
         }
     }
     )

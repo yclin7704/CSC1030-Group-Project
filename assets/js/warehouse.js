@@ -3,7 +3,7 @@ const optionButtonsElement = document.getElementById('options'); // Buttoms for 
 const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage'); //Location
 const profession = sessionStorage.getItem("profession"); //Profession
-const playerName = localStorage.getItem("playerName");
+const playerName = sessionStorage.getItem("playerName");
 
 // This variable stores the current game state
 
@@ -21,7 +21,7 @@ function getGameState() {
 }
 
 function displayPlayerName() {
-	document.getElementById("playerSpan").innerHTML = localStorage.getItem("playerName") + "<br>";
+	document.getElementById("playerSpan").innerHTML = sessionStorage.getItem("playerName") + "<br>";
 }
 
 // Starting the game
@@ -123,7 +123,7 @@ const textNodes = [
         options: [
             {
                 text: 'Look around the warehouse',
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 2
             },
         ]
@@ -141,19 +141,19 @@ const textNodes = [
                 setInventory: { 'Wood Planks': true },
                 requiredState: (currentState) => !currentState.warehouseWood,
                 setState: { warehouseWood : true },
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 2
             },
             {
                 text: 'Take the torch',
                 requiredInventory: { 'Torch': false },
                 setInventory: { 'Torch': true },
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 2
             },
             {
                 text: 'Fuel the campfire',
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 2.1
             },
             {
@@ -165,19 +165,19 @@ const textNodes = [
             {
                 text: 'Barricade the door',
                 requiredState: (currentState) => !currentState.barricaded,
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 2.2
             },
             {
                 text: 'Setup Camp',
                 setState: { warehouseInside : true },
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: "camp"
             },
             {
                 text: 'Leave the building',
                 requiredState: (currentState) => !currentState.barricaded,
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 3
             },
         ]
@@ -194,7 +194,7 @@ const textNodes = [
                 setInventory: { 'Wood Planks': false },
                 requiredState: (currentState) => !currentState.haveWood,
                 setState: { haveWood : true },
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 2
             },
             {
@@ -203,7 +203,7 @@ const textNodes = [
                 requiredState: (currentState) => !currentState.firelit,
                 setState: { fireLit : true },
                 setInventory: {'Matches': false},
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 2
             },
             {
@@ -223,7 +223,7 @@ const textNodes = [
                 text: 'Barricade the door with planks',
                 setInventory: { 'Wood Planks': false },
                 setState: { barricaded : true },
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 2
             },
             {
@@ -255,24 +255,24 @@ const textNodes = [
         options: [
             {
                 text: 'Go back inside',
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 2
             },
             {
                 text: 'Inspect the fence',
                 requiredState: (currentState) => !currentState.fenceFixed,
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 3.1
             },
             {
                 text: 'Inspect the fence',
                 requiredState: (currentState) => currentState.fenceFixed,
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 3.2
             },
             {
                 text: 'Go to a different location',
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 4
             },
         ]
@@ -289,7 +289,7 @@ const textNodes = [
                 requiredInventory: {'Barbed Wire': true, "Bolt Cutters": true},
                 setState: { fenceFixed : true },
                 setInventory: {'Barbed Wire': false, "Bolt Cutters": false},
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 3.2
             },
             {
@@ -320,32 +320,32 @@ const textNodes = [
         options: [
             {
                 text: 'Go to the gas station',
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: "GasStation"
             },
             {
                 text: 'Go to the farm house',
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: "FarmHouse"
             },
             {
                 text: 'Go to the testing centre',
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: "Lab"
             },
             {
                 text: 'Go to the cabin',
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: "Cabin"
             },
             {
                 text: 'Go to the hospital',
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: "Hospital"
             },
             {
                 text: 'Decide not to go anywhere',
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 3
             },
         ]
@@ -361,25 +361,25 @@ const textNodes = [
             {
                 text: "Start the Night",
                 requiredState: (currentState) => !currentState.fenceFixed && !currentState.barricaded,
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 5.1
             },
             {
                 text: "Start the Night",
                 requiredState: (currentState) => currentState.fenceFixed && !currentState.barricaded,
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 5.2
             },
             {
                 text: "Start the Night",
                 requiredState: (currentState) => !currentState.fenceFixed && currentState.barricaded,
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 5.3
             },
             {
                 text: "Start the Night",
                 requiredState: (currentState) => currentState.fenceFixed && currentState.barricaded,
-                tempChange: "decrease",
+                tempChange: -1,
                 nextText: 5.4
             }
         ]

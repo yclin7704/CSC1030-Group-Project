@@ -6,15 +6,15 @@ const audio1 = document.createElement("audio");
 audio1.loop = true;
 // Keep track of which one is currently being played
 let audioTrack = 0;
-const volume = sessionStorage.getItem("gameVolume");
+const volume = localStorage.getItem("gameVolume");
 
 let volumeMult = getSavedVolumeMult();
 
 /**
- * Get the volume multiplier value saved to sessionStorage, or the default (full volume) if it has not been set.
+ * Get the volume multiplier value saved to localStorage, or the default (full volume) if it has not been set.
  */
 function getSavedVolumeMult() {
-	let saved = parseInt(sessionStorage.getItem("gameVolume"));
+	let saved = parseInt(localStorage.getItem("gameVolume"));
 	if (!isNaN(saved)) return (saved * saved) / 10000;
 	else return 1;
 }
@@ -82,6 +82,12 @@ async function volumeUpdated(newVolume) {
 	volumeMult = (newVolume * newVolume) / 10000;
 	if (audio0.volume) audio0.volume = volumeMult;
 	if (audio1.volume) audio1.volume = volumeMult;
+}
+
+function getVolume() {
+	let saved = parseInt(localStorage.getItem("gameVolume"));
+	if (!isNaN(saved)) return saved;
+	else return 40;
 }
 
 /**
