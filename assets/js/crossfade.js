@@ -84,6 +84,12 @@ async function volumeUpdated(newVolume) {
 	if (audio1.volume) audio1.volume = volumeMult;
 }
 
+function getVolume() {
+	let saved = parseInt(sessionStorage.getItem("gameVolume"));
+	if (!isNaN(saved)) return saved;
+	else return 40;
+}
+
 /**
  * Play the given sound
  * Meant to be used for short, non-looping individual sounds
