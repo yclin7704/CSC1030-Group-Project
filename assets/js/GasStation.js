@@ -76,7 +76,7 @@ function showTextNode(textNodeIndex) {
     const torchOn = [2, 26, 14, 29, 55];
 
     for (i = 0; i < torchOn.length; i++) {
-        if (textNodeIndex === torchOn[i]) {
+        if ((textNodeIndex === torchOn[i]) && currentState.LightsOff) {
             toggleTorch();
         }
     }
