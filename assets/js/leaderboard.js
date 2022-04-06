@@ -41,7 +41,7 @@ function saveTime(time, timeArray) {
 
 	// Remove the last item in the array
 	timeArray.splice(ARRAY_SIZE);
-	
+
 	// Save the updated array to localStorage
 	localStorage.setItem("timeArray", JSON.stringify(timeArray));
 }
@@ -67,4 +67,10 @@ function showTimes() {
 
 	// Display the result
 	leaderboard.innerHTML = html;
+}
+
+function clearLeaderboard() {
+	let empty = Array.apply(null, { length: ARRAY_SIZE });
+	localStorage.setItem("timeArray", JSON.stringify(empty));
+	showTimes();
 }
