@@ -4,7 +4,8 @@ const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage'); //Location
 const profession = sessionStorage.getItem("profession"); //Profession
 const soundElement = document.createElement('audio'); //Sound
-const noteItem = document.getElementById('handwritten');
+const noteItem = document.getElementById('handwritten'); //Note
+const playerName = localStorage.getItem("playerName"); // Playername
 
 // This variable stores the current game state
 
@@ -23,7 +24,7 @@ function startGame()
         case "Priest": state["Priest"] = true; break;
     }
 
-    //showVault();
+    showVault();
 
     // Displays the inventory
     showInventory();
@@ -39,6 +40,14 @@ function startGame()
     
     // Will display the first text node (id=1)
     showTextNode(1);
+
+    // Display player name
+    displayPlayerName();
+}
+
+
+function displayPlayerName() {
+    document.getElementById('playerSpan').innerHTML = playerName + '<br>';
 }
 
 function getGameState() {
@@ -57,6 +66,9 @@ function getGameState() {
 function showTextNode(textNodeIndex){
     if (textNodeIndex ==='Warehouse'){
         window.location.href = "Warehouse.html";
+    }
+    if (textNodeIndex === 3.33){
+        showVault();
     }
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "labText"); // Changes the dialogue box to text stored in the text node.

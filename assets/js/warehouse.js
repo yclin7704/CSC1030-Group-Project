@@ -3,6 +3,7 @@ const optionButtonsElement = document.getElementById('options'); // Buttoms for 
 const inventoryElement = document.getElementById('inventory'); // Inventory
 const imageElement = document.getElementById('locationImage'); //Location
 const profession = sessionStorage.getItem("profession"); //Profession
+const playerName = localStorage.getItem("playerName");
 
 // This variable stores the current game state
 
@@ -17,6 +18,10 @@ function getGameState() {
 			// TODO: Get profession properly with sessionStorage.getItem("profession");
 			profession: "Hunter",
 		};
+}
+
+function displayPlayerName() {
+	document.getElementById("playerSpan").innerHTML = localStorage.getItem("playerName") + "<br>";
 }
 
 // Starting the game
@@ -35,6 +40,11 @@ function startGame()
     // Displays the inventory
     showInventory();
 
+    // Displays Player's Name
+    displayPlayerName()
+
+    // This will take the player to the appropriate Text Node when day ends, and when night ends
+    setTimerData(showTextNode, "camp", 5.1);
 
 	// This will take the player to the appropriate Text Node if they die of frostbite or heat stroke
     setTemperatureData(showTextNode, 6.1, 6.2);

@@ -16,8 +16,9 @@ function getGameState() {
 		};
 }
 
-
-
+function displayPlayerName() {
+	document.getElementById("playerSpan").innerHTML = localStorage.getItem("playerName") + "<br>";
+}
 
 // Contains all of the text entries for the Hospital Documents
 const  entries = ["Log Entry 1:</br>Some strange men started appearing in the Hospital recently, with more of them coming and going more frequently as time went on. Unfortunately, we still don't know what their goals are yet but we believe that maybe they are here to oversee our recent task given to us by the local government, which is to perform a series of highly classified experiments which will ultimately determine the future of Humanity. However we'll have to see how it all plays out in the long run...<br><br> Dr. Nallig",
@@ -88,6 +89,9 @@ function startGame() {
 
     // Displays the inventory
     showInventory();
+
+    // Display's Player Name
+    displayPlayerName()
 
     // This will take the player to the appropriate Text Node when day ends, and when night ends
     setTimerData(showTextNode, 29, 101);
