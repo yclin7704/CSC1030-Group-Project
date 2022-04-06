@@ -42,9 +42,12 @@ function startGame()
     showTextNode(1);
 
     // Display player name
-    function displayPlayerName() {
-        document.getElementById('playerSpan').innerHTML = playerName + '<br>';
-    }
+    displayPlayerName();
+}
+
+
+function displayPlayerName() {
+    document.getElementById('playerSpan').innerHTML = playerName + '<br>';
 }
 
 function getGameState() {
