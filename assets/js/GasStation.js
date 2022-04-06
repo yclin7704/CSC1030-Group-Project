@@ -73,7 +73,7 @@ function showTextNode(textNodeIndex) {
         return;
     }
 
-    const torchOn = [2, 26];
+    const torchOn = [2, 26, 14, 29, 55];
 
     for (i = 0; i < torchOn.length; i++) {
         if (textNodeIndex === torchOn[i]) {
@@ -247,7 +247,7 @@ const textNodes = [
                 nextEventId: 26,
                 requiredInventory: { 'Fuse': true },
                 setInventory: { Fuse: false},
-                setState: { LightsOn: true }
+                setState: { LightsOff: false }
             },
             {
                 text: 'Search for a new fuse',
