@@ -33,11 +33,15 @@ async function resetValues() {
 	localStorage.setItem("prevGameTime", getTimePlayed());
 
 	let name = sessionStorage.getItem("playerName");
+	let volume = sessionStorage.getItem("gameVolume");
+	let prevGameTime = sessionStorage.getItem("prevGameTime");
 
 	// Reset temperature etc. by clearing all of sessionStorage
 	sessionStorage.clear();
 
 	sessionStorage.setItem("playerName", name);
+	sessionStorage.setItem("gameVolume", volume);
+	sessionStorage.setItem("prevGameTime", prevGameTime);
 }
 
 async function playAgain() {
