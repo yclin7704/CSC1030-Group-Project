@@ -7,7 +7,7 @@ const profession = sessionStorage.getItem("profession");
 const playerName = sessionStorage.getItem("playerName");
 
 
-let state = getGameState(); // set state                                   
+let state = getGameState();                                    
 
 function getGameState() {
 	let savedData = sessionStorage.getItem("GasStationGameState");
@@ -38,7 +38,7 @@ function startGame() {
     clearInventory();
     
     if (state.leftLocation) {
-    showTextNode(1.5);
+        showTextNode(1.5);
     } else {
         showTextNode(1);
     }
@@ -76,10 +76,10 @@ function showTextNode(textNodeIndex) {
         window.location.href = "./Warehouse.html";
     }
 
-    const torchOn = [2, 26, 14, 18, 42, 55];
+    const torchOn = [2, 26];
 
     for (i = 0; i < torchOn.length; i++) {
-        if (textNodeIndex === torchOn[i] && !state.GeneratorFixed) {
+        if (textNodeIndex === torchOn[i]) {
             setTorch(!getIsTorchOn());
             break;
         }
@@ -275,7 +275,7 @@ const textNodes = [
                 text: 'Replace the fuse',
                 requiredInventory: { 'Fuse': true },
                 setInventory: {Fuse : false},
-                setState: { LightsOff: false, GeneratorFixed:true },
+                setState: { LightsOff: false },
                 nextEventId: 26
             },
             {
@@ -331,17 +331,12 @@ const textNodes = [
                 text: 'Go inside',
                 nextEventId: 2,
                 setState: { LightsOff: true }
-            },
-            {
-                text: 'Return to warehouse',
-                nextEventId: 'warehouse',
-                tempChange: 'decrease',
             }
         ]
     },
     {
         id: 39,
-        text: 'You take the <strong>matches</strong>.',
+        text: 'You take the <strong>Matches</strong>.',
         image: './assets/images/car.jpg',
         inventory: '',
         options: [
@@ -414,11 +409,6 @@ const textNodes = [
                 text: 'Look for a backup generator',
                 nextEventId: 28,
                 requiredState: (currentState) => !currentState.Generator
-            },
-            {
-                text: 'Return to warehouse',
-                nextEventId: 'warehouse',
-                tempChange: 'decrease',
             }
         ]
 
@@ -454,11 +444,6 @@ const textNodes = [
                 tempChange: 'decrease',
                 setInventory:{ Parts:false },
                 requiredState: (currentState) => currentState.SearchParts
-            },
-            {
-                text: 'Return to warehouse',
-                nextEventId: 'warehouse',
-                tempChange: 'decrease',
             }
         ]
     },
@@ -483,11 +468,6 @@ const textNodes = [
                 text: 'Go back and fix the generator',
                 nextEventId: 28,
                 requiredState: (currentState) => currentState.LightsOff
-            },
-            {
-                text: 'Return to warehouse',
-                nextEventId: 'warehouse',
-                tempChange: 'decrease',
             }
         ]
     },
@@ -501,13 +481,13 @@ const textNodes = [
             {
                 text: 'Take the parts and return to the stranger',
                 nextEventId: 45,
-                setInventory:{Parts:true, LightsOff:false},
+                setInventory:{Parts:true},
                 requiredState: (currentState) => !currentState.SparkPlugs
             },
             {
                 text: 'Take the parts and return to fix the car',
                 nextEventId: 18,
-                setInventory:{Parts:true, LightsOff:false},
+                setInventory:{Parts:true},
                 requiredState: (currentState) => currentState.SparkPlugs
             }
         ]
@@ -553,8 +533,7 @@ const textNodes = [
             {
                 text: 'Prepare for the night',
                 tempChange: 'decrease',
-                nextEventId: 29,
-                setState: {LightsOff:true}
+                nextEventId: 29
             }
         ]
     },
@@ -569,7 +548,6 @@ const textNodes = [
             {
                 text: 'Offer to help fix his car',
                 requiredState: (currentState) => currentState.Mechanic,
-                setState: {LightsOff:false},
                 nextEventId: 14
             },
             {
@@ -602,8 +580,7 @@ const textNodes = [
         options: [
             {
                 text: 'Prepare for the night',
-                nextEventId: 29,
-                setState: {LightsOff:true}
+                nextEventId: 29
             },
             {
                 text: 'Offer to help fix his car',
@@ -614,11 +591,6 @@ const textNodes = [
             {
                 text: 'Attack him and steal his supplies',
                 nextEventId: 12
-            },
-            {
-                text: 'Return to warehouse',
-                nextEventId: 'warehouse',
-                tempChange: 'decrease',
             }
         ]
     },
@@ -704,7 +676,7 @@ const textNodes = [
             {
                 text: 'Look for spare parts inside',
                 requiredInventory: { 'Parts': false },
-                setState: {SparkPlugs:true, LightsOff:true},
+                setState: {SparkPlugs:true},
                 requiredState: (currentState) => !currentState.FixCar,
                 nextEventId: 42
             },
@@ -745,24 +717,17 @@ const textNodes = [
                 text: 'Stay at the gas station and prepare for the night',
                 tempChange: 'decrease',
                 requiredState: (currentState) => currentState.FixCar,
-                setState:{LightsOff:true},
-                nextEventId: 29,
+                nextEventId: 29
             },
             {
                 text: 'Stay at the gas station and prepare for the night',
                 tempChange: 'decrease',
                 requiredState: (currentState) => !currentState.FixCar,
-                setState:{LightsOff:true},
                 nextEventId: 55
             },
             {
                 text: 'Attempt to steal the vehicle',
                 nextEventId: 23
-            },
-            {
-                text: 'Return to warehouse',
-                nextEventId: 'warehouse',
-                tempChange: 'decrease',
             }
         ]
     },
@@ -802,8 +767,7 @@ const textNodes = [
             {
                 text: 'Prepare for the night',
                 setInventory: {Knife:true},
-                nextEventId: 29,
-                setState: {LightsOff:true}
+                nextEventId: 29
             }
         ]
     },
@@ -870,7 +834,6 @@ const textNodes = [
                 text: 'Continue preparation',
                 setState: { Wood: true },
                 nextEventId: 29,
-                setState: {LightsOff:true},
             },
             {
                 text: 'Finish preparation',
@@ -890,7 +853,6 @@ const textNodes = [
                 text: 'Continue preparation',
                 setState: { Windows: true },
                 nextEventId: 29,
-                setState: {LightsOff:true},
             },
             {
                 text: 'Finish preparation',
@@ -910,7 +872,6 @@ const textNodes = [
                 text: 'Continue preparation',
                 setState: { Doors: true },
                 nextEventId: 29,
-                setState: {LightsOff:true},
             },
             {
                 text: 'Finish preparation',
@@ -939,8 +900,7 @@ const textNodes = [
                 requiredInventory: { 'Matches': false },
                 setInventory: {'Wood Planks':false, Gasoline:false},
                 setState: { Fire: false },
-                nextEventId: 29,
-                setState: {LightsOff:true}
+                nextEventId: 29
             }
         ]
     },
@@ -956,7 +916,6 @@ const textNodes = [
                 setState: { Matches: true },
                 setInventory: {Matches:false},
                 nextEventId: 29,
-                setState: {LightsOff:true},
             },
             {
                 text: 'Finish preparation',

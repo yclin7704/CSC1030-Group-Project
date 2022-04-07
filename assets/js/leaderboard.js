@@ -1,5 +1,12 @@
 const ARRAY_SIZE = 3;
 const timeString = sessionStorage.getItem("prevGameTime");
+const gameStatus = localStorage.getItem('gameStatus');
+
+function getGameStatus() {
+	if (gameStatus == true) {
+		compareTime();
+	}
+}
 
 function compareTime() {
 	// Parse the saved time value
