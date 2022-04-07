@@ -23,7 +23,7 @@ function showTimes() {
 		if (!item.profession) item.profession = "Unknown";
 		if (!item.time) item.time = "?";
 
-		html += `<li class="record">${item.name} | ${item.profession} | ${item.time} seconds</li>`;
+		html += `<li class="record">${item.name} || ${item.profession} || ${item.time} seconds</li>`;
 	}
 
 	// Display the result
