@@ -153,6 +153,7 @@ const textNodes = [
             },
             {
                 text: 'Fuel the campfire',
+                requiredInventory: { 'Wood Planks': true },
                 tempChange: -1,
                 nextText: 2.1
             },
