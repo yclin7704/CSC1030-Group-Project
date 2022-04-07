@@ -185,7 +185,7 @@ const textNodes = [
         text: "You arrive at a Hospital, and judging by its ancient and run-down appearance it's likely that it's been abandoned for at least 17 years." + 
             " Although you feel the need to turn away, curiosity and the concern for what might be waiting for you in the forest beckons you closer to the" +
             " collosal building, and as you approach it, the air gets colder around you...</br>Around you, you see some <strong>worn-down First Aid kits</strong>" +
-            " , <strong>an abandoned campfire</strong>, <strong>some Mushrooms</strong> and a <strong>pathway.</strong> Furthermore, the door to the Hospital seems <strong>locked</strong> but" +
+            ", <strong>an abandoned campfire</strong>, <strong>some Mushrooms</strong> and a <strong>pathway.</strong> Furthermore, the door to the Hospital seems <strong>locked</strong> but" +
             " something like a crowbar could pry it open.",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
