@@ -3,7 +3,7 @@ const timeString = sessionStorage.getItem("prevGameTime");
 const gameStatus = localStorage.getItem('gameStatus');
 
 function getGameStatus() {
-	if (gameStatus == true) {
+	if (gameStatus === 'true') {
 		compareTime();
 	}
 }
