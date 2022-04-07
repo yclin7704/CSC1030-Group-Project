@@ -45,9 +45,15 @@ function incrementTime() {
 
 	if (time >= dayLength && !hasNightStarted) {
 		hasNightStarted = true;
+		try {
+			vaultClear();
+		} catch {}
 		showTextNodeFunctionTimer(onDayEndId);
 	} else if (time >= dayLength + nightLength) {
 		stopTimer();
+		try {
+			vaultClear();
+		} catch {}
 		showTextNodeFunctionTimer(onNightEndId);
 	}
 }
