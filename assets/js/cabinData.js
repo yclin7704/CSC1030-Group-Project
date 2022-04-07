@@ -3,6 +3,8 @@ const imgInside = "./assets/images/Cabin/cabin-inside.webp";
 const imgHatch = "./assets/images/Cabin/cabin-trapdoor.jpg";
 const imgSafe = "./assets/images/Cabin/safe.jpg";
 const imgForest = "./assets/images/Cabin/forest.jpg";
+const imgLogs = "./assets/images/Cabin/logs.jpg";
+const imgCampfire = "./assets/images/fire_gas-station.jpg";
 
 const gifDied = "./assets/images/You-Died_TEST-GIF.gif";
 const gifWon = "./assets/images/Victory2_TEST-GIF.gif";
@@ -732,11 +734,13 @@ const events = [
         ones that'll be useful for keeping a fire going throughout the night.<br />
         If you had a <strong>saw</strong> of some sort, you could cut some of them up into planks.`,
 		optsId: "atFirewood",
+		img: imgLogs,
 	},
 	{
 		id: "visitFirewood",
 		text: "You return to the stack of logs.",
 		optsId: "atFirewood",
+		img: imgLogs,
 	},
 	{
 		id: "takeLargeFirewood",
@@ -1014,12 +1018,14 @@ const events = [
 		id: "lightFire",
 		text: `You successfully light your fire, and warm yourself with its orange glow. You prepare to get some sleep, knowing you've survived the night.`,
 		optsId: "litFire",
+		img: imgCampfire,
 	},
 	{
 		id: "lightCabinFire",
 		text: `As you attempt to start a fire using some wood from the furniture strewn across the cabin, you accidentally drop a match which, before you can stop it,
         falls on to the carpet below you, which quickly catches alight.`,
 		optsId: "onFire",
+		img: imgCampfire,
 	},
 	// END: Night
 
