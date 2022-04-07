@@ -267,7 +267,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/lab-room-left.jpg',
-        sound2: 'assets/sounds/zombieBashing.wav',
+        sound: 'assets/sounds/zombieBashing.wav',
         options: [
             {
                 text: 'Sneak up and attack',
@@ -531,7 +531,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/lab-room-basement.jpg',
-        sound2: 'assets/sounds/toolbox.wav',
+        sound: 'assets/sounds/toolbox.wav',
         options: [
             {
                 text: "Pick up the hammer",

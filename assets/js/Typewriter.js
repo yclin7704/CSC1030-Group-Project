@@ -7,6 +7,8 @@ let printCount = 0;
  * @returns Nothing
  */
 async function typeSentence(text, dialogueId = "dialogue", delay = 10, isSlow = false) {
+	if (sessionStorage.getItem("Typewriter")) delay = 0;
+
 	printCount++;
 	if (printCount > 100) printCount = 0;
 	let thisPrintCount = printCount;
@@ -27,7 +29,7 @@ async function typeSentence(text, dialogueId = "dialogue", delay = 10, isSlow = 
 	for (let i = 0; i < letters.length; i++) {
 		// Wait before printing each letter
 		// TODO: HTML tags are skipped over instantly (takes too long otherwise)
-		if (!tag) await waitForMs(delay);
+		if (!tag && delay) await waitForMs(delay);
 
 		// If the user has gone on to the next event/location, stop displaying this one
 		if (printCount != thisPrintCount && !isSlow) return;
