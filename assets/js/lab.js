@@ -24,8 +24,6 @@ function startGame()
         case "Priest": state["Priest"] = true; break;
     }
 
-    showVault();
-
     // Displays the inventory
     showInventory();
 
@@ -69,6 +67,14 @@ function showTextNode(textNodeIndex){
     }
     if (textNodeIndex === 3.33){
         showVault();
+    }
+    if (textNodeIndex === 3.3){
+        vaultClear();
+    }
+    if (state.GameWin) {
+        localStorage.setItem('endStatus', 'true');
+    } else {
+        localStorage.setItem('endStatus', 'false');
     }
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "labText"); // Changes the dialogue box to text stored in the text node.
@@ -1238,6 +1244,37 @@ const textNodes = [
         ]
     },
     {
+        id: 3.331,
+        text: `I don't know how but you somehow managed to open the vault by either sheer luck or was it something else? Anyway inside was a glass casing with a note aside it.`,
+        note: ``,
+        inventory: '',
+        image: 'assets/images/lab-room-right.jpg',
+        options: [
+            {
+                text: "Read the note",
+                nextText: 3.3311 
+            },
+            {
+                text: "Go back with cure?",
+                setInventory: {cure: true},
+                nextText: 3.3 
+            },
+        ]
+    },
+    {
+        id: 3.3311,
+        text: 'The note read:<br><button onClick="changeText();" class="changeText">Change Text</button> <button onClick="revertText();" class="changeText">Revert Text</button>',
+        note: `Well done! you broke into my safe, your reward shall be the cure to this outbreak. How did I make it? Don't worry about it. Anyway the cure is inactive until the next day and the cure will infinitely reproduce itself. Cool right? - Dave`,
+        inventory: '',
+        image: 'assets/images/lab-room-right.jpg',
+        options: [
+            {
+                text: "Go back",
+                nextText: 3.331 
+            },
+        ]
+    },
+    {
         id: 4,
         text: `You decided that the best way to accomplish anything is to brute force through the dumbest way possible so you smash the glass and jumped in. Unfortunately for you there was a zombie there ready for you to land and became his next meal.<br><br><a href=\"EndStatistics.html\">See Statistics</a>`,
         note: '',
@@ -1699,11 +1736,13 @@ const textNodes = [
             {
                 text: 'Conclude',
                 requiredInventory: { 'cure': false },
+                setState: { GameWin : true },
                 nextText: "victory"         
             },
             {
                 text: 'Conclude',
                 requiredInventory: { 'cure': true },
+                setState: { GameWin : true },
                 nextText: "trueVictory"
             },
         ]
