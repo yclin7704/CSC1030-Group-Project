@@ -68,9 +68,9 @@ function revertText() {
 function showTextNode(textNodeIndex) {
 
     if (state.GameWin) {
-        localStorage.setItem('endStatus', 'true');
+        sessionStorage.setItem("endStatus", "true");
     } else {
-        localStorage.setItem('endStatus', 'false');
+        sessionStorage.setItem("endStatus", "false");
     }
 
     if (textNodeIndex === "warehouse") {

@@ -119,9 +119,9 @@ function startGame() {
 function showTextNode(textNodeIndex){
     // Checks to see if the Player has won or lost
     if (state.GameWin) {
-        localStorage.setItem('endStatus', 'true');
+        sessionStorage.setItem("endStatus", "true");
     } else {
-        localStorage.setItem('endStatus', 'false');
+        sessionStorage.setItem("endStatus", "false");
     }
 
     // Checks to see if the Player wishes to return to the Warehouse location
