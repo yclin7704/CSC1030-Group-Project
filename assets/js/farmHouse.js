@@ -34,7 +34,6 @@ function startGame(){
     setTemperatureData(showTextNode, 34, 34);
     showInventory();
     displayPlayerName();
-    //clearInventory(); //This clears the inventory
     showTextNode(1);
 }
 

@@ -76,12 +76,3 @@ function showInventory() {
 
 	document.getElementById("inventory").innerHTML = str;
 }
-
-/**
- * Clear all items in the inventory
- */
-function clearInventory() {
-	inventory = {};
-	saveInventory();
-	showInventory();
-}
