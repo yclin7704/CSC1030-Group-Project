@@ -153,6 +153,7 @@ const textNodes = [
             },
             {
                 text: 'Fuel the campfire',
+                requiredInventory: { 'Wood Planks': true },
                 tempChange: -1,
                 nextText: 2.1
             },
@@ -164,6 +165,7 @@ const textNodes = [
             },
             {
                 text: 'Barricade the door',
+                requiredInventory: { 'Wood Planks': true },
                 requiredState: (currentState) => !currentState.barricaded,
                 tempChange: -1,
                 nextText: 2.2
@@ -412,8 +414,8 @@ const textNodes = [
         text: "You decided to wait patiently for the night to cover the Warehouse in darkness, and as you did you could hear the blood curdling screams of not only the Zombies" +
             "but of some other people as they were attacked. However, as the Zombies grew closer and closer you felt confident in the fact that you were able to successfully" +
             " barricade the front door to the Warehouse because the wood was sturdy and strong, and thankfully there were no other entrances into the Warehouse. As the Zombies" +
-            "apparoached, although it wasn't fixed, the fence managed to still pose as an obstacle to the Zombies as only some of them were able to get through the gap completely" +
-            "unharmed, but your defences on the door were able to hold off the few that did make it through..." +
+            " apparoached, although it wasn't fixed, the fence managed to still pose as an obstacle to the Zombies as only some of them were able to get through the gap completely" +
+            " unharmed, but your defences on the door were able to hold off the few that did make it through..." +
             "<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
         inventory: '',
         image: 'assets/images/Victory2_TEST-GIF.gif',
