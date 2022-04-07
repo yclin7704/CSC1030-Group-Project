@@ -30,6 +30,7 @@ function listingCollectable() {
 
 async function resetValues() {
 	let name = sessionStorage.getItem("playerName");
+	let profession = sessionStorage.getItem("profession");
 	let volume = sessionStorage.getItem("gameVolume");
 	let prevGameTime = getTimePlayed();
 
@@ -39,6 +40,7 @@ async function resetValues() {
 	sessionStorage.setItem("playerName", name);
 	sessionStorage.setItem("gameVolume", volume);
 	sessionStorage.setItem("prevGameTime", prevGameTime);
+	sessionStorage.setItem("profession", profession);
 }
 
 async function playAgain() {

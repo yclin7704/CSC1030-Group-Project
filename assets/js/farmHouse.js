@@ -59,6 +59,13 @@ function showTextNode(textNodeIndex){
         sessionStorage.setItem("farmhouseGameState", JSON.stringify(state));
         window.location.href = "Warehouse.html";
     }
+
+    if (state.GameWin) {
+        localStorage.setItem('endStatus', 'true');
+    } else {
+        localStorage.setItem('endStatus', 'false');
+    }
+
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "dialogue"); // Changes the dialogue box to text stored in the text node.
     updateInventory(textNode.inventory);
@@ -834,12 +841,14 @@ const textNodes = [
             {
                 text: 'Shoot your gun',
                 requiredInventory: {shotgunLoaded:true},
+                setState: {GameWin:true},
                 //requiredState: (currentState) => currentState.shotgunLoaded,
                 nextText: 32
             },
             {
                 text: 'Slash the zombies',
                 requiredInventory: {kitchenKnife:true},
+                setState: {GameWin:true},
                 //requiredState: (currentState) => currentState.kitchenKnife,
                 nextText: 32
             },

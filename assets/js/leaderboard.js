@@ -1,11 +1,13 @@
 const ARRAY_SIZE = 3;
 const timeString = sessionStorage.getItem("prevGameTime");
-const gameStatus = localStorage.getItem('gameStatus');
+const endStatus = localStorage.getItem('endStatus');
 
 function getGameStatus() {
-	if (gameStatus === 'true') {
+	if (endStatus === 'true') {
 		compareTime();
 	}
+
+	showTimes();
 }
 
 function compareTime() {
@@ -23,18 +25,19 @@ function compareTime() {
 		// If it is, update the list
 		saveTime(time, timeArray);
 	}
-
-	// Display the times
-	showTimes();
 }
 
 function saveTime(time, timeArray) {
 	// Get the player's name
 	let name = sessionStorage.getItem("playerName");
+	// player's profession
+	let profession = sessionStorage.getItem("profession");
 	// Fall back to a default value if not set
 	if (!name) name = "Unknown";
 
-	let playerData = { name, time };
+	if (!profession) profession = "Unknown";
+
+	let playerData = { name, profession, time };
 	// Add the player data to the array
 	timeArray.push(playerData);
 
@@ -67,9 +70,10 @@ function showTimes() {
 		// Use fallback values if not found
 		if (!item) item = {};
 		if (!item.name) item.name = "Unknown";
+		if (!item.profession) item.profession = "Unknown";
 		if (!item.time) item.time = "?";
 
-		html += `<li class="record">${item.name}: ${item.time} seconds</li>`;
+		html += `<li class="record">${item.name} | ${item.profession} | ${item.time} seconds</li>`;
 	}
 
 	// Display the result

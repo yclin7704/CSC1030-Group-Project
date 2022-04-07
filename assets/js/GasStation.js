@@ -68,6 +68,13 @@ function revertText() {
 // This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.
 
 function showTextNode(textNodeIndex) {
+
+    if (state.GameWin) {
+        localStorage.setItem('endStatus', 'true');
+    } else {
+        localStorage.setItem('endStatus', 'false');
+    }
+
     if (textNodeIndex === "warehouse") {
         state.leftLocation = true;
         // Save the current game state to session storage
@@ -331,6 +338,11 @@ const textNodes = [
                 text: 'Go inside',
                 nextEventId: 2,
                 setState: { LightsOff: true }
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
     },
@@ -351,6 +363,11 @@ const textNodes = [
                 text: 'Go inside',
                 nextEventId: 2,
                 setState: { LightsOff: true }
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
     },
@@ -371,6 +388,11 @@ const textNodes = [
                 text: 'Go inside',
                 nextEventId: 2,
                 setState: { LightsOff: true }
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
     },
@@ -444,6 +466,11 @@ const textNodes = [
                 tempChange: 'decrease',
                 setInventory:{ Parts:false },
                 requiredState: (currentState) => currentState.SearchParts
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
     },
@@ -468,6 +495,11 @@ const textNodes = [
                 text: 'Go back and fix the generator',
                 nextEventId: 28,
                 requiredState: (currentState) => currentState.LightsOff
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
     },
@@ -523,7 +555,7 @@ const textNodes = [
             + ' You hear a noise coming from outside...',
         image: './assets/images/gas-station_stock-room.jpg',
         inventory: '',
-        sound: './assets/sounds/pennydrop.wav',
+        sound: './assets/sounds/stockroomnoise.aiff',
         options: [
             {
                 text: 'Investigate the noise',
@@ -553,8 +585,7 @@ const textNodes = [
             {
                 text: 'Give him the parts you found',
                 requiredInventory: { 'Parts': true },
-                setInventory: { Parts: false },
-                setInventory:{Knife:true},
+                setInventory:{Knife:true, Parts:false},
                 tempChange: 'decrease',
                 nextEventId: 11
             },
@@ -591,6 +622,11 @@ const textNodes = [
             {
                 text: 'Attack him and steal his supplies',
                 nextEventId: 12
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
     },
@@ -768,6 +804,11 @@ const textNodes = [
                 text: 'Prepare for the night',
                 setInventory: {Knife:true},
                 nextEventId: 29
+            },
+            {
+                text: 'Return to warehouse',
+                nextEventId: 'warehouse',
+                tempChange: 'decrease',
             }
         ]
     },
@@ -929,11 +970,11 @@ const textNodes = [
         */
 
         id: 12,
-        text: 'You try pushing the man to the ground and he quickly grabs a knife from his pocket and pushes it into your stomach. Your eyes slowly close'
-            + ' as you bleed to death.'
+        text: 'You shove the stranger into the window, smashing it to pieces. He grabs a shard of glass and pushes it into your stomach. Your eyes slowly close'
+            + ' as you bleed to death and the stranger runs away.'
             + '<b><em> You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
         image: './assets/images/You-Died_TEST-GIF.gif',
-        sound: './assets/sounds/knifeholster.wav',
+        sound: './assets/sounds/glassbreak.wav',
         inventory: '',
         options: []
     },
@@ -948,34 +989,40 @@ const textNodes = [
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.Windows && !currentState.Doors,
                 requiredInventory: {'Knife':false},
+                setState:{GameWin:false},
                 nextEventId: 35
             },
             {
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.Doors && !currentState.Windows,
                 requiredInventory: {'Knife':false},
+                setState:{GameWin:false},
                 nextEventId: 36
             },
             {
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.Windows && !currentState.Doors,
                 requiredInventory: {'Knife':true},
+                setState:{GameWin:true},
                 nextEventId: 50
             },
             {
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.Doors && !currentState.Windows,
                 requiredInventory: {'Knife':true},
+                setState:{GameWin:true},
                 nextEventId: 51
             },
             {
                 text: 'Start the night',
                 requiredState: (currentState) => currentState.Windows && currentState.Doors,
+                setState:{GameWin:true},
                 nextEventId: 52
             },
             {
                 text: 'Start the night',
                 requiredState: (currentState) => !currentState.Windows && !currentState.Doors,
+                setState:{GameWin:false},
                 nextEventId: 54
             }
         ]
