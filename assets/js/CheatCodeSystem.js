@@ -15,8 +15,7 @@ function validateCheat() {
         case "GreenScheme":
             sessionStorage.setItem("Value", "./assets/css/Cheat2.css");
             break;
-        case "Monocolour":
-        case "Monocolor":
+        case "Monochrome":
             sessionStorage.setItem("Value", "./assets/css/Cheat3.css");
             break;
         case "betaDesign":
