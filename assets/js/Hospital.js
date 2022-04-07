@@ -943,7 +943,7 @@ const textNodes = [
             " made full use of the wood, you were only able to cover half of the windows",
         inventory: '',
         image: 'assets/images/Hospital/Abandoned_Room.jpg',
-        sound2: 'assets/sounds/Barricading.wav',
+        sound: 'assets/sounds/Barricading.wav',
         options: [
             {
                 text: "Go back to preparing for the Night",

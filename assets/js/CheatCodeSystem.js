@@ -21,6 +21,9 @@ function validateCheat() {
         case "betaDesign":
             sessionStorage.setItem("Value", "./assets/css/Cheat4.css");
             break;
+        case "normalText":
+            sessionStorage.setItem("Typewriter", true);
+            break;
         default:
             sessionStorage.setItem("Value", "./assets/css/main.css");
     }
