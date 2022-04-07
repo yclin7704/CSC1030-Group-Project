@@ -165,6 +165,7 @@ const textNodes = [
             },
             {
                 text: 'Barricade the door',
+                requiredInventory: { 'Wood Planks': true },
                 requiredState: (currentState) => !currentState.barricaded,
                 tempChange: -1,
                 nextText: 2.2
