@@ -98,10 +98,12 @@ function startGame() {
 	// This will take the player to the appropriate Text Node if they die of frostbite or heat stroke
     setTemperatureData(showTextNode, 103, 111);
     
-    // Will display the first text node (id=1)
+    // Will display the second text node if it's not the Player's first visit to the Hospital
     if (state.leftLocation) {
         showTextNode(2);
-    } else {
+    } 
+    // Will display the first text node if it's the Player's first visit to the Hospital
+    else {
         showTextNode(1);
     }
     
@@ -115,9 +117,20 @@ function startGame() {
  * @param textNodeIndex - This is the id number of the text node to be displayed
  */
 function showTextNode(textNodeIndex){
+    // Checks to see if the Player has won or lost
+    if (state.GameWin) {
+        sessionStorage.setItem("endStatus", "true");
+    } else {
+        sessionStorage.setItem("endStatus", "false");
+    }
+
+    // Checks to see if the Player wishes to return to the Warehouse location
     if (textNodeIndex === "Warehouse"){
         window.location.href = "Warehouse.html";
+
+        // This will indicate that the player has visited the Hospital for the first time
         state.leftLocation = true;
+
         // Save the current game state to session storage
         sessionStorage.setItem("HospitalGameState", JSON.stringify(state));
     }
@@ -870,6 +883,7 @@ const textNodes = [
                 text: 'Start the Night',
                 requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false,
                 requiredInventory: {'First Aid Kits': false, 'Bone Saw': true},
+                setState: {GameWin: true},
                 tempChange: -1,
                 nextText: 102
             },
@@ -884,18 +898,21 @@ const textNodes = [
                 text: 'Start the Night',
                 requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false,
                 requiredInventory: {'First Aid Kits': true, 'Bone Saw': true},
+                setState: {GameWin: true},
                 tempChange: -1,
                 nextText: 106
             },
             {
                 text: 'Start the Night',
                 requiredState: (currentState) => currentState.defence1 === true && currentState.defence2 === true,
+                setState: {GameWin: true},
                 tempChange: -1,
                 nextText: 107
             },
             {
                 text: 'Start the Night',
                 requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === true,
+                setState: {GameWin: true},
                 tempChange: -1,
                 nextText: 108
             },
@@ -910,6 +927,7 @@ const textNodes = [
                 text: 'Start the Night',
                 requiredState: (currentState) => currentState.defence1 === true && currentState.defence2 === false,
                 requiredInventory: {'Bone Saw': true},
+                setState: {GameWin: true},
                 tempChange: -1,
                 nextText: 110
             }

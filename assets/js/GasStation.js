@@ -34,8 +34,6 @@ function startGame() {
 
     // Displays the inventory
     showInventory();
-    // clears the inventory before the game starts
-    clearInventory();
     
     if (state.leftLocation) {
         showTextNode(1.5);
@@ -70,9 +68,9 @@ function revertText() {
 function showTextNode(textNodeIndex) {
 
     if (state.GameWin) {
-        localStorage.setItem('endStatus', 'true');
+        sessionStorage.setItem("endStatus", "true");
     } else {
-        localStorage.setItem('endStatus', 'false');
+        sessionStorage.setItem("endStatus", "false");
     }
 
     if (textNodeIndex === "warehouse") {
@@ -175,6 +173,7 @@ const textNodes = [
         id: 1.2,
         text: 'You take the wood planks.',
         image: './assets/images/gas-station.jpg',
+        sound: './assets/sounds/zip.wav',
         inventory: '',
         options: [
             {
@@ -325,14 +324,18 @@ const textNodes = [
                 nextEventId: 39,
                 tempChange: 'decrease',
                 requiredInventory: { 'Matches': false },
-                setInventory: { Matches: true }
+                setInventory: { Matches: true },
+                requiredState: (currentState) => !currentState.GasMatches,
+                setState: {GasMatches:true},
             },
             {
                 text: 'Take the gasoline',
                 nextEventId: 40,
                 tempChange: 'decrease',
                 requiredInventory: { 'Gasoline': false },
-                setInventory: { Gasoline: true }
+                setInventory: { Gasoline: true },
+                requiredState: (currentState) => !currentState.GasGasoline,
+                setState: {GasGasoline:true},
             },
             {
                 text: 'Go inside',
@@ -350,6 +353,7 @@ const textNodes = [
         id: 39,
         text: 'You take the <strong>Matches</strong>.',
         image: './assets/images/car.jpg',
+        sound: './assets/sounds/zip.wav',
         inventory: '',
         options: [
             {
@@ -357,7 +361,9 @@ const textNodes = [
                 nextEventId: 40,
                 tempChange: 'decrease',
                 requiredInventory: { 'Gasoline': false },
-                setInventory: { Gasoline: true }
+                setInventory: { Gasoline: true },
+                requiredState: (currentState) => !currentState.GasGasoline,
+                setState: {GasGasoline:true},
             },
             {
                 text: 'Go inside',
@@ -375,6 +381,7 @@ const textNodes = [
         id: 40,
         text: 'You take the <strong>gasoline</strong>.',
         image: './assets/images/car.jpg',
+        sound: './assets/sounds/zip.wav',
         inventory: '',
         options: [
             {
@@ -382,7 +389,9 @@ const textNodes = [
                 nextEventId: 39,
                 tempChange: 'decrease',
                 requiredInventory: { 'Matches': false },
-                setInventory: { Matches: true }
+                setInventory: { Matches: true },
+                requiredState: (currentState) => !currentState.GasMatches,
+                setState: {GasMatches:true},
             },
             {
                 text: 'Go inside',
@@ -409,13 +418,17 @@ const textNodes = [
                 nextEventId: 45,
                 requiredInventory: { 'Parts': false },
                 setInventory: { Parts: true },
+                requiredState: (currentState) => !currentState.GasParts,
+                setState: {GasParts:true},
 
             },
             {
                 text: 'Take the fuse',
                 nextEventId: 41,
                 setInventory: { Fuse: true },
-                requiredInventory: { Fuse: false }
+                requiredInventory: { Fuse: false },
+                requiredState: (currentState) => !currentState.GasFuse,
+                setState: {GasFuse:true},
             },
             {
                 text: 'Search the stock room',
@@ -439,6 +452,7 @@ const textNodes = [
         id: 45,
         text: 'You take the parts.',
         image: './assets/images/gas-station_inside.jpg',
+        sound: './assets/sounds/zip.wav',
         inventory: '',
         options: [
             {
@@ -446,7 +460,8 @@ const textNodes = [
                 nextEventId: 41,
                 requiredInventory: { Fuse: false },
                 setInventory: { Fuse: true },
-                requiredState: (currentState) => !currentState.SearchParts
+                requiredState: (currentState) => !currentState.SearchParts && !currentState.GasFuse,
+                setState: {GasFuse:true},
             },
             {
                 text: 'Search the stock room',
@@ -458,13 +473,18 @@ const textNodes = [
             {
                 text: 'Go back and fix the generator',
                 nextEventId: 28,
-                requiredState: (currentState) => currentState.LightsOff && !currentState.SearchParts,
+                requiredState: (currentState) => currentState.LightsOff && !currentState.SearchParts && currentState.Generator,
+            },
+            {
+                text: 'Look for a backup generator',
+                nextEventId: 28,
+                requiredState: (currentState) => !currentState.Generator && currentState.LightsOff && !currentState.SearchParts
             },
             {
                 text: 'Give the man the parts you found',
                 nextEventId: 11,
                 tempChange: 'decrease',
-                setInventory:{ Parts:false },
+                setInventory:{ Parts:false, Knife:true },
                 requiredState: (currentState) => currentState.SearchParts
             },
             {
@@ -478,12 +498,15 @@ const textNodes = [
         id: 41,
         text: 'You take the fuse.',
         image: './assets/images/gas-station_inside.jpg',
+        sound: './assets/sounds/zip.wav',
         inventory: '',
         options: [
             {
                 text: 'Take the parts',
                 nextEventId: 45,
-                requiredInventory: { 'Parts': false }
+                requiredInventory: { 'Parts': false },
+                requiredState: (currentState) => !currentState.GasParts,
+                setState: {GasParts:true},
             },
             {
                 text: 'Search the stock room',
@@ -494,7 +517,12 @@ const textNodes = [
             {
                 text: 'Go back and fix the generator',
                 nextEventId: 28,
-                requiredState: (currentState) => currentState.LightsOff
+                requiredState: (currentState) => currentState.LightsOff && currentState.Generator
+            },
+            {
+                text: 'Look for a backup generator',
+                nextEventId: 28,
+                requiredState: (currentState) => !currentState.Generator && currentState.LightsOff && !currentState.SearchParts
             },
             {
                 text: 'Return to warehouse',
@@ -514,7 +542,8 @@ const textNodes = [
                 text: 'Take the parts and return to the stranger',
                 nextEventId: 45,
                 setInventory:{Parts:true},
-                requiredState: (currentState) => !currentState.SparkPlugs
+                requiredState: (currentState) => !currentState.SparkPlugs && !currentState.GasParts,
+                setState: {GasParts:true},
             },
             {
                 text: 'Take the parts and return to fix the car',
@@ -554,8 +583,8 @@ const textNodes = [
             + ' everything seems to have been taken. This could be a safe location to spend the night with a bit of preparation.'
             + ' You hear a noise coming from outside...',
         image: './assets/images/gas-station_stock-room.jpg',
+        sound: './assets/sounds/candrop.wav',
         inventory: '',
-        sound: './assets/sounds/stockroomnoise.aiff',
         options: [
             {
                 text: 'Investigate the noise',
@@ -802,6 +831,7 @@ const textNodes = [
         options:[
             {
                 text: 'Prepare for the night',
+                tempChange: 'decrease',
                 setInventory: {Knife:true},
                 nextEventId: 29
             },
@@ -823,12 +853,14 @@ const textNodes = [
             {
                 text: 'Break up the shelves for wood',
                 nextEventId: 30,
+                tempChange: 'decrease',
                 setInventory: { 'Wood Planks': true },
                 requiredState: (currentState) => !currentState.Wood
             },
             {
                 text: 'Barricade the windows using the wood from the shelves',
                 nextEventId: 31,
+                tempChange: 'decrease',
                 requiredState: (currentState) => !currentState.Windows,
                 setInventory: {'Wood Planks':false},
                 requiredInventory: { 'Wood Planks': true },
@@ -836,6 +868,7 @@ const textNodes = [
             {
                 text: 'Barricade the doors using the wood from the shelves',
                 nextEventId: 32,
+                tempChange: 'decrease',
                 requiredInventory: { 'Wood Planks': true },
                 setInventory:{'Wood Planks':false},
                 requiredState: (currentState) => !currentState.Doors,
@@ -843,6 +876,7 @@ const textNodes = [
             {
                 text: 'Prepare a fire using wood from the shelves and the gasoline from the car',
                 nextEventId: 33,
+                tempChange: 'decrease',
                 requiredInventory: { 'Gasoline': true },
                 requiredInventory: { 'Wood Planks': true },
                 setInventory: {'Wood Planks':false, Gasoline:false},
@@ -851,11 +885,18 @@ const textNodes = [
             {
                 text: 'Light the fire using the matches',
                 nextEventId: 34,
+                tempChange: 'decrease',
                 requiredState: (currentState) => !currentState.Matches,
                 requiredState: (currentState) => currentState.Fire,
                 requiredInventory: { 'Matches': true },
                 setInventory:{Matches:false},
                 tempChange: 'increase'
+            },
+            {
+                text: 'Sit by the fire',
+                nextEventId: 34,
+                tempChange: 5,
+                requiredState: (currentState) => currentState.Fire
             },
             {
                 text: 'Finish preparation',
@@ -873,6 +914,7 @@ const textNodes = [
         options: [
             {
                 text: 'Continue preparation',
+                tempChange: 'decrease',
                 setState: { Wood: true },
                 nextEventId: 29,
             },
@@ -880,6 +922,12 @@ const textNodes = [
                 text: 'Finish preparation',
                 nextEventId: 53,
                 setState: { Finished: true }
+            },
+            {
+                text: 'Sit by the fire',
+                nextEventId: 34,
+                tempChange: 5,
+                requiredState: (currentState) => currentState.Fire
             }
         ]
     },
@@ -892,6 +940,7 @@ const textNodes = [
         options: [
             {
                 text: 'Continue preparation',
+                tempChange: 'decrease',
                 setState: { Windows: true },
                 nextEventId: 29,
             },
@@ -899,6 +948,12 @@ const textNodes = [
                 text: 'Finish preparation',
                 nextEventId: 53,
                 setState: { Finished: true }
+            },
+            {
+                text: 'Sit by the fire',
+                nextEventId: 34,
+                tempChange: 5,
+                requiredState: (currentState) => currentState.Fire
             }
         ]
     },
@@ -911,6 +966,7 @@ const textNodes = [
         options: [
             {
                 text: 'Continue preparation',
+                tempChange: 'decrease',
                 setState: { Doors: true },
                 nextEventId: 29,
             },
@@ -918,6 +974,12 @@ const textNodes = [
                 text: 'Finish preparation',
                 nextEventId: 53,
                 setState: { Finished: true }
+            },
+            {
+                text: 'Sit by the fire',
+                nextEventId: 34,
+                tempChange: 5,
+                requiredState: (currentState) => currentState.Fire
             }
         ]
     },
@@ -931,6 +993,7 @@ const textNodes = [
             {
                 text: 'Use the matches',
                 requiredInventory: { 'Matches': true },
+                tempChange: 5,
                 setInventory: { Matches: false },
                 setInventory: {'Wood Planks':false, Gasoline:false},
                 setState: { Fire: true},
@@ -939,6 +1002,7 @@ const textNodes = [
             {
                 text: 'Abandon the fire',
                 requiredInventory: { 'Matches': false },
+                tempChange: 'decrease',
                 setInventory: {'Wood Planks':false, Gasoline:false},
                 setState: { Fire: false },
                 nextEventId: 29
@@ -947,13 +1011,14 @@ const textNodes = [
     },
     {
         id: 34,
-        text: 'You light the fire and the temperature starts to rise again.',
+        text: 'You sit by the fire and the temperature starts to rise again.',
         image: './assets/images/fire_gas-station.jpg',
-        sound: './assets/sounds/Fire.mp3',
+        sound: './assets/sounds/Fire.wav',
         inventory: '',
         options: [
             {
                 text: 'Continue preparation',
+                tempChange: 'decrease',
                 setState: { Matches: true },
                 setInventory: {Matches:false},
                 nextEventId: 29,
@@ -983,6 +1048,7 @@ const textNodes = [
         text: 'You finish your preparations for the night. You hear zombies approaching outside and prepare yourself for an'
         + ' attack.',
         image: './assets/images/gas-station_stock-room.jpg',
+        sound: './assets/sounds/zombieBashing.wav',
         inventory: '',
         options: [
             {

@@ -82,6 +82,10 @@ const eventOpts = [
 				desc: "DEBUG: Decrease temp",
 				tempChange: "decrease",
 			},
+			{
+				desc: "DEBUG: WIN",
+				nextEventId: "survived",
+			},
 		],
 	},
 
@@ -1153,7 +1157,10 @@ function getRandomSearchCabinDialogue() {
 }
 
 function goToStatistics() {
-	window.location.href = "EndStatistics.html";
+	if (gameState.won) {
+		sessionStorage.setItem("endStatus", true);
+		window.location.href = "EndStatistics.html";
+	} else window.location.href = "EndStatistics.html";
 }
 
 function guessCombination() {
