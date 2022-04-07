@@ -1,13 +1,15 @@
-const imgOutside = "assets/images/cabin-outside.webp";
-const imgInside = "assets/images/cabin-inside.webp";
-const imgHatch = "assets/images/cabin-trapdoor.jpg";
+const imgOutside = "./assets/images/Cabin/cabin-outside.webp";
+const imgInside = "./assets/images/Cabin/cabin-inside.webp";
+const imgHatch = "./assets/images/Cabin/cabin-trapdoor.jpg";
+const imgSafe = "./assets/images/Cabin/safe.jpg";
+const imgForest = "./assets/images/Cabin/forest.jpg";
 
-const gifDied = "assets/images/You-Died_TEST-GIF.gif";
-const gifWon = "assets/images/Victory2_TEST-GIF.gif";
+const gifDied = "./assets/images/You-Died_TEST-GIF.gif";
+const gifWon = "./assets/images/Victory2_TEST-GIF.gif";
 
-const audioWind = "assets/sounds/wind.wav";
-const audioRain = "assets/sounds/rain_2.wav";
-const audioWinter = "assets/sounds/winterStorm.wav";
+const audioWind = "./assets/sounds/wind.wav";
+const audioRain = "./assets/sounds/rain_2.wav";
+const audioWinter = "./assets/sounds/winterStorm.wav";
 
 const soundZombie = "./assets/sounds/zombieseating.wav";
 const soundTakeWood = "./assets/sounds/SpareFireWood.wav";
@@ -73,14 +75,6 @@ const eventOpts = [
 			{
 				desc: "Return to the warehouse",
 				nextEventId: "warehouse",
-			},
-			{
-				desc: "DEBUG: Increase temp",
-				tempChange: "increase",
-			},
-			{
-				desc: "DEBUG: Decrease temp",
-				tempChange: "decrease",
 			},
 			{
 				desc: "DEBUG: WIN",
@@ -612,8 +606,8 @@ const eventOpts = [
 		id: "coldInCabin",
 		choices: [
 			{
-				desc: "Light a fire using with the logs and matches you found earlier",
-				requiredInventory: { Matches: true }, // TODO: LOGS
+				desc: "Light a fire using with the planks and matches you found earlier",
+				requiredInventory: { Matches: true, "Wood Planks": true },
 				disableMode: "hidden",
 				nextEventId: "lightFire",
 				tempChange: 10,
@@ -782,6 +776,7 @@ const events = [
         but you're able to scavenge a few tins of food and a bottle of water. There's also a locked safe hidden at the back of a cabinet, but no signs of a combination anywhere.`,
 		// TODO: Anything inside safe, or just note for the hunter?
 		// TODO: Image
+		img: imgSafe,
 		optsId: "riflingCabin",
 	},
 	{
@@ -951,6 +946,7 @@ const events = [
         the little daylight remaining slowly vanishing as the tree branches thicken. Suddenly, you feel the snow beneath you give way,
         and your leg plunges into an icy-cold pool of water below.`,
 		optsId: "visitingForestInitial",
+		img: imgForest,
 	},
 	{
 		id: "icyWaterPush",
@@ -1091,7 +1087,7 @@ const eventsHunter = [
 		id: "firstVisitOutside",
 		text: `Following the path you've treaded so many times before, you find yourself outside your cabin in the woods once again. 
         You can still see signs of zombies nearby, and the window of the cabin is smashed.
-        TODO Something about things aren't looking good for the rest of your family`,
+        Things aren't looking good for the rest of your family - you hope they managed to escape in time.`,
 	},
 	{
 		id: "searchingCabin",
