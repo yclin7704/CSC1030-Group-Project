@@ -484,7 +484,7 @@ const textNodes = [
                 text: 'Give the man the parts you found',
                 nextEventId: 11,
                 tempChange: 'decrease',
-                setInventory:{ Parts:false },
+                setInventory:{ Parts:false, Knife:true },
                 requiredState: (currentState) => currentState.SearchParts
             },
             {
