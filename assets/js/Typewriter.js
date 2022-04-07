@@ -7,6 +7,8 @@ let printCount = 0;
  * @returns Nothing
  */
 async function typeSentence(text, dialogueId = "dialogue", delay = 10, isSlow = false) {
+	if (sessionStorage.getItem("Typewriter")) delay = 0;
+
 	printCount++;
 	if (printCount > 100) printCount = 0;
 	let thisPrintCount = printCount;
