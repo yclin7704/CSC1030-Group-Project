@@ -60,9 +60,9 @@ function showTextNode(textNodeIndex){
     }
 
     if (state.GameWin) {
-        localStorage.setItem('endStatus', 'true');
+        sessionStorage.setItem('endStatus', 'true');
     } else {
-        localStorage.setItem('endStatus', 'false');
+        sessionStorage.setItem("endStatus", "false");
     }
 
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.

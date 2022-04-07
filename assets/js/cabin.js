@@ -59,6 +59,8 @@ async function runEvent(eventId) {
 
 		window.location.href = "Warehouse.html";
 		return;
+	} else if (eventId === "survived") {
+		gameState.won = true;
 	}
 
 	// Keep track of the current event ID
