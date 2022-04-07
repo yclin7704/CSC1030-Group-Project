@@ -34,9 +34,6 @@ function startGame() {
 
     // Displays the inventory
     showInventory();
-    // clears the inventory before the game starts
-    clearInventory();
-    
     if (state.leftLocation) {
         showTextNode(1.5);
     } else {

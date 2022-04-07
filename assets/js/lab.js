@@ -29,9 +29,6 @@ function startGame()
     // Displays the inventory
     showInventory();
 
-    // clears the inventory before the game starts
-    //clearInventory();
-
     //Time up
     setTimerData(showTextNode, "camp", "timeOut");
 
