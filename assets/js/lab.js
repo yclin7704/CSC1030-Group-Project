@@ -487,7 +487,7 @@ const textNodes = [
     {
         id: 3.2,
         text: `You walk down stairs to be faced with a metallic iron door, upon opening said door, it reveals to be a storage of medicine and chemicals for the lab however upon further inspection, it seems to have been converted to in a bunker by the previous occupant, not that you are complaining with plenty of food and water. There is also a toolbox here if you want to repair things?`,
-        note: 'assets/images/lab-room-basement.jpg',
+        note: '',
         sound: 'assets/sounds/taptap.wav',
         inventory: '',
         image: 'assets/images/lab-room-basement.jpg',
@@ -563,7 +563,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/lab-room-basement.jpg',
-        sound2: 'assets/sounds/scavage.wav',
+        sound: 'assets/sounds/scavage.wav',
         options: [
             {
                 text: "Pick up all the chemical",
@@ -583,7 +583,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/lab-room-basement.jpg',
-        sound2: 'assets/sounds/scavage.wav',
+        sound: 'assets/sounds/scavage.wav',
         options: [
             {
                 text: "Pick up all the chemical",
@@ -603,7 +603,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/lab-room-basement.jpg',
-        sound2: 'assets/sounds/stomp.wav',
+        sound: 'assets/sounds/stomp.wav',
         options: [
             {
                 text: "Ponder what to do next",
@@ -1599,7 +1599,7 @@ const textNodes = [
         text: "With how little zombies there are around this place, the simple barricade you put up should be more than enough to keep out those zombies which fortunately for you is true. After some time has passed the zombies eventually gave up and left however the worst of it is yet to come...the storm.",
         note: '',
         inventory: '',
-        image: 'assets/images/lab-barricade',
+        image: 'assets/images/lab-barricade.jpg',
         options: [
             {
                 text: 'Wait until the storm',
