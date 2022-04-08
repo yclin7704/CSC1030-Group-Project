@@ -78,10 +78,6 @@ const eventOpts = [
 				desc: "Return to the warehouse",
 				nextEventId: "warehouse",
 			},
-			{
-				desc: "DEBUG: WIN",
-				nextEventId: "survived",
-			},
 		],
 	},
 

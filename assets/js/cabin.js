@@ -89,8 +89,7 @@ async function runEvent(eventId) {
 		// Update the setting image
 		setImg(eventData.img);
 		// Crossfade audio
-		// DEBUG: Re-enable audio
-		//crossfadeAudio(eventData.audio);
+		crossfadeAudio(eventData.audio);
 		// Update the player's inventory
 		updateInventory(eventData.setInventory);
 		// Show the user's options
