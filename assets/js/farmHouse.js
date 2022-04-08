@@ -1012,9 +1012,17 @@ const textNodes = [
             },
             {
                 text: 'Set up your camp',
-                requiredState: (currentState) => currentState.Hunter && !currentState.camp,
-                requiredInventory: {firewood:true, Matches:true},
-                setInventory: {firewood:false, Matches:false},
+                requiredState: (currentState) => !currentState.camp,
+                requiredInventory: {firewood:true, Torch:true, "Wood Planks":false},
+                setInventory: {firewood:false, Torch:false},
+                setState: {camp: true},
+                nextText: 36
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => !currentState.camp,
+                requiredInventory: {firewood:false, Torch:true, "Wood Planks":true},
+                setInventory: {firewood:false, Torch:false},
                 setState: {camp: true},
                 nextText: 36
             },

@@ -7,7 +7,7 @@
 		<meta name="description" content="Last Stand Text Adventure" />
 
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<link id="Styling" rel="stylesheet"/>
+		<link id="Styling" rel="stylesheet" />
 	</head>
 	<body onload="updatePages()">
 		<div class="wrapper">
@@ -15,7 +15,7 @@
 				<!-- Column 1: Map and inventory -->
 				<div class="col col1">
 					<div class="map">
-                        <span id="playerSpan"></span>
+						<span id="playerSpan"></span>
 						<div class="temperature">
 							<label for="temperatureMeter">Temperature:</label><br />
 							<div id="temperatureMeter" class="temperatureMeter"></div>
@@ -28,7 +28,7 @@
 						</div>
 					</div>
 					<div class="inventory">
-						<p class="inventoryHeading">    Inventory    </p>
+						<p class="inventoryHeading">Inventory</p>
 						<span class="inventory" id="inventory"></span>
 					</div>
 				</div>
@@ -42,7 +42,7 @@
 				<div class="col col3" id="divChoices">
 					<!-- Just in case things break - This should never be seen normally -->
 					<button class="buttonChoice" onclick="sessionStorage.clear(); console.log('Cleared sessionStorage!')">
-						DEBUG: Clear sessionStorage
+						Clear sessionStorage as a last resort - something has broken badly if you're reading this
 					</button>
 				</div>
 			</div>

@@ -26,7 +26,7 @@ const soundBarricade = "./assets/sounds/Barricading.wav";
 const profHunter = "Hunter";
 const profMechanic = "Mechanic";
 const profDoctor = "Doctor";
-const profVeteran = "Veteran";
+const profVeteran = "War Veteran";
 const profPriest = "Priest";
 
 const eventOpts = [
@@ -78,10 +78,6 @@ const eventOpts = [
 				desc: "Return to the warehouse",
 				nextEventId: "warehouse",
 			},
-			{
-				desc: "DEBUG: WIN",
-				nextEventId: "survived",
-			},
 		],
 	},
 
@@ -90,24 +86,27 @@ const eventOpts = [
 		id: "atFirewood",
 		choices: [
 			{
-				desc: "Ignore the firewood for now and return to the entrance to the cabin",
+				desc: "Ignore the planks for now and return to the entrance to the cabin",
 				nextEventId: "leaveLogs",
 				tempChange: "decrease",
 			},
 			{
-				desc: "Take some of the logs",
-				requiredInventory: { Firewood: false },
-				setInventory: { Firewood: true },
+				desc: "Take some of the planks",
+				requiredState: { tookPlanks: false },
+				stateChanges: { tookPlanks: true },
+				setInventory: { "Wood Planks": true },
 				nextEventId: "takeLargeFirewood",
 				disableMode: "hidden",
 				tempChange: "decrease",
 				sound: soundTakeWood,
 			},
 			{
-				desc: "Make some smaller kindling out of the logs using your saw",
-				requiredInventory: { "Bone Saw": true, Kindling: false },
-				setInventory: { Kindling: true },
-				nextEventId: "makeKindling",
+				desc: "Make some extra planks out of the logs using your saw",
+				requiredInventory: { "Bone Saw": true },
+				requiredState: { madePlanks: false },
+				stateChanges: { madePlanks: true },
+				setInventory: { "Wood Planks": true },
+				nextEventId: "makePlanks",
 				tempChange: "decrease",
 			},
 			{
@@ -122,25 +121,26 @@ const eventOpts = [
 		id: "takingLargeFirewood",
 		choices: [
 			{
-				desc: "Return to the entrance to the cabin with your blocks of firewood",
+				desc: "Return to the entrance to the cabin with your wooden planks",
 				nextEventId: "leaveLogs",
 				tempChange: "decrease",
 			},
 		],
 	},
 	{
-		id: "makingKindling",
+		id: "makingPlanks",
 		choices: [
 			{
-				desc: "Return to the entrance to the cabin with your kindling",
+				desc: "Return to the entrance to the cabin with your planks",
 				nextEventId: "leaveLogs",
 				tempChange: "decrease",
 			},
 			{
-				desc: "Return the the entrance to the cabin and take some larger blocks of firewood too",
+				desc: "Return the the entrance to the cabin and take some extra planks with you",
 				nextEventId: "leaveLogs",
-				requiredInventory: { Firewood: false },
-				setInventory: { Firewood: true },
+				requiredState: { tookPlanks: false },
+				stateChanges: { tookPlanks: true },
+				setInventory: { "Wood Planks": true },
 				tempChange: "decrease",
 			},
 		],
@@ -314,10 +314,11 @@ const eventOpts = [
 				stateChanges: { zombieInCabin: false },
 			},
 			{
-				desc: "Throw one of the logs you found earlier at the zombie",
+				desc: "Throw one of the planks you found earlier at the zombie",
 				nextEventId: "attackZombieFirewood",
-				requiredInventory: { Firewood: true },
+				requiredInventory: { "Wood Planks": true },
 				stateChanges: { zombieInCabin: false },
+				setInventory: { "Wood Planks": false },
 			},
 			{
 				desc: "Uhh... try punching it?",
@@ -730,9 +731,9 @@ const events = [
 	// BEGIN: Firewood
 	{
 		id: "searchForFirewood",
-		text: `Walking around the house, you find a large stack of logs. Some of them are quite large, but there's a few smaller
-        ones that'll be useful for keeping a fire going throughout the night.<br />
-        If you had a <strong>saw</strong> of some sort, you could cut some of them up into planks.`,
+		text: `Walking around the house, you find a large stack of logs. Some of them are quite large, but there's a few planks here that'll be
+        useful for surviving throughout the night.<br />
+        If you had a <strong>saw</strong> of some sort, you could even more of them up into planks.`,
 		optsId: "atFirewood",
 		img: imgLogs,
 	},
@@ -744,16 +745,14 @@ const events = [
 	},
 	{
 		id: "takeLargeFirewood",
-		text: `You take some of the wood with you. It's heavy, but you should have enough now to last you the night.<br />
-        If you find a saw, you can always return here and make some kindling.`,
-		// IDEA: Making kindling when you find the saw from the wood you already have is probably too ambitious, right?
+		text: `You take some of the wood planks with you. They're heavy, but you take all that you can.<br />
+        If you find a saw, you can always return here and make some more planks.`,
 		optsId: "takingLargeFirewood",
 	},
 	{
-		id: "makeKindling",
-		text: `You saw some of the logs into smaller peices of kindling. This should be a great help in starting a fire to keep you warm enough to last through tonight.<br />
-        Do you want to take some larger blocks of wood too?`,
-		optsId: "makingKindling",
+		id: "makePlanks",
+		text: `You saw some of the logs into smaller planks. This should be a great help in surviving through tonight.`,
+		optsId: "makingPlanks",
 	},
 	// END: Firewood
 
@@ -779,7 +778,6 @@ const events = [
 		text: `You begin rifling through the cupboards and cabinets in the cabin. They seem mostly empty or filled with junk,
         but you're able to scavenge a few tins of food and a bottle of water. There's also a locked safe hidden at the back of a cabinet, but no signs of a combination anywhere.`,
 		// TODO: Anything inside safe, or just note for the hunter?
-		// TODO: Image
 		img: imgSafe,
 		optsId: "riflingCabin",
 	},
@@ -879,8 +877,8 @@ const events = [
 	},
 	{
 		id: "attackZombieFirewood",
-		text: `Taking as big a peice of the firewood as you can reasonably throw, you aim for the head. Luckily, your aim is better than you thought,
-        and the log scores a hit directly on the back of the zombie's head. It collapses to the floor, dead.`,
+		text: `Taking as big a  plank as you can reasonably throw, you aim for the head. Luckily, your aim is better than you thought,
+        and the it scores a hit directly on the back of the zombie's head. It collapses to the floor, dead.`,
 		optsId: "killedZombie",
 	},
 	{
