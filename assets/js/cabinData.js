@@ -26,7 +26,7 @@ const soundBarricade = "./assets/sounds/Barricading.wav";
 const profHunter = "Hunter";
 const profMechanic = "Mechanic";
 const profDoctor = "Doctor";
-const profVeteran = "Veteran";
+const profVeteran = "War Veteran";
 const profPriest = "Priest";
 
 const eventOpts = [
@@ -778,7 +778,6 @@ const events = [
 		text: `You begin rifling through the cupboards and cabinets in the cabin. They seem mostly empty or filled with junk,
         but you're able to scavenge a few tins of food and a bottle of water. There's also a locked safe hidden at the back of a cabinet, but no signs of a combination anywhere.`,
 		// TODO: Anything inside safe, or just note for the hunter?
-		// TODO: Image
 		img: imgSafe,
 		optsId: "riflingCabin",
 	},
