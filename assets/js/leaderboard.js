@@ -8,7 +8,10 @@ function getGameStatus() {
 function showTimes() {
 	// Parse the saved times array
 	let timeArray = JSON.parse(localStorage.getItem("timeArray"));
+	// If it doesn't exist in localStorage, try sessionStorage
 	if (!timeArray || !timeArray[0]) timeArray = JSON.parse(sessionStorage.getItem("timeArray"));
+	// If it still doesn't exist, create it
+	if (!timeArray) timeArray = Array.apply(null, { length: ARRAY_SIZE });
 	// Get the element to display the leaderboard on
 	const leaderboard = document.getElementById("timesList");
 
