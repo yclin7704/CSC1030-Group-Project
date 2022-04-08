@@ -10,7 +10,6 @@ UNSUCESSFUL PLAYTHROUGH -- Andrew Moneypenny
 --> Show off the player dying as a result of poor preparation before night starts
 --> Show off the player dying as a result of waiting after the 50 second timer for night ends
 --> Show that unsuccessful playthroughs aren't added to the Leaderboard
---> (If there's time) Show that the player can die outside of the main preparation phase e.g eating the Mushrooms as the Hunter
 
 
 BEST BITS 1
