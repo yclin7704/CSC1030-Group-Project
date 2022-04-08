@@ -37,8 +37,7 @@ function getGameState() {
 	if (savedData) return JSON.parse(savedData);
 	else
 		return {
-			// TODO: Get profession properly with sessionStorage.getItem("profession");
-			profession: profHunter,
+			profession: sessionStorage.getItem("profession"),
 		};
 }
 
@@ -89,8 +88,7 @@ async function runEvent(eventId) {
 		// Update the setting image
 		setImg(eventData.img);
 		// Crossfade audio
-		// DEBUG: Re-enable audio
-		//crossfadeAudio(eventData.audio);
+		crossfadeAudio(eventData.audio);
 		// Update the player's inventory
 		updateInventory(eventData.setInventory);
 		// Show the user's options
@@ -221,7 +219,7 @@ async function selectOption(opt) {
 
 /**
  * Check if all the given requirements are met
- * @todo Any way of doing (A OR B)?
+ * Idea for possible improvement (Not needed for this project): Any way of doing (A OR B)?
  * @param {JSON} reqs The requirements to check
  * @returns True if all requirements are met, false if not
  */
@@ -239,7 +237,6 @@ function areReqsMet(reqs) {
 
 /**
  * Display the given dialogue to the user
- * @todo Some fancy ttyping effect maybe?
  * @param {string} text The text to display
  */
 async function print(text) {

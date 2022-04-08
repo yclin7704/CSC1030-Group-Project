@@ -45,7 +45,7 @@ function compareTime() {
 		let timeArray = JSON.parse(localStorage.getItem("timeArray"));
 		// If it doesn't exist in localStorage, try sessionStorage
 		if (!timeArray) timeArray = JSON.parse(sessionStorage.getItem("timeArray"));
-		// If it doesn't exist, create it
+		// If it still doesn't exist, create it
 		if (!timeArray) timeArray = Array.apply(null, { length: ARRAY_SIZE });
 		console.log(timeArray);
 

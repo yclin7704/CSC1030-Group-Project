@@ -153,6 +153,7 @@ const textNodes = [
             },
             {
                 text: 'Fuel the campfire',
+                requiredState: (currentState) => !currentState.fireLit,
                 requiredInventory: { 'Wood Planks': true },
                 tempChange: -1,
                 nextText: 2.1
@@ -201,10 +202,19 @@ const textNodes = [
             },
             {
                 text: 'Light Campfire with matches',
-                requiredInventory: { 'Matches': true },
-                requiredState: (currentState) => !currentState.firelit,
+                requiredInventory: { 'Matches': true, Torch:false},
+                requiredState: (currentState) => !currentState.fireLit,
                 setState: { fireLit : true },
                 setInventory: {'Matches': false},
+                tempChange: -1,
+                nextText: 2
+            },
+            {
+                text: 'Light Campfire with the torch',
+                requiredInventory: { 'Matches': false, Torch:true},
+                requiredState: (currentState) => !currentState.fireLit,
+                setState: { fireLit : true },
+                setInventory: {Torch: false},
                 tempChange: -1,
                 nextText: 2
             },
