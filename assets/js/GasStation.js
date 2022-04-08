@@ -505,6 +505,7 @@ const textNodes = [
                 text: 'Take the parts',
                 nextEventId: 45,
                 requiredInventory: { 'Parts': false },
+                setInventory: {Parts:true},
                 requiredState: (currentState) => !currentState.GasParts,
                 setState: {GasParts:true},
             },
