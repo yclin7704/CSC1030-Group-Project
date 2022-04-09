@@ -777,7 +777,8 @@ const textNodes = [
         options: [
             {
                 text: 'Go with the man in his vehicle',
-                nextEventId: 21
+                nextEventId: 21,
+                setState:{GameWin:false}
             },
             {
                 text: 'Stay at the gas station and prepare for the night',
@@ -789,11 +790,13 @@ const textNodes = [
                 text: 'Stay at the gas station and prepare for the night',
                 tempChange: 'decrease',
                 requiredState: (currentState) => !currentState.FixCar,
+                setInventory: {Knife : true},
                 nextEventId: 55
             },
             {
                 text: 'Attempt to steal the vehicle',
-                nextEventId: 23
+                nextEventId: 23,
+                setState: {GameWin:true}
             }
         ]
     },
@@ -828,12 +831,11 @@ const textNodes = [
         text: '<i>"Take this knife to protect yourself</i>',
         image: './assets/images/car.jpg',
         sound: './assets/sounds/knifeholster.wav',
-        inventory,
+        inventory: '',
         options:[
             {
                 text: 'Prepare for the night',
                 tempChange: 'decrease',
-                setInventory: {Knife:true},
                 nextEventId: 29
             },
             {
@@ -995,8 +997,7 @@ const textNodes = [
                 text: 'Use the matches',
                 requiredInventory: { 'Matches': true },
                 tempChange: 5,
-                setInventory: { Matches: false },
-                setInventory: {'Wood Planks':false, Gasoline:false},
+                setInventory: {'Wood Planks':false, Gasoline:false, Matches: false},
                 setState: { Fire: true},
                 nextEventId: 34
             },
