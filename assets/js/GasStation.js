@@ -831,7 +831,7 @@ const textNodes = [
         text: '<i>"Take this knife to protect yourself</i>',
         image: './assets/images/car.jpg',
         sound: './assets/sounds/knifeholster.wav',
-        inventory,
+        inventory: '',
         options:[
             {
                 text: 'Prepare for the night',
