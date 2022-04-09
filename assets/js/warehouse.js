@@ -56,6 +56,13 @@ function startGame()
 // This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.
 
 function showTextNode(textNodeIndex){
+    // Checks to see if the Player has won or lost
+    if (state.GameWin) {
+        sessionStorage.setItem("endStatus", "true");
+    } else {
+        sessionStorage.setItem("endStatus", "false");
+    }
+
     if (textNodeIndex === "Hospital"){
         window.location.href = "Hospital.html";
     }
@@ -386,12 +393,14 @@ const textNodes = [
                 text: "Start the Night",
                 requiredState: (currentState) => !currentState.fenceFixed && currentState.barricaded,
                 tempChange: -1,
+                setState: {GameWin: true},
                 nextText: 5.3
             },
             {
                 text: "Start the Night",
                 requiredState: (currentState) => currentState.fenceFixed && currentState.barricaded,
                 tempChange: -1,
+                setState: {GameWin: true},
                 nextText: 5.4
             }
         ]
