@@ -1628,7 +1628,7 @@ const textNodes = [
         text: "The trap you set outside with the gasoline turned out to work wonders as the zombies weren't dumb or intelligent as they walked away from the facility while some did try but quickly became ablazed. Unfortunately the gasoline won't be able to heat you up for the snow storm.",
         note: '',
         inventory: '',
-        image: 'assets/images/lab-barricade',
+        image: 'assets/images/lab-barricade.jpg',
         options: [
             {
                 text: 'Wait until the storm',
@@ -1657,7 +1657,7 @@ const textNodes = [
         text: "The trap you set outside with the gasoline turned out to work wonders as the zombies weren't dumb or intelligent as they walked away from the facility while some did try but quickly became ablazed. The extra defence from the barricade probably wasn't needed but you feel a lot safer I guess? Anyway you have bigger problems surviving this snow storm.",
         note: '',
         inventory: '',
-        image: 'assets/images/lab-barricade',
+        image: 'assets/images/lab-barricade.jpg',
         options: [
             {
                 text: 'Wait until the storm',
