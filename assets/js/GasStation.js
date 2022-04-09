@@ -997,8 +997,7 @@ const textNodes = [
                 text: 'Use the matches',
                 requiredInventory: { 'Matches': true },
                 tempChange: 5,
-                setInventory: { Matches: false },
-                setInventory: {'Wood Planks':false, Gasoline:false},
+                setInventory: {'Wood Planks':false, Gasoline:false, Matches: false},
                 setState: { Fire: true},
                 nextEventId: 34
             },
