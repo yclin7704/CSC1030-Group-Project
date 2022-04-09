@@ -1152,7 +1152,7 @@ const textNodes = [
          */
 
         id: 37,
-        text: 'Your body temperature falls below 35 degrees celcius.  The symptoms of hypothermia develop. You start to shiver, followed by '
+        text: 'The temperature falls below -20 degrees celcius. The symptoms of hypothermia develop. You start to shiver, followed by '
             + 'a feeling of shortness of breath and a lack of co-ordination. Eventually, your eyes slowly close and you lose consciousness. '
             + 'You later die from the hypothermia. '
             + '<b><em>You Died!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>',
