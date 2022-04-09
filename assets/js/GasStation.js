@@ -575,14 +575,14 @@ const textNodes = [
             {
                 text: 'Give him the parts you found',
                 requiredInventory: { 'Parts': true },
-                setInventory: { Parts: false },
-                setInventory:{Knife:true},
+                setInventory: { Parts: false, Knife:true},
                 tempChange: 'decrease',
                 nextEventId: 11
             },
             {
                 text: 'Help him search for the parts',
                 requiredInventory: {'Parts':false},
+                requiredState: (currentState) => !currentState.leftLocation,
                 setState: { SearchParts: true },
                 tempChange: 'decrease',
                 nextEventId: 42
@@ -590,6 +590,12 @@ const textNodes = [
             {
                 text: 'Attack him and steal his supplies',
                 nextEventId: 12
+            },
+            {
+                text: 'Prepare for the night',
+                nextEventId: 29,
+                setState: {LightsOff:true},
+                requiredState: (currentState) => currentState.leftLocation
             }
         ]
     },
@@ -938,9 +944,8 @@ const textNodes = [
                 text: 'Abandon the fire',
                 requiredInventory: { 'Matches': false },
                 setInventory: {'Wood Planks':false, Gasoline:false},
-                setState: { Fire: false },
+                setState: { Fire: false, LightsOff:true },
                 nextEventId: 29,
-                setState: {LightsOff:true}
             }
         ]
     },
@@ -953,10 +958,9 @@ const textNodes = [
         options: [
             {
                 text: 'Continue preparation',
-                setState: { Matches: true },
+                setState: { Matches: true, LightsOff:true },
                 setInventory: {Matches:false},
                 nextEventId: 29,
-                setState: {LightsOff:true},
             },
             {
                 text: 'Finish preparation',
