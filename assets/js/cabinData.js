@@ -1,13 +1,17 @@
-const imgOutside = "assets/images/cabin-outside.webp";
-const imgInside = "assets/images/cabin-inside.webp";
-const imgHatch = "assets/images/cabin-trapdoor.jpg";
+const imgOutside = "./assets/images/Cabin/cabin-outside.webp";
+const imgInside = "./assets/images/Cabin/cabin-inside.webp";
+const imgHatch = "./assets/images/Cabin/cabin-trapdoor.jpg";
+const imgSafe = "./assets/images/Cabin/safe.jpg";
+const imgForest = "./assets/images/Cabin/forest.jpg";
+const imgLogs = "./assets/images/Cabin/logs.jpg";
+const imgCampfire = "./assets/images/fire_gas-station.jpg";
 
-const gifDied = "assets/images/You-Died_TEST-GIF.gif";
-const gifWon = "assets/images/Victory2_TEST-GIF.gif";
+const gifDied = "./assets/images/You-Died_TEST-GIF.gif";
+const gifWon = "./assets/images/Victory2_TEST-GIF.gif";
 
-const audioWind = "assets/sounds/wind.wav";
-const audioRain = "assets/sounds/rain_2.wav";
-const audioWinter = "assets/sounds/winterStorm.wav";
+const audioWind = "./assets/sounds/wind.wav";
+const audioRain = "./assets/sounds/rain_2.wav";
+const audioWinter = "./assets/sounds/winterStorm.wav";
 
 const soundZombie = "./assets/sounds/zombieseating.wav";
 const soundTakeWood = "./assets/sounds/SpareFireWood.wav";
@@ -22,7 +26,7 @@ const soundBarricade = "./assets/sounds/Barricading.wav";
 const profHunter = "Hunter";
 const profMechanic = "Mechanic";
 const profDoctor = "Doctor";
-const profVeteran = "Veteran";
+const profVeteran = "War Veteran";
 const profPriest = "Priest";
 
 const eventOpts = [
@@ -74,14 +78,6 @@ const eventOpts = [
 				desc: "Return to the warehouse",
 				nextEventId: "warehouse",
 			},
-			{
-				desc: "DEBUG: Increase temp",
-				tempChange: "increase",
-			},
-			{
-				desc: "DEBUG: Decrease temp",
-				tempChange: "decrease",
-			},
 		],
 	},
 
@@ -90,24 +86,27 @@ const eventOpts = [
 		id: "atFirewood",
 		choices: [
 			{
-				desc: "Ignore the firewood for now and return to the entrance to the cabin",
+				desc: "Ignore the planks for now and return to the entrance to the cabin",
 				nextEventId: "leaveLogs",
 				tempChange: "decrease",
 			},
 			{
-				desc: "Take some of the logs",
-				requiredInventory: { Firewood: false },
-				setInventory: { Firewood: true },
+				desc: "Take some of the planks",
+				requiredState: { tookPlanks: false },
+				stateChanges: { tookPlanks: true },
+				setInventory: { "Wood Planks": true },
 				nextEventId: "takeLargeFirewood",
 				disableMode: "hidden",
 				tempChange: "decrease",
 				sound: soundTakeWood,
 			},
 			{
-				desc: "Make some smaller kindling out of the logs using your saw",
-				requiredInventory: { "Bone Saw": true, Kindling: false },
-				setInventory: { Kindling: true },
-				nextEventId: "makeKindling",
+				desc: "Make some extra planks out of the logs using your saw",
+				requiredInventory: { "Bone Saw": true },
+				requiredState: { madePlanks: false },
+				stateChanges: { madePlanks: true },
+				setInventory: { "Wood Planks": true },
+				nextEventId: "makePlanks",
 				tempChange: "decrease",
 			},
 			{
@@ -122,25 +121,26 @@ const eventOpts = [
 		id: "takingLargeFirewood",
 		choices: [
 			{
-				desc: "Return to the entrance to the cabin with your blocks of firewood",
+				desc: "Return to the entrance to the cabin with your wooden planks",
 				nextEventId: "leaveLogs",
 				tempChange: "decrease",
 			},
 		],
 	},
 	{
-		id: "makingKindling",
+		id: "makingPlanks",
 		choices: [
 			{
-				desc: "Return to the entrance to the cabin with your kindling",
+				desc: "Return to the entrance to the cabin with your planks",
 				nextEventId: "leaveLogs",
 				tempChange: "decrease",
 			},
 			{
-				desc: "Return the the entrance to the cabin and take some larger blocks of firewood too",
+				desc: "Return the the entrance to the cabin and take some extra planks with you",
 				nextEventId: "leaveLogs",
-				requiredInventory: { Firewood: false },
-				setInventory: { Firewood: true },
+				requiredState: { tookPlanks: false },
+				stateChanges: { tookPlanks: true },
+				setInventory: { "Wood Planks": true },
 				tempChange: "decrease",
 			},
 		],
@@ -314,10 +314,11 @@ const eventOpts = [
 				stateChanges: { zombieInCabin: false },
 			},
 			{
-				desc: "Throw one of the logs you found earlier at the zombie",
+				desc: "Throw one of the planks you found earlier at the zombie",
 				nextEventId: "attackZombieFirewood",
-				requiredInventory: { Firewood: true },
+				requiredInventory: { "Wood Planks": true },
 				stateChanges: { zombieInCabin: false },
+				setInventory: { "Wood Planks": false },
 			},
 			{
 				desc: "Uhh... try punching it?",
@@ -608,8 +609,8 @@ const eventOpts = [
 		id: "coldInCabin",
 		choices: [
 			{
-				desc: "Light a fire using with the logs and matches you found earlier",
-				requiredInventory: { Matches: true }, // TODO: LOGS
+				desc: "Light a fire using with the planks and matches you found earlier",
+				requiredInventory: { Matches: true, "Wood Planks": true },
 				disableMode: "hidden",
 				nextEventId: "lightFire",
 				tempChange: 10,
@@ -730,28 +731,28 @@ const events = [
 	// BEGIN: Firewood
 	{
 		id: "searchForFirewood",
-		text: `Walking around the house, you find a large stack of logs. Some of them are quite large, but there's a few smaller
-        ones that'll be useful for keeping a fire going throughout the night.<br />
-        If you had a <strong>saw</strong> of some sort, you could cut some of them up into planks.`,
+		text: `Walking around the house, you find a large stack of logs. Some of them are quite large, but there's a few planks here that'll be
+        useful for surviving throughout the night.<br />
+        If you had a <strong>saw</strong> of some sort, you could even more of them up into planks.`,
 		optsId: "atFirewood",
+		img: imgLogs,
 	},
 	{
 		id: "visitFirewood",
 		text: "You return to the stack of logs.",
 		optsId: "atFirewood",
+		img: imgLogs,
 	},
 	{
 		id: "takeLargeFirewood",
-		text: `You take some of the wood with you. It's heavy, but you should have enough now to last you the night.<br />
-        If you find a saw, you can always return here and make some kindling.`,
-		// IDEA: Making kindling when you find the saw from the wood you already have is probably too ambitious, right?
+		text: `You take some of the wood planks with you. They're heavy, but you take all that you can.<br />
+        If you find a saw, you can always return here and make some more planks.`,
 		optsId: "takingLargeFirewood",
 	},
 	{
-		id: "makeKindling",
-		text: `You saw some of the logs into smaller peices of kindling. This should be a great help in starting a fire to keep you warm enough to last through tonight.<br />
-        Do you want to take some larger blocks of wood too?`,
-		optsId: "makingKindling",
+		id: "makePlanks",
+		text: `You saw some of the logs into smaller planks. This should be a great help in surviving through tonight.`,
+		optsId: "makingPlanks",
 	},
 	// END: Firewood
 
@@ -777,7 +778,7 @@ const events = [
 		text: `You begin rifling through the cupboards and cabinets in the cabin. They seem mostly empty or filled with junk,
         but you're able to scavenge a few tins of food and a bottle of water. There's also a locked safe hidden at the back of a cabinet, but no signs of a combination anywhere.`,
 		// TODO: Anything inside safe, or just note for the hunter?
-		// TODO: Image
+		img: imgSafe,
 		optsId: "riflingCabin",
 	},
 	{
@@ -876,8 +877,8 @@ const events = [
 	},
 	{
 		id: "attackZombieFirewood",
-		text: `Taking as big a peice of the firewood as you can reasonably throw, you aim for the head. Luckily, your aim is better than you thought,
-        and the log scores a hit directly on the back of the zombie's head. It collapses to the floor, dead.`,
+		text: `Taking as big a  plank as you can reasonably throw, you aim for the head. Luckily, your aim is better than you thought,
+        and the it scores a hit directly on the back of the zombie's head. It collapses to the floor, dead.`,
 		optsId: "killedZombie",
 	},
 	{
@@ -947,6 +948,7 @@ const events = [
         the little daylight remaining slowly vanishing as the tree branches thicken. Suddenly, you feel the snow beneath you give way,
         and your leg plunges into an icy-cold pool of water below.`,
 		optsId: "visitingForestInitial",
+		img: imgForest,
 	},
 	{
 		id: "icyWaterPush",
@@ -1014,12 +1016,14 @@ const events = [
 		id: "lightFire",
 		text: `You successfully light your fire, and warm yourself with its orange glow. You prepare to get some sleep, knowing you've survived the night.`,
 		optsId: "litFire",
+		img: imgCampfire,
 	},
 	{
 		id: "lightCabinFire",
 		text: `As you attempt to start a fire using some wood from the furniture strewn across the cabin, you accidentally drop a match which, before you can stop it,
         falls on to the carpet below you, which quickly catches alight.`,
 		optsId: "onFire",
+		img: imgCampfire,
 	},
 	// END: Night
 
@@ -1087,7 +1091,7 @@ const eventsHunter = [
 		id: "firstVisitOutside",
 		text: `Following the path you've treaded so many times before, you find yourself outside your cabin in the woods once again. 
         You can still see signs of zombies nearby, and the window of the cabin is smashed.
-        TODO Something about things aren't looking good for the rest of your family`,
+        Things aren't looking good for the rest of your family - you hope they managed to escape in time.`,
 	},
 	{
 		id: "searchingCabin",
@@ -1153,7 +1157,10 @@ function getRandomSearchCabinDialogue() {
 }
 
 function goToStatistics() {
-	window.location.href = "EndStatistics.html";
+	if (gameState.won) {
+		sessionStorage.setItem("endStatus", true);
+		window.location.href = "EndStatistics.html";
+	} else window.location.href = "EndStatistics.html";
 }
 
 function guessCombination() {

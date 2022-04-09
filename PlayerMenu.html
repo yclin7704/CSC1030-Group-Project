@@ -19,12 +19,13 @@
 				<button class="button" value="New game" onclick="newGame();">New Game</button>
 				<button class="button" value="View leaderboard" onclick="window.location.href='Leaderboard.html'">View Leaderboard</button>
 				<button class="button" value="Cheat Code" onclick='window.location.href="CheatCodes.html"'>Cheat Codes</button>
-				<label class="label" for="Normal">Normal CSS</label>
-				<input type="radio" name="Scheme" id="Normal" value="Normal"/><br>
-				<label class="label" for="Blue">Blue</label>
+				<p class="label">For those who are Colourblind you may wish to change the Colour Scheme to one of the options below, or change it back to normal again if you change your mind:</p>
+				<label class="label" for="Normal">Normal</label>
+				<input type="radio" name="Scheme" id="Normal" value="Normal" checked="checked"/><br>
+				<label class="label" for="Blue">Blue/Orange</label>
 				<input type="radio" name="Scheme" id="Blue" value="Blue"/><br>
-				<label class="label" for="Monocolour">Monocolour</label>
-				<input type="radio" name="Scheme" id="Monocolour" value="Monocolour"/>
+				<label class="label" for="Yellow">Yellow/Pink</label>
+				<input type="radio" name="Scheme" id="Yellow" value="Yellow"/>
 				</div>
 				<form id = "playerForm" action="./Warehouse.html" onsubmit="setPlayerName(), setGameVolume();">
 				<div id="menuOptions">

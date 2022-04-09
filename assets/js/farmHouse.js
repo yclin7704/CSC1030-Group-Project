@@ -34,7 +34,6 @@ function startGame(){
     setTemperatureData(showTextNode, 34, 34);
     showInventory();
     displayPlayerName();
-    //clearInventory(); //This clears the inventory
     showTextNode(1);
 }
 
@@ -59,6 +58,13 @@ function showTextNode(textNodeIndex){
         sessionStorage.setItem("farmhouseGameState", JSON.stringify(state));
         window.location.href = "Warehouse.html";
     }
+
+    if (state.GameWin) {
+        sessionStorage.setItem('endStatus', 'true');
+    } else {
+        sessionStorage.setItem("endStatus", "false");
+    }
+
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "dialogue"); // Changes the dialogue box to text stored in the text node.
     updateInventory(textNode.inventory);
@@ -615,7 +621,7 @@ const textNodes = [
                 requiredState: (currentState) => !currentState.Matches,
                 //requiredInventory: {Matches:false},
                 setInventory: {Matches: true},
-                //setState: {Matches: true},
+                setState: {Matches: true},
                 nextText: 18
             },
             {
@@ -834,12 +840,14 @@ const textNodes = [
             {
                 text: 'Shoot your gun',
                 requiredInventory: {shotgunLoaded:true},
+                setState: {GameWin:true},
                 //requiredState: (currentState) => currentState.shotgunLoaded,
                 nextText: 32
             },
             {
                 text: 'Slash the zombies',
                 requiredInventory: {kitchenKnife:true},
+                setState: {GameWin:true},
                 //requiredState: (currentState) => currentState.kitchenKnife,
                 nextText: 32
             },
@@ -973,7 +981,7 @@ const textNodes = [
             {
                 text: 'Set up your camp',
                 requiredState: (currentState) => !currentState.camp,
-                requiredInventory: {blanket:true, firewood:true, Matches:true},
+                requiredInventory: {blanket:true, firewood:true, Matches:true, "Wood Planks":false},
                 setInventory: {firewood:false, Matches:false, blanket:false},
                 setState: {camp: true},
                 nextText: 36
@@ -989,7 +997,7 @@ const textNodes = [
             {
                 text: 'Set up your camp',
                 requiredState: (currentState) => !currentState.camp,
-                requiredInventory: {blanket:true, "Wood Planks":true, Matches:true},
+                requiredInventory: {blanket:true, "Wood Planks":true, Matches:true, firewood: false},
                 setInventory: {"Wood Planks":false, Matches:false, blanket:false},
                 setState: {camp: true},
                 nextText: 36
@@ -997,15 +1005,24 @@ const textNodes = [
             {
                 text: 'Set up your camp',
                 requiredState: (currentState) => !currentState.camp,
-                requiredInventory: {"Wood Planks":true, Matches:true},
+                requiredInventory: {"Wood Planks":true, Matches:true, firewood:false},
                 setInventory: {"Wood Planks":false, Matches:false},
                 setState: {camp: true},
                 nextText: 36
             },
             {
                 text: 'Set up your camp',
-                requiredState: (currentState) => currentState.Hunter && !currentState.camp,
-                requiredInventory: {firewood:true, sticks:true},
+                requiredState: (currentState) => !currentState.camp,
+                requiredInventory: {firewood:true, Torch:true, "Wood Planks":false},
+                setInventory: {firewood:false, Torch:false},
+                setState: {camp: true},
+                nextText: 36
+            },
+            {
+                text: 'Set up your camp',
+                requiredState: (currentState) => !currentState.camp,
+                requiredInventory: {firewood:false, Torch:true, "Wood Planks":true},
+                setInventory: {firewood:false, Torch:false},
                 setState: {camp: true},
                 nextText: 36
             },

@@ -1,11 +1,11 @@
 /* Variables */
 /* Will apply a blue colour scheme to the Main Pages */
 :root {
-	--background: #171c24;
-	--brownDark: #3e455d;
-	--beige: #a38767;
-	--text: #debc89;
-	--lightText: #f5dfc3;
+	--background: #091b36;
+	--brownDark: #1a2a5f;
+	--beige: #a56d2c;
+	--text: #db9e43;
+	--lightText: #f5c88d;
 }
 
 .temperatureSpan {
@@ -17,6 +17,7 @@
 }
 
 .dialogueOuter {
+	background-color: rgb(54, 39, 11);
     color: #553212;
 }
 
@@ -27,4 +28,8 @@
 button:enabled:hover {
 	color: var(--beige);
 	background-color: #553212;
+}
+
+.buttonChoice {
+	color: #553212;
 }

@@ -15,12 +15,14 @@ function validateCheat() {
         case "GreenScheme":
             sessionStorage.setItem("Value", "./assets/css/Cheat2.css");
             break;
-        case "Monocolour":
-        case "Monocolor":
+        case "Monochrome":
             sessionStorage.setItem("Value", "./assets/css/Cheat3.css");
             break;
         case "betaDesign":
             sessionStorage.setItem("Value", "./assets/css/Cheat4.css");
+            break;
+        case "normalText":
+            sessionStorage.setItem("Typewriter", true);
             break;
         default:
             sessionStorage.setItem("Value", "./assets/css/main.css");

@@ -24,13 +24,8 @@ function startGame()
         case "Priest": state["Priest"] = true; break;
     }
 
-    showVault();
-
     // Displays the inventory
     showInventory();
-
-    // clears the inventory before the game starts
-    //clearInventory();
 
     //Time up
     setTimerData(showTextNode, "camp", "timeOut");
@@ -69,6 +64,14 @@ function showTextNode(textNodeIndex){
     }
     if (textNodeIndex === 3.33){
         showVault();
+    }
+    if (textNodeIndex === 3.3){
+        vaultClear();
+    }
+    if (state.GameWin) {
+        localStorage.setItem('endStatus', 'true');
+    } else {
+        localStorage.setItem('endStatus', 'false');
     }
     const textNode = textNodes.find(textNode => textNode.id === textNodeIndex); // Finds the text node by comparing to parameter input.
     typeSentence(textNode.text, "labText"); // Changes the dialogue box to text stored in the text node.
@@ -264,7 +267,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/lab-room-left.jpg',
-        sound2: 'assets/sounds/zombieBashing.wav',
+        sound: 'assets/sounds/zombieBashing.wav',
         options: [
             {
                 text: 'Sneak up and attack',
@@ -484,7 +487,7 @@ const textNodes = [
     {
         id: 3.2,
         text: `You walk down stairs to be faced with a metallic iron door, upon opening said door, it reveals to be a storage of medicine and chemicals for the lab however upon further inspection, it seems to have been converted to in a bunker by the previous occupant, not that you are complaining with plenty of food and water. There is also a toolbox here if you want to repair things?`,
-        note: 'assets/images/lab-room-basement.jpg',
+        note: '',
         sound: 'assets/sounds/taptap.wav',
         inventory: '',
         image: 'assets/images/lab-room-basement.jpg',
@@ -528,7 +531,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/lab-room-basement.jpg',
-        sound2: 'assets/sounds/toolbox.wav',
+        sound: 'assets/sounds/toolbox.wav',
         options: [
             {
                 text: "Pick up the hammer",
@@ -560,7 +563,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/lab-room-basement.jpg',
-        sound2: 'assets/sounds/scavage.wav',
+        sound: 'assets/sounds/scavage.wav',
         options: [
             {
                 text: "Pick up all the chemical",
@@ -580,7 +583,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/lab-room-basement.jpg',
-        sound2: 'assets/sounds/scavage.wav',
+        sound: 'assets/sounds/scavage.wav',
         options: [
             {
                 text: "Pick up all the chemical",
@@ -600,7 +603,7 @@ const textNodes = [
         note: '',
         inventory: '',
         image: 'assets/images/lab-room-basement.jpg',
-        sound2: 'assets/sounds/stomp.wav',
+        sound: 'assets/sounds/stomp.wav',
         options: [
             {
                 text: "Ponder what to do next",
@@ -1238,6 +1241,37 @@ const textNodes = [
         ]
     },
     {
+        id: 3.331,
+        text: `I don't know how but you somehow managed to open the vault by either sheer luck or was it something else? Anyway inside was a glass casing with a note aside it.`,
+        note: ``,
+        inventory: '',
+        image: 'assets/images/lab-room-right.jpg',
+        options: [
+            {
+                text: "Read the note",
+                nextText: 3.3311 
+            },
+            {
+                text: "Go back with cure?",
+                setInventory: {cure: true},
+                nextText: 3.3 
+            },
+        ]
+    },
+    {
+        id: 3.3311,
+        text: 'The note read:<br><button onClick="changeText();" class="changeText">Change Text</button> <button onClick="revertText();" class="changeText">Revert Text</button>',
+        note: `Well done! you broke into my safe, your reward shall be the cure to this outbreak. How did I make it? Don't worry about it. Anyway the cure is inactive until the next day and the cure will infinitely reproduce itself. Cool right? - Dave`,
+        inventory: '',
+        image: 'assets/images/lab-room-right.jpg',
+        options: [
+            {
+                text: "Go back",
+                nextText: 3.331 
+            },
+        ]
+    },
+    {
         id: 4,
         text: `You decided that the best way to accomplish anything is to brute force through the dumbest way possible so you smash the glass and jumped in. Unfortunately for you there was a zombie there ready for you to land and became his next meal.<br><br><a href=\"EndStatistics.html\">See Statistics</a>`,
         note: '',
@@ -1565,7 +1599,7 @@ const textNodes = [
         text: "With how little zombies there are around this place, the simple barricade you put up should be more than enough to keep out those zombies which fortunately for you is true. After some time has passed the zombies eventually gave up and left however the worst of it is yet to come...the storm.",
         note: '',
         inventory: '',
-        image: 'assets/images/lab-barricade',
+        image: 'assets/images/lab-barricade.jpg',
         options: [
             {
                 text: 'Wait until the storm',
@@ -1594,7 +1628,7 @@ const textNodes = [
         text: "The trap you set outside with the gasoline turned out to work wonders as the zombies weren't dumb or intelligent as they walked away from the facility while some did try but quickly became ablazed. Unfortunately the gasoline won't be able to heat you up for the snow storm.",
         note: '',
         inventory: '',
-        image: 'assets/images/lab-barricade',
+        image: 'assets/images/lab-barricade.jpg',
         options: [
             {
                 text: 'Wait until the storm',
@@ -1623,7 +1657,7 @@ const textNodes = [
         text: "The trap you set outside with the gasoline turned out to work wonders as the zombies weren't dumb or intelligent as they walked away from the facility while some did try but quickly became ablazed. The extra defence from the barricade probably wasn't needed but you feel a lot safer I guess? Anyway you have bigger problems surviving this snow storm.",
         note: '',
         inventory: '',
-        image: 'assets/images/lab-barricade',
+        image: 'assets/images/lab-barricade.jpg',
         options: [
             {
                 text: 'Wait until the storm',
@@ -1699,11 +1733,13 @@ const textNodes = [
             {
                 text: 'Conclude',
                 requiredInventory: { 'cure': false },
+                setState: { GameWin : true },
                 nextText: "victory"         
             },
             {
                 text: 'Conclude',
                 requiredInventory: { 'cure': true },
+                setState: { GameWin : true },
                 nextText: "trueVictory"
             },
         ]

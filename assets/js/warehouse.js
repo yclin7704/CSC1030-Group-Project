@@ -56,6 +56,13 @@ function startGame()
 // This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.
 
 function showTextNode(textNodeIndex){
+    // Checks to see if the Player has won or lost
+    if (state.GameWin) {
+        sessionStorage.setItem("endStatus", "true");
+    } else {
+        sessionStorage.setItem("endStatus", "false");
+    }
+
     if (textNodeIndex === "Hospital"){
         window.location.href = "Hospital.html";
     }
@@ -153,6 +160,8 @@ const textNodes = [
             },
             {
                 text: 'Fuel the campfire',
+                requiredState: (currentState) => !currentState.fireLit,
+                requiredInventory: { 'Wood Planks': true },
                 tempChange: -1,
                 nextText: 2.1
             },
@@ -164,6 +173,7 @@ const textNodes = [
             },
             {
                 text: 'Barricade the door',
+                requiredInventory: { 'Wood Planks': true },
                 requiredState: (currentState) => !currentState.barricaded,
                 tempChange: -1,
                 nextText: 2.2
@@ -199,10 +209,19 @@ const textNodes = [
             },
             {
                 text: 'Light Campfire with matches',
-                requiredInventory: { 'Matches': true },
-                requiredState: (currentState) => !currentState.firelit,
+                requiredInventory: { 'Matches': true, Torch:false},
+                requiredState: (currentState) => !currentState.fireLit,
                 setState: { fireLit : true },
                 setInventory: {'Matches': false},
+                tempChange: -1,
+                nextText: 2
+            },
+            {
+                text: 'Light Campfire with the torch',
+                requiredInventory: { 'Matches': false, Torch:true},
+                requiredState: (currentState) => !currentState.fireLit,
+                setState: { fireLit : true },
+                setInventory: {Torch: false},
                 tempChange: -1,
                 nextText: 2
             },
@@ -374,12 +393,14 @@ const textNodes = [
                 text: "Start the Night",
                 requiredState: (currentState) => !currentState.fenceFixed && currentState.barricaded,
                 tempChange: -1,
+                setState: {GameWin: true},
                 nextText: 5.3
             },
             {
                 text: "Start the Night",
                 requiredState: (currentState) => currentState.fenceFixed && currentState.barricaded,
                 tempChange: -1,
+                setState: {GameWin: true},
                 nextText: 5.4
             }
         ]
@@ -412,8 +433,8 @@ const textNodes = [
         text: "You decided to wait patiently for the night to cover the Warehouse in darkness, and as you did you could hear the blood curdling screams of not only the Zombies" +
             "but of some other people as they were attacked. However, as the Zombies grew closer and closer you felt confident in the fact that you were able to successfully" +
             " barricade the front door to the Warehouse because the wood was sturdy and strong, and thankfully there were no other entrances into the Warehouse. As the Zombies" +
-            "apparoached, although it wasn't fixed, the fence managed to still pose as an obstacle to the Zombies as only some of them were able to get through the gap completely" +
-            "unharmed, but your defences on the door were able to hold off the few that did make it through..." +
+            " apparoached, although it wasn't fixed, the fence managed to still pose as an obstacle to the Zombies as only some of them were able to get through the gap completely" +
+            " unharmed, but your defences on the door were able to hold off the few that did make it through..." +
             "<b><em>You Survived!</em></b></br></br><a href=\"EndStatistics.html\">See Statistics</a>",
         inventory: '',
         image: 'assets/images/Victory2_TEST-GIF.gif',

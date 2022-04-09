@@ -57,3 +57,159 @@
     right: 1%;
     left: 74%;
 }
+
+#button4
+{
+    position: absolute;
+    width: 25%;
+	height: 35%;
+    margin: auto;
+    top: 48%;
+    bottom: 0%;
+    right: 150%;
+    left: 1%;
+}
+
+#button5
+{
+    position: absolute;
+    width: 25%;
+	height: 35%;
+    margin: auto;
+    top: 48%;
+    bottom: 0%;
+    right: 4%;
+    left: 4%;
+}
+
+#button6
+{
+    position: absolute;
+    width: 25%;
+	height: 35%;
+    margin: auto;
+    top: 48%;
+    bottom: 0%;
+    right: 1%;
+    left: 74%;
+}
+
+#button7
+{
+    position: absolute;
+    width: 25%;
+	height: 35%;
+    margin: auto;
+    top: 124%;
+    bottom: 0%;
+    right: 150%;
+    left: 1%;
+}
+
+#button8
+{
+    position: absolute;
+    width: 25%;
+	height: 35%;
+    margin: auto;
+    top: 124%;
+    bottom: 0%;
+    right: 4%;
+    left: 4%;
+}
+
+#button9
+{
+    position: absolute;
+    width: 25%;
+	height: 35%;
+    margin: auto;
+    top: 124%;
+    bottom: 0%;
+    right: 1%;
+    left: 74%;
+}
+
+#button0
+{
+    position: absolute;
+    width: 25%;
+	height: 35%;
+    margin: auto;
+    top: 124%;
+    bottom: 0%;
+    right: -30%;
+    left: 104%;
+}
+
+#buttonD
+{
+    position: absolute;
+    width: 25%;
+	height: 35%;
+    margin: auto;
+    top: 40%;
+    bottom: 0%;
+    right: 180%;
+    left: -30%;
+}
+
+#buttonE
+{
+    position: absolute;
+    width: 25%;
+	height: 35%;
+    margin: auto;
+    top: 39%;
+    bottom: 0%;
+    right: -30%;
+    left: 104%;
+}
+
+#passInterface0
+{
+    position: absolute;
+    width: 16%;
+	height: 24%;
+    margin: auto;
+    top: 0;
+    bottom: 119%;
+    right: 150%;
+    left: 6%;
+}
+
+#passInterface1
+{
+    position: absolute;
+    width: 16%;
+	height: 24%;
+    margin: auto;
+    top: 0;
+    bottom: 119%;
+    right: 30%;
+    left: 6%;
+}
+
+#passInterface2
+{
+    position: absolute;
+    width: 16%;
+	height: 24%;
+    margin: auto;
+    top: 0;
+    bottom: 119%;
+    right: 6%;
+    left: 30%;
+}
+
+#passInterface3
+{
+    position: absolute;
+    width: 16%;
+	height: 24%;
+    margin: auto;
+    top: 0;
+    bottom: 119%;
+    right: 6%;
+    left: 78%;
+}

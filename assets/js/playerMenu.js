@@ -64,8 +64,8 @@ function validateOption() {
             sessionStorage.setItem("Value", "./assets/css/main.css"); break;
         case "Blue":
             sessionStorage.setItem("Value", "./assets/css/ColourblindColourPalette.css"); break;
-        case "Monocolour":
-            sessionStorage.setItem("Value", "./assets/css/Cheat3.css"); break;
+        case "Yellow":
+            sessionStorage.setItem("Value", "./assets/css/ColourblindColourPalette2.css"); break;
     }
 }
 

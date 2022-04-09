@@ -98,10 +98,12 @@ function startGame() {
 	// This will take the player to the appropriate Text Node if they die of frostbite or heat stroke
     setTemperatureData(showTextNode, 103, 111);
     
-    // Will display the first text node (id=1)
+    // Will display the second text node if it's not the Player's first visit to the Hospital
     if (state.leftLocation) {
         showTextNode(2);
-    } else {
+    } 
+    // Will display the first text node if it's the Player's first visit to the Hospital
+    else {
         showTextNode(1);
     }
     
@@ -115,9 +117,20 @@ function startGame() {
  * @param textNodeIndex - This is the id number of the text node to be displayed
  */
 function showTextNode(textNodeIndex){
+    // Checks to see if the Player has won or lost
+    if (state.GameWin) {
+        sessionStorage.setItem("endStatus", "true");
+    } else {
+        sessionStorage.setItem("endStatus", "false");
+    }
+
+    // Checks to see if the Player wishes to return to the Warehouse location
     if (textNodeIndex === "Warehouse"){
         window.location.href = "Warehouse.html";
+
+        // This will indicate that the player has visited the Hospital for the first time
         state.leftLocation = true;
+
         // Save the current game state to session storage
         sessionStorage.setItem("HospitalGameState", JSON.stringify(state));
     }
@@ -185,7 +198,7 @@ const textNodes = [
         text: "You arrive at a Hospital, and judging by its ancient and run-down appearance it's likely that it's been abandoned for at least 17 years." + 
             " Although you feel the need to turn away, curiosity and the concern for what might be waiting for you in the forest beckons you closer to the" +
             " collosal building, and as you approach it, the air gets colder around you...</br>Around you, you see some <strong>worn-down First Aid kits</strong>" +
-            " , <strong>an abandoned campfire</strong>, <strong>some Mushrooms</strong> and a <strong>pathway.</strong> Furthermore, the door to the Hospital seems <strong>locked</strong> but" +
+            ", <strong>an abandoned campfire</strong>, <strong>some Mushrooms</strong> and a <strong>pathway.</strong> Furthermore, the door to the Hospital seems <strong>locked</strong> but" +
             " something like a crowbar could pry it open.",
         inventory: '',
         image: 'assets/images/Hospital/Hospital_Outside.jpg',
@@ -870,6 +883,7 @@ const textNodes = [
                 text: 'Start the Night',
                 requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false,
                 requiredInventory: {'First Aid Kits': false, 'Bone Saw': true},
+                setState: {GameWin: true},
                 tempChange: -1,
                 nextText: 102
             },
@@ -884,18 +898,21 @@ const textNodes = [
                 text: 'Start the Night',
                 requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === false,
                 requiredInventory: {'First Aid Kits': true, 'Bone Saw': true},
+                setState: {GameWin: true},
                 tempChange: -1,
                 nextText: 106
             },
             {
                 text: 'Start the Night',
                 requiredState: (currentState) => currentState.defence1 === true && currentState.defence2 === true,
+                setState: {GameWin: true},
                 tempChange: -1,
                 nextText: 107
             },
             {
                 text: 'Start the Night',
                 requiredState: (currentState) => currentState.defence1 === false && currentState.defence2 === true,
+                setState: {GameWin: true},
                 tempChange: -1,
                 nextText: 108
             },
@@ -910,6 +927,7 @@ const textNodes = [
                 text: 'Start the Night',
                 requiredState: (currentState) => currentState.defence1 === true && currentState.defence2 === false,
                 requiredInventory: {'Bone Saw': true},
+                setState: {GameWin: true},
                 tempChange: -1,
                 nextText: 110
             }
@@ -925,7 +943,7 @@ const textNodes = [
             " made full use of the wood, you were only able to cover half of the windows",
         inventory: '',
         image: 'assets/images/Hospital/Abandoned_Room.jpg',
-        sound2: 'assets/sounds/Barricading.wav',
+        sound: 'assets/sounds/Barricading.wav',
         options: [
             {
                 text: "Go back to preparing for the Night",
