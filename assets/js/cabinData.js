@@ -376,6 +376,16 @@ const eventOpts = [
 		],
 	},
 	{
+		id: "returnFromSafe",
+		choices: [
+			{
+				desc: "Return from the safe",
+				nextEventId: "insideCabin",
+				stateChanges: { openedSafe: true },
+			},
+		],
+	},
+	{
 		id: "lookingAtSafe",
 		choices: [
 			{
@@ -385,10 +395,6 @@ const eventOpts = [
 			{
 				desc: "Take a guess at the combination",
 				nextEventId: guessCombination,
-			},
-			{
-				desc: "Unlock the safe",
-				nextEventId: "unlockSafe",
 			},
 		],
 	},
@@ -723,7 +729,6 @@ const events = [
 		id: "searchingCabin",
 		text: `You begin rifling through the cupboards and cabinets in the cabin. They seem mostly empty or filled with junk,
         but you're able to scavenge a few tins of food and a bottle of water. There's also a locked safe hidden at the back of a cabinet, but no signs of a combination anywhere.`,
-		// TODO: Anything inside safe, or just note for the hunter?
 		img: imgSafe,
 		optsId: "riflingCabin",
 	},
@@ -735,8 +740,8 @@ const events = [
 	},
 	{
 		id: "unlockSafe",
-		text: `UNLOCKED SAFE`,
-		optsId: undefined,
+		text: `You got the code! The safe creaks open, to reveal nothing but some notes... Nothing useful to you unfortunately.`,
+		optsId: "returnFromSafe",
 	},
 	{
 		id: "continueSearchingCabin",
@@ -1010,6 +1015,13 @@ const eventsHunter = [
         but you're able to scavenge a few tins of food and a bottle of water. There's also a locked safe hidden at the back of a cabinet -
         If the password hasn't been changed, you should be able to get it open.`,
 		optsId: "riflingCabin",
+	},
+	{
+		id: "lookAtSafe",
+		text: `You open the safe - thankfully the code hasn't been changed.<br />
+        Inside is a note, written by your family. Thankfully, it seems they escaped and are waiting for you a few day's travel from here. 
+        Unfortunately, you still need to survive tonight.`,
+		optsId: "returnFromSafe",
 	},
 ];
 const eventsMechanic = [];
