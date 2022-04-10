@@ -47,8 +47,8 @@ function getGameState() {
 	if (savedData) return JSON.parse(savedData);
 	else
 		return {
-			// TODO: Get profession properly with sessionStorage.getItem("profession");
-		}
+            profession: profession,
+        };
     }
 
 // This function displays the current text node in the dialogue box. The index of the text node is required as a parameter.

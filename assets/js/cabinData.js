@@ -22,6 +22,7 @@ const soundFire = "./assets/sounds/Fire.wav";
 const soundDrawer = "./assets/sounds/drawerOpen.wav";
 const soundCreak = "./assets/sounds/door.wav";
 const soundBarricade = "./assets/sounds/Barricading.wav";
+const soundZombieBashing = "./assets/sounds/zombieBashing.wav";
 
 const profHunter = "Hunter";
 const profMechanic = "Mechanic";
@@ -194,6 +195,7 @@ const eventOpts = [
 				nextEventId: "testBarricadingFurniture",
 				requiredState: { startedBarricade: false },
 				stateChanges: { startedBarricade: true },
+				sound: soundCreak,
 				disableMode: "hidden",
 			},
 			{
@@ -202,16 +204,13 @@ const eventOpts = [
 				requiredState: { startedBarricade: true, returnedToBarricade: false },
 				stateChanges: { returnedToBarricade: true },
 				disableMode: "hidden",
+				sound: soundBarricade,
 			},
 			{
 				desc: "Return to your barricade",
 				nextEventId: "addToBarricade",
 				requiredState: { returnedToBarricade: true },
 				disableMode: "hidden",
-			},
-			{
-				desc: "Take a closer look at the hatch in the floor",
-				nextEventId: "approachHatch",
 			},
 			{
 				desc: "Wait until night",
@@ -239,6 +238,7 @@ const eventOpts = [
 			{
 				desc: "Escape through the window",
 				nextEventId: "escapeZombie",
+				sound: soundGlassBreak,
 			},
 		],
 	},
@@ -380,6 +380,16 @@ const eventOpts = [
 		],
 	},
 	{
+		id: "returnFromSafe",
+		choices: [
+			{
+				desc: "Return from the safe",
+				nextEventId: "insideCabin",
+				stateChanges: { openedSafe: true },
+			},
+		],
+	},
+	{
 		id: "lookingAtSafe",
 		choices: [
 			{
@@ -389,10 +399,6 @@ const eventOpts = [
 			{
 				desc: "Take a guess at the combination",
 				nextEventId: guessCombination,
-			},
-			{
-				desc: "Unlock the safe",
-				nextEventId: "unlockSafe",
 			},
 		],
 	},
@@ -432,55 +438,6 @@ const eventOpts = [
 			},
 			{
 				desc: getRandomSearchCabinGiveUp,
-				nextEventId: "insideCabin",
-			},
-		],
-	},
-	{
-		id: "inspectingHatch",
-		choices: [
-			{
-				desc: "Ignore the hatch for now",
-				nextEventId: "insideCabin",
-			},
-			{
-				desc: "Use your spare key to open the lock",
-				nextEventId: "unlockHatch",
-				requiredState: { profession: profHunter },
-				stateChanges: { hatchOpen: true },
-				disableMode: "hidden",
-			},
-			{
-				desc: "Pick the lock",
-				nextEventId: "pickHatchLock",
-				requiredState: {
-					canLockpick: true /* A bunch of these probably need renamed depending on what other people do */,
-				},
-				stateChanges: { hatchOpen: true },
-			},
-			{
-				desc: "Cut the lock's shackle using your bolt cutters",
-				nextEventId: "cutHatchLockBolts",
-				requiredInventory: { "Bolt Cutters": true },
-				stateChanges: { hatchOpen: true },
-			},
-			{
-				desc: "Use your crowbar to pry open the hatch",
-				nextEventId: "pryOpenHatch",
-				requiredInventory: { Crowbar: true },
-				stateChanges: { hatchOpen: true },
-			},
-		],
-	},
-	{
-		id: "openedHatch",
-		choices: [
-			{
-				desc: "Climb down the ladder into the darkness below",
-				nextEventId: undefined,
-			},
-			{
-				desc: "Ignore the basement for now",
 				nextEventId: "insideCabin",
 			},
 		],
@@ -555,12 +512,14 @@ const eventOpts = [
 				nextEventId: "nightZombiesAtWindow",
 				requiredState: { returnedToBarricade: true },
 				disableMode: "hidden",
+				sound: soundZombieBashing,
 			},
 			{
 				desc: "You'd forgotten to complete your barricade - They're coming in!",
 				nextEventId: "forgotBarricade",
 				requiredState: { returnedToBarricade: false },
 				disableMode: "hidden",
+				sound: soundZombie,
 			},
 		],
 	},
@@ -613,13 +572,7 @@ const eventOpts = [
 				requiredInventory: { Matches: true, "Wood Planks": true },
 				disableMode: "hidden",
 				nextEventId: "lightFire",
-				tempChange: 10,
-			},
-			{
-				desc: "Light a fire using some of the planks and matches you found earlier",
-				requiredInventory: { Matches: true, "Wood Planks": true },
-				disableMode: "hidden",
-				nextEventId: "lightFire",
+				sound: soundFire,
 				tempChange: 10,
 			},
 			{
@@ -627,6 +580,7 @@ const eventOpts = [
 				requiredInventory: { Matches: true },
 				disableMode: "hidden",
 				nextEventId: "lightCabinFire",
+				sound: soundFire,
 				tempChange: 10,
 			},
 			{
@@ -760,8 +714,7 @@ const events = [
 	{
 		id: "initialInsideCabin",
 		text: `Pushing the broken door aside, you enter the cabin. As your eyes adjust to its dark interior, you get a better picture of the state of disrepair the cabin is now in.
-        Broken glass from the shattered windows litters the floor, and the room is a mess.<br />
-        You also spot a hatch in the floor.`,
+        Broken glass from the shattered windows litters the floor, and the room is a mess.`,
 		img: imgInside,
 		audio: audioRain,
 		optsId: "inside",
@@ -777,7 +730,6 @@ const events = [
 		id: "searchingCabin",
 		text: `You begin rifling through the cupboards and cabinets in the cabin. They seem mostly empty or filled with junk,
         but you're able to scavenge a few tins of food and a bottle of water. There's also a locked safe hidden at the back of a cabinet, but no signs of a combination anywhere.`,
-		// TODO: Anything inside safe, or just note for the hunter?
 		img: imgSafe,
 		optsId: "riflingCabin",
 	},
@@ -789,8 +741,8 @@ const events = [
 	},
 	{
 		id: "unlockSafe",
-		text: `UNLOCKED SAFE`,
-		optsId: undefined,
+		text: `You got the code! The safe creaks open, to reveal nothing but some notes... Nothing useful to you unfortunately.`,
+		optsId: "returnFromSafe",
 	},
 	{
 		id: "continueSearchingCabin",
@@ -799,7 +751,7 @@ const events = [
 	},
 	{
 		id: "thoroughlySearchCabin",
-		text: `Hidden in a box at the back of a cupboard, you find a red crowbar. It might be useful on that hatch you found earlier, or could help you take down a few zombies.`,
+		text: `Hidden in a box at the back of a cupboard, you find a red crowbar. It might help you take down a few zombies.`,
 		optsId: "thoroughlySearchingCabin",
 		setInventory: { Crowbar: true },
 	},
@@ -904,41 +856,6 @@ const events = [
 	},
 
 	// END: Barricading setup
-
-	// BEGIN: Hatch
-	{
-		id: "approachHatch",
-		text: `There's a heavy lock on the hatch, and it refuses to budge.<br />
-        With a crowbar or some other tool you may be able to wedge the hatch open, or use something else to get past the lock itself.`,
-		img: imgHatch,
-		optsId: "inspectingHatch",
-	},
-	{
-		id: "unlockHatch",
-		text: `It's a good thing you remembered to bring your spare key with you when you returned. The lock is slightly rusted, but still swings open when you turn the key.
-        You're very glad your sturdy lock managed to prevent [TODO Haven't decided what's down there yet] from any damage. It also means your family are nowhere to be found here -
-        there's no way to lock this from the inside.`,
-		optsId: "openedHatch",
-	},
-	{
-		id: "pickHatchLock",
-		text: `The lock is beginning to rust, but you're able to get it open without too much effort. This lock was designed more to look impressive than actually protect anything.`,
-		optsId: "openedHatch",
-	},
-	{
-		id: "cutHatchLockBolts",
-		text: `The bolt cutters slice through the lock's shackles with ease, and you can easily pull away the rest of the lock.
-        This lock was designed more to look impressive than actually protect anything.`,
-		optsId: "openedHatch",
-	},
-	{
-		id: "pryOpenHatch",
-		text: `Wedging one end of the crowbar beneath a gap to the side of the hatch, you push hard against the crowbar.
-        To your surprise, the shackle of the lock snaps before the hatch itself does. Looks like the lock isn't as strong as it looked.`,
-		optsId: "openedHatch",
-	},
-	// END: Hatch
-
 	// END: Inside cabin
 
 	// BEGIN: Forest
@@ -1099,6 +1016,13 @@ const eventsHunter = [
         but you're able to scavenge a few tins of food and a bottle of water. There's also a locked safe hidden at the back of a cabinet -
         If the password hasn't been changed, you should be able to get it open.`,
 		optsId: "riflingCabin",
+	},
+	{
+		id: "lookAtSafe",
+		text: `You open the safe - thankfully the code hasn't been changed.<br />
+        Inside is a note, written by your family. Thankfully, it seems they escaped and are waiting for you a few day's travel from here. 
+        Unfortunately, you still need to survive tonight.`,
+		optsId: "returnFromSafe",
 	},
 ];
 const eventsMechanic = [];
