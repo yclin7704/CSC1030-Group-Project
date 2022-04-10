@@ -51,7 +51,6 @@ function getGameState() {
 	if (savedData) return JSON.parse(savedData);
 	else
 		return {
-			// TODO: Get profession properly with sessionStorage.getItem("profession");
             profession: "Doctor",
 		}
     }
