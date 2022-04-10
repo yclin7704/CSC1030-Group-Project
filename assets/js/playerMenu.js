@@ -44,11 +44,12 @@ function newGame() {
 	playMusic("https://soundimage.org/wp-content/uploads/2018/07/Horror-Game-Intro.mp3");
 }
 
-// validates the entered Cheat Code
+// validates the selected colour scheme
 function validateOption() {
 
-    // Stores the Cheat Code entered
+    // Stores a list of the radio buttons
     var optionList = document.getElementsByName('Scheme');
+	// Loops through the list of radio buttons to check to see if one's checked.
 	for (var i = 0; i < optionList.length; i++) {
 		if (optionList[i].checked) {
 			var option = optionList[i].value;
@@ -58,10 +59,8 @@ function validateOption() {
     sessionStorage.setItem("ID", "Styling");
     sessionStorage.setItem("Attribute", "href");
 
-    // switches the effects based on the Cheat Code's value
+    // switches the effects based on the selected radio button's value
     switch(option){
-        case "Normal":
-            sessionStorage.setItem("Value", "./assets/css/main.css"); break;
         case "Blue":
             sessionStorage.setItem("Value", "./assets/css/ColourblindColourPalette.css"); break;
         case "Yellow":
