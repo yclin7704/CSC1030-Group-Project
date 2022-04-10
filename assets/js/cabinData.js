@@ -22,6 +22,7 @@ const soundFire = "./assets/sounds/Fire.wav";
 const soundDrawer = "./assets/sounds/drawerOpen.wav";
 const soundCreak = "./assets/sounds/door.wav";
 const soundBarricade = "./assets/sounds/Barricading.wav";
+const soundZombieBashing = "./assets/sounds/zombieBashing.wav";
 
 const profHunter = "Hunter";
 const profMechanic = "Mechanic";
@@ -194,6 +195,7 @@ const eventOpts = [
 				nextEventId: "testBarricadingFurniture",
 				requiredState: { startedBarricade: false },
 				stateChanges: { startedBarricade: true },
+				sound: soundCreak,
 				disableMode: "hidden",
 			},
 			{
@@ -202,6 +204,7 @@ const eventOpts = [
 				requiredState: { startedBarricade: true, returnedToBarricade: false },
 				stateChanges: { returnedToBarricade: true },
 				disableMode: "hidden",
+				sound: soundBarricade,
 			},
 			{
 				desc: "Return to your barricade",
@@ -235,6 +238,7 @@ const eventOpts = [
 			{
 				desc: "Escape through the window",
 				nextEventId: "escapeZombie",
+				sound: soundGlassBreak,
 			},
 		],
 	},
@@ -508,12 +512,14 @@ const eventOpts = [
 				nextEventId: "nightZombiesAtWindow",
 				requiredState: { returnedToBarricade: true },
 				disableMode: "hidden",
+				sound: soundZombieBashing,
 			},
 			{
 				desc: "You'd forgotten to complete your barricade - They're coming in!",
 				nextEventId: "forgotBarricade",
 				requiredState: { returnedToBarricade: false },
 				disableMode: "hidden",
+				sound: soundZombie,
 			},
 		],
 	},
@@ -566,13 +572,7 @@ const eventOpts = [
 				requiredInventory: { Matches: true, "Wood Planks": true },
 				disableMode: "hidden",
 				nextEventId: "lightFire",
-				tempChange: 10,
-			},
-			{
-				desc: "Light a fire using some of the planks and matches you found earlier",
-				requiredInventory: { Matches: true, "Wood Planks": true },
-				disableMode: "hidden",
-				nextEventId: "lightFire",
+				sound: soundFire,
 				tempChange: 10,
 			},
 			{
@@ -580,6 +580,7 @@ const eventOpts = [
 				requiredInventory: { Matches: true },
 				disableMode: "hidden",
 				nextEventId: "lightCabinFire",
+				sound: soundFire,
 				tempChange: 10,
 			},
 			{
