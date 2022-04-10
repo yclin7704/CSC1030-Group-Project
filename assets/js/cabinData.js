@@ -356,6 +356,7 @@ const eventOpts = [
 				nextEventId: "addToBarricade",
 				requiredState: { windowsBoarded: false },
 				stateChanges: { windowsBoarded: true },
+				setInventory: { "Wood Planks": false },
 			},
 		],
 	},
