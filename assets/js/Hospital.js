@@ -11,7 +11,7 @@ function getGameState() {
 	if (savedData) return JSON.parse(savedData);
 	else
 		return {
-			profession: "Hunter",
+			profession: profession,
 		};
 }
 
@@ -721,7 +721,7 @@ const textNodes = [
         id: 20,
         text: "The Newspaper, although mysteriously cut-off, dates back two weeks ago, the 10th March 1999, and it reads...</br>" +
             "<button onClick=\"changeText();\" class=\"changeText\">Change Text</button> <button onClick=\"revertText();\" class=\"changeText\">Revert Text</button>" +
-            " <span class=\"handwritten\" id=\"handwritten\">BREAKING NEWS - Civilians Going Missing!!</br>Recently, it's been reported that up to 30 people from local towns" +
+            " <span class=\"handwritten\" id=\"handwritten\">BREAKING NEWS - Civilians Going Missing!!<br>Recently, it's been reported that up to 30 people from local towns" +
             " and cities have suddenly vanished without trace. Local Police have been investigating the homes of each one of these individuals and what's most astonishing is" +
             " that in every single case there isn't a single piece of evidence left behind by the perpetrators. The Police have advised that you stay on high alert in the" +
             " coming days, by locking door and windows as they continue to search for a conclusion into what's going on. However rumours have begun to spread that it might be.......</span>",

@@ -84,7 +84,7 @@ function showTextNode(textNodeIndex) {
     const torchOn = [2, 26];
 
     for (i = 0; i < torchOn.length; i++) {
-        if (textNodeIndex === torchOn[i]) {
+        if (textNodeIndex === torchOn[i] && !state.GeneratorFixed) {
             setTorch(!getIsTorchOn());
             break;
         }
@@ -238,6 +238,7 @@ const textNodes = [
             {
                 text: 'Look for a backup generator',
                 setState: { Breaker: true, Generator:true },
+                requiredState:(currentState) => !currentState.GeneratorFixed,
                 nextEventId: 28,
             }
         ]
@@ -259,7 +260,7 @@ const textNodes = [
                 nextEventId: 26,
                 requiredInventory: { 'Fuse': true },
                 setInventory: { Fuse: false},
-                setState: { LightsOff: false }
+                setState: { LightsOff: false, GeneratorFixed:true }
             },
             {
                 text: 'Search for a new fuse',
@@ -281,7 +282,7 @@ const textNodes = [
                 text: 'Replace the fuse',
                 requiredInventory: { 'Fuse': true },
                 setInventory: {Fuse : false},
-                setState: { LightsOff: false },
+                setState: { LightsOff: false, GeneratorFixed:true },
                 nextEventId: 26
             },
             {
@@ -438,12 +439,12 @@ const textNodes = [
             {
                 text: 'Go back to fix the generator',
                 nextEventId: 28,
-                requiredState: (currentState) => currentState.LightsOff && currentState.Generator,
+                requiredState: (currentState) => currentState.LightsOff && currentState.Generator && !currentState.GeneratorFixed,
             },
             {
                 text: 'Look for a backup generator',
                 nextEventId: 28,
-                requiredState: (currentState) => !currentState.Generator
+                requiredState: (currentState) => !currentState.Generator && !currentState.GeneratorFixed
             }
         ]
 
@@ -473,12 +474,12 @@ const textNodes = [
             {
                 text: 'Go back and fix the generator',
                 nextEventId: 28,
-                requiredState: (currentState) => currentState.LightsOff && !currentState.SearchParts && currentState.Generator,
+                requiredState: (currentState) => currentState.LightsOff && !currentState.SearchParts && currentState.Generator && !currentState.GeneratorFixed,
             },
             {
                 text: 'Look for a backup generator',
                 nextEventId: 28,
-                requiredState: (currentState) => !currentState.Generator && currentState.LightsOff && !currentState.SearchParts
+                requiredState: (currentState) => !currentState.Generator && currentState.LightsOff && !currentState.SearchParts && !currentState.GeneratorFixed
             },
             {
                 text: 'Give the man the parts you found',
@@ -518,12 +519,12 @@ const textNodes = [
             {
                 text: 'Go back and fix the generator',
                 nextEventId: 28,
-                requiredState: (currentState) => currentState.LightsOff && currentState.Generator
+                requiredState: (currentState) => currentState.LightsOff && currentState.Generator && !currentState.GeneratorFixed
             },
             {
                 text: 'Look for a backup generator',
                 nextEventId: 28,
-                requiredState: (currentState) => !currentState.Generator && currentState.LightsOff && !currentState.SearchParts
+                requiredState: (currentState) => !currentState.Generator && currentState.LightsOff && !currentState.SearchParts && !currentState.GeneratorFixed
             },
             {
                 text: 'Return to warehouse',
