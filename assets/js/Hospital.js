@@ -11,7 +11,7 @@ function getGameState() {
 	if (savedData) return JSON.parse(savedData);
 	else
 		return {
-			profession: "Hunter",
+			profession: profession,
 		};
 }
 
